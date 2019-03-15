@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="taw-4Y-TWF" userLabel="PersonTableViewCell" customClass="PersonTableViewCell" customModule="MoviePicker" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xmc-nF-0Fs" userLabel="Content View">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_person_image" translatesAutoresizingMaskIntoConstraints="NO" id="X6g-68-gJp">
+                            <rect key="frame" x="0.0" y="0.0" width="60" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="X6g-68-gJp" secondAttribute="height" multiplier="3:4" id="Slg-rq-MSR"/>
+                            </constraints>
+                        </imageView>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PC3-M1-hgO">
+                            <rect key="frame" x="20" y="30" width="20" height="20"/>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoD-OF-90c">
+                            <rect key="frame" x="76" y="8" width="291" height="24"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Position" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="azh-Ro-oDI">
+                            <rect key="frame" x="76" y="32" width="291" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="X6g-68-gJp" secondAttribute="bottom" id="2zG-Qp-gRy"/>
+                        <constraint firstItem="PC3-M1-hgO" firstAttribute="leading" secondItem="xmc-nF-0Fs" secondAttribute="leading" constant="20" id="43J-Kj-tMx"/>
+                        <constraint firstAttribute="trailing" secondItem="azh-Ro-oDI" secondAttribute="trailing" constant="8" id="9yX-3I-yYg"/>
+                        <constraint firstItem="X6g-68-gJp" firstAttribute="top" secondItem="xmc-nF-0Fs" secondAttribute="top" id="Gox-dm-w8U"/>
+                        <constraint firstItem="azh-Ro-oDI" firstAttribute="leading" secondItem="X6g-68-gJp" secondAttribute="trailing" constant="16" id="LAX-Dy-DE6"/>
+                        <constraint firstItem="X6g-68-gJp" firstAttribute="leading" secondItem="xmc-nF-0Fs" secondAttribute="leading" id="Q89-0E-Syq"/>
+                        <constraint firstItem="qoD-OF-90c" firstAttribute="leading" secondItem="X6g-68-gJp" secondAttribute="trailing" constant="16" id="boT-2Y-Jho"/>
+                        <constraint firstItem="qoD-OF-90c" firstAttribute="top" secondItem="xmc-nF-0Fs" secondAttribute="top" constant="8" id="dxF-5e-Fg3"/>
+                        <constraint firstAttribute="trailing" secondItem="qoD-OF-90c" secondAttribute="trailing" constant="8" id="fWk-KK-yOm"/>
+                        <constraint firstItem="azh-Ro-oDI" firstAttribute="top" secondItem="qoD-OF-90c" secondAttribute="bottom" id="ydq-mh-H8n"/>
+                        <constraint firstItem="PC3-M1-hgO" firstAttribute="centerY" secondItem="xmc-nF-0Fs" secondAttribute="centerY" id="zNu-2C-JNR"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="xmc-nF-0Fs" firstAttribute="leading" secondItem="5yC-yU-bdn" secondAttribute="leading" id="2l4-Mj-hf1"/>
+                <constraint firstItem="5yC-yU-bdn" firstAttribute="trailing" secondItem="xmc-nF-0Fs" secondAttribute="trailing" id="50t-Su-WDj"/>
+                <constraint firstItem="xmc-nF-0Fs" firstAttribute="top" secondItem="taw-4Y-TWF" secondAttribute="top" id="Vs5-wI-tXN"/>
+                <constraint firstAttribute="bottom" secondItem="xmc-nF-0Fs" secondAttribute="bottom" id="eUY-BR-AP0"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="5yC-yU-bdn"/>
+            <connections>
+                <outlet property="personImageActivityIndicator" destination="PC3-M1-hgO" id="ahC-m7-Fqt"/>
+                <outlet property="personImageImageView" destination="X6g-68-gJp" id="RLi-CB-A6h"/>
+                <outlet property="personNameLabel" destination="qoD-OF-90c" id="TsX-o6-fuf"/>
+                <outlet property="personPositionLabel" destination="azh-Ro-oDI" id="w5u-23-tN1"/>
+            </connections>
+            <point key="canvasLocation" x="-4" y="-550"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="default_person_image" width="762" height="939"/>
+    </resources>
+</document>

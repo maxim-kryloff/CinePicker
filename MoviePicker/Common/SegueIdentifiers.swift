@@ -1,0 +1,7 @@
+class SegueIdentifiers {
+    
+    public static let showPersonMovies = "ShowPersonMovies"
+    
+    public static let showMovieDetails = "ShowMovieDetails"
+    
+}
