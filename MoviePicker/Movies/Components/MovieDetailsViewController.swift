@@ -6,13 +6,15 @@ class MovieDetailsViewController: UIViewController {
     
     public var movie: Movie!
     
-    private let numberOfSections: Int = 3
+    private let numberOfSections: Int = 4
     
     private let movieDetailsSectionNumber: Int = 0
     
-    private let movieDetailsOverviewSectionNumber: Int = 1
+    private let movieDetailsBookmarkActionSectionNumber: Int = 1
     
-    private let movieDetailsCharactersSectionNumber: Int = 2
+    private let movieDetailsOverviewSectionNumber: Int = 2
+    
+    private let movieDetailsCharactersSectionNumber: Int = 3
     
     private var isBeingRequested = false
     
@@ -51,8 +53,23 @@ class MovieDetailsViewController: UIViewController {
         movieDetailsTableView.register(failedLoadingTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.failedLoading)
     }
     
-    private func onReloadData() {
+    private func onSelectFailedLoadingCell() {
         performRequest(fromReloading: true)
+    }
+    
+    private func onSelectBookmarkActionCell() {
+        defer {
+            let bookmarkActionIndexPath = IndexPath(row: 0, section: movieDetailsBookmarkActionSectionNumber)
+            movieDetailsTableView.reloadRows(at: [bookmarkActionIndexPath], with: .automatic)
+        }
+        
+        let isSavedInBookmarks = checkIfSavedInBookmarks()
+        
+        if isSavedInBookmarks {
+            _ = BookmarkRepository.shared.removeBookmark(movie: movie)
+        } else {
+            _ = BookmarkRepository.shared.saveBookmark(movie: movie)
+        }
     }
     
     private func performRequest(fromReloading: Bool) {
@@ -92,6 +109,11 @@ class MovieDetailsViewController: UIViewController {
         }
     }
     
+    private func checkIfSavedInBookmarks() -> Bool {
+        let bookmarks = BookmarkRepository.shared.getBookmarks()
+        return bookmarks.contains { $0.id == movie.id }
+    }
+    
 }
 
 extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate {
@@ -103,6 +125,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case movieDetailsSectionNumber: return 1
+        case movieDetailsBookmarkActionSectionNumber: return 1
         case movieDetailsOverviewSectionNumber: return 1
         case movieDetailsCharactersSectionNumber: return getMovieDetailsCharactersSectionNumberOfRows()
         default: fatalError("Section number is out of range...")
@@ -112,6 +135,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch (indexPath.section, indexPath.row) {
         case (movieDetailsSectionNumber, _): return MovieDetailsTableViewCell.standardHeight
+        case (movieDetailsBookmarkActionSectionNumber, _): return MovieDetailsBookmarkActionTableViewCell.standardHeight
         case (movieDetailsOverviewSectionNumber, _): return MovieDetailsOverviewTableViewCell.standardHeight
         case (movieDetailsCharactersSectionNumber, _): return getMovieDetailsCharactersSectionRowHeight()
         default: fatalError("Section number is out of range...")
@@ -129,6 +153,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch (indexPath.section, indexPath.row) {
         case (movieDetailsSectionNumber, _): return getMovieDetailsTableViewCell(tableView, cellForRowAt: indexPath)
+        case (movieDetailsBookmarkActionSectionNumber, _): return getMovieDetailsBookmarkActionTableViewCell(tableView, cellForRowAt: indexPath)
         case (movieDetailsOverviewSectionNumber, _): return getMovieDetailsOverviewTableViewCell(tableView, cellForRowAt: indexPath)
         case (movieDetailsCharactersSectionNumber, _): return getCharacterTableViewCell(tableView, cellForRowAt: indexPath)
         default: fatalError("Section number is out of range...")
@@ -152,8 +177,13 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == movieDetailsBookmarkActionSectionNumber {
+            onSelectBookmarkActionCell()
+            return
+        }
+        
         if isRequestFailed {
-            onReloadData()
+            onSelectFailedLoadingCell()
             return
         }
         
@@ -178,6 +208,14 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         return cell
     }
     
+    private func getMovieDetailsBookmarkActionTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsBookmarkAction, for: indexPath) as! MovieDetailsBookmarkActionTableViewCell
+
+        cell.isRemoveAction = checkIfSavedInBookmarks()
+        
+        return cell
+    }
+    
     private func getMovieDetailsOverviewTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsOverview, for: indexPath) as! MovieDetailsOverviewTableViewCell
 
@@ -194,9 +232,6 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         
         if isRequestFailed {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.failedLoading) as! FailedLoadingTableViewCell
-            
-            cell.onTouchDownHandler = onReloadData
-            
             return cell
         }
         

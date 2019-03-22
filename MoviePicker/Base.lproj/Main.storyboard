@@ -38,7 +38,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="RZU-kS-9aX"/>
                     <connections>
-                        <outlet property="multiSearchTableView" destination="eic-RW-Wdl" id="ayQ-kh-reZ"/>
+                        <outlet property="entityTableView" destination="eic-RW-Wdl" id="ayQ-kh-reZ"/>
                         <segue destination="igN-2x-NPg" kind="show" identifier="ShowPersonMovies" id="XCY-oZ-kcm"/>
                         <segue destination="xLm-8S-XWy" kind="show" identifier="ShowMovieDetails" id="6Rr-Qk-OvN"/>
                     </connections>
@@ -94,7 +94,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsTableViewCellIdentifier" rowHeight="120" id="eBF-Pn-bw7" customClass="MovieDetailsTableViewCell" customModule="MoviePicker" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsTableViewCellIdentifier" rowHeight="120" id="eBF-Pn-bw7" customClass="MovieDetailsTableViewCell" customModule="MoviePicker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eBF-Pn-bw7" id="M6N-Uj-2CD">
@@ -111,19 +111,19 @@
                                                     <rect key="frame" x="34" y="50" width="20" height="20"/>
                                                 </activityIndicatorView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAe-QB-gjf">
-                                                    <rect key="frame" x="96" y="16" width="271" height="24"/>
+                                                    <rect key="frame" x="96" y="16" width="496" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Original Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDF-mL-Nhf">
-                                                    <rect key="frame" x="96" y="40" width="271" height="18"/>
+                                                    <rect key="frame" x="96" y="40" width="496" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genres" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJX-rh-QeE">
-                                                    <rect key="frame" x="96" y="62" width="271" height="18"/>
+                                                    <rect key="frame" x="96" y="62" width="496" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -143,7 +143,7 @@
                                                     </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="lfy-AL-095">
-                                                    <rect key="frame" x="320" y="83.5" width="47" height="20"/>
+                                                    <rect key="frame" x="545" y="83.5" width="47" height="20"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GTB-sT-3md">
                                                             <rect key="frame" x="0.0" y="0.0" width="14" height="20"/>
@@ -201,15 +201,37 @@
                                             <outlet property="voteCountLabel" destination="GTB-sT-3md" id="EM4-js-JzG"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsOverviewTableViewCellIdentifier" rowHeight="80" id="Asg-lF-N0F" customClass="MovieDetailsOverviewTableViewCell" customModule="MoviePicker" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="148" width="375" height="80"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsBookmarkActionTableViewCellIdentifier" rowHeight="40" id="kxo-ji-saJ" customClass="MovieDetailsBookmarkActionTableViewCell" customModule="MoviePicker" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="148" width="375" height="40"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kxo-ji-saJ" id="FVQ-JD-sP9">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="39.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iA0-o9-7Xg">
+                                                    <rect key="frame" x="104" y="2" width="167" height="36"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <state key="normal" title="Save to Bookmarks"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="iA0-o9-7Xg" firstAttribute="centerX" secondItem="FVQ-JD-sP9" secondAttribute="centerX" id="CJy-ZU-AGu"/>
+                                                <constraint firstItem="iA0-o9-7Xg" firstAttribute="centerY" secondItem="FVQ-JD-sP9" secondAttribute="centerY" id="PV2-Rv-8OL"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="bookmarkActionButton" destination="iA0-o9-7Xg" id="IW2-uZ-kMd"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsOverviewTableViewCellIdentifier" rowHeight="80" id="Asg-lF-N0F" customClass="MovieDetailsOverviewTableViewCell" customModule="MoviePicker" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="188" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Asg-lF-N0F" id="Jlf-cX-u5l">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9T9-V7-vLf">
-                                                    <rect key="frame" x="8" y="8" width="359" height="63.5"/>
+                                                    <rect key="frame" x="8" y="8" width="584" height="63.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -249,7 +271,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9A-xx-AUB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1207" y="233"/>
+            <point key="canvasLocation" x="1205.5999999999999" y="232.53373313343329"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nb6-RJ-Uf8">
