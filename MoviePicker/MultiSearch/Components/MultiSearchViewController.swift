@@ -2,10 +2,10 @@ import UIKit
 
 class MultiSearchViewController: StatesViewController {
     
-    @IBOutlet weak var multiSearchTableView: UITableView!
+    @IBOutlet weak var entityTableView: UITableView!
     
     override var tableViewDefinition: UITableView! {
-        return multiSearchTableView
+        return entityTableView
     }
     
     private let searchController = UISearchController(searchResultsController: nil)
@@ -16,7 +16,9 @@ class MultiSearchViewController: StatesViewController {
     
     private let searchDebounceDelayMilliseconds: Int = 500
     
-    private var searchEntities: [Popularity] = []
+    private let bookmarkHeaderHeight: CGFloat = 35
+    
+    private var entities: [Popularity] = []
     
     private let multiSearchService = MultiSearchService(movieService: MovieService(), personService: PersonService())
     
@@ -30,7 +32,15 @@ class MultiSearchViewController: StatesViewController {
         defineSearchController()
         defineTableView()
         
+        setBookmarks()
+        
         definesPresentationContext = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if currentSearchQuery.isEmpty {
+            setBookmarks()
+        }
     }
     
     override func onReloadData() {
@@ -43,8 +53,8 @@ class MultiSearchViewController: StatesViewController {
     override func updateTable<DataType>(withData data: [DataType]) {
         super.updateTable(withData: data)
         
-        searchEntities = data as! [Popularity]
-        multiSearchTableView.reloadData()
+        entities = data as! [Popularity]
+        entityTableView.reloadData()
     }
     
     private func defineSearchController() {
@@ -56,19 +66,37 @@ class MultiSearchViewController: StatesViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         
         OperationQueue.main.addOperation {
-            self.searchController.searchBar.becomeFirstResponder()
+            let bookmarks = BookmarkRepository.shared.getBookmarks()
+            
+            if bookmarks.isEmpty {
+                self.searchController.searchBar.becomeFirstResponder()
+            }
         }
     }
     
     private func defineTableView() {
-        multiSearchTableView.rowHeight = PersonTableViewCell.standardHeight
-        multiSearchTableView.tableFooterView = UIView(frame: .zero)
+        entityTableView.rowHeight = PersonTableViewCell.standardHeight
+        entityTableView.tableFooterView = UIView(frame: .zero)
 
         let movieTableViewCellNib = UINib(nibName: "MovieTableViewCell", bundle: nil)
-        multiSearchTableView.register(movieTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movie)
+        entityTableView.register(movieTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movie)
         
         let personTableViewCellNib = UINib(nibName: "PersonTableViewCell", bundle: nil)
-        multiSearchTableView.register(personTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.person)
+        entityTableView.register(personTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.person)
+    }
+    
+    private func setBookmarks() {
+        let bookmarks = BookmarkRepository.shared.getBookmarks()
+        updateTable(withData: bookmarks)
+    }
+    
+    private func removeBookmark(at indexPath: IndexPath) {
+        let movie = entities[indexPath.row] as! Movie
+        
+        let bookmarks = BookmarkRepository.shared.removeBookmark(movie: movie)
+        
+        entities = bookmarks
+        entityTableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     private func performRequest(shouldScrollToFirstRow: Bool) {
@@ -93,14 +121,14 @@ class MultiSearchViewController: StatesViewController {
                 
                 self.updateTable(withData: requestedSearchEntities)
                 
-                if self.searchEntities.isEmpty {
+                if self.entities.isEmpty {
                     self.setMessageState(withMessage: "There is no data found...")
                     return
                 }
                 
                 if shouldScrollToFirstRow {
                     let firstIndexPath = IndexPath(row: 0, section: 0);
-                    self.multiSearchTableView.scrollToRow(at: firstIndexPath, at: .top, animated: true)
+                    self.entityTableView.scrollToRow(at: firstIndexPath, at: .top, animated: true)
                 }
             }
         }
@@ -111,7 +139,30 @@ class MultiSearchViewController: StatesViewController {
 extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchEntities.count
+        return entities.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return currentSearchQuery.isEmpty ? "Bookmarks" : ""
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if currentSearchQuery.isEmpty {
+            let bookmarks = BookmarkRepository.shared.getBookmarks()
+            return !bookmarks.isEmpty ? bookmarkHeaderHeight : 0
+        }
+        
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return currentSearchQuery.isEmpty
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            removeBookmark(at: indexPath)
+        }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -119,10 +170,10 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         
         switch cell {
         case is MovieTableViewCell:
-            let movie = searchEntities[indexPath.row] as! Movie
+            let movie = entities[indexPath.row] as! Movie
             imagePath = movie.imagePath
         case is PersonTableViewCell:
-            let actor = searchEntities[indexPath.row] as! Actor
+            let actor = entities[indexPath.row] as! Actor
             imagePath = actor.imagePath
         default:
             fatalError("Unexpected type of table view cell...")
@@ -135,7 +186,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let entity = searchEntities[indexPath.row]
+        let entity = entities[indexPath.row]
         
         switch (entity) {
         case is Movie: return getMovieTableViewCell(tableView, cellForRowAt: indexPath, movie: entity as! Movie)
@@ -155,7 +206,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let entity = searchEntities[indexPath.row]
+        let entity = entities[indexPath.row]
         
         if entity is Movie {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath)
@@ -212,7 +263,7 @@ extension MultiSearchViewController {
         let sender = sender as! TableViewCellSender
         let indexPath = sender.indexPath
         
-        let entity = searchEntities[indexPath.row]
+        let entity = entities[indexPath.row]
         
         if segueIdentifier == SegueIdentifiers.showMovieDetails {
             let movieDetailsViewController = segue.destination as! MovieDetailsViewController
@@ -252,7 +303,9 @@ extension MultiSearchViewController: UISearchResultsUpdating {
 
         if currentSearchQuery.isEmpty {
             unsetAllStates()
-            updateTable(withData: [])
+            
+            let bookmarks = BookmarkRepository.shared.getBookmarks()
+            updateTable(withData: bookmarks)
             
             return
         }
