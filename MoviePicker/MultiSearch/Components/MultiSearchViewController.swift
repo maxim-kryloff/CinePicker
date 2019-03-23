@@ -66,9 +66,9 @@ class MultiSearchViewController: StatesViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         
         OperationQueue.main.addOperation {
-            let bookmarks = BookmarkRepository.shared.getBookmarks()
+            let isBookmarksEmpty = self.checkIfBookmarksEmpty()
             
-            if bookmarks.isEmpty {
+            if isBookmarksEmpty {
                 self.searchController.searchBar.becomeFirstResponder()
             }
         }
@@ -87,16 +87,24 @@ class MultiSearchViewController: StatesViewController {
     
     private func setBookmarks() {
         let bookmarks = BookmarkRepository.shared.getBookmarks()
-        updateTable(withData: bookmarks)
+        let reversedBookmarks = Array(bookmarks.reversed())
+        
+        updateTable(withData: reversedBookmarks)
     }
     
     private func removeBookmark(at indexPath: IndexPath) {
         let movie = entities[indexPath.row] as! Movie
         
         let bookmarks = BookmarkRepository.shared.removeBookmark(movie: movie)
+        let reversedBookmarks = Array(bookmarks.reversed())
         
-        entities = bookmarks
+        entities = reversedBookmarks
         entityTableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    private func checkIfBookmarksEmpty() -> Bool {
+        let bookmarks = BookmarkRepository.shared.getBookmarks()
+        return bookmarks.isEmpty
     }
     
     private func performRequest(shouldScrollToFirstRow: Bool) {
@@ -148,8 +156,8 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if currentSearchQuery.isEmpty {
-            let bookmarks = BookmarkRepository.shared.getBookmarks()
-            return !bookmarks.isEmpty ? bookmarkHeaderHeight : 0
+            let isBookmarksEmpty = checkIfBookmarksEmpty()
+            return !isBookmarksEmpty ? bookmarkHeaderHeight : 0
         }
         
         return 0
@@ -303,9 +311,7 @@ extension MultiSearchViewController: UISearchResultsUpdating {
 
         if currentSearchQuery.isEmpty {
             unsetAllStates()
-            
-            let bookmarks = BookmarkRepository.shared.getBookmarks()
-            updateTable(withData: bookmarks)
+            setBookmarks()
             
             return
         }
