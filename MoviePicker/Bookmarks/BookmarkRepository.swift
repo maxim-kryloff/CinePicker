@@ -30,7 +30,12 @@ class BookmarkRepository {
         
         do {
             let movieDAOs = try managedContext.fetch(request)
-            let movies = buildMovieModels(from: movieDAOs)
+            var movies: [Movie] = []
+            
+            for movieDAO in movieDAOs {
+                let movie = Movie.buildMovie(fromDAO: movieDAO)
+                movies.append(movie)
+            }
             
             return movies
             
@@ -63,9 +68,6 @@ class BookmarkRepository {
         
         movieDAO.setValue(movie.overview, forKey: "overview")
         
-        let genreIdsString = getStringFrom(genreIds: movie.genreIds)
-        movieDAO.setValue(genreIdsString, forKey: "genreIds")
-        
         movieDAO.setValue(movie.popularity, forKey: "popularity")
         
         do {
@@ -93,79 +95,6 @@ class BookmarkRepository {
         }
         
         return getBookmarks()
-    }
-    
-    private func buildMovieModels(from movieDAOs: [NSManagedObject]) -> [Movie] {
-        var movies: [Movie] = []
-        
-        for movieDAO in movieDAOs {
-            let id = movieDAO.value(forKey: "id") as! Int
-            
-            let title = movieDAO.value(forKey: "title") as! String
-            
-            let originalTitle = movieDAO.value(forKey: "originalTitle") as? String
-            
-            let imagePath = movieDAO.value(forKey: "imagePath") as? String
-            
-            let rating = movieDAO.value(forKey: "rating") as? Double
-            
-            let voteCount = movieDAO.value(forKey: "voteCount") as? Int
-            
-            let releaseYear = movieDAO.value(forKey: "releaseYear") as? String
-            
-            let overview = movieDAO.value(forKey: "overview") as? String
-            
-            let genreIdsString = movieDAO.value(forKey: "genreIds") as? String
-            let genreIds = getGenreIdsFrom(string: genreIdsString)
-            
-            let popularity = movieDAO.value(forKey: "popularity") as! Double
-            
-            let movie = Movie(
-                id: id,
-                title: title,
-                originalTitle: originalTitle,
-                imagePath: imagePath,
-                rating: rating,
-                voteCount: voteCount,
-                releaseYear: releaseYear,
-                overview: overview,
-                genreIds: genreIds,
-                popularity: popularity
-            )
-            
-            movies.append(movie)
-        }
-        
-        return movies
-    }
-    
-    private func getStringFrom(genreIds: [Int]?) -> String? {
-        guard let genreIds = genreIds else {
-            return nil
-        }
-        
-        var string = ""
-        
-        for genreId in genreIds {
-            string += String(genreId) + " "
-        }
-        
-        return string
-    }
-    
-    private func getGenreIdsFrom(string: String?) -> [Int]? {
-        guard let string = string else {
-            return nil
-        }
-        
-        var genreIds: [Int] = []
-        
-        for item in string.split(separator: " ") {
-            let genreId = Int(item)!
-            genreIds.append(genreId)
-        }
-        
-        return genreIds
     }
     
 }

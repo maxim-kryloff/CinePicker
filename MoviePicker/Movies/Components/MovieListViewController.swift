@@ -60,9 +60,7 @@ class MovieListViewController: StatesViewController {
     
     override func onReloadData() {
         super.onReloadData()
-        
-        isRequestFailed = false
-        
+
         unsetAllStates()
         performRequest()
     }
@@ -107,6 +105,7 @@ class MovieListViewController: StatesViewController {
         setLoadingState()
         
         isBeingRequested = true
+        isRequestFailed = false
         
         movieListService.requestMovies(by: person.id) { (requestedMoviesResult, isLoadingDataFailed) in
             OperationQueue.main.addOperation {
@@ -150,13 +149,10 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let movie = movies[indexPath.row]
         
-        guard let movieImagePath = movie.imagePath else {
-            return
+        if !movie.imagePath.isEmpty {
+            var cell = cell as! ImageFromInternet
+            UIViewHelper.setImageFromInternet(by: movie.imagePath, at: &cell, using: imageService)
         }
-        
-        var cell = cell as! ImageFromInternet
-        
-        UIViewHelper.setImageFromInternet(by: movieImagePath, at: &cell, using: imageService)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -206,7 +202,8 @@ extension MovieListViewController {
             
             let indexPath = sender.indexPath
             
-            movieListViewController.movie = movies[indexPath.row]
+            movieListViewController.movieId = movies[indexPath.row].id
+            movieListViewController.movieOriginalTitle = movies[indexPath.row].originalTitle
             
             return
         }

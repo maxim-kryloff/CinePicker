@@ -23,7 +23,7 @@ class MovieListService {
         var isLoadingCrewMoviesFailed = false
         
         concurrentDispatchQueue.async(group: dispatchGroup) {
-            self.requestMovies(byActor: personId, dispatchGroup: dispatchGroup) { (result, isRequestFailed) in
+            self.requestMovies(byPerson: personId, dispatchGroup: dispatchGroup) { (result, isRequestFailed) in
                 castMovies = result
                 isLoadingCastMoviesFailed = isRequestFailed
             }
@@ -45,13 +45,13 @@ class MovieListService {
     }
     
     private func requestMovies(
-        byActor personId: Int,
+        byPerson personId: Int,
         dispatchGroup: DispatchGroup,
         callback: @escaping (_: [Movie], _ isLoadingDataFailed: Bool) -> Void
     ) {
         dispatchGroup.enter()
         
-        movieService.getMovies(byActor: personId) { (result) in
+        movieService.getMovies(byPerson: personId) { (result) in
             var requestResult: [Movie] = []
             var isFailed = false
             
@@ -64,8 +64,8 @@ class MovieListService {
                 let movies = try result.getValue()
                 
                 requestResult = movies
-                    .filter { $0.imagePath != nil }
-                    .filter { $0.overview != nil && $0.overview != "" }
+                    .filter { !$0.imagePath.isEmpty }
+                    .filter { !$0.overview.isEmpty }
                 
             } catch ResponseError.dataIsNil {
                 isFailed = true
@@ -95,8 +95,8 @@ class MovieListService {
                 let movies = try result.getValue()
                 
                 requestResult = movies
-                    .filter { $0.imagePath != nil }
-                    .filter { $0.overview != nil && $0.overview != "" }
+                    .filter { !$0.imagePath.isEmpty }
+                    .filter { !$0.overview.isEmpty }
                 
             } catch ResponseError.dataIsNil {
                 isFailed = true

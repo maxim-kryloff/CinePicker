@@ -4,7 +4,15 @@ class MovieDetailsViewController: UIViewController {
     
     @IBOutlet weak var movieDetailsTableView: UITableView!
     
-    public var movie: Movie!
+    public var movieId: Int!
+    
+    public var movieOriginalTitle: String?
+    
+    private var movieDetails: MovieDetails!
+    
+    private var loadingView: UIView!
+    
+    private var failedLoadingView: FailedLoadingUIView!
     
     private let numberOfSections: Int = 4
     
@@ -16,26 +24,30 @@ class MovieDetailsViewController: UIViewController {
     
     private let movieDetailsCharactersSectionNumber: Int = 3
     
-    private var isBeingRequested = false
+    private var isCharactersGoingToBeRequested = false
     
-    private var isRequestFailed = false
+    private var isCharactersBeingRequested = false
+    
+    private var isCharactersRequestFailed = false
     
     private var characters: [Character] = []
     
     private let imageService = ImageService()
     
-    private let movieService = MovieService()
-    
-    private let movieDetailsService = MovieDetailsService(personService: PersonService())
+    private var movieDetailsService: MovieDetailsService!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = movie.title
+        navigationItem.title = movieOriginalTitle
         
+        movieDetailsService = MovieDetailsService(movieService: MovieService(), personService: PersonService())
+        
+        defineLoadingView()
+        defineFailedLoadingView()
         defineTableView()
         
-        performRequest(fromReloading: false)
+        performMovieDetailsRequest()
     }
     
     private func defineTableView() {
@@ -53,8 +65,20 @@ class MovieDetailsViewController: UIViewController {
         movieDetailsTableView.register(failedLoadingTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.failedLoading)
     }
     
+    private func defineLoadingView() {
+        loadingView = UIViewHelper.getLoadingView(for: movieDetailsTableView)
+    }
+    
+    private func defineFailedLoadingView() {
+        failedLoadingView = UIViewHelper.getFailedLoadingView(for: movieDetailsTableView, onTouchDownHandler: onReloadGettingMovieDetails)
+    }
+    
+    private func onReloadGettingMovieDetails() {
+        performMovieDetailsRequest()
+    }
+    
     private func onSelectFailedLoadingCell() {
-        performRequest(fromReloading: true)
+        performCharactersRequest(fromReloading: true)
     }
     
     private func onSelectBookmarkActionCell() {
@@ -66,29 +90,54 @@ class MovieDetailsViewController: UIViewController {
         let isSavedInBookmarks = checkIfSavedInBookmarks()
         
         if isSavedInBookmarks {
-            _ = BookmarkRepository.shared.removeBookmark(movie: movie)
+            _ = BookmarkRepository.shared.removeBookmark(movie: movieDetails)
         } else {
-            _ = BookmarkRepository.shared.saveBookmark(movie: movie)
+            _ = BookmarkRepository.shared.saveBookmark(movie: movieDetails)
         }
     }
     
-    private func performRequest(fromReloading: Bool) {
-        isBeingRequested = true
-        isRequestFailed = false
+    private func performMovieDetailsRequest() {
+        movieDetailsTableView.backgroundView = loadingView
+        
+        movieDetailsService.requestMovieDetails(by: movieId) { (requestedMovieDetails) in
+            OperationQueue.main.addOperation {
+                guard let requestedMovieDetails = requestedMovieDetails else {
+                    self.movieDetailsTableView.backgroundView = self.failedLoadingView
+                    self.isCharactersGoingToBeRequested = false
+                    
+                    return
+                }
+                
+                self.movieDetailsTableView.backgroundView = nil
+                
+                self.movieDetails = requestedMovieDetails
+                
+                self.isCharactersGoingToBeRequested = true
+                self.movieDetailsTableView.reloadData()
+                
+                self.performCharactersRequest(fromReloading: false)
+            }
+        }
+    }
+    
+    private func performCharactersRequest(fromReloading: Bool) {
+        isCharactersGoingToBeRequested = false
+        isCharactersBeingRequested = true
+        isCharactersRequestFailed = false
         
         if fromReloading {
             let firstCharactersIndexPath = IndexPath(row: 0, section: self.movieDetailsCharactersSectionNumber)
             self.movieDetailsTableView.reloadRows(at: [firstCharactersIndexPath], with: .automatic)
         }
         
-        movieDetailsService.requestCharacters(by: movie.id) { (requestedCharacters, isLoadingDataFailed) in
+        movieDetailsService.requestCharacters(by: movieDetails.id) { (requestedCharacters, isLoadingDataFailed) in
             OperationQueue.main.addOperation {
-                self.isBeingRequested = false
-                self.isRequestFailed = isLoadingDataFailed
+                self.isCharactersBeingRequested = false
+                self.isCharactersRequestFailed = isLoadingDataFailed
                 
                 let firstCharactersIndexPath = IndexPath(row: 0, section: self.movieDetailsCharactersSectionNumber)
                 
-                if self.isRequestFailed {
+                if self.isCharactersRequestFailed {
                     self.movieDetailsTableView.reloadRows(at: [firstCharactersIndexPath], with: .automatic)
                     return
                 }
@@ -111,7 +160,7 @@ class MovieDetailsViewController: UIViewController {
     
     private func checkIfSavedInBookmarks() -> Bool {
         let bookmarks = BookmarkRepository.shared.getBookmarks()
-        return bookmarks.contains { $0.id == movie.id }
+        return bookmarks.contains { $0.id == movieDetails.id }
     }
     
 }
@@ -119,10 +168,18 @@ class MovieDetailsViewController: UIViewController {
 extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        if movieDetails == nil {
+            return 0
+        }
+        
         return numberOfSections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if movieDetails == nil {
+            return 0
+        }
+        
         switch section {
         case movieDetailsSectionNumber: return 1
         case movieDetailsBookmarkActionSectionNumber: return 1
@@ -182,7 +239,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             return
         }
         
-        if isRequestFailed {
+        if isCharactersRequestFailed {
             onSelectFailedLoadingCell()
             return
         }
@@ -199,11 +256,12 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     private func getMovieDetailsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetails, for: indexPath) as! MovieDetailsTableViewCell
 
-        cell.title = movie.title
-        cell.originalTitle = movie.originalTitle
-        cell.releaseYear = movie.releaseYear
-        cell.voteCount = movie.voteCount
-        cell.rating = movie.rating
+        cell.title = movieDetails.title
+        cell.originalTitle = movieDetails.originalTitle
+        cell.genres = movieDetails.genres
+        cell.releaseYear = movieDetails.releaseYear
+        cell.voteCount = movieDetails.voteCount
+        cell.rating = movieDetails.rating
         
         return cell
     }
@@ -219,18 +277,18 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     private func getMovieDetailsOverviewTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsOverview, for: indexPath) as! MovieDetailsOverviewTableViewCell
 
-        cell.overview = movie.overview
+        cell.overview = movieDetails.overview
         
         return cell
     }
     
     private func getCharacterTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isBeingRequested {
+        if isCharactersBeingRequested {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
             return cell
         }
         
-        if isRequestFailed {
+        if isCharactersRequestFailed {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.failedLoading) as! FailedLoadingTableViewCell
             return cell
         }
@@ -245,45 +303,35 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     private func prepare(movieDetailsTableViewCell cell: MovieDetailsTableViewCell) {
-        if let movieImagePath = movie.imagePath {
+        if !movieDetails.imagePath.isEmpty {
             var cell = cell as ImageFromInternet
-            
-            UIViewHelper.setImageFromInternet(by: movieImagePath, at: &cell, using: imageService)
+            UIViewHelper.setImageFromInternet(by: movieDetails.imagePath, at: &cell, using: imageService)
         }
-        
-        guard let genreIds = movie.genreIds else {
-            return
-        }
-        
-        CacheService.shared.getGenres(callback: { (genres) in
-            OperationQueue.main.addOperation {
-                cell.genres = genres.filter { genreIds.contains($0.id) }
-            }
-        })
     }
     
     private func prepare(personTableViewCell cell: PersonTableViewCell, forRowAt indexPath: IndexPath) {
         let character = characters[indexPath.row]
-        
-        guard let characterImagePath = character.imagePath else {
-            return
+
+        if !character.imagePath.isEmpty {
+            var cell = cell as ImageFromInternet
+            UIViewHelper.setImageFromInternet(by: character.imagePath, at: &cell, using: imageService)
         }
-        
-        var cell = cell as ImageFromInternet
-        
-        UIViewHelper.setImageFromInternet(by: characterImagePath, at: &cell, using: imageService)
     }
     
     private func getMovieDetailsCharactersSectionNumberOfRows() -> Int {
-        return isBeingRequested || isRequestFailed ? 1 : characters.count
+        if isCharactersGoingToBeRequested || isCharactersBeingRequested || isCharactersRequestFailed {
+            return 1
+        }
+        
+        return characters.count
     }
     
     private func getMovieDetailsCharactersSectionRowHeight() -> CGFloat {
-        if isBeingRequested {
+        if isCharactersBeingRequested {
             return LoadingTableViewCell.standardHeight
         }
         
-        if isRequestFailed {
+        if isCharactersRequestFailed {
             return FailedLoadingTableViewCell.standardHeight
         }
         
