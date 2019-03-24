@@ -60,11 +60,13 @@ class MultiSearchViewController: StatesViewController {
     private func defineSearchController() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Type movie or actor..."
+        searchController.hidesNavigationBarDuringPresentation = false
         
-        navigationItem.searchController = searchController
+        searchController.searchBar.placeholder = "Search..."
+        
+        navigationItem.titleView = searchController.searchBar
         navigationItem.hidesSearchBarWhenScrolling = false
-        
+
         OperationQueue.main.addOperation {
             let isBookmarksEmpty = self.checkIfBookmarksEmpty()
             

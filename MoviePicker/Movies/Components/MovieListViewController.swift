@@ -57,8 +57,8 @@ class MovieListViewController: StatesViewController {
     }
     
     private func defineSegmentControl() {
-        personTypeSegmentControl.backgroundColor = .clear
-        personTypeSegmentControl.tintColor = MoviePickerColors.lightGray
+        personTypeSegmentControl.backgroundColor = MoviePickerColors.lightGray
+        personTypeSegmentControl.tintColor = UIColor.white
         
         personTypeSegmentControl.setTitleTextAttributes(
             [
@@ -70,7 +70,7 @@ class MovieListViewController: StatesViewController {
         
         personTypeSegmentControl.setTitleTextAttributes(
             [
-                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17, weight: .semibold),
+                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17, weight: .medium),
                 NSAttributedString.Key.foregroundColor : UIColor.black
             ],
             for: .selected
