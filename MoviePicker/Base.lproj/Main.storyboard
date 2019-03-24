@@ -55,8 +55,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7fY-3H-5bL">
+                                <rect key="frame" x="0.0" y="20" width="375" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="gKj-1p-G7O"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Cast"/>
+                                    <segment title="Crew"/>
+                                </segments>
+                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="onPersonTypeSegmentControlAction:" destination="igN-2x-NPg" eventType="valueChanged" id="Evs-4t-CT5"/>
+                                </connections>
+                            </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0ee-El-F5W">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="55" width="375" height="612"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="igN-2x-NPg" id="bnX-7I-yPw"/>
@@ -66,8 +80,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="0ee-El-F5W" firstAttribute="top" secondItem="voB-7I-mVv" secondAttribute="top" id="Ll8-iG-Zod"/>
+                            <constraint firstItem="7fY-3H-5bL" firstAttribute="leading" secondItem="voB-7I-mVv" secondAttribute="leading" id="6Oe-e7-vYv"/>
+                            <constraint firstItem="7fY-3H-5bL" firstAttribute="trailing" secondItem="voB-7I-mVv" secondAttribute="trailing" id="6Ub-lt-0SF"/>
+                            <constraint firstItem="7fY-3H-5bL" firstAttribute="top" secondItem="voB-7I-mVv" secondAttribute="top" id="Hvp-FW-qgB"/>
                             <constraint firstItem="voB-7I-mVv" firstAttribute="trailing" secondItem="0ee-El-F5W" secondAttribute="trailing" id="MWL-Wm-2nH"/>
+                            <constraint firstItem="0ee-El-F5W" firstAttribute="top" secondItem="7fY-3H-5bL" secondAttribute="bottom" id="SuW-ff-D0d"/>
                             <constraint firstItem="voB-7I-mVv" firstAttribute="bottom" secondItem="0ee-El-F5W" secondAttribute="bottom" id="Tf5-iI-OPO"/>
                             <constraint firstItem="0ee-El-F5W" firstAttribute="leading" secondItem="voB-7I-mVv" secondAttribute="leading" id="lij-MG-8Xr"/>
                         </constraints>
@@ -75,12 +92,13 @@
                     </view>
                     <connections>
                         <outlet property="movieListTableView" destination="0ee-El-F5W" id="zrV-um-fEb"/>
+                        <outlet property="personTypeSegmentControl" destination="7fY-3H-5bL" id="MeG-ui-Tl5"/>
                         <segue destination="xLm-8S-XWy" kind="show" identifier="ShowMovieDetails" id="AWG-3S-84R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zox-ax-4q4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1990" y="-542"/>
+            <point key="canvasLocation" x="1989.5999999999999" y="-542.87856071964018"/>
         </scene>
         <!--Movie Details View Controller-->
         <scene sceneID="Dld-VK-j1z">
@@ -91,7 +109,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hWT-bd-Joq">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsTableViewCellIdentifier" rowHeight="120" id="eBF-Pn-bw7" customClass="MovieDetailsTableViewCell" customModule="MoviePicker" customModuleProvider="target">
@@ -111,19 +129,19 @@
                                                     <rect key="frame" x="34" y="50" width="20" height="20"/>
                                                 </activityIndicatorView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAe-QB-gjf">
-                                                    <rect key="frame" x="96" y="16" width="496" height="24"/>
+                                                    <rect key="frame" x="96" y="16" width="271" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Original Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDF-mL-Nhf">
-                                                    <rect key="frame" x="96" y="40" width="496" height="18"/>
+                                                    <rect key="frame" x="96" y="40" width="271" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genres" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJX-rh-QeE">
-                                                    <rect key="frame" x="96" y="62" width="496" height="18"/>
+                                                    <rect key="frame" x="96" y="62" width="271" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -143,7 +161,7 @@
                                                     </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="lfy-AL-095">
-                                                    <rect key="frame" x="545" y="83.5" width="47" height="20"/>
+                                                    <rect key="frame" x="320" y="83.5" width="47" height="20"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GTB-sT-3md">
                                                             <rect key="frame" x="0.0" y="0.0" width="14" height="20"/>
@@ -231,7 +249,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9T9-V7-vLf">
-                                                    <rect key="frame" x="8" y="8" width="584" height="63.5"/>
+                                                    <rect key="frame" x="8" y="8" width="359" height="63.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -296,7 +314,7 @@
         <image name="default_movie_image" width="777" height="899"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6Rr-Qk-OvN"/>
+        <segue reference="AWG-3S-84R"/>
         <segue reference="Hkb-x9-9mw"/>
     </inferredMetricsTieBreakers>
 </document>

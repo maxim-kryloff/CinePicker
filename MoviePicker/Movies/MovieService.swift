@@ -2,14 +2,15 @@ import Foundation
 
 class MovieService {
     
-    private let getMoviesOperationQueue = OperationQueue()
+    private let getMoviesByActorOperationQueue = OperationQueue()
     
-    public func getMovies(by personId: Int, callback: @escaping (_: AsyncResult<[Movie]>) -> Void) {
-        getMoviesOperationQueue.cancelAllOperations()
+    public func getMovies(byActor personId: Int, callback: @escaping (_: AsyncResult<[Movie]>) -> Void) {
+        getMoviesByActorOperationQueue.cancelAllOperations()
         
         let operation = GetMoviesOperation()
         
         operation.personId = personId
+        operation.personType = .actor
         operation.qualityOfService = .utility
         
         operation.completionBlock = {
@@ -18,7 +19,27 @@ class MovieService {
             }
         }
         
-        getMoviesOperationQueue.addOperation(operation)
+        getMoviesByActorOperationQueue.addOperation(operation)
+    }
+    
+    private let getMoviesByCrewMemberOperationQueue = OperationQueue()
+    
+    public func getMovies(byCrewMember personId: Int, callback: @escaping (_: AsyncResult<[Movie]>) -> Void) {
+        getMoviesByCrewMemberOperationQueue.cancelAllOperations()
+        
+        let operation = GetMoviesOperation()
+        
+        operation.personId = personId
+        operation.personType = .crewMember
+        operation.qualityOfService = .utility
+        
+        operation.completionBlock = {
+            if let result = operation.result {
+                callback(result)
+            }
+        }
+        
+        getMoviesByCrewMemberOperationQueue.addOperation(operation)
     }
     
     private let searchOperationQueue = OperationQueue()
@@ -45,11 +66,21 @@ class MovieService {
 
 extension MovieService {
     
+    private enum PersonType {
+        
+        case actor
+        
+        case crewMember
+        
+    }
+    
     private class GetMoviesOperation: AsyncOperation {
         
         public var result: AsyncResult<[Movie]>?
         
         public var personId: Int = 0
+        
+        public var personType: PersonType = .actor
         
         override func main() {
             if isCancelled {
@@ -71,7 +102,7 @@ extension MovieService {
                     return
                 }
                 
-                let movies = self.getMovies(from: data)
+                let movies = self.getMovies(from: data, personType: self.personType)
                 
                 self.result = AsyncResult.success(movies)
                 self.state = .isFinished
@@ -90,15 +121,17 @@ extension MovieService {
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
         }
         
-        private func getMovies(from responseData: Data) -> [Movie] {
+        private func getMovies(from responseData: Data, personType: PersonType) -> [Movie] {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
-                let cast = json["cast"] as! [[String: Any]]
+                let key = personType == .actor ? "cast" : "crew"
+                
+                let jsonResults = json[key] as! [[String: Any]]
                 
                 var movies: [Movie] = []
                 
-                for item in cast {
+                for item in jsonResults {
                     let id = item["id"] as! Int
                     
                     let title = item["title"] as! String
@@ -147,11 +180,28 @@ extension MovieService {
                     movies.append(movie)
                 }
                 
-                return movies
+                let uniqueMovies = getUniqueMovies(from: movies)
+                return uniqueMovies
+                
             } catch {
                 fatalError("Recieved json wasn't serialized...")
             }
         }
+        
+        private func getUniqueMovies(from movies: [Movie]) -> [Movie] {
+            var uniqueMovies: [Movie] = []
+            
+            for movie in movies {
+                if uniqueMovies.contains(where: { $0.id == movie.id }) {
+                    continue
+                }
+                
+                uniqueMovies.append(movie)
+            }
+            
+            return uniqueMovies
+        }
+        
     }
     
 }
@@ -211,11 +261,11 @@ extension MovieService {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
-                let cast = json["results"] as! [[String: Any]]
+                let jsonResults = json["results"] as! [[String: Any]]
                 
                 var movies: [Movie] = []
                 
-                for item in cast {
+                for item in jsonResults {
                     let id = item["id"] as! Int
                     
                     let title = item["title"] as! String

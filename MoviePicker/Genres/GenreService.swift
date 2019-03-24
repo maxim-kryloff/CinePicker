@@ -71,13 +71,13 @@ extension GenreService {
                     fatalError("Json isn't a dictionary...")
                 }
                 
-                guard let jsonGenres = json["genres"] as? [[String: Any]] else {
+                guard let jsonResults = json["genres"] as? [[String: Any]] else {
                     fatalError("'genres' property isn't an array of dictionaries...")
                 }
                 
                 var genres: [Genre] = []
                 
-                for jsonGenre in jsonGenres {
+                for jsonGenre in jsonResults {
                     guard let id = jsonGenre["id"] as? Int else {
                         fatalError("jsonGenre['id'] isn't a number...")
                     }

@@ -40,6 +40,7 @@ class PersonService {
         
         getCharactersOperationQueue.addOperation(operation)
     }
+    
 }
 
 extension PersonService {
@@ -97,11 +98,11 @@ extension PersonService {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
-                let results = json["results"] as! [[String: Any]]
+                let jsonResults = json["results"] as! [[String: Any]]
                 
                 var people: [Actor] = []
                 
-                for result in results {
+                for result in jsonResults {
                     let id = result["id"] as! Int
                     
                     let name = result["name"] as! String
@@ -176,11 +177,11 @@ extension PersonService {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
-                let cast = json["cast"] as! [[String: Any]]
+                let jsonResults = json["cast"] as! [[String: Any]]
                 
                 var characters: [Character] = []
                 
-                for item in cast {
+                for item in jsonResults {
                     let id = item["id"] as! Int
                     
                     let name = item["name"] as! String
