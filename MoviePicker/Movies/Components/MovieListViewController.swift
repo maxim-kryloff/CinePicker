@@ -18,17 +18,33 @@ class MovieListViewController: StatesViewController {
     
     private var crewMovies: [Movie] = []
     
+    private var isBeingRequested = false
+    
+    private var isRequestFailed = false
+    
     private let movieListService = MovieListService(movieService: MovieService())
     
     private let imageService = ImageService()
     
     @IBAction func onPersonTypeSegmentControlAction(_ sender: Any) {
-        if self.personTypeSegmentControl.selectedSegmentIndex == 0 {
-            self.updateTable(withData: self.castMovies)
+        if isBeingRequested || isRequestFailed {
             return
         }
         
-        self.updateTable(withData: self.crewMovies)
+        if personTypeSegmentControl.selectedSegmentIndex == 0 {
+            updateTable(withData: castMovies)
+        } else {
+            updateTable(withData: crewMovies)
+        }
+        
+        if movies.isEmpty {
+            self.setMessageState(withMessage: "There are no movies found...")
+        } else {
+            unsetMessageState()
+            
+            let firstRowIndexPath = IndexPath(row: 0, section: 0)
+            movieListTableView.scrollToRow(at: firstRowIndexPath, at: .top, animated: true)
+        }
     }
     
     override func viewDidLoad() {
@@ -44,6 +60,8 @@ class MovieListViewController: StatesViewController {
     
     override func onReloadData() {
         super.onReloadData()
+        
+        isRequestFailed = false
         
         unsetAllStates()
         performRequest()
@@ -88,9 +106,14 @@ class MovieListViewController: StatesViewController {
     private func performRequest() {
         setLoadingState()
         
+        isBeingRequested = true
+        
         movieListService.requestMovies(by: person.id) { (requestedMoviesResult, isLoadingDataFailed) in
             OperationQueue.main.addOperation {
                 self.unsetLoadingState()
+                
+                self.isBeingRequested = false
+                self.isRequestFailed = isLoadingDataFailed
                 
                 if isLoadingDataFailed {
                     self.setFailedLoadingState()
