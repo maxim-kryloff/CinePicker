@@ -4,6 +4,8 @@ class MovieListViewController: StatesViewController {
     
     @IBOutlet weak var movieListTableView: UITableView!
     
+    @IBOutlet weak var personTypeSegmentControl: UISegmentedControl!
+    
     override var tableViewDefinition: UITableView! {
         return movieListTableView
     }
@@ -12,15 +14,29 @@ class MovieListViewController: StatesViewController {
     
     private var movies: [Movie] = []
     
+    private var castMovies: [Movie] = []
+    
+    private var crewMovies: [Movie] = []
+    
     private let movieListService = MovieListService(movieService: MovieService())
     
     private let imageService = ImageService()
+    
+    @IBAction func onPersonTypeSegmentControlAction(_ sender: Any) {
+        if self.personTypeSegmentControl.selectedSegmentIndex == 0 {
+            self.updateTable(withData: self.castMovies)
+            return
+        }
+        
+        self.updateTable(withData: self.crewMovies)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.title = "\(person.name)'s Movies"
         
+        defineSegmentControl()
         defineTableView()
 
         performRequest()
@@ -40,6 +56,27 @@ class MovieListViewController: StatesViewController {
         movieListTableView.reloadData()
     }
     
+    private func defineSegmentControl() {
+        personTypeSegmentControl.backgroundColor = .clear
+        personTypeSegmentControl.tintColor = MoviePickerColors.lightGray
+        
+        personTypeSegmentControl.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17, weight: .medium),
+                NSAttributedString.Key.foregroundColor : UIColor.darkGray
+            ],
+            for: .normal
+        )
+        
+        personTypeSegmentControl.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17, weight: .semibold),
+                NSAttributedString.Key.foregroundColor : UIColor.black
+            ],
+            for: .selected
+        )
+    }
+    
     private func defineTableView() {
         movieListTableView.rowHeight = MovieTableViewCell.standardHeight
         movieListTableView.tableFooterView = UIView(frame: .zero)
@@ -51,7 +88,7 @@ class MovieListViewController: StatesViewController {
     private func performRequest() {
         setLoadingState()
         
-        movieListService.requestMovies(by: person.id) { (requestedMovies, isLoadingDataFailed) in
+        movieListService.requestMovies(by: person.id) { (requestedMoviesResult, isLoadingDataFailed) in
             OperationQueue.main.addOperation {
                 self.unsetLoadingState()
                 
@@ -62,7 +99,14 @@ class MovieListViewController: StatesViewController {
                     return
                 }
                 
-                self.updateTable(withData: requestedMovies)
+                self.castMovies = requestedMoviesResult.cast
+                self.crewMovies = requestedMoviesResult.crew
+                
+                if self.personTypeSegmentControl.selectedSegmentIndex == 0 {
+                    self.updateTable(withData: self.castMovies)
+                } else {
+                    self.updateTable(withData: self.crewMovies)
+                }
                 
                 if self.movies.isEmpty {
                     self.setMessageState(withMessage: "There are no movies found...")
