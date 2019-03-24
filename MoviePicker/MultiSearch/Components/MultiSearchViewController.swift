@@ -16,7 +16,7 @@ class MultiSearchViewController: StatesViewController {
     
     private let searchDebounceDelayMilliseconds: Int = 500
     
-    private let bookmarkHeaderHeight: CGFloat = 35
+    private let bookmarkHeaderHeight: CGFloat = 40
     
     private var entities: [Popularity] = []
     
