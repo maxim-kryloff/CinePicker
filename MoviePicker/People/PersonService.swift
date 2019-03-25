@@ -2,12 +2,12 @@ import Foundation
 
 class PersonService {
     
-    private let searchActorsOperationQueue = OperationQueue()
+    private let searchPopularPeopleOperationQueue = OperationQueue()
     
-    func searchActors(by searchQuery: String, andPage page: Int, callback: @escaping (_: AsyncResult<[Actor]>) -> Void) {
-        searchActorsOperationQueue.cancelAllOperations()
+    func searchPopularPeople(by searchQuery: String, andPage page: Int, callback: @escaping (_: AsyncResult<[PopularPerson]>) -> Void) {
+        searchPopularPeopleOperationQueue.cancelAllOperations()
         
-        let operation = SearchActorsOperation()
+        let operation = SearchPopularPeopleOperation()
         
         operation.searchQuery = searchQuery
         operation.page = page
@@ -19,7 +19,7 @@ class PersonService {
             }
         }
         
-        searchActorsOperationQueue.addOperation(operation)
+        searchPopularPeopleOperationQueue.addOperation(operation)
     }
     
     private let getCharactersOperationQueue = OperationQueue()
@@ -45,13 +45,13 @@ class PersonService {
 
 extension PersonService {
     
-    private class SearchActorsOperation: AsyncOperation {
+    private class SearchPopularPeopleOperation: AsyncOperation {
         
-        public var result: AsyncResult<[Actor]>?
+        public var result: AsyncResult<[PopularPerson]>?
         
-        public var searchQuery = ""
+        public var searchQuery: String!
         
-        public var page: Int = 0
+        public var page: Int!
         
         override func main() {
             if isCancelled {
@@ -59,9 +59,9 @@ extension PersonService {
             }
             
             let session = URLSession.shared
-            let searchActorsRequest = buildSearchActorsRequest(withSearchQuery: searchQuery)
+            let searchPopularPeopleRequest = buildSearchPopularPeopleRequest(withSearchQuery: searchQuery)
             
-            let task = session.dataTask(with: searchActorsRequest) { (data, _, _) in
+            let task = session.dataTask(with: searchPopularPeopleRequest) { (data, _, _) in
                 if self.isCancelled {
                     return
                 }
@@ -73,16 +73,16 @@ extension PersonService {
                     return
                 }
                 
-                let actors = self.getActors(from: data)
+                let popularPeople = self.getPopularPeople(from: data)
                 
-                self.result = AsyncResult.success(actors)
+                self.result = AsyncResult.success(popularPeople)
                 self.state = .isFinished
             }
             
             task.resume()
         }
         
-        private func buildSearchActorsRequest(withSearchQuery query: String) -> URLRequest {
+        private func buildSearchPopularPeopleRequest(withSearchQuery query: String) -> URLRequest {
             let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
                 .append(pathComponent: "/search/person")
                 .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
@@ -94,29 +94,21 @@ extension PersonService {
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
         }
         
-        private func getActors(from responseData: Data) -> [Actor] {
+        private func getPopularPeople(from responseData: Data) -> [PopularPerson] {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
                 let jsonResults = json["results"] as! [[String: Any]]
                 
-                var people: [Actor] = []
+                var popularPeople: [PopularPerson] = []
                 
-                for result in jsonResults {
-                    let id = result["id"] as! Int
-                    
-                    let name = result["name"] as! String
-                    
-                    let profilePath = result["profile_path"] as? String
-                    
-                    let popularity = result["popularity"] as! Double
-                    
-                    let person = Actor(id: id, name: name, imagePath: profilePath, popularity: popularity)
-                    
-                    people.append(person)
+                for item in jsonResults {
+                    let person = PopularPerson.buildPopularPerson(fromJson: item)
+                    popularPeople.append(person)
                 }
                 
-                return people
+                return popularPeople
+                
             } catch {
                 fatalError("Recieved json wasn't serialized...")
             }
@@ -132,7 +124,7 @@ extension PersonService {
         
         public var result: AsyncResult<[Character]>?
         
-        public var movieId: Int = 0
+        public var movieId: Int!
         
         override func main() {
             if isCancelled {
@@ -182,20 +174,12 @@ extension PersonService {
                 var characters: [Character] = []
                 
                 for item in jsonResults {
-                    let id = item["id"] as! Int
-                    
-                    let name = item["name"] as! String
-                    
-                    let profilePath = item["profile_path"] as? String
-                    
-                    let characterName = item["character"] as! String
-                    
-                    let character = Character(id: id, name: name, imagePath: profilePath, characterName: characterName)
-                    
+                    let character = Character.buildCharacter(fromJson: item)
                     characters.append(character)
                 }
                 
                 return characters
+                
             } catch {
                 fatalError("Recieved json wasn't serialized...")
             }

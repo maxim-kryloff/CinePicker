@@ -2,10 +2,29 @@ import Foundation
 
 class MovieService {
     
-    private let getMoviesByActorOperationQueue = OperationQueue()
+    private let getMovieDetailsOperationQueue = OperationQueue()
     
-    public func getMovies(byActor personId: Int, callback: @escaping (_: AsyncResult<[Movie]>) -> Void) {
-        getMoviesByActorOperationQueue.cancelAllOperations()
+    public func getMovieDetails(by movieId: Int, callback: @escaping (_: AsyncResult<MovieDetails>) -> Void) {
+        getMovieDetailsOperationQueue.cancelAllOperations()
+        
+        let operation = GetMovieDetailsOperation()
+        
+        operation.movieId = movieId
+        operation.qualityOfService = .utility
+        
+        operation.completionBlock = {
+            if let result = operation.result {
+                callback(result)
+            }
+        }
+        
+        getMovieDetailsOperationQueue.addOperation(operation)
+    }
+    
+    private let getMoviesByPersonOperationQueue = OperationQueue()
+    
+    public func getMovies(byPerson personId: Int, callback: @escaping (_: AsyncResult<[Movie]>) -> Void) {
+        getMoviesByPersonOperationQueue.cancelAllOperations()
         
         let operation = GetMoviesOperation()
         
@@ -19,7 +38,7 @@ class MovieService {
             }
         }
         
-        getMoviesByActorOperationQueue.addOperation(operation)
+        getMoviesByPersonOperationQueue.addOperation(operation)
     }
     
     private let getMoviesByCrewMemberOperationQueue = OperationQueue()
@@ -66,6 +85,69 @@ class MovieService {
 
 extension MovieService {
     
+    private class GetMovieDetailsOperation: AsyncOperation {
+        
+        public var result: AsyncResult<MovieDetails>?
+        
+        public var movieId: Int!
+        
+        override func main() {
+            if isCancelled {
+                return
+            }
+            
+            let session = URLSession.shared
+            let getMoviesRequest = buildGetMovieDetailsRequest(withMovieIds: movieId)
+            
+            let task = session.dataTask(with: getMoviesRequest) { (data, _, _) in
+                if self.isCancelled {
+                    return
+                }
+                
+                guard let data = data else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
+                
+                let movieDetails = self.getMovieDetails(from: data)
+                
+                self.result = AsyncResult.success(movieDetails)
+                self.state = .isFinished
+            }
+            
+            task.resume()
+        }
+        
+        private func buildGetMovieDetailsRequest(withMovieIds movieId: Int) -> URLRequest {
+            let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
+                .append(pathComponent: "/movie/\(movieId)")
+                .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
+                .append(queryItem: ("language", MoviePickerConfig.language))
+                .build()
+            
+            return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
+        }
+        
+        private func getMovieDetails(from responseData: Data) -> MovieDetails {
+            do {
+                let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
+                let movieDetails = MovieDetails.buildMovieDetails(fromJson: json)
+                
+                return movieDetails
+                
+            } catch {
+                fatalError("Recieved json wasn't serialized...")
+            }
+        }
+        
+    }
+    
+}
+
+extension MovieService {
+    
     private enum PersonType {
         
         case actor
@@ -78,9 +160,9 @@ extension MovieService {
         
         public var result: AsyncResult<[Movie]>?
         
-        public var personId: Int = 0
+        public var personId: Int!
         
-        public var personType: PersonType = .actor
+        public var personType: PersonType!
         
         override func main() {
             if isCancelled {
@@ -132,55 +214,12 @@ extension MovieService {
                 var movies: [Movie] = []
                 
                 for item in jsonResults {
-                    let id = item["id"] as! Int
-                    
-                    let title = item["title"] as! String
-                    
-                    let originalTitle = item["original_title"] as? String
-                    
-                    let poster_path = item["poster_path"] as? String
-                    
-                    let vote_average = item["vote_average"] as? Double
-                    
-                    let vote_count = item["vote_count"] as? Int
-                    
-                    let release_date = item["release_date"] as? String
-                    var releaseDateSubstring: Substring? = nil
-                    
-                    if let release_date = release_date, release_date.count >= 4 {
-                        let index = release_date.index(release_date.startIndex, offsetBy: 3)
-                        releaseDateSubstring = release_date[...index]
-                    }
-                    
-                    var releaseYear: String? = nil
-                    
-                    if let releaseDateSubstring = releaseDateSubstring {
-                        releaseYear = String(releaseDateSubstring)
-                    }
-                    
-                    let overview = item["overview"] as? String
-                    
-                    let genre_ids = item["genre_ids"] as? [Int]
-                    
-                    let popularity = item["popularity"] as! Double
-                    
-                    let movie = Movie(
-                        id: id,
-                        title: title,
-                        originalTitle: originalTitle,
-                        imagePath: poster_path,
-                        rating: vote_average,
-                        voteCount: vote_count,
-                        releaseYear: releaseYear,
-                        overview: overview,
-                        genreIds: genre_ids,
-                        popularity: popularity
-                    )
-                    
+                    let movie = Movie.buildMovie(fromJson: item)
                     movies.append(movie)
                 }
                 
                 let uniqueMovies = getUniqueMovies(from: movies)
+                
                 return uniqueMovies
                 
             } catch {
@@ -212,9 +251,9 @@ extension MovieService {
         
         public var result: AsyncResult<[Movie]>?
         
-        public var searchQuery = ""
+        public var searchQuery: String!
         
-        public var page: Int = 0
+        public var page: Int!
         
         override func main() {
             if isCancelled {
@@ -266,55 +305,12 @@ extension MovieService {
                 var movies: [Movie] = []
                 
                 for item in jsonResults {
-                    let id = item["id"] as! Int
-                    
-                    let title = item["title"] as! String
-                    
-                    let originalTitle = item["original_title"] as? String
-                    
-                    let poster_path = item["poster_path"] as? String
-                    
-                    let vote_average = item["vote_average"] as? Double
-                    
-                    let vote_count = item["vote_count"] as? Int
-                    
-                    let release_date = item["release_date"] as? String
-                    var releaseDateSubstring: Substring? = nil
-                    
-                    if let release_date = release_date, release_date.count >= 4 {
-                        let index = release_date.index(release_date.startIndex, offsetBy: 3)
-                        releaseDateSubstring = release_date[...index]
-                    }
-                    
-                    var releaseYear: String? = nil
-                    
-                    if let releaseDateSubstring = releaseDateSubstring {
-                        releaseYear = String(releaseDateSubstring)
-                    }
-                    
-                    let overview = item["overview"] as? String
-                    
-                    let genre_ids = item["genre_ids"] as? [Int]
-                    
-                    let popularity = item["popularity"] as! Double
-                    
-                    let movie = Movie(
-                        id: id,
-                        title: title,
-                        originalTitle: originalTitle,
-                        imagePath: poster_path,
-                        rating: vote_average,
-                        voteCount: vote_count,
-                        releaseYear: releaseYear,
-                        overview: overview,
-                        genreIds: genre_ids,
-                        popularity: popularity
-                    )
-                    
+                    let movie = Movie.buildMovie(fromJson: item)
                     movies.append(movie)
                 }
                 
                 return movies
+                
             } catch {
                 fatalError("Recieved json wasn't serialized...")
             }

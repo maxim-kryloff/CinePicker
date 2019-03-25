@@ -4,12 +4,28 @@ class Person {
     
     public let name: String
     
-    public let imagePath: String?
+    public let imagePath: String
     
-    init(id: Int, name: String, imagePath: String?) {
+    init(id: Int, name: String, imagePath: String) {
         self.id = id
         self.name = name
         self.imagePath = imagePath
+    }
+    
+    public static func buildPerson(fromJson json: [String: Any]) -> Person {
+        let id = json["id"] as! Int
+        
+        let name = json["name"] as? String
+        
+        let profilePath = json["profile_path"] as? String
+        
+        let person = Person(
+            id: id,
+            name: name ?? "",
+            imagePath: profilePath ?? ""
+        )
+        
+        return person
     }
     
 }
