@@ -10,6 +10,6 @@ class MoviePickerColors {
     
     public static let blue = UIColor(red: 11 / 255.0, green: 120 / 255.0, blue: 254 / 255.0, alpha: 1.0)
     
-    public static let lightGray = UIColor(red: 245 / 255.0, green: 245 / 255.0, blue: 245 / 255.0, alpha: 1.0)
+    public static let lightGray = UIColor(red: 240 / 255.0, green: 240 / 255.0, blue: 240 / 255.0, alpha: 1.0)
     
 }

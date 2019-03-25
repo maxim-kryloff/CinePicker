@@ -64,6 +64,9 @@ class MultiSearchViewController: StatesViewController {
         
         searchController.searchBar.placeholder = "Search..."
         
+        let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField
+        searchField?.backgroundColor = MoviePickerColors.lightGray
+        
         navigationItem.titleView = searchController.searchBar
         navigationItem.hidesSearchBarWhenScrolling = false
 

@@ -73,8 +73,8 @@ class MovieListViewController: StatesViewController {
     }
     
     private func defineSegmentControl() {
-        personTypeSegmentControl.backgroundColor = MoviePickerColors.lightGray
-        personTypeSegmentControl.tintColor = UIColor.white
+        personTypeSegmentControl.backgroundColor = .clear
+        personTypeSegmentControl.tintColor = .clear
         
         personTypeSegmentControl.setTitleTextAttributes(
             [
