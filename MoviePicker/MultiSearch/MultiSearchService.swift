@@ -46,7 +46,9 @@ class MultiSearchService {
             let requestedSearchEntities = (popularPeople as [Popularity] + movies as [Popularity])
                 .sorted { $0.popularityValue > $1.popularityValue }
             
-            callback(request, requestedSearchEntities, isLoadingMoviesFailed && isLoadingPopularPeopleFailed)
+            let isFailed = isLoadingMoviesFailed || isLoadingPopularPeopleFailed
+            
+            callback(request, requestedSearchEntities, isFailed)
         }
     }
     

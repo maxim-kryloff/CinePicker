@@ -38,7 +38,7 @@ class MovieListService {
         
         dispatchGroup.notify(queue: concurrentDispatchQueue) {
             let result = (cast: castMovies, crew: crewMovies)
-            let isFailed = isLoadingCastMoviesFailed && isLoadingCrewMoviesFailed
+            let isFailed = isLoadingCastMoviesFailed || isLoadingCrewMoviesFailed
             
             callback(result, isFailed)
         }
