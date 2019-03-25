@@ -17,10 +17,10 @@ class MovieListService {
         let dispatchGroup = DispatchGroup()
         
         var castMovies: [Movie] = []
-        var isLoadingCastMoviesFailed = false
+        var isLoadingCastMoviesFailed = true
         
         var crewMovies: [Movie] = []
-        var isLoadingCrewMoviesFailed = false
+        var isLoadingCrewMoviesFailed = true
         
         concurrentDispatchQueue.async(group: dispatchGroup) {
             self.requestMovies(byPerson: personId, dispatchGroup: dispatchGroup) { (result, isRequestFailed) in
@@ -53,7 +53,7 @@ class MovieListService {
         
         movieService.getMovies(byPerson: personId) { (result) in
             var requestResult: [Movie] = []
-            var isFailed = false
+            var isFailed = true
             
             defer {
                 callback(requestResult, isFailed)
@@ -67,8 +67,10 @@ class MovieListService {
                     .filter { !$0.imagePath.isEmpty }
                     .filter { !$0.overview.isEmpty }
                 
+                isFailed = false
+                
             } catch ResponseError.dataIsNil {
-                isFailed = true
+                return
             } catch {
                 fatalError("Unexpected async result...")
             }
@@ -84,7 +86,7 @@ class MovieListService {
         
         movieService.getMovies(byCrewMember: personId) { (result) in
             var requestResult: [Movie] = []
-            var isFailed = false
+            var isFailed = true
             
             defer {
                 callback(requestResult, isFailed)
@@ -98,8 +100,10 @@ class MovieListService {
                     .filter { !$0.imagePath.isEmpty }
                     .filter { !$0.overview.isEmpty }
                 
+                isFailed = false
+                
             } catch ResponseError.dataIsNil {
-                isFailed = true
+                return
             } catch {
                 fatalError("Unexpected async result...")
             }
