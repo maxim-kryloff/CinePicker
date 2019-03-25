@@ -155,8 +155,12 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         return entities.count
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return currentSearchQuery.isEmpty ? "Bookmarks" : ""
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if currentSearchQuery.isEmpty {
+            return UIViewHelper.getHeaderView(for: entityTableView, withText: "Bookmarks")
+        }
+        
+        return nil
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
