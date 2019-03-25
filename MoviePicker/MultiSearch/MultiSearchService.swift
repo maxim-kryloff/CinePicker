@@ -20,10 +20,10 @@ class MultiSearchService {
         let dispatchGroup = DispatchGroup()
         
         var movies: [Movie] = []
-        var isLoadingMoviesFailed = false
+        var isLoadingMoviesFailed = true
         
         var popularPeople: [PopularPerson] = []
-        var isLoadingPopularPeopleFailed = false
+        var isLoadingPopularPeopleFailed = true
         
         let searchQuery = request.searchQuery
         let page = request.page
@@ -60,7 +60,7 @@ class MultiSearchService {
         
         movieService.searchMovies(by: searchQuery, andPage: page) { (result) in
             var requestResult: [Movie] = []
-            var isFailed = false
+            var isFailed = true
             
             defer {
                 callback(requestResult, isFailed)
@@ -75,8 +75,10 @@ class MultiSearchService {
                     .filter { !$0.overview.isEmpty }
                     .sorted { $0.popularity > $1.popularity }
                 
+                isFailed = false
+                
             } catch ResponseError.dataIsNil {
-                isFailed = true
+                return
             } catch {
                 fatalError("Unexpected async result...")
             }
@@ -93,7 +95,7 @@ class MultiSearchService {
         
         personService.searchPopularPeople(by: searchQuery, andPage: page) { (result) in
             var requestResult: [PopularPerson] = []
-            var isFailed = false
+            var isFailed = true
             
             defer {
                 callback(requestResult, isFailed)
@@ -106,9 +108,11 @@ class MultiSearchService {
                 requestResult = popularPeople
                     .filter { !$0.imagePath.isEmpty }
                     .sorted { $0.popularity > $1.popularity }
+                
+                isFailed = false
 
             } catch ResponseError.dataIsNil {
-                isFailed = true
+                return
             } catch {
                 fatalError("Unexpected async result...")
             }
