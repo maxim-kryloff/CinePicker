@@ -124,7 +124,7 @@ extension MovieService {
             let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId)")
                 .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
-                .append(queryItem: ("language", MoviePickerConfig.language))
+                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
                 .build()
             
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
@@ -197,7 +197,7 @@ extension MovieService {
             let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
                 .append(pathComponent: "/person/\(personId)/movie_credits")
                 .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
-                .append(queryItem: ("language", MoviePickerConfig.language))
+                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
                 .build()
 
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
@@ -288,7 +288,7 @@ extension MovieService {
             let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
                 .append(pathComponent: "/search/movie")
                 .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
-                .append(queryItem: ("language", MoviePickerConfig.language))
+                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
                 .append(queryItem: ("query", query))
                 .append(queryItem: ("page", String(page)))
                 .build()

@@ -86,7 +86,7 @@ extension PersonService {
             let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
                 .append(pathComponent: "/search/person")
                 .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
-                .append(queryItem: ("language", MoviePickerConfig.language))
+                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
                 .append(queryItem: ("query", query))
                 .append(queryItem: ("page", String(page)))
                 .build()
@@ -159,7 +159,7 @@ extension PersonService {
             let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId)/credits")
                 .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
-                .append(queryItem: ("language", MoviePickerConfig.language))
+                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
                 .build()
             
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)

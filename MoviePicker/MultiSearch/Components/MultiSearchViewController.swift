@@ -8,6 +8,8 @@ class MultiSearchViewController: StatesViewController {
         return entityTableView
     }
     
+    private var languageBarButtonItem: UIBarButtonItem!
+    
     private let searchController = UISearchController(searchResultsController: nil)
     
     private var currentSearchQuery = ""
@@ -29,6 +31,7 @@ class MultiSearchViewController: StatesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        defineLanguageButton()
         defineSearchController()
         defineTableView()
         
@@ -55,6 +58,17 @@ class MultiSearchViewController: StatesViewController {
         
         entities = data as! [Popularity]
         entityTableView.reloadData()
+    }
+    
+    private func defineLanguageButton() {
+        languageBarButtonItem = UIBarButtonItem(
+            title: MoviePickerConfig.getLanguageShortcut(),
+            style: .plain,
+            target: self,
+            action: #selector(MultiSearchViewController.onChangeLanguage)
+        )
+        
+        self.navigationItem.leftBarButtonItem = languageBarButtonItem
     }
     
     private func defineSearchController() {
@@ -145,6 +159,47 @@ class MultiSearchViewController: StatesViewController {
                 }
             }
         }
+    }
+    
+    @objc private func onChangeLanguage() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let setEnglish = UIAlertAction(title: "English", style: .default) { (action) in
+            UserDefaults.standard.set("en-US", forKey: "Language")
+            self.languageBarButtonItem.title = MoviePickerConfig.getLanguageShortcut()
+        }
+        
+        let setRussian = UIAlertAction(title: "Russian", style: .default) { (action) in
+            UserDefaults.standard.set("ru-RU", forKey: "Language")
+            self.languageBarButtonItem.title = MoviePickerConfig.getLanguageShortcut()
+        }
+        
+        let setFrench = UIAlertAction(title: "French", style: .default) { (action) in
+            UserDefaults.standard.set("fr-FR", forKey: "Language")
+            self.languageBarButtonItem.title = MoviePickerConfig.getLanguageShortcut()
+        }
+        
+        let setGerman = UIAlertAction(title: "German", style: .default) { (action) in
+            UserDefaults.standard.set("de-DE", forKey: "Language")
+            self.languageBarButtonItem.title = MoviePickerConfig.getLanguageShortcut()
+        }
+        
+        let setItalian = UIAlertAction(title: "Italian", style: .default) { (action) in
+            UserDefaults.standard.set("it-IT", forKey: "Language")
+            self.languageBarButtonItem.title = MoviePickerConfig.getLanguageShortcut()
+        }
+
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+        
+        alert.addAction(setEnglish)
+        alert.addAction(setRussian)
+        alert.addAction(setFrench)
+        alert.addAction(setGerman)
+        alert.addAction(setItalian)
+        
+        alert.addAction(cancel)
+        
+        present(alert, animated: true, completion: nil)
     }
 
 }
