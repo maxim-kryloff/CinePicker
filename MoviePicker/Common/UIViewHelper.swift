@@ -30,6 +30,18 @@ class UIViewHelper {
         }
     }
     
+    public static func getHeaderView(
+        for tableView: UITableView,
+        withText text: String
+    ) -> HeaderUIView {
+        
+        let view = Bundle.main.loadNibNamed("HeaderUIView", owner: tableView, options: nil)!.first as! HeaderUIView
+        
+        view.header = text
+        
+        return view
+    }
+    
     public static func getLoadingView(for tableView: UITableView) -> UIView {
         let view = Bundle.main.loadNibNamed("LoadingUIView", owner: tableView, options: nil)!.first as! UIView
         

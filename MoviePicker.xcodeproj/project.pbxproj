@@ -52,6 +52,8 @@
 		33C4767C2245FE90006FF3DC /* BookmarkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C4767B2245FE90006FF3DC /* BookmarkRepository.swift */; };
 		33C4767F2246066E006FF3DC /* Bookmarks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 33C4767D2246066E006FF3DC /* Bookmarks.xcdatamodeld */; };
 		33D548B822489D1E001F5A66 /* MovieDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D548B722489D1E001F5A66 /* MovieDetails.swift */; };
+		33D548BC2248F2CA001F5A66 /* HeaderUIView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33D548BB2248F2CA001F5A66 /* HeaderUIView.xib */; };
+		33D548BE2248F6E0001F5A66 /* HeaderUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D548BD2248F6E0001F5A66 /* HeaderUIView.swift */; };
 		33DABDA12243BEAA003BF008 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DABDA02243BEAA003BF008 /* LoadingTableViewCell.swift */; };
 		33DABDA32243C592003BF008 /* FailedLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33DABDA22243C592003BF008 /* FailedLoadingTableViewCell.xib */; };
 		33DABDA52243C7F3003BF008 /* FailedLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DABDA42243C7F3003BF008 /* FailedLoadingTableViewCell.swift */; };
@@ -109,6 +111,8 @@
 		33C4767B2245FE90006FF3DC /* BookmarkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRepository.swift; sourceTree = "<group>"; };
 		33C4767E2246066E006FF3DC /* Bookmarks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bookmarks.xcdatamodel; sourceTree = "<group>"; };
 		33D548B722489D1E001F5A66 /* MovieDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetails.swift; sourceTree = "<group>"; };
+		33D548BB2248F2CA001F5A66 /* HeaderUIView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderUIView.xib; sourceTree = "<group>"; };
+		33D548BD2248F6E0001F5A66 /* HeaderUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderUIView.swift; sourceTree = "<group>"; };
 		33DABDA02243BEAA003BF008 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
 		33DABDA22243C592003BF008 /* FailedLoadingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FailedLoadingTableViewCell.xib; sourceTree = "<group>"; };
 		33DABDA42243C7F3003BF008 /* FailedLoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedLoadingTableViewCell.swift; sourceTree = "<group>"; };
@@ -214,6 +218,8 @@
 				33349E6F224390D700970A55 /* LoadingTableViewCell.xib */,
 				33DABDA42243C7F3003BF008 /* FailedLoadingTableViewCell.swift */,
 				33DABDA22243C592003BF008 /* FailedLoadingTableViewCell.xib */,
+				33D548BB2248F2CA001F5A66 /* HeaderUIView.xib */,
+				33D548BD2248F6E0001F5A66 /* HeaderUIView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -358,6 +364,7 @@
 				3390056422429AB2001CAF91 /* MessageUIView.xib in Resources */,
 				338DC89722148BED006680A4 /* Assets.xcassets in Resources */,
 				3302A6EC22342CF300466EC2 /* PersonTableViewCell.xib in Resources */,
+				33D548BC2248F2CA001F5A66 /* HeaderUIView.xib in Resources */,
 				33DABDA32243C592003BF008 /* FailedLoadingTableViewCell.xib in Resources */,
 				33C032A4224277CC009D78F6 /* FailedLoadingUIView.xib in Resources */,
 				338DC89522148BED006680A4 /* Main.storyboard in Resources */,
@@ -377,6 +384,7 @@
 				3388E5C82233D354006FD414 /* TableViewCellIdentifiers.swift in Sources */,
 				3320C40822354B4000755EC8 /* PopularPerson.swift in Sources */,
 				337E6CA622435D1900537CBA /* MovieListService.swift in Sources */,
+				33D548BE2248F6E0001F5A66 /* HeaderUIView.swift in Sources */,
 				33E982322240099A004C0AC2 /* MultiSearchService.swift in Sources */,
 				338DC89222148BED006680A4 /* MultiSearchViewController.swift in Sources */,
 				33475F4B22305DA10076F2FC /* ImageFromInternet.swift in Sources */,
