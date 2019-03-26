@@ -84,9 +84,19 @@
                                     <action selector="onPersonTypeSegmentControlAction:" destination="igN-2x-NPg" eventType="valueChanged" id="Evs-4t-CT5"/>
                                 </connections>
                             </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TjU-9m-Sh0" userLabel="Person Type Separator Bar">
+                                <rect key="frame" x="187.5" y="630" width="0.5" height="37"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="FVT-Yf-rkn"/>
+                                    <constraint firstAttribute="width" constant="0.5" id="drH-fd-Vty"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="TjU-9m-Sh0" firstAttribute="centerX" secondItem="Nca-Eg-rci" secondAttribute="centerX" id="A2B-eS-WOX"/>
+                            <constraint firstAttribute="bottom" secondItem="TjU-9m-Sh0" secondAttribute="bottom" id="F6i-pY-uey"/>
                             <constraint firstItem="voB-7I-mVv" firstAttribute="trailing" secondItem="k4N-xu-orc" secondAttribute="trailing" id="I77-qW-jJt"/>
                             <constraint firstItem="k4N-xu-orc" firstAttribute="top" secondItem="0ee-El-F5W" secondAttribute="bottom" id="Jsn-Ri-hMh"/>
                             <constraint firstItem="7fY-3H-5bL" firstAttribute="bottom" secondItem="voB-7I-mVv" secondAttribute="bottom" id="KUG-Qp-wxP"/>
