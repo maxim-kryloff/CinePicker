@@ -41,6 +41,25 @@ class PersonService {
         getCharactersOperationQueue.addOperation(operation)
     }
     
+    private let getCrewPeopleOperationQueue = OperationQueue()
+    
+    public func getCrewPeople(by movieId: Int, callback: @escaping (_: AsyncResult<[CrewPerson]>) -> Void) {
+        getCrewPeopleOperationQueue.cancelAllOperations()
+        
+        let operation = GetCrewPeopleOperation()
+        
+        operation.movieId = movieId
+        operation.qualityOfService = .utility
+        
+        operation.completionBlock = {
+            if let result = operation.result {
+                callback(result)
+            }
+        }
+        
+        getCrewPeopleOperationQueue.addOperation(operation)
+    }
+    
 }
 
 extension PersonService {
@@ -179,6 +198,77 @@ extension PersonService {
                 }
                 
                 return characters
+                
+            } catch {
+                fatalError("Recieved json wasn't serialized...")
+            }
+        }
+        
+    }
+    
+}
+
+extension PersonService {
+    
+    private class GetCrewPeopleOperation: AsyncOperation {
+        
+        public var result: AsyncResult<[CrewPerson]>?
+        
+        public var movieId: Int!
+        
+        override func main() {
+            if isCancelled {
+                return
+            }
+            
+            let session = URLSession.shared
+            let getCrewPeopleRequest = buildGetCrewPeopleRequest(withMovieId: movieId)
+            
+            let task = session.dataTask(with: getCrewPeopleRequest) { (data, _, _) in
+                if self.isCancelled {
+                    return
+                }
+                
+                guard let data = data else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
+                
+                let crewPeople = self.getCrewPeople(from: data)
+                
+                self.result = AsyncResult.success(crewPeople)
+                self.state = .isFinished
+            }
+            
+            task.resume()
+        }
+        
+        private func buildGetCrewPeopleRequest(withMovieId movieId: Int) -> URLRequest {
+            let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
+                .append(pathComponent: "/movie/\(movieId)/credits")
+                .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
+                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
+                .build()
+            
+            return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
+        }
+        
+        private func getCrewPeople(from responseData: Data) -> [CrewPerson] {
+            do {
+                let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
+                
+                let jsonResults = json["crew"] as! [[String: Any]]
+                
+                var crewPeople: [CrewPerson] = []
+                
+                for item in jsonResults {
+                    let crewPerson = CrewPerson.buildCrewPerson(fromJson: item)
+                    crewPeople.append(crewPerson)
+                }
+                
+                return crewPeople
                 
             } catch {
                 fatalError("Recieved json wasn't serialized...")
