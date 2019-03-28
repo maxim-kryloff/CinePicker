@@ -124,6 +124,12 @@ class MovieListViewController: StatesViewController {
                 self.castMovies = requestedMoviesResult.cast
                 self.crewMovies = requestedMoviesResult.crew
                 
+                if self.crewMovies.count > self.castMovies.count {
+                    self.personTypeSegmentControl.selectedSegmentIndex = 1
+                } else {
+                    self.personTypeSegmentControl.selectedSegmentIndex = 0
+                }
+                
                 if self.personTypeSegmentControl.selectedSegmentIndex == 0 {
                     self.updateTable(withData: self.castMovies)
                 } else {
