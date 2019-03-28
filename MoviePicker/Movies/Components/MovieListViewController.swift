@@ -12,8 +12,6 @@ class MovieListViewController: StatesViewController {
     
     public var person: Person!
     
-    public var isCrewTabSelectedInitially: Bool = false
-    
     private var movies: [Movie] = []
     
     private var castMovies: [Movie] = []
@@ -93,10 +91,6 @@ class MovieListViewController: StatesViewController {
             ],
             for: .selected
         )
-        
-        if isCrewTabSelectedInitially {
-            personTypeSegmentControl.selectedSegmentIndex = 1
-        }
     }
     
     private func defineTableView() {
