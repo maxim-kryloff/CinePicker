@@ -17,8 +17,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zbs-qZ-XXV" userLabel="Top Bar View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="0.5"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="C0J-tk-Mqx"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eic-RW-Wdl">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="64.5" width="375" height="602.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="OJN-uO-eWR"/>
@@ -28,10 +35,13 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="eic-RW-Wdl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="3Nh-m7-in2"/>
                             <constraint firstItem="eic-RW-Wdl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9qD-RJ-yuv"/>
+                            <constraint firstItem="eic-RW-Wdl" firstAttribute="top" secondItem="Zbs-qZ-XXV" secondAttribute="bottom" id="Cd0-bh-Yur"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eic-RW-Wdl" secondAttribute="trailing" id="FiE-rm-zRd"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eic-RW-Wdl" secondAttribute="bottom" id="HnM-Zz-DU4"/>
+                            <constraint firstItem="Zbs-qZ-XXV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="agV-oj-iyo"/>
+                            <constraint firstItem="Zbs-qZ-XXV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hMx-DV-qQg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Zbs-qZ-XXV" secondAttribute="trailing" id="sGm-ph-SBf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -55,7 +65,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7fY-3H-5bL">
-                                <rect key="frame" x="0.0" y="20" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="39" id="gKj-1p-G7O"/>
                                 </constraints>
@@ -69,22 +79,15 @@
                                 </connections>
                             </segmentedControl>
                             <view userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eXe-Ma-rzo" userLabel="Separator Bar View">
-                                <rect key="frame" x="187.5" y="20" width="0.5" height="40"/>
+                                <rect key="frame" x="187.5" y="64" width="0.5" height="40"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="0.5" id="Mtu-hN-Q75"/>
                                     <constraint firstAttribute="height" constant="40" id="TN8-1V-SrT"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k4N-xu-orc" userLabel="Bottom Bar View">
-                                <rect key="frame" x="0.0" y="59" width="375" height="0.5"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="0.69999999999999996" id="OZx-cw-rHf"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0ee-El-F5W">
-                                <rect key="frame" x="0.0" y="59.5" width="375" height="607.5"/>
+                                <rect key="frame" x="0.0" y="103.5" width="375" height="563.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="igN-2x-NPg" id="bnX-7I-yPw"/>
@@ -97,14 +100,11 @@
                             <constraint firstItem="7fY-3H-5bL" firstAttribute="top" secondItem="voB-7I-mVv" secondAttribute="top" id="2WR-SM-jIX"/>
                             <constraint firstItem="eXe-Ma-rzo" firstAttribute="top" secondItem="voB-7I-mVv" secondAttribute="top" id="4HK-4p-MJe"/>
                             <constraint firstItem="eXe-Ma-rzo" firstAttribute="centerX" secondItem="Nca-Eg-rci" secondAttribute="centerX" id="B3N-Xh-sSH"/>
-                            <constraint firstItem="0ee-El-F5W" firstAttribute="top" secondItem="k4N-xu-orc" secondAttribute="bottom" id="CDz-Xu-gzn"/>
-                            <constraint firstItem="voB-7I-mVv" firstAttribute="trailing" secondItem="k4N-xu-orc" secondAttribute="trailing" id="I77-qW-jJt"/>
                             <constraint firstItem="voB-7I-mVv" firstAttribute="trailing" secondItem="0ee-El-F5W" secondAttribute="trailing" id="MWL-Wm-2nH"/>
                             <constraint firstItem="voB-7I-mVv" firstAttribute="bottom" secondItem="0ee-El-F5W" secondAttribute="bottom" id="Tas-VL-VmZ"/>
                             <constraint firstItem="7fY-3H-5bL" firstAttribute="trailing" secondItem="voB-7I-mVv" secondAttribute="trailing" id="dqz-Xq-J5b"/>
                             <constraint firstItem="0ee-El-F5W" firstAttribute="leading" secondItem="voB-7I-mVv" secondAttribute="leading" id="lij-MG-8Xr"/>
-                            <constraint firstItem="k4N-xu-orc" firstAttribute="leading" secondItem="voB-7I-mVv" secondAttribute="leading" id="oeG-wn-JhV"/>
-                            <constraint firstItem="k4N-xu-orc" firstAttribute="top" secondItem="7fY-3H-5bL" secondAttribute="bottom" id="qxa-Ug-aGV"/>
+                            <constraint firstItem="0ee-El-F5W" firstAttribute="top" secondItem="7fY-3H-5bL" secondAttribute="bottom" constant="0.5" id="tT5-UD-BpQ"/>
                             <constraint firstItem="7fY-3H-5bL" firstAttribute="leading" secondItem="voB-7I-mVv" secondAttribute="leading" id="txT-gL-tPj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="voB-7I-mVv"/>
@@ -127,8 +127,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YqC-Sp-M9K" userLabel="Top Bar View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="0.5"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="veh-yt-zxf"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hWT-bd-Joq">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64.5" width="375" height="602.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsTableViewCellIdentifier" rowHeight="120" id="eBF-Pn-bw7" customClass="MovieDetailsTableViewCell" customModule="MoviePicker" customModuleProvider="target">
@@ -294,10 +301,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="hWT-bd-Joq" firstAttribute="top" secondItem="YqC-Sp-M9K" secondAttribute="bottom" id="LIR-UP-w9e"/>
                             <constraint firstItem="A78-85-1pC" firstAttribute="trailing" secondItem="hWT-bd-Joq" secondAttribute="trailing" id="TWN-Sr-k41"/>
-                            <constraint firstItem="hWT-bd-Joq" firstAttribute="top" secondItem="A78-85-1pC" secondAttribute="top" id="YbZ-XH-awH"/>
+                            <constraint firstItem="A78-85-1pC" firstAttribute="trailing" secondItem="YqC-Sp-M9K" secondAttribute="trailing" id="XnN-KF-hT5"/>
+                            <constraint firstItem="YqC-Sp-M9K" firstAttribute="leading" secondItem="A78-85-1pC" secondAttribute="leading" id="esJ-Ow-rS9"/>
                             <constraint firstItem="hWT-bd-Joq" firstAttribute="leading" secondItem="A78-85-1pC" secondAttribute="leading" id="kET-mv-lIZ"/>
                             <constraint firstItem="A78-85-1pC" firstAttribute="bottom" secondItem="hWT-bd-Joq" secondAttribute="bottom" id="lo4-Bj-vtf"/>
+                            <constraint firstItem="YqC-Sp-M9K" firstAttribute="top" secondItem="A78-85-1pC" secondAttribute="top" id="noE-yt-kgz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="A78-85-1pC"/>
                     </view>
@@ -319,8 +329,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0fL-dU-Nm3" userLabel="Top Bar View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="0.5"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="fgD-Zh-pOu"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nIN-dc-ZYm">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64.5" width="375" height="602.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="qMz-EX-DC4" id="kcT-TH-ttI"/>
@@ -330,10 +347,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="nIN-dc-ZYm" firstAttribute="top" secondItem="0fL-dU-Nm3" secondAttribute="bottom" id="CWA-QO-zR6"/>
                             <constraint firstItem="hgu-W5-CeU" firstAttribute="trailing" secondItem="nIN-dc-ZYm" secondAttribute="trailing" id="DhH-1d-HIP"/>
-                            <constraint firstItem="nIN-dc-ZYm" firstAttribute="top" secondItem="hgu-W5-CeU" secondAttribute="top" id="G2q-Kp-1FJ"/>
+                            <constraint firstItem="hgu-W5-CeU" firstAttribute="trailing" secondItem="0fL-dU-Nm3" secondAttribute="trailing" id="UpL-nh-Z7f"/>
+                            <constraint firstItem="0fL-dU-Nm3" firstAttribute="leading" secondItem="hgu-W5-CeU" secondAttribute="leading" id="W0e-dD-EeC"/>
                             <constraint firstItem="hgu-W5-CeU" firstAttribute="bottom" secondItem="nIN-dc-ZYm" secondAttribute="bottom" id="dnL-pL-Ull"/>
                             <constraint firstItem="nIN-dc-ZYm" firstAttribute="leading" secondItem="hgu-W5-CeU" secondAttribute="leading" id="pO1-LT-4Ke"/>
+                            <constraint firstItem="0fL-dU-Nm3" firstAttribute="top" secondItem="hgu-W5-CeU" secondAttribute="top" id="wmb-a5-I7o"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hgu-W5-CeU"/>
                     </view>
@@ -344,7 +364,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TZ5-0X-Dzc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2556" y="233"/>
+            <point key="canvasLocation" x="2556" y="232.53373313343329"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nb6-RJ-Uf8">
@@ -370,8 +390,7 @@
         <image name="default_movie_image" width="388.5" height="449.5"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="m1u-ZE-hGY"/>
         <segue reference="AWG-3S-84R"/>
-        <segue reference="2Eb-ae-loT"/>
+        <segue reference="XCY-oZ-kcm"/>
     </inferredMetricsTieBreakers>
 </document>
