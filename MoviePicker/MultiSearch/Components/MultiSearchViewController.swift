@@ -31,6 +31,7 @@ class MultiSearchViewController: StatesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        defineNavigationController()
         defineLanguageButton()
         defineSearchController()
         defineTableView()
@@ -58,6 +59,10 @@ class MultiSearchViewController: StatesViewController {
         
         entities = data as! [Popularity]
         entityTableView.reloadData()
+    }
+    
+    private func defineNavigationController() {
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     private func defineLanguageButton() {
