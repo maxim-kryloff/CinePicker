@@ -458,10 +458,6 @@ extension MovieDetailsViewController {
             
             movieListViewController.person = person
             
-            if person is CrewPerson {
-                movieListViewController.isCrewTabSelectedInitially = true
-            }
-            
             return
         }
         
@@ -471,7 +467,6 @@ extension MovieDetailsViewController {
 
             personListViewController.title = movieOriginalTitle
             personListViewController.people = sender.personListType == PersonListType.cast ? characters : crewPeople
-            personListViewController.personListType = sender.personListType
             
             return
         }

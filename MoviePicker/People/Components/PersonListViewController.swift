@@ -6,8 +6,6 @@ class PersonListViewController: UIViewController {
     
     public var people: [Person]!
     
-    public var personListType: PersonListType!
-    
     private let imageService = ImageService()
     
     override func viewDidLoad() {
@@ -48,13 +46,10 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.personName = person.name
         
-        switch personListType! {
-        case .cast:
-            let character = person as! Character
+        if let character = person as? Character {
             cell.personPosition = character.characterName
             cell.isPersonPositionValid = !character.isUncredited
-        case .crew:
-            let crewPerson = person as! CrewPerson
+        } else if let crewPerson  = person as? CrewPerson {
             cell.personPosition = crewPerson.jobs.joined(separator: ", ")
             cell.isPersonPositionValid = true
         }
@@ -98,10 +93,6 @@ extension PersonListViewController {
             let indexPath = sender.indexPath
             
             movieListViewController.person = people[indexPath.row]
-            
-            if personListType == .crew {
-                movieListViewController.isCrewTabSelectedInitially = true
-            }
             
             return
         }
