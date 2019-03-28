@@ -14,4 +14,6 @@ class TableViewCellIdentifiers {
     
     public static let failedLoading = "FailedLoadingTableViewCellIdentifier"
     
+    public static let header = "HeaderTableViewCellIdentifier"
+    
 }

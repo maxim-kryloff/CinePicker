@@ -22,15 +22,27 @@ class MovieDetailsViewController: UIViewController {
     
     private let movieDetailsOverviewSectionNumber: Int = 2
     
-    private let movieDetailsCharactersSectionNumber: Int = 3
+    private let movieDetailsPeopleSectionNumber: Int = 3
     
-    private var isCharactersGoingToBeRequested = false
+    private var isPeopleGoingToBeRequested = false
     
-    private var isCharactersBeingRequested = false
+    private var isPeopleBeingRequested = false
     
-    private var isCharactersRequestFailed = false
+    private var isPeopleRequestFailed = false
+    
+    private var people: [Person] = []
     
     private var characters: [Character] = []
+    
+    private var limitedCharacters: [Character] = []
+    
+    private var crewPeople: [CrewPerson] = []
+    
+    private var limitedCrewPeople: [CrewPerson] = []
+    
+    private var charactersLimit: Int = 6
+    
+    private var crewPeopleLimit: Int = 4
     
     private let imageService = ImageService()
     
@@ -63,6 +75,9 @@ class MovieDetailsViewController: UIViewController {
         
         let failedLoadingTableViewCellNib = UINib(nibName: "FailedLoadingTableViewCell", bundle: nil)
         movieDetailsTableView.register(failedLoadingTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.failedLoading)
+        
+        let headerTableViewCellNib = UINib(nibName: "HeaderTableViewCell", bundle: nil)
+        movieDetailsTableView.register(headerTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.header)
     }
     
     private func defineLoadingView() {
@@ -78,7 +93,7 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func onSelectFailedLoadingCell() {
-        performCharactersRequest(fromReloading: true)
+        performPeopleRequest(fromReloading: true)
     }
     
     private func onSelectBookmarkActionCell() {
@@ -103,7 +118,7 @@ class MovieDetailsViewController: UIViewController {
             OperationQueue.main.addOperation {
                 guard let requestedMovieDetails = requestedMovieDetails else {
                     self.movieDetailsTableView.backgroundView = self.failedLoadingView
-                    self.isCharactersGoingToBeRequested = false
+                    self.isPeopleGoingToBeRequested = false
                     
                     return
                 }
@@ -112,44 +127,50 @@ class MovieDetailsViewController: UIViewController {
                 
                 self.movieDetails = requestedMovieDetails
                 
-                self.isCharactersGoingToBeRequested = true
+                self.isPeopleGoingToBeRequested = true
                 self.movieDetailsTableView.reloadData()
                 
-                self.performCharactersRequest(fromReloading: false)
+                self.performPeopleRequest(fromReloading: false)
             }
         }
     }
     
-    private func performCharactersRequest(fromReloading: Bool) {
-        isCharactersGoingToBeRequested = false
-        isCharactersBeingRequested = true
-        isCharactersRequestFailed = false
+    private func performPeopleRequest(fromReloading: Bool) {
+        isPeopleGoingToBeRequested = false
+        isPeopleBeingRequested = true
+        isPeopleRequestFailed = false
         
         if fromReloading {
-            let firstCharactersIndexPath = IndexPath(row: 0, section: self.movieDetailsCharactersSectionNumber)
-            self.movieDetailsTableView.reloadRows(at: [firstCharactersIndexPath], with: .automatic)
+            let firstPeopleIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
+            self.movieDetailsTableView.reloadRows(at: [firstPeopleIndexPath], with: .automatic)
         }
         
-        movieDetailsService.requestCharacters(by: movieDetails.id) { (requestedCharacters, isLoadingDataFailed) in
+        movieDetailsService.requestPeople(by: movieDetails.id) { (requestedMoviePeople, isLoadingDataFailed) in
             OperationQueue.main.addOperation {
-                self.isCharactersBeingRequested = false
-                self.isCharactersRequestFailed = isLoadingDataFailed
+                self.isPeopleBeingRequested = false
+                self.isPeopleRequestFailed = isLoadingDataFailed
                 
-                let firstCharactersIndexPath = IndexPath(row: 0, section: self.movieDetailsCharactersSectionNumber)
+                let firstPeopleIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
                 
-                if self.isCharactersRequestFailed {
-                    self.movieDetailsTableView.reloadRows(at: [firstCharactersIndexPath], with: .automatic)
+                if self.isPeopleRequestFailed {
+                    self.movieDetailsTableView.reloadRows(at: [firstPeopleIndexPath], with: .automatic)
                     return
                 }
                 
-                self.movieDetailsTableView.deleteRows(at: [firstCharactersIndexPath], with: .automatic)
+                self.movieDetailsTableView.deleteRows(at: [firstPeopleIndexPath], with: .automatic)
                 
-                self.characters = requestedCharacters
+                self.characters = requestedMoviePeople.cast
+                self.crewPeople = requestedMoviePeople.crew
+                
+                self.limitedCharacters = self.getLimitedPeople(from: self.characters, limit: self.charactersLimit)
+                self.limitedCrewPeople = self.getLimitedPeople(from: self.crewPeople, limit: self.crewPeopleLimit)
+                
+                self.people = self.limitedCharacters + self.limitedCrewPeople
                 
                 var indexPaths: [IndexPath] = []
                 
-                for index in 0..<self.characters.count {
-                    let indexPath = IndexPath(row: index, section: self.movieDetailsCharactersSectionNumber)
+                for index in 0..<self.people.count {
+                    let indexPath = IndexPath(row: index, section: self.movieDetailsPeopleSectionNumber)
                     indexPaths.append(indexPath)
                 }
                 
@@ -161,6 +182,22 @@ class MovieDetailsViewController: UIViewController {
     private func checkIfSavedInBookmarks() -> Bool {
         let bookmarks = BookmarkRepository.shared.getBookmarks()
         return bookmarks.contains { $0.id == movieDetails.id }
+    }
+    
+    private func getGoToFullCastIndex() -> Int {
+        return charactersLimit - 1
+    }
+    
+    private func getGoToFullCrewIndex() -> Int {
+        return limitedCharacters.count + crewPeopleLimit - 1
+    }
+    
+    private func getLimitedPeople<PersonType>(from people: [PersonType], limit: Int) -> [PersonType] {
+        if people.count <= limit {
+            return people
+        }
+        
+        return Array(people[0..<limit])
     }
     
 }
@@ -184,7 +221,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         case movieDetailsSectionNumber: return 1
         case movieDetailsBookmarkActionSectionNumber: return 1
         case movieDetailsOverviewSectionNumber: return 1
-        case movieDetailsCharactersSectionNumber: return getMovieDetailsCharactersSectionNumberOfRows()
+        case movieDetailsPeopleSectionNumber: return getMovieDetailsPeopleSectionNumberOfRows()
         default: fatalError("Section number is out of range...")
         }
     }
@@ -194,7 +231,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         case (movieDetailsSectionNumber, _): return MovieDetailsTableViewCell.standardHeight
         case (movieDetailsBookmarkActionSectionNumber, _): return MovieDetailsBookmarkActionTableViewCell.standardHeight
         case (movieDetailsOverviewSectionNumber, _): return MovieDetailsOverviewTableViewCell.standardHeight
-        case (movieDetailsCharactersSectionNumber, _): return getMovieDetailsCharactersSectionRowHeight()
+        case (movieDetailsPeopleSectionNumber, _): return getMovieDetailsPeopleSectionRowHeight(at: indexPath)
         default: fatalError("Section number is out of range...")
         }
     }
@@ -212,7 +249,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         case (movieDetailsSectionNumber, _): return getMovieDetailsTableViewCell(tableView, cellForRowAt: indexPath)
         case (movieDetailsBookmarkActionSectionNumber, _): return getMovieDetailsBookmarkActionTableViewCell(tableView, cellForRowAt: indexPath)
         case (movieDetailsOverviewSectionNumber, _): return getMovieDetailsOverviewTableViewCell(tableView, cellForRowAt: indexPath)
-        case (movieDetailsCharactersSectionNumber, _): return getCharacterTableViewCell(tableView, cellForRowAt: indexPath)
+        case (movieDetailsPeopleSectionNumber, _): return getPersonTableViewCell(tableView, cellForRowAt: indexPath)
         default: fatalError("Section number is out of range...")
         }
     }
@@ -239,13 +276,33 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             return
         }
         
-        if isCharactersRequestFailed {
+        if isPeopleRequestFailed {
             onSelectFailedLoadingCell()
             return
         }
         
-        // TODO: This row is incorrect, there should be tableView.dequeueReusableCell(..., for: indexPath) instead, but
-        // there is a bug which breaks cell after dequeueing by index path, and I don't know for now what's wrong!
+        let person = people[indexPath.row]
+        
+        if person is Character && indexPath.row == getGoToFullCastIndex() {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header)!
+            let sender = GoToPersonListTableViewCellSender(cell: cell, indexPath: indexPath, personListType: .cast)
+            
+            movieDetailsTableView.reloadRows(at: [indexPath], with: .automatic)
+            performSegue(withIdentifier: SegueIdentifiers.showPersonList, sender: sender)
+            
+            return
+        }
+        
+        if person is CrewPerson && indexPath.row == getGoToFullCrewIndex() {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header)!
+            let sender = GoToPersonListTableViewCellSender(cell: cell, indexPath: indexPath, personListType: .crew)
+            
+            movieDetailsTableView.reloadRows(at: [indexPath], with: .automatic)
+            performSegue(withIdentifier: SegueIdentifiers.showPersonList, sender: sender)
+            
+            return
+        }
+
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person)!
         
         let sender = TableViewCellSender(cell: cell, indexPath: indexPath)
@@ -282,24 +339,52 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         return cell
     }
     
-    private func getCharacterTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isCharactersBeingRequested {
+    private func getPersonTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if isPeopleBeingRequested {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
             return cell
         }
         
-        if isCharactersRequestFailed {
+        if isPeopleRequestFailed {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.failedLoading) as! FailedLoadingTableViewCell
             return cell
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
+        let person = people[indexPath.row]
         
-        cell.personName = characters[indexPath.row].name
-        cell.personPosition = characters[indexPath.row].characterName
-        cell.isPersonPositionValid = !characters[indexPath.row].isUncredited
+        if let character = person as? Character {
+            if indexPath.row == getGoToFullCastIndex() {
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
+                cell.header = "Go to Full Cast"
+                return cell
+            }
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
+            
+            cell.personName = character.name
+            cell.personPosition = character.characterName
+            cell.isPersonPositionValid = !character.isUncredited
+            
+            return cell
+        }
         
-        return cell
+        if let crewPerson = person as? CrewPerson {
+            if indexPath.row == getGoToFullCrewIndex() {
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
+                cell.header = "Go to Full Crew"
+                return cell
+            }
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
+            
+            cell.personName = crewPerson.name
+            cell.personPosition = crewPerson.jobs.joined(separator: ", ")
+            cell.isPersonPositionValid = true
+            
+            return cell
+        }
+        
+        fatalError("Person has wrong type...")
     }
     
     private func prepare(movieDetailsTableViewCell cell: MovieDetailsTableViewCell) {
@@ -310,32 +395,46 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     private func prepare(personTableViewCell cell: PersonTableViewCell, forRowAt indexPath: IndexPath) {
-        let character = characters[indexPath.row]
+        let person = people[indexPath.row]
 
-        if !character.imagePath.isEmpty {
+        if !person.imagePath.isEmpty {
             var cell = cell as ImageFromInternet
-            UIViewHelper.setImageFromInternet(by: character.imagePath, at: &cell, using: imageService)
+            UIViewHelper.setImageFromInternet(by: person.imagePath, at: &cell, using: imageService)
         }
     }
     
-    private func getMovieDetailsCharactersSectionNumberOfRows() -> Int {
-        if isCharactersGoingToBeRequested || isCharactersBeingRequested || isCharactersRequestFailed {
+    private func getMovieDetailsPeopleSectionNumberOfRows() -> Int {
+        if isPeopleGoingToBeRequested || isPeopleBeingRequested || isPeopleRequestFailed {
             return 1
         }
         
-        return characters.count
+        return people.count
     }
     
-    private func getMovieDetailsCharactersSectionRowHeight() -> CGFloat {
-        if isCharactersBeingRequested {
+    private func getMovieDetailsPeopleSectionRowHeight(at indexPath: IndexPath) -> CGFloat {
+        if isPeopleBeingRequested {
             return LoadingTableViewCell.standardHeight
         }
         
-        if isCharactersRequestFailed {
+        if isPeopleRequestFailed {
             return FailedLoadingTableViewCell.standardHeight
         }
         
-        return PersonTableViewCell.standardHeight
+        let person = people[indexPath.row]
+        
+        if person is Character {
+            return indexPath.row == getGoToFullCastIndex()
+                ? HeaderTableViewCell.standardHeight
+                : PersonTableViewCell.standardHeight
+        }
+        
+        if person is CrewPerson {
+            return indexPath.row == getGoToFullCrewIndex()
+                ? HeaderTableViewCell.standardHeight
+                : PersonTableViewCell.standardHeight
+        }
+        
+        fatalError("Person has wrong type...")
     }
     
 }
@@ -355,7 +454,24 @@ extension MovieDetailsViewController {
             
             let indexPath = sender.indexPath
             
-            movieListViewController.person = characters[indexPath.row]
+            let person = people[indexPath.row]
+            
+            movieListViewController.person = person
+            
+            if person is CrewPerson {
+                movieListViewController.isCrewTabSelectedInitially = true
+            }
+            
+            return
+        }
+        
+        if segueIdentifier == SegueIdentifiers.showPersonList {
+            let personListViewController = segue.destination as! PersonListViewController
+            let sender = sender as! GoToPersonListTableViewCellSender
+
+            personListViewController.title = movieOriginalTitle
+            personListViewController.people = sender.personListType == PersonListType.cast ? characters : crewPeople
+            personListViewController.personListType = sender.personListType
             
             return
         }
