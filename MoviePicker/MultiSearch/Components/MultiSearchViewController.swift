@@ -4,6 +4,8 @@ class MultiSearchViewController: StatesViewController {
     
     @IBOutlet weak var entityTableView: UITableView!
     
+    @IBOutlet weak var topBarView: UIView!
+    
     override var tableViewDefinition: UITableView! {
         return entityTableView
     }
@@ -63,6 +65,7 @@ class MultiSearchViewController: StatesViewController {
     
     private func defineNavigationController() {
         navigationController?.navigationBar.shadowImage = UIImage()
+        showTopBarView()
     }
     
     private func defineLanguageButton() {
@@ -109,9 +112,21 @@ class MultiSearchViewController: StatesViewController {
         entityTableView.register(personTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.person)
     }
     
+    private func showTopBarView() {
+        topBarView.isHidden = false
+    }
+    
+    private func hideTopBarView() {
+        topBarView.isHidden = true
+    }
+    
     private func setBookmarks() {
         let bookmarks = BookmarkRepository.shared.getBookmarks()
         let reversedBookmarks = Array(bookmarks.reversed())
+        
+        if !bookmarks.isEmpty {
+            hideTopBarView()
+        }
         
         updateTable(withData: reversedBookmarks)
     }
@@ -121,6 +136,10 @@ class MultiSearchViewController: StatesViewController {
         
         let bookmarks = BookmarkRepository.shared.removeBookmark(movie: movie)
         let reversedBookmarks = Array(bookmarks.reversed())
+        
+        if bookmarks.isEmpty {
+            showTopBarView()
+        }
         
         entities = reversedBookmarks
         entityTableView.deleteRows(at: [indexPath], with: .automatic)
@@ -392,7 +411,9 @@ extension MultiSearchViewController: UISearchResultsUpdating {
             }
             
             OperationQueue.main.addOperation {
+                self.showTopBarView()
                 self.unsetAllStates()
+                
                 self.performRequest(shouldScrollToFirstRow: true)
             }
         }

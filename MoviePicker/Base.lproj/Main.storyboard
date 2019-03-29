@@ -48,6 +48,7 @@
                     <navigationItem key="navigationItem" id="RZU-kS-9aX"/>
                     <connections>
                         <outlet property="entityTableView" destination="eic-RW-Wdl" id="ayQ-kh-reZ"/>
+                        <outlet property="topBarView" destination="Zbs-qZ-XXV" id="mEI-u3-EbM"/>
                         <segue destination="igN-2x-NPg" kind="show" identifier="ShowPersonMovies" id="XCY-oZ-kcm"/>
                         <segue destination="xLm-8S-XWy" kind="show" identifier="ShowMovieDetails" id="6Rr-Qk-OvN"/>
                     </connections>
@@ -390,7 +391,7 @@
         <image name="default_movie_image" width="388.5" height="449.5"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AWG-3S-84R"/>
+        <segue reference="6Rr-Qk-OvN"/>
         <segue reference="XCY-oZ-kcm"/>
     </inferredMetricsTieBreakers>
 </document>
