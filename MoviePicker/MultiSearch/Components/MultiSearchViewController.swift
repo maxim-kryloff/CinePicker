@@ -46,6 +46,10 @@ class MultiSearchViewController: StatesViewController {
     override func viewWillAppear(_ animated: Bool) {
         if currentSearchQuery.isEmpty {
             setBookmarks()
+            
+            if entities.isEmpty {
+                showTopBarView()
+            }
         }
     }
     
