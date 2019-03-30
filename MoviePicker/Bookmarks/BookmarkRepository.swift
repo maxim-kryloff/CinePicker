@@ -66,10 +66,6 @@ class BookmarkRepository {
         
         movieDAO.setValue(movie.releaseYear, forKey: "releaseYear")
         
-        movieDAO.setValue(movie.overview, forKey: "overview")
-        
-        movieDAO.setValue(movie.popularity, forKey: "popularity")
-        
         do {
             try managedContext.save()
         } catch let error as NSError {
