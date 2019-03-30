@@ -66,29 +66,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7fY-3H-5bL">
-                                <rect key="frame" x="0.0" y="64" width="375" height="40"/>
+                                <rect key="frame" x="8" y="69" width="359" height="31"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="39" id="gKj-1p-G7O"/>
+                                    <constraint firstAttribute="height" constant="30" id="gKj-1p-G7O"/>
                                 </constraints>
                                 <segments>
                                     <segment title="Cast"/>
                                     <segment title="Crew"/>
                                 </segments>
-                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="onPersonTypeSegmentControlAction:" destination="igN-2x-NPg" eventType="valueChanged" id="Evs-4t-CT5"/>
                                 </connections>
                             </segmentedControl>
-                            <view userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eXe-Ma-rzo" userLabel="Separator Bar View">
-                                <rect key="frame" x="187.5" y="64" width="0.5" height="40"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="0.5" id="Mtu-hN-Q75"/>
-                                    <constraint firstAttribute="height" constant="40" id="TN8-1V-SrT"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0ee-El-F5W">
-                                <rect key="frame" x="0.0" y="103.5" width="375" height="563.5"/>
+                                <rect key="frame" x="0.0" y="107" width="375" height="560"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="igN-2x-NPg" id="bnX-7I-yPw"/>
@@ -98,15 +89,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="7fY-3H-5bL" firstAttribute="top" secondItem="voB-7I-mVv" secondAttribute="top" id="2WR-SM-jIX"/>
-                            <constraint firstItem="eXe-Ma-rzo" firstAttribute="top" secondItem="voB-7I-mVv" secondAttribute="top" id="4HK-4p-MJe"/>
-                            <constraint firstItem="eXe-Ma-rzo" firstAttribute="centerX" secondItem="Nca-Eg-rci" secondAttribute="centerX" id="B3N-Xh-sSH"/>
+                            <constraint firstItem="7fY-3H-5bL" firstAttribute="top" secondItem="voB-7I-mVv" secondAttribute="top" constant="5" id="2WR-SM-jIX"/>
                             <constraint firstItem="voB-7I-mVv" firstAttribute="trailing" secondItem="0ee-El-F5W" secondAttribute="trailing" id="MWL-Wm-2nH"/>
                             <constraint firstItem="voB-7I-mVv" firstAttribute="bottom" secondItem="0ee-El-F5W" secondAttribute="bottom" id="Tas-VL-VmZ"/>
-                            <constraint firstItem="7fY-3H-5bL" firstAttribute="trailing" secondItem="voB-7I-mVv" secondAttribute="trailing" id="dqz-Xq-J5b"/>
                             <constraint firstItem="0ee-El-F5W" firstAttribute="leading" secondItem="voB-7I-mVv" secondAttribute="leading" id="lij-MG-8Xr"/>
-                            <constraint firstItem="0ee-El-F5W" firstAttribute="top" secondItem="7fY-3H-5bL" secondAttribute="bottom" constant="0.5" id="tT5-UD-BpQ"/>
-                            <constraint firstItem="7fY-3H-5bL" firstAttribute="leading" secondItem="voB-7I-mVv" secondAttribute="leading" id="txT-gL-tPj"/>
+                            <constraint firstItem="0ee-El-F5W" firstAttribute="top" secondItem="7fY-3H-5bL" secondAttribute="bottom" constant="8" id="tT5-UD-BpQ"/>
+                            <constraint firstItem="7fY-3H-5bL" firstAttribute="leading" secondItem="voB-7I-mVv" secondAttribute="leading" constant="8" id="txT-gL-tPj"/>
+                            <constraint firstItem="voB-7I-mVv" firstAttribute="trailing" secondItem="7fY-3H-5bL" secondAttribute="trailing" constant="8" id="vAf-tk-YVm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="voB-7I-mVv"/>
                     </view>
@@ -391,7 +380,7 @@
         <image name="default_movie_image" width="388.5" height="449.5"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6Rr-Qk-OvN"/>
+        <segue reference="AWG-3S-84R"/>
         <segue reference="XCY-oZ-kcm"/>
     </inferredMetricsTieBreakers>
 </document>
