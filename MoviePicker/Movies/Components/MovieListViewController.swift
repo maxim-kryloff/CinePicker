@@ -12,10 +12,6 @@ class MovieListViewController: StatesViewController {
     
     public var person: Person!
     
-    private var topBarView: UIView!
-    
-    private var bottomBarView: UIView!
-    
     private var movies: [Movie] = []
     
     private var castMovies: [Movie] = []
@@ -31,8 +27,6 @@ class MovieListViewController: StatesViewController {
     private let imageService = ImageService()
     
     @IBAction func onPersonTypeSegmentControlAction(_ sender: Any) {
-        updatePersonTypeSegmentControlBorders()
-        
         if isBeingRequested || isRequestFailed {
             return
         }
@@ -79,65 +73,15 @@ class MovieListViewController: StatesViewController {
     }
     
     private func defineSegmentControl() {
-        personTypeSegmentControl.backgroundColor = .clear
-        personTypeSegmentControl.tintColor = .clear
-        
         personTypeSegmentControl.setTitleTextAttributes(
-            [
-                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17, weight: .regular),
-                NSAttributedString.Key.foregroundColor : UIColor.lightGray
-            ],
+            [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)],
             for: .normal
         )
         
         personTypeSegmentControl.setTitleTextAttributes(
-            [
-                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17, weight: .medium),
-                NSAttributedString.Key.foregroundColor : UIColor.black
-            ],
+            [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)],
             for: .selected
         )
-        
-        setPersonTypeSegmentControlTopBar()
-        setPersonTypeSegmentControlBottomBar()
-    }
-    
-    private func setPersonTypeSegmentControlTopBar() {
-        topBarView = UIView()
-        
-        topBarView.translatesAutoresizingMaskIntoConstraints = false
-        
-        topBarView.backgroundColor = UIColor.lightGray
-        topBarView.alpha = 0.7
-        
-        personTypeSegmentControl.addSubview(topBarView)
-        
-        topBarView.topAnchor.constraint(equalTo: personTypeSegmentControl.topAnchor).isActive = true
-        topBarView.leftAnchor.constraint(equalTo: personTypeSegmentControl.leftAnchor).isActive = true
-        topBarView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-        topBarView.widthAnchor.constraint(
-            equalTo: personTypeSegmentControl.widthAnchor,
-            multiplier: 1 / CGFloat(personTypeSegmentControl.numberOfSegments)
-        ).isActive = true
-    }
-    
-    private func setPersonTypeSegmentControlBottomBar() {
-        bottomBarView = UIView()
-        
-        bottomBarView.translatesAutoresizingMaskIntoConstraints = false
-        
-        bottomBarView.backgroundColor = UIColor.lightGray
-        bottomBarView.alpha = 0.7
-        
-        personTypeSegmentControl.addSubview(bottomBarView)
-        
-        bottomBarView.topAnchor.constraint(equalTo: personTypeSegmentControl.bottomAnchor).isActive = true
-        bottomBarView.rightAnchor.constraint(equalTo: personTypeSegmentControl.rightAnchor).isActive = true
-        bottomBarView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-        bottomBarView.widthAnchor.constraint(
-            equalTo: personTypeSegmentControl.widthAnchor,
-            multiplier: 1 / CGFloat(personTypeSegmentControl.numberOfSegments)
-        ).isActive = true
     }
     
     private func defineTableView() {
@@ -177,8 +121,6 @@ class MovieListViewController: StatesViewController {
                     self.personTypeSegmentControl.selectedSegmentIndex = 0
                 }
                 
-                self.updatePersonTypeSegmentControlBorders()
-                
                 if self.personTypeSegmentControl.selectedSegmentIndex == 0 {
                     self.updateTable(withData: self.castMovies)
                 } else {
@@ -191,13 +133,6 @@ class MovieListViewController: StatesViewController {
                 }
             }
         }
-    }
-    
-    private func updatePersonTypeSegmentControlBorders() {
-        let segmentWidth = personTypeSegmentControl.frame.width / CGFloat(personTypeSegmentControl.numberOfSegments)
-    
-        topBarView.frame.origin.x = segmentWidth * CGFloat(personTypeSegmentControl.selectedSegmentIndex)
-        bottomBarView.frame.origin.x = segmentWidth * CGFloat(abs(personTypeSegmentControl.selectedSegmentIndex - 1))
     }
 
 }
