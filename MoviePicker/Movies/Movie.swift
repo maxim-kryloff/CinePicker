@@ -103,10 +103,6 @@ class Movie {
         
         let releaseYear = movieDAO.value(forKey: "releaseYear") as! String
         
-        let overview = movieDAO.value(forKey: "overview") as! String
-        
-        let popularity = movieDAO.value(forKey: "popularity") as! Double
-        
         let movie = Movie(
             id: id,
             title: title,
@@ -115,8 +111,9 @@ class Movie {
             rating: rating,
             voteCount: voteCount,
             releaseYear: releaseYear,
-            overview: overview,
-            popularity: popularity
+            
+            overview: "",
+            popularity: 0
         )
         
         return movie
