@@ -46,14 +46,12 @@ class MovieDetailsViewController: UIViewController {
     
     private let imageService = ImageService()
     
-    private var movieDetailsService: MovieDetailsService!
+    private var movieDetailsService = MovieDetailsService(movieService: MovieService(), personService: PersonService())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = movieOriginalTitle
-        
-        movieDetailsService = MovieDetailsService(movieService: MovieService(), personService: PersonService())
         
         defineLoadingView()
         defineFailedLoadingView()
