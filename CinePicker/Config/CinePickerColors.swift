@@ -1,6 +1,6 @@
 import UIKit
 
-class MoviePickerColors {
+class CinePickerColors {
     
     public static let green = UIColor(red: 0 / 255.0, green: 180 / 255.0, blue: 0 / 255.0, alpha: 1.0)
     

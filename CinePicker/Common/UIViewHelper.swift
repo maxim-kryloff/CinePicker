@@ -4,15 +4,15 @@ class UIViewHelper {
     
     public static func getMovieRatingColor(rating: Double) -> UIColor {
         switch(rating) {
-        case 0.0..<5.0: return MoviePickerColors.red
-        case 5.0..<6.5: return MoviePickerColors.yellow
-        case 6.5...10: return MoviePickerColors.green
+        case 0.0..<5.0: return CinePickerColors.red
+        case 5.0..<6.5: return CinePickerColors.yellow
+        case 6.5...10: return CinePickerColors.green
         default: fatalError("Rating is out of allowed range...")
         }
     }
     
     public static func setImageFromInternet(by imagePath: String, at view: inout ImageFromInternet, using imageService: ImageService) {
-        let imageUrl: URL! = URLBuilder(string: MoviePickerConfig.imagesPath)
+        let imageUrl: URL! = URLBuilder(string: CinePickerConfig.imagesPath)
             .append(pathComponent: imagePath)
             .build()
         

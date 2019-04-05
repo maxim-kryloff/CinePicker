@@ -78,7 +78,7 @@ class MultiSearchViewController: StatesViewController {
     
     private func defineLanguageButton() {
         languageBarButtonItem = UIBarButtonItem(
-            title: MoviePickerConfig.getLanguageShortcut(),
+            title: CinePickerConfig.getLanguageShortcut(),
             style: .plain,
             target: self,
             action: #selector(MultiSearchViewController.onChangeLanguage)
@@ -95,7 +95,7 @@ class MultiSearchViewController: StatesViewController {
         searchController.searchBar.placeholder = "Search..."
         
         let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField
-        searchField?.backgroundColor = MoviePickerColors.lightGray
+        searchField?.backgroundColor = CinePickerColors.lightGray
         
         navigationItem.titleView = searchController.searchBar
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -198,27 +198,27 @@ class MultiSearchViewController: StatesViewController {
         
         let setEnglish = UIAlertAction(title: "English", style: .default) { (action) in
             UserDefaults.standard.set("en-US", forKey: "Language")
-            self.languageBarButtonItem.title = MoviePickerConfig.getLanguageShortcut()
+            self.languageBarButtonItem.title = CinePickerConfig.getLanguageShortcut()
         }
         
         let setRussian = UIAlertAction(title: "Russian", style: .default) { (action) in
             UserDefaults.standard.set("ru-RU", forKey: "Language")
-            self.languageBarButtonItem.title = MoviePickerConfig.getLanguageShortcut()
+            self.languageBarButtonItem.title = CinePickerConfig.getLanguageShortcut()
         }
         
         let setFrench = UIAlertAction(title: "French", style: .default) { (action) in
             UserDefaults.standard.set("fr-FR", forKey: "Language")
-            self.languageBarButtonItem.title = MoviePickerConfig.getLanguageShortcut()
+            self.languageBarButtonItem.title = CinePickerConfig.getLanguageShortcut()
         }
         
         let setGerman = UIAlertAction(title: "German", style: .default) { (action) in
             UserDefaults.standard.set("de-DE", forKey: "Language")
-            self.languageBarButtonItem.title = MoviePickerConfig.getLanguageShortcut()
+            self.languageBarButtonItem.title = CinePickerConfig.getLanguageShortcut()
         }
         
         let setItalian = UIAlertAction(title: "Italian", style: .default) { (action) in
             UserDefaults.standard.set("it-IT", forKey: "Language")
-            self.languageBarButtonItem.title = MoviePickerConfig.getLanguageShortcut()
+            self.languageBarButtonItem.title = CinePickerConfig.getLanguageShortcut()
         }
 
         let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)

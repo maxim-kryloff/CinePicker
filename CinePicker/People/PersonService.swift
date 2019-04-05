@@ -102,10 +102,10 @@ extension PersonService {
         }
         
         private func buildSearchPopularPeopleRequest(withSearchQuery query: String) -> URLRequest {
-            let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
+            let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/search/person")
-                .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
-                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
+                .append(queryItem: ("api_key", CinePickerConfig.apiToken))
+                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
                 .append(queryItem: ("query", query))
                 .append(queryItem: ("page", String(page)))
                 .build()
@@ -175,10 +175,10 @@ extension PersonService {
         }
         
         private func buildGetCharactersRequest(withMovieId movieId: Int) -> URLRequest {
-            let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
+            let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId)/credits")
-                .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
-                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
+                .append(queryItem: ("api_key", CinePickerConfig.apiToken))
+                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
                 .build()
             
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
@@ -246,10 +246,10 @@ extension PersonService {
         }
         
         private func buildGetCrewPeopleRequest(withMovieId movieId: Int) -> URLRequest {
-            let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
+            let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId)/credits")
-                .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
-                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
+                .append(queryItem: ("api_key", CinePickerConfig.apiToken))
+                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
                 .build()
             
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)

@@ -15,7 +15,7 @@ class MovieDetailsBookmarkActionTableViewCell: UITableViewCell {
             }
             
             let title = isRemoveAction ? "Remove from Bookmarks" : "Save to Bookmarks"
-            let titleColor = isRemoveAction ? MoviePickerColors.red : MoviePickerColors.blue
+            let titleColor = isRemoveAction ? CinePickerColors.red : CinePickerColors.blue
             
             bookmarkActionButton.setTitle(title, for: UIControl.State.normal)
             bookmarkActionButton.setTitleColor(titleColor, for: UIControl.State.normal)
@@ -36,7 +36,7 @@ class MovieDetailsBookmarkActionTableViewCell: UITableViewCell {
 
     private func setDefaultState() {
         bookmarkActionButton.setTitle("Save to Bookmarks", for: UIControl.State.normal)
-        bookmarkActionButton.setTitleColor(MoviePickerColors.blue, for: UIControl.State.normal)
+        bookmarkActionButton.setTitleColor(CinePickerColors.blue, for: UIControl.State.normal)
     }
 
 }
