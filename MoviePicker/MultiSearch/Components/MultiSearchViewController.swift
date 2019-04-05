@@ -40,6 +40,10 @@ class MultiSearchViewController: StatesViewController {
         
         setBookmarks()
         
+        if !UserDefaults.standard.bool(forKey: "didAgreeToUseDataSource") {
+            showDataSourceAgreementAlert()
+        }
+        
         definesPresentationContext = true
     }
     
@@ -227,6 +231,7 @@ class MultiSearchViewController: StatesViewController {
         
         alert.addAction(cancel)
         
+        // TODO: Make more elegant solution
         if let popoverController = alert.popoverPresentationController {
             popoverController.sourceView = self.view
             popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
@@ -234,6 +239,29 @@ class MultiSearchViewController: StatesViewController {
         }
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    private func showDataSourceAgreementAlert() {
+        let alert = UIAlertController(
+            title: "Data Source",
+            message: "This product uses the TMDb API but is not endorsed or certified by TMDb.",
+            preferredStyle: .alert
+        )
+        
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            UserDefaults.standard.set(true, forKey: "didAgreeToUseDataSource")
+            self.searchController.searchBar.becomeFirstResponder()
+        }
+        
+        let logo = UIImage(named:"data_source_logo")
+        
+        let logoImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 30, height: 30))
+        logoImageView.image = logo
+        
+        alert.view.addSubview(logoImageView)
+        alert.addAction(action)
+        
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
