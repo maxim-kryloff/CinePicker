@@ -1,6 +1,6 @@
 import Foundation
 
-class MoviePickerConfig {
+class CinePickerConfig {
 
     public static let apiPath = "https://api.themoviedb.org/3"
     

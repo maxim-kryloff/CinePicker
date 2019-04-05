@@ -29,7 +29,7 @@ class PersonTableViewCell: UITableViewCell {
     public var isPersonPositionValid: Bool? {
         didSet {
             if let isPersonPositionValid = isPersonPositionValid {
-                personPositionLabel.textColor = isPersonPositionValid ? UIColor.darkGray : MoviePickerColors.red
+                personPositionLabel.textColor = isPersonPositionValid ? UIColor.darkGray : CinePickerColors.red
             }
         }
     }

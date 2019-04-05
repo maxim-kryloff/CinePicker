@@ -121,10 +121,10 @@ extension MovieService {
         }
         
         private func buildGetMovieDetailsRequest(withMovieIds movieId: Int) -> URLRequest {
-            let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
+            let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId)")
-                .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
-                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
+                .append(queryItem: ("api_key", CinePickerConfig.apiToken))
+                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
                 .build()
             
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
@@ -194,10 +194,10 @@ extension MovieService {
         }
         
         private func buildGetMoviesRequest(withPersonId personId: Int) -> URLRequest {
-            let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
+            let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/person/\(personId)/movie_credits")
-                .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
-                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
+                .append(queryItem: ("api_key", CinePickerConfig.apiToken))
+                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
                 .build()
 
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
@@ -285,10 +285,10 @@ extension MovieService {
         }
         
         private func buildSearchMoviesRequest(withSearchQuery query: String) -> URLRequest {
-            let url: URL! = URLBuilder(string: MoviePickerConfig.apiPath)
+            let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/search/movie")
-                .append(queryItem: ("api_key", MoviePickerConfig.apiToken))
-                .append(queryItem: ("language", MoviePickerConfig.getLanguage()))
+                .append(queryItem: ("api_key", CinePickerConfig.apiToken))
+                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
                 .append(queryItem: ("query", query))
                 .append(queryItem: ("page", String(page)))
                 .build()
