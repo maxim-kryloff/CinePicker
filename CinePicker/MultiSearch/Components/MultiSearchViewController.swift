@@ -75,7 +75,7 @@ class MultiSearchViewController: StatesViewController {
     }
     
     private func defineActionsButton() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .action,
             target: self,
             action: #selector(MultiSearchViewController.onChangeLanguage)
