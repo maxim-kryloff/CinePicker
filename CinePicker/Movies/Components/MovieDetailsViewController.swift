@@ -9,6 +9,8 @@ class MovieDetailsViewController: UIViewController {
     
     public var movieOriginalTitle: String?
     
+    private var actionsBarButtonItem: UIBarButtonItem!
+    
     private var movieDetails: MovieDetails!
     
     private var loadingView: UIView!
@@ -63,11 +65,15 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func defineActionsButton() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+        actionsBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .action,
             target: self,
             action: #selector(MovieDetailsViewController.onPressActionsButton)
         )
+        
+        actionsBarButtonItem.isEnabled = false
+        
+        navigationItem.rightBarButtonItem = actionsBarButtonItem
     }
     
     private func defineTableView() {
@@ -156,6 +162,8 @@ class MovieDetailsViewController: UIViewController {
                 self.movieDetailsTableView.backgroundView = nil
                 
                 self.movieDetails = requestedMovieDetails
+                
+                self.actionsBarButtonItem.isEnabled = true
                 
                 self.isPeopleGoingToBeRequested = true
                 self.movieDetailsTableView.reloadData()
