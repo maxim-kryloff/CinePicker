@@ -6,4 +6,6 @@ class SegueIdentifiers {
     
     public static let showPersonList = "ShowPersonList"
     
+    public static let showSimilarMovies = "ShowSimilarMovies"
+    
 }
