@@ -51,7 +51,7 @@ class SimilarMoviesViewController: StatesViewController {
     private func performRequest() {
         setLoadingState()
         
-        similarMovieService.requestMovies(byMovieId: movie.id, andPage: 1) { (requestedMoviesResult, isLoadingDataFailed) in
+        similarMovieService.requestMovies(byMovieId: movie.id) { (requestedMoviesResult, isLoadingDataFailed) in
             OperationQueue.main.addOperation {
                 self.unsetLoadingState()
                 
