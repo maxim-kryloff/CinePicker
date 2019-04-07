@@ -132,20 +132,18 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
         
         let movie = similarMovies[indexPath.row]
         
-        if !movie.imagePath.isEmpty {
-            if self.loadedImages[movie.imagePath] != nil {
-                return
-            }
-            
-            var cell = cell as! ImageFromInternet
-            
-            UIViewHelper.setImageFromInternet(by: movie.imagePath, at: &cell, using: imageService) { (image) in
-                if image == nil {
-                    return
-                }
-                
-                self.loadedImages[movie.imagePath] = image
-            }
+        if movie.imagePath.isEmpty {
+            return
+        }
+        
+        if self.loadedImages[movie.imagePath] != nil {
+            return
+        }
+        
+        var cell = cell as! ImageFromInternet
+        
+        UIViewHelper.setImageFromInternet(by: movie.imagePath, at: &cell, using: imageService) { (image) in
+            self.loadedImages[movie.imagePath] = image
         }
     }
     

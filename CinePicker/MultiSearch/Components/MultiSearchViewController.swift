@@ -22,6 +22,8 @@ class MultiSearchViewController: StatesViewController {
     
     private var entities: [Popularity] = []
     
+    private var loadedImages: [String: UIImage] = [:]
+    
     private let multiSearchService = MultiSearchService(movieService: MovieService(), personService: PersonService())
     
     private let imageService = ImageService()
@@ -323,9 +325,18 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
             fatalError("Unexpected type of table view cell...")
         }
         
-        if imagePath != nil {
-            var cell = cell as! ImageFromInternet
-            UIViewHelper.setImageFromInternet(by: imagePath!, at: &cell, using: imageService)
+        if imagePath == nil {
+            return
+        }
+        
+        if loadedImages[imagePath!] != nil {
+            return
+        }
+        
+        var cell = cell as! ImageFromInternet
+        
+        UIViewHelper.setImageFromInternet(by: imagePath!, at: &cell, using: imageService) { (image) in
+            self.loadedImages[imagePath!] = image
         }
     }
     
@@ -376,6 +387,10 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     private func getMovieTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, movie: Movie) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
         
+        if let image = loadedImages[movie.imagePath] {
+            cell.imageValue = image
+        }
+        
         cell.title = movie.title
         cell.originalTitle = movie.originalTitle
         cell.releaseYear = movie.releaseYear
@@ -387,6 +402,10 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     
     private func getPersonTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, person: PopularPerson) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
+        
+        if let image = loadedImages[person.imagePath] {
+            cell.imageValue = image
+        }
         
         cell.personName = person.name
         
@@ -403,6 +422,8 @@ extension MultiSearchViewController {
         guard let segueIdentifier = segue.identifier else {
             return
         }
+        
+        loadedImages = [:]
         
         let sender = sender as! TableViewCellSender
         let indexPath = sender.indexPath
@@ -445,6 +466,7 @@ extension MultiSearchViewController: UISearchResultsUpdating {
         }
         
         currentSearchQuery = text
+        loadedImages = [:]
 
         if currentSearchQuery.isEmpty {
             unsetAllStates()

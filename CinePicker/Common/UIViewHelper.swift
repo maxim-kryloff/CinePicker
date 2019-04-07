@@ -15,7 +15,7 @@ class UIViewHelper {
         by imagePath: String,
         at view: inout ImageFromInternet,
         using imageService: ImageService,
-        _ callback: @escaping (_ image: UIImage?) -> Void = { _ in }
+        _ callback: @escaping (_ image: UIImage?) -> Void
     ) {
         let imageUrl: URL! = URLBuilder(string: CinePickerConfig.imagesPath)
             .append(pathComponent: imagePath)
