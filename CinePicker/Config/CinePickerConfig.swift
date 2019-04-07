@@ -11,18 +11,5 @@ class CinePickerConfig {
     public static func getLanguage() -> String {
         return UserDefaults.standard.string(forKey: "Language") ?? "en-US"
     }
-    
-    public static func getLanguageShortcut() -> String {
-        let currentLanguage = getLanguage()
-        
-        switch currentLanguage {
-        case "en-US": return "EN"
-        case "ru-RU": return "RU"
-        case "fr-FR": return "FR"
-        case "de-DE": return "DE"
-        case "it-IT": return "IT"
-        default: fatalError("Unexpected language code: \(currentLanguage)")
-        }
-    }
 
 }

@@ -10,8 +10,6 @@ class MultiSearchViewController: StatesViewController {
         return entityTableView
     }
     
-    private var languageBarButtonItem: UIBarButtonItem!
-    
     private let searchController = UISearchController(searchResultsController: nil)
     
     private var currentSearchQuery = ""
@@ -77,14 +75,11 @@ class MultiSearchViewController: StatesViewController {
     }
     
     private func defineLanguageButton() {
-        languageBarButtonItem = UIBarButtonItem(
-            title: CinePickerConfig.getLanguageShortcut(),
-            style: .plain,
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
             target: self,
             action: #selector(MultiSearchViewController.onChangeLanguage)
         )
-        
-        self.navigationItem.leftBarButtonItem = languageBarButtonItem
     }
     
     private func defineSearchController() {
@@ -92,7 +87,7 @@ class MultiSearchViewController: StatesViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         
-        searchController.searchBar.placeholder = "Search..."
+        searchController.searchBar.placeholder = "Type movie or actor..."
         
         let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField
         searchField?.backgroundColor = CinePickerColors.lightGray
@@ -196,32 +191,47 @@ class MultiSearchViewController: StatesViewController {
     @objc private func onChangeLanguage() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        let titleFontAttributes = [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15, weight: .regular),
+            NSAttributedString.Key.foregroundColor : UIColor.darkGray
+        ]
+        
+        let messageFontAttributes = [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13, weight: .regular),
+            NSAttributedString.Key.foregroundColor : UIColor.lightGray
+        ]
+        
+        let attributedTitle = NSMutableAttributedString(string: "Choose content language", attributes: titleFontAttributes)
+        
+        let attributedMessage = NSMutableAttributedString(
+            string: "This affects only movie details language: title, genres, overview. This doesn't affect user interface, person details and saved bookmarks",
+            attributes: messageFontAttributes
+        )
+        
+        alert.setValue(attributedTitle, forKey: "attributedTitle")
+        alert.setValue(attributedMessage, forKey: "attributedMessage")
+        
         let setEnglish = UIAlertAction(title: "English", style: .default) { (action) in
             UserDefaults.standard.set("en-US", forKey: "Language")
-            self.languageBarButtonItem.title = CinePickerConfig.getLanguageShortcut()
         }
         
         let setRussian = UIAlertAction(title: "Russian", style: .default) { (action) in
             UserDefaults.standard.set("ru-RU", forKey: "Language")
-            self.languageBarButtonItem.title = CinePickerConfig.getLanguageShortcut()
         }
         
         let setFrench = UIAlertAction(title: "French", style: .default) { (action) in
             UserDefaults.standard.set("fr-FR", forKey: "Language")
-            self.languageBarButtonItem.title = CinePickerConfig.getLanguageShortcut()
         }
         
         let setGerman = UIAlertAction(title: "German", style: .default) { (action) in
             UserDefaults.standard.set("de-DE", forKey: "Language")
-            self.languageBarButtonItem.title = CinePickerConfig.getLanguageShortcut()
         }
         
         let setItalian = UIAlertAction(title: "Italian", style: .default) { (action) in
             UserDefaults.standard.set("it-IT", forKey: "Language")
-            self.languageBarButtonItem.title = CinePickerConfig.getLanguageShortcut()
         }
 
-        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(setEnglish)
         alert.addAction(setRussian)
