@@ -10,7 +10,17 @@ class SimilarMoviesViewController: StatesViewController {
     
     public var movie: Movie!
     
+    private var requestedPage: Int = 1
+    
     private var similarMovies: [Movie] = []
+    
+    private var isLiveScrollingRelevant = false
+
+    private var isBeingLiveScrolled = false
+    
+    private let liveScrollingDellayMilliseconds: Int = 1000
+    
+    private var loadedImages: [String: UIImage] = [:]
     
     private let similarMovieService = SimilarMovieService(movieService: MovieService())
     
@@ -46,12 +56,17 @@ class SimilarMoviesViewController: StatesViewController {
         
         let movieTableViewCellNib = UINib(nibName: "MovieTableViewCell", bundle: nil)
         similarMoviesTableView.register(movieTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movie)
+        
+        let loadingTableViewCellNib = UINib(nibName: "LoadingTableViewCell", bundle: nil)
+        similarMoviesTableView.register(loadingTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.loading)
     }
     
     private func performRequest() {
         setLoadingState()
         
-        similarMovieService.requestMovies(byMovieId: movie.id, andPage: 1) { (requestedMoviesResult, isLoadingDataFailed) in
+        let similarMovieRequest = SimilarMovieRequest(movieId: movie.id, page: requestedPage)
+        
+        similarMovieService.requestMovies(request: similarMovieRequest) { (_, requestedMoviesResult, isLoadingDataFailed) in
             OperationQueue.main.addOperation {
                 self.unsetLoadingState()
                 
@@ -65,9 +80,30 @@ class SimilarMoviesViewController: StatesViewController {
                 self.similarMovies = requestedMoviesResult
                 self.updateTable(withData: self.similarMovies)
                 
+                self.isLiveScrollingRelevant = true
+                
                 if self.similarMovies.isEmpty {
                     self.setMessageState(withMessage: "There are no movies found...")
                     return
+                }
+            }
+        }
+    }
+    
+    private func performLiveScrollingRequest() {
+        requestedPage += 1
+        isBeingLiveScrolled = true
+        
+        let deadline = DispatchTime.now() + DispatchTimeInterval.milliseconds(liveScrollingDellayMilliseconds)
+        let similarMovieRequest = SimilarMovieRequest(movieId: movie.id, page: requestedPage)
+        
+        DispatchQueue.main.asyncAfter(deadline: deadline) {
+            self.similarMovieService.requestMovies(request: similarMovieRequest) { (_, requestedMoviesResult, isLoadingDataFailed) in
+                OperationQueue.main.addOperation {
+                    self.isBeingLiveScrolled = false
+                    self.isLiveScrollingRelevant = !isLoadingDataFailed && !requestedMoviesResult.isEmpty
+                    
+                    self.updateTable(withData: self.similarMovies + requestedMoviesResult)
                 }
             }
         }
@@ -81,29 +117,70 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
         return similarMovies.count
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == similarMovies.count - 1 && isLiveScrollingRelevant {
+            return LoadingTableViewCell.standardHeight
+        }
+        
+        return MovieTableViewCell.standardHeight
+    }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if !(cell is MovieTableViewCell) {
+            return
+        }
+        
         let movie = similarMovies[indexPath.row]
         
         if !movie.imagePath.isEmpty {
+            if self.loadedImages[movie.imagePath] != nil {
+                return
+            }
+            
             var cell = cell as! ImageFromInternet
-            UIViewHelper.setImageFromInternet(by: movie.imagePath, at: &cell, using: imageService)
+            
+            UIViewHelper.setImageFromInternet(by: movie.imagePath, at: &cell, using: imageService) { (image) in
+                if image == nil {
+                    return
+                }
+                
+                self.loadedImages[movie.imagePath] = image
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == similarMovies.count - 1 && isLiveScrollingRelevant {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
+            
+            if !isBeingLiveScrolled {
+                performLiveScrollingRequest()
+            }
+            
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
         
-        cell.title = similarMovies[indexPath.row].title
-        cell.originalTitle = similarMovies[indexPath.row].originalTitle
-        cell.releaseYear = similarMovies[indexPath.row].releaseYear
-        cell.voteCount = similarMovies[indexPath.row].voteCount
-        cell.rating = similarMovies[indexPath.row].rating
+        let movie = similarMovies[indexPath.row]
+        
+        if let image = loadedImages[movie.imagePath] {
+            cell.imageValue = image
+        }
+        
+        cell.title = movie.title
+        cell.originalTitle = movie.originalTitle
+        cell.releaseYear = movie.releaseYear
+        cell.voteCount = movie.voteCount
+        cell.rating = movie.rating
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = cell as! MovieTableViewCell
+        guard let cell = cell as? MovieTableViewCell else {
+            return
+        }
         
         guard let imageUrl = cell.imageUrl else {
             return
@@ -113,7 +190,7 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie)!
         
         let sender = TableViewCellSender(cell: cell, indexPath: indexPath)
         
@@ -130,6 +207,8 @@ extension SimilarMoviesViewController {
         guard let segueIdentifier = segue.identifier else {
             return
         }
+        
+        loadedImages = [:]
         
         if segueIdentifier == SegueIdentifiers.showMovieDetails {
             let movieDetailsViewController = segue.destination as! MovieDetailsViewController
