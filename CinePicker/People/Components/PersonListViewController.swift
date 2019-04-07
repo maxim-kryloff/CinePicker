@@ -6,6 +6,8 @@ class PersonListViewController: UIViewController {
     
     public var people: [Person]!
     
+    private var loadedImages: [String: UIImage] = [:]
+    
     private let imageService = ImageService()
     
     override func viewDidLoad() {
@@ -33,9 +35,18 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let person = people[indexPath.row]
         
-        if !person.imagePath.isEmpty {
-            var cell = cell as! ImageFromInternet
-            UIViewHelper.setImageFromInternet(by: person.imagePath, at: &cell, using: imageService)
+        if person.imagePath.isEmpty {
+            return
+        }
+        
+        if loadedImages[person.imagePath] != nil {
+            return
+        }
+        
+        var cell = cell as! ImageFromInternet
+        
+        UIViewHelper.setImageFromInternet(by: person.imagePath, at: &cell, using: imageService) { (image) in
+            self.loadedImages[person.imagePath] = image
         }
     }
     
@@ -43,6 +54,10 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
         
         let person = people[indexPath.row]
+        
+        if let image = loadedImages[person.imagePath] {
+            cell.imageValue = image
+        }
         
         cell.personName = person.name
         
@@ -85,6 +100,8 @@ extension PersonListViewController {
         guard let segueIdentifier = segue.identifier else {
             return
         }
+        
+        loadedImages = [:]
         
         if segueIdentifier == SegueIdentifiers.showPersonMovies {
             let movieListViewController = segue.destination as! MovieListViewController

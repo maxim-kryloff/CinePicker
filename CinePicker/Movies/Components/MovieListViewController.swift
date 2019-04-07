@@ -22,6 +22,8 @@ class MovieListViewController: StatesViewController {
     
     private var isRequestFailed = false
     
+    private var loadedImages: [String: UIImage] = [:]
+    
     private let movieListService = MovieListService(movieService: MovieService())
     
     private let imageService = ImageService()
@@ -146,20 +148,35 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let movie = movies[indexPath.row]
         
-        if !movie.imagePath.isEmpty {
-            var cell = cell as! ImageFromInternet
-            UIViewHelper.setImageFromInternet(by: movie.imagePath, at: &cell, using: imageService)
+        if movie.imagePath.isEmpty {
+            return
+        }
+        
+        if loadedImages[movie.imagePath] != nil {
+            return
+        }
+        
+        var cell = cell as! ImageFromInternet
+        
+        UIViewHelper.setImageFromInternet(by: movie.imagePath, at: &cell, using: imageService) { (image) in
+            self.loadedImages[movie.imagePath] = image
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
         
-        cell.title = movies[indexPath.row].title
-        cell.originalTitle = movies[indexPath.row].originalTitle
-        cell.releaseYear = movies[indexPath.row].releaseYear
-        cell.voteCount = movies[indexPath.row].voteCount
-        cell.rating = movies[indexPath.row].rating
+        let movie = movies[indexPath.row]
+        
+        if let image = loadedImages[movie.imagePath] {
+            cell.imageValue = image
+        }
+        
+        cell.title = movie.title
+        cell.originalTitle = movie.originalTitle
+        cell.releaseYear = movie.releaseYear
+        cell.voteCount = movie.voteCount
+        cell.rating = movie.rating
         
         return cell
     }
@@ -192,6 +209,8 @@ extension MovieListViewController {
         guard let segueIdentifier = segue.identifier else {
             return
         }
+        
+        loadedImages = [:]
         
         if segueIdentifier == SegueIdentifiers.showMovieDetails {
             let movieListViewController = segue.destination as! MovieDetailsViewController

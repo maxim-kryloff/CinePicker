@@ -47,6 +47,8 @@ class MovieDetailsViewController: UIViewController {
     
     private var crewPeopleLimit: Int = 4
     
+    private var loadedImages: [String: UIImage] = [:]
+    
     private let imageService = ImageService()
     
     private var movieDetailsService = MovieDetailsService(movieService: MovieService(), personService: PersonService())
@@ -350,6 +352,10 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     
     private func getMovieDetailsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetails, for: indexPath) as! MovieDetailsTableViewCell
+        
+        if let image = loadedImages[movieDetails.imagePath] {
+            cell.imageValue = image
+        }
 
         cell.title = movieDetails.title
         cell.originalTitle = movieDetails.originalTitle
@@ -399,6 +405,10 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
             
+            if let image = loadedImages[person.imagePath] {
+                cell.imageValue = image
+            }
+            
             cell.personName = character.name
             cell.personPosition = character.characterName
             cell.isPersonPositionValid = !character.isUncredited
@@ -415,6 +425,10 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
             
+            if let image = loadedImages[person.imagePath] {
+                cell.imageValue = image
+            }
+            
             cell.personName = crewPerson.name
             cell.personPosition = crewPerson.jobs.joined(separator: ", ")
             cell.isPersonPositionValid = true
@@ -426,18 +440,36 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     private func prepare(movieDetailsTableViewCell cell: MovieDetailsTableViewCell) {
-        if !movieDetails.imagePath.isEmpty {
-            var cell = cell as ImageFromInternet
-            UIViewHelper.setImageFromInternet(by: movieDetails.imagePath, at: &cell, using: imageService)
+        if movieDetails.imagePath.isEmpty {
+            return
+        }
+        
+        if loadedImages[movieDetails.imagePath] != nil {
+            return
+        }
+        
+        var cell = cell as ImageFromInternet
+        
+        UIViewHelper.setImageFromInternet(by: movieDetails.imagePath, at: &cell, using: imageService) { (image) in
+            self.loadedImages[self.movieDetails.imagePath] = image
         }
     }
     
     private func prepare(personTableViewCell cell: PersonTableViewCell, forRowAt indexPath: IndexPath) {
         let person = people[indexPath.row]
 
-        if !person.imagePath.isEmpty {
-            var cell = cell as ImageFromInternet
-            UIViewHelper.setImageFromInternet(by: person.imagePath, at: &cell, using: imageService)
+        if person.imagePath.isEmpty {
+            return
+        }
+        
+        if loadedImages[person.imagePath] != nil {
+            return
+        }
+        
+        var cell = cell as ImageFromInternet
+        
+        UIViewHelper.setImageFromInternet(by: person.imagePath, at: &cell, using: imageService) { (image) in
+            self.loadedImages[person.imagePath] = image
         }
     }
     
@@ -485,6 +517,8 @@ extension MovieDetailsViewController {
         guard let segueIdentifier = segue.identifier else {
             return
         }
+        
+        loadedImages = [:]
         
         if segueIdentifier == SegueIdentifiers.showSimilarMovies {
             let similarMoviesController = segue.destination as! SimilarMoviesViewController
