@@ -58,7 +58,7 @@ class MovieDetailsViewController: UIViewController {
         
         navigationItem.title = movieOriginalTitle
         
-        defineActionsButton()
+        defineMoreButton()
         defineLoadingView()
         defineFailedLoadingView()
         defineTableView()
@@ -66,9 +66,10 @@ class MovieDetailsViewController: UIViewController {
         performMovieDetailsRequest()
     }
     
-    private func defineActionsButton() {
+    private func defineMoreButton() {
         actionsBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .action,
+            title: "More",
+            style: .plain,
             target: self,
             action: #selector(MovieDetailsViewController.onPressActionsButton)
         )

@@ -34,7 +34,7 @@ class MultiSearchViewController: StatesViewController {
         super.viewDidLoad()
         
         defineNavigationController()
-        defineActionsButton()
+        defineLngButton()
         defineSearchController()
         defineTableView()
         
@@ -76,9 +76,10 @@ class MultiSearchViewController: StatesViewController {
         showTopBarView()
     }
     
-    private func defineActionsButton() {
+    private func defineLngButton() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .action,
+            title: "Lng",
+            style: .plain,
             target: self,
             action: #selector(MultiSearchViewController.onChangeLanguage)
         )
