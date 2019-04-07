@@ -78,7 +78,7 @@ extension PersonService {
             }
             
             let session = URLSession.shared
-            let searchPopularPeopleRequest = buildSearchPopularPeopleRequest(withSearchQuery: searchQuery)
+            let searchPopularPeopleRequest = buildSearchPopularPeopleRequest(withSearchQuery: searchQuery, andPage: page)
             
             let task = session.dataTask(with: searchPopularPeopleRequest) { (data, _, _) in
                 if self.isCancelled {
@@ -101,7 +101,7 @@ extension PersonService {
             task.resume()
         }
         
-        private func buildSearchPopularPeopleRequest(withSearchQuery query: String) -> URLRequest {
+        private func buildSearchPopularPeopleRequest(withSearchQuery query: String, andPage page: Int) -> URLRequest {
             let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/search/person")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))

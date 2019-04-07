@@ -1,5 +1,6 @@
 import UIKit
 
+// TODO: Try to inherit StatesViewController or remove this TODO
 class MovieDetailsViewController: UIViewController {
     
     @IBOutlet weak var movieDetailsTableView: UITableView!
@@ -53,11 +54,20 @@ class MovieDetailsViewController: UIViewController {
         
         navigationItem.title = movieOriginalTitle
         
+        defineActionsButton()
         defineLoadingView()
         defineFailedLoadingView()
         defineTableView()
         
         performMovieDetailsRequest()
+    }
+    
+    private func defineActionsButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(MovieDetailsViewController.onPressActionsButton)
+        )
     }
     
     private func defineTableView() {
@@ -92,6 +102,28 @@ class MovieDetailsViewController: UIViewController {
     
     private func onSelectFailedLoadingCell() {
         performPeopleRequest(fromReloading: true)
+    }
+    
+    @objc private func onPressActionsButton() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let setGoToSimilarMovies = UIAlertAction(title: "Go to Similar Movies", style: .default) { (action) in
+            self.performSegue(withIdentifier: SegueIdentifiers.showSimilarMovies, sender: self.movieDetails)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        alert.addAction(setGoToSimilarMovies)
+        alert.addAction(cancel)
+        
+        // TODO: Make more elegant solution
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
+        present(alert, animated: true, completion: nil)
     }
     
     private func onSelectBookmarkActionCell() {
@@ -443,6 +475,15 @@ extension MovieDetailsViewController {
         super.prepare(for: segue, sender: sender)
         
         guard let segueIdentifier = segue.identifier else {
+            return
+        }
+        
+        if segueIdentifier == SegueIdentifiers.showSimilarMovies {
+            let similarMoviesController = segue.destination as! SimilarMoviesViewController
+            let movieDetails = sender as! MovieDetails
+            
+            similarMoviesController.movie = movieDetails
+            
             return
         }
         
