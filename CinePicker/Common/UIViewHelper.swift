@@ -11,7 +11,12 @@ class UIViewHelper {
         }
     }
     
-    public static func setImageFromInternet(by imagePath: String, at view: inout ImageFromInternet, using imageService: ImageService) {
+    public static func setImageFromInternet(
+        by imagePath: String,
+        at view: inout ImageFromInternet,
+        using imageService: ImageService,
+        _ callback: @escaping (_ image: UIImage?) -> Void = { _ in }
+    ) {
         let imageUrl: URL! = URLBuilder(string: CinePickerConfig.imagesPath)
             .append(pathComponent: imagePath)
             .build()
@@ -26,6 +31,8 @@ class UIViewHelper {
             OperationQueue.main.addOperation {
                 escapedView.imageValue = image
                 update(imageViewWithActivityIndicator: &escapedView, whenIsWaitingForImage: false)
+                
+                callback(image)
             }
         }
     }

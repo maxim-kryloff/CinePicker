@@ -9,16 +9,15 @@ class SimilarMovieService {
     }
     
     public func requestMovies(
-        byMovieId movieId: Int,
-        andPage page: Int,
-        callback: @escaping (_: [Movie], _ isLoadingDataFailed: Bool) -> Void
+        request: SimilarMovieRequest,
+        callback: @escaping (_: SimilarMovieRequest, _: [Movie], _ isLoadingDataFailed: Bool) -> Void
     ) {
-        movieService.getSimilarMovies(byMovieId: movieId, andPage: page) { (result) in
+        movieService.getSimilarMovies(byMovieId: request.movieId, andPage: request.page) { (result) in
             var requestResult: [Movie] = []
             var isFailed = true
             
             defer {
-                callback(requestResult, isFailed)
+                callback(request, requestResult, isFailed)
             }
             
             do {
