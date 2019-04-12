@@ -313,7 +313,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        var imagePath: String? = nil
+        var imagePath: String?
         
         switch cell {
         case is MovieTableViewCell:

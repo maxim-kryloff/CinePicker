@@ -31,6 +31,8 @@
 		3358103922297CEE009F965B /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3358103822297CEE009F965B /* URLBuilder.swift */; };
 		335BA4572236C95C0026979F /* DebounceActionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335BA4562236C95C0026979F /* DebounceActionService.swift */; };
 		335BA45A2236F7770026979F /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335BA4592236F7770026979F /* ResponseError.swift */; };
+		3372A9AB225FAE300064BACD /* MovieDetailsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3372A9AA225FAE300064BACD /* MovieDetailsServiceTests.swift */; };
+		3372A9B3225FB51B0064BACD /* Seeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3372A9B2225FB51B0064BACD /* Seeder.swift */; };
 		337E6CA32242C2F300537CBA /* StatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337E6CA22242C2F300537CBA /* StatesViewController.swift */; };
 		337E6CA622435D1900537CBA /* MovieListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337E6CA522435D1900537CBA /* MovieListService.swift */; };
 		337E6CA82243679400537CBA /* MovieDetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337E6CA72243679400537CBA /* MovieDetailsService.swift */; };
@@ -72,6 +74,16 @@
 		33F3A13D2228275A00AE02EF /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F3A13C2228275A00AE02EF /* Movie.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3372A9AD225FAE300064BACD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 338DC88422148BED006680A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 338DC88B22148BED006680A4;
+			remoteInfo = CinePicker;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		3302A6EB22342CF300466EC2 /* PersonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonTableViewCell.xib; sourceTree = "<group>"; };
 		3302A6ED2234326900466EC2 /* TableViewCellSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellSender.swift; sourceTree = "<group>"; };
@@ -97,6 +109,10 @@
 		3358103822297CEE009F965B /* URLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
 		335BA4562236C95C0026979F /* DebounceActionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebounceActionService.swift; sourceTree = "<group>"; };
 		335BA4592236F7770026979F /* ResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
+		3372A9A8225FAE300064BACD /* CinePickerUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CinePickerUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3372A9AA225FAE300064BACD /* MovieDetailsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsServiceTests.swift; sourceTree = "<group>"; };
+		3372A9AC225FAE300064BACD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3372A9B2225FB51B0064BACD /* Seeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seeder.swift; sourceTree = "<group>"; };
 		337E6CA22242C2F300537CBA /* StatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatesViewController.swift; sourceTree = "<group>"; };
 		337E6CA522435D1900537CBA /* MovieListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListService.swift; sourceTree = "<group>"; };
 		337E6CA72243679400537CBA /* MovieDetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsService.swift; sourceTree = "<group>"; };
@@ -141,6 +157,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3372A9A5225FAE300064BACD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		338DC88922148BED006680A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -214,6 +237,16 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
+		3372A9A9225FAE300064BACD /* CinePickerUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				3372A9AA225FAE300064BACD /* MovieDetailsServiceTests.swift */,
+				3372A9B2225FB51B0064BACD /* Seeder.swift */,
+				3372A9AC225FAE300064BACD /* Info.plist */,
+			);
+			path = CinePickerUnitTests;
+			sourceTree = "<group>";
+		};
 		337E6CA42242C69300537CBA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				338DC88E22148BED006680A4 /* CinePicker */,
+				3372A9A9225FAE300064BACD /* CinePickerUnitTests */,
 				338DC88D22148BED006680A4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -287,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				338DC88C22148BED006680A4 /* CinePicker.app */,
+				3372A9A8225FAE300064BACD /* CinePickerUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -337,6 +372,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3372A9A7225FAE300064BACD /* CinePickerUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3372A9B1225FAE300064BACD /* Build configuration list for PBXNativeTarget "CinePickerUnitTests" */;
+			buildPhases = (
+				3372A9A4225FAE300064BACD /* Sources */,
+				3372A9A5225FAE300064BACD /* Frameworks */,
+				3372A9A6225FAE300064BACD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3372A9AE225FAE300064BACD /* PBXTargetDependency */,
+			);
+			name = CinePickerUnitTests;
+			productName = CinePickerUnitTests;
+			productReference = 3372A9A8225FAE300064BACD /* CinePickerUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		338DC88B22148BED006680A4 /* CinePicker */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 338DC89E22148BED006680A4 /* Build configuration list for PBXNativeTarget "CinePicker" */;
@@ -360,10 +413,14 @@
 		338DC88422148BED006680A4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Maxim Krylov";
 				TargetAttributes = {
+					3372A9A7225FAE300064BACD = {
+						CreatedOnToolsVersion = 10.2;
+						TestTargetID = 338DC88B22148BED006680A4;
+					};
 					338DC88B22148BED006680A4 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
@@ -384,11 +441,19 @@
 			projectRoot = "";
 			targets = (
 				338DC88B22148BED006680A4 /* CinePicker */,
+				3372A9A7225FAE300064BACD /* CinePickerUnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3372A9A6225FAE300064BACD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		338DC88A22148BED006680A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -411,6 +476,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3372A9A4225FAE300064BACD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3372A9B3225FB51B0064BACD /* Seeder.swift in Sources */,
+				3372A9AB225FAE300064BACD /* MovieDetailsServiceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		338DC88822148BED006680A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -471,6 +545,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3372A9AE225FAE300064BACD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 338DC88B22148BED006680A4 /* CinePicker */;
+			targetProxy = 3372A9AD225FAE300064BACD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		338DC89322148BED006680A4 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -491,6 +573,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3372A9AF225FAE300064BACD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6U649BQYH3;
+				INFOPLIST_FILE = CinePickerUnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = maxim.kryloff.CinePickerUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CinePicker.app/CinePicker";
+			};
+			name = Debug;
+		};
+		3372A9B0225FAE300064BACD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6U649BQYH3;
+				INFOPLIST_FILE = CinePickerUnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = maxim.kryloff.CinePickerUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CinePicker.app/CinePicker";
+			};
+			name = Release;
+		};
 		338DC89C22148BED006680A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -652,6 +776,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3372A9B1225FAE300064BACD /* Build configuration list for PBXNativeTarget "CinePickerUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3372A9AF225FAE300064BACD /* Debug */,
+				3372A9B0225FAE300064BACD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		338DC88722148BED006680A4 /* Build configuration list for PBXProject "CinePicker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
