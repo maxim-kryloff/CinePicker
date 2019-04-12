@@ -186,15 +186,16 @@ class MovieDetailsViewController: UIViewController {
             self.movieDetailsTableView.reloadRows(at: [firstPeopleIndexPath], with: .automatic)
         }
         
-        movieDetailsService.requestPeople(by: movieDetails.id) { (requestedMoviePeople, isLoadingDataFailed) in
+        movieDetailsService.requestPeople(by: movieDetails.id) { (requestedMoviePeople) in
             OperationQueue.main.addOperation {
                 self.isPeopleBeingRequested = false
-                self.isPeopleRequestFailed = isLoadingDataFailed
                 
                 let firstPeopleIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
                 
-                if self.isPeopleRequestFailed {
+                guard let requestedMoviePeople = requestedMoviePeople else {
+                    self.isPeopleRequestFailed = true
                     self.movieDetailsTableView.reloadRows(at: [firstPeopleIndexPath], with: .automatic)
+                    
                     return
                 }
                 

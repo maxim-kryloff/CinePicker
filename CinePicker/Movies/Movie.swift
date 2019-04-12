@@ -56,14 +56,14 @@ class Movie {
         let vote_count = json["vote_count"] as? Int
         
         let release_date = json["release_date"] as? String
-        var releaseDateSubstring: Substring? = nil
+        var releaseDateSubstring: Substring?
         
         if let release_date = release_date, release_date.count >= 4 {
             let index = release_date.index(release_date.startIndex, offsetBy: 3)
             releaseDateSubstring = release_date[...index]
         }
         
-        var releaseYear: String? = nil
+        var releaseYear: String?
         
         if let releaseDateSubstring = releaseDateSubstring {
             releaseYear = String(releaseDateSubstring)
