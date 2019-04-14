@@ -10,53 +10,50 @@ class MovieListService {
     
     public func requestMovies(
         by personId: Int,
-        callback: @escaping (_: (cast: [Movie], crew: [Movie]), _ isLoadingDataFailed: Bool) -> Void
+        callback: @escaping (_: (cast: [Movie], crew: [Movie])?) -> Void
     ) {
         let concurrentDispatchQueue = DispatchQueue(label: UUID().uuidString, qos: .utility, attributes: [.concurrent])
         
         let dispatchGroup = DispatchGroup()
         
-        var castMovies: [Movie] = []
-        var isLoadingCastMoviesFailed = true
-        
-        var crewMovies: [Movie] = []
-        var isLoadingCrewMoviesFailed = true
+        var castMovies: [Movie]?
+        var crewMovies: [Movie]?
         
         concurrentDispatchQueue.async(group: dispatchGroup) {
-            self.requestMovies(byPerson: personId, dispatchGroup: dispatchGroup) { (result, isRequestFailed) in
+            self.requestMovies(byPerson: personId, dispatchGroup: dispatchGroup) { (result) in
                 castMovies = result
-                isLoadingCastMoviesFailed = isRequestFailed
             }
         }
         
         concurrentDispatchQueue.async(group: dispatchGroup) {
-            self.requestMovies(byCrewMember: personId, dispatchGroup: dispatchGroup) { (result, isRequestFailed) in
+            self.requestMovies(byCrewMember: personId, dispatchGroup: dispatchGroup) { (result) in
                 crewMovies = result
-                isLoadingCrewMoviesFailed = isRequestFailed
             }
         }
         
         dispatchGroup.notify(queue: concurrentDispatchQueue) {
-            let result = (cast: castMovies, crew: crewMovies)
-            let isFailed = isLoadingCastMoviesFailed || isLoadingCrewMoviesFailed
+            var result: (cast: [Movie], crew: [Movie])?
             
-            callback(result, isFailed)
+            if let cast = castMovies, let crew = crewMovies {
+                result = (cast: cast, crew: crew)
+            }
+            
+            callback(result)
         }
     }
     
     private func requestMovies(
         byPerson personId: Int,
         dispatchGroup: DispatchGroup,
-        callback: @escaping (_: [Movie], _ isLoadingDataFailed: Bool) -> Void
+        callback: @escaping (_: [Movie]?) -> Void
     ) {
         dispatchGroup.enter()
         
         movieService.getMovies(byPerson: personId) { (result) in
-            var requestResult: [Movie] = []
-            var isFailed = true
+            var requestResult: [Movie]?
             
             defer {
-                callback(requestResult, isFailed)
+                callback(requestResult)
                 dispatchGroup.leave()
             }
             
@@ -66,8 +63,6 @@ class MovieListService {
                 requestResult = movies
                     .filter { !$0.imagePath.isEmpty }
                     .filter { !$0.overview.isEmpty }
-                
-                isFailed = false
                 
             } catch ResponseError.dataIsNil {
                 return
@@ -80,16 +75,15 @@ class MovieListService {
     private func requestMovies(
         byCrewMember personId: Int,
         dispatchGroup: DispatchGroup,
-        callback: @escaping (_: [Movie], _ isLoadingDataFailed: Bool) -> Void
+        callback: @escaping (_: [Movie]?) -> Void
     ) {
         dispatchGroup.enter()
         
         movieService.getMovies(byCrewMember: personId) { (result) in
-            var requestResult: [Movie] = []
-            var isFailed = true
+            var requestResult: [Movie]?
             
             defer {
-                callback(requestResult, isFailed)
+                callback(requestResult)
                 dispatchGroup.leave()
             }
             
@@ -99,8 +93,6 @@ class MovieListService {
                 requestResult = movies
                     .filter { !$0.imagePath.isEmpty }
                     .filter { !$0.overview.isEmpty }
-                
-                isFailed = false
                 
             } catch ResponseError.dataIsNil {
                 return
