@@ -100,14 +100,15 @@ class MovieListViewController: StatesViewController {
         isBeingRequested = true
         isRequestFailed = false
         
-        movieListService.requestMovies(by: person.id) { (requestedMoviesResult, isLoadingDataFailed) in
+        movieListService.requestMovies(by: person.id) { (requestedMoviesResult) in
             OperationQueue.main.addOperation {
                 self.unsetLoadingState()
                 
                 self.isBeingRequested = false
-                self.isRequestFailed = isLoadingDataFailed
                 
-                if isLoadingDataFailed {
+                guard let requestedMoviesResult = requestedMoviesResult else {
+                    self.isRequestFailed = true
+                    
                     self.setFailedLoadingState()
                     self.updateTable(withData: [])
                     

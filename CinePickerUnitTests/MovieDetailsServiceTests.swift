@@ -25,8 +25,10 @@ class MovieDetailsServiceTests: XCTestCase {
     }
 
     override func tearDown() {
+        mockMovieService = nil
         mockPersonService = nil
         movieDetailsService = nil
+        
         fakeMovieId = nil
         expectationPromise = nil
         

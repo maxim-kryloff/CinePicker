@@ -58,4 +58,26 @@ class Seeder {
         return crewPeople
     }
     
+    public func getMovies(count: Int) -> [Movie] {
+        var movies: [Movie] = []
+        
+        for index in 0..<count {
+            let movie = Movie(
+                id: index,
+                title: "Movie \(index)",
+                originalTitle: "Movie \(index)",
+                imagePath: "Image Path \(index)",
+                rating: 0.0,
+                voteCount: 0,
+                releaseYear: "2000",
+                overview: "Overview \(index)",
+                popularity: 10
+            )
+            
+            movies.append(movie)
+        }
+        
+        return movies
+    }
+    
 }

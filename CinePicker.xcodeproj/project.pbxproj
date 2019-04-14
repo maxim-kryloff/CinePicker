@@ -18,6 +18,7 @@
 		331E39C422350E3000682742 /* Popularity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331E39C322350E3000682742 /* Popularity.swift */; };
 		331F5BFA224BAA27008A8607 /* CrewPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331F5BF9224BAA27008A8607 /* CrewPerson.swift */; };
 		3320C40822354B4000755EC8 /* PopularPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3320C40722354B4000755EC8 /* PopularPerson.swift */; };
+		3322BAB82263230800E57494 /* MovieListServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3322BAB72263230800E57494 /* MovieListServiceTests.swift */; };
 		33349E70224390D700970A55 /* LoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33349E6F224390D700970A55 /* LoadingTableViewCell.xib */; };
 		3335AAFE222C754800ECB7B3 /* CinePickerColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3335AAFD222C754800ECB7B3 /* CinePickerColors.swift */; };
 		3344AEF1223156E700168A72 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344AEF0223156E700168A72 /* Character.swift */; };
@@ -96,6 +97,7 @@
 		331E39C322350E3000682742 /* Popularity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popularity.swift; sourceTree = "<group>"; };
 		331F5BF9224BAA27008A8607 /* CrewPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewPerson.swift; sourceTree = "<group>"; };
 		3320C40722354B4000755EC8 /* PopularPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPerson.swift; sourceTree = "<group>"; };
+		3322BAB72263230800E57494 /* MovieListServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListServiceTests.swift; sourceTree = "<group>"; };
 		33349E6F224390D700970A55 /* LoadingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingTableViewCell.xib; sourceTree = "<group>"; };
 		3335AAFD222C754800ECB7B3 /* CinePickerColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinePickerColors.swift; sourceTree = "<group>"; };
 		3344AEF0223156E700168A72 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		3372A9A9225FAE300064BACD /* CinePickerUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				3322BAB72263230800E57494 /* MovieListServiceTests.swift */,
 				3372A9AA225FAE300064BACD /* MovieDetailsServiceTests.swift */,
 				3372A9B2225FB51B0064BACD /* Seeder.swift */,
 				3372A9AC225FAE300064BACD /* Info.plist */,
@@ -480,6 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3322BAB82263230800E57494 /* MovieListServiceTests.swift in Sources */,
 				3372A9B3225FB51B0064BACD /* Seeder.swift in Sources */,
 				3372A9AB225FAE300064BACD /* MovieDetailsServiceTests.swift in Sources */,
 			);
