@@ -73,6 +73,7 @@
 		33E9823422400EB4004C0AC2 /* MultiSearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E9823322400EB4004C0AC2 /* MultiSearchRequest.swift */; };
 		33EB3A61222DA5A0002956B8 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EB3A60222DA5A0002956B8 /* MovieDetailsViewController.swift */; };
 		33F3A13D2228275A00AE02EF /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F3A13C2228275A00AE02EF /* Movie.swift */; };
+		33FFDF042264FF64005890FE /* SimilarMovieServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FFDF032264FF64005890FE /* SimilarMovieServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +157,7 @@
 		33E9823322400EB4004C0AC2 /* MultiSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSearchRequest.swift; sourceTree = "<group>"; };
 		33EB3A60222DA5A0002956B8 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		33F3A13C2228275A00AE02EF /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		33FFDF032264FF64005890FE /* SimilarMovieServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarMovieServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +244,7 @@
 		3372A9A9225FAE300064BACD /* CinePickerUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				33FFDF032264FF64005890FE /* SimilarMovieServiceTests.swift */,
 				3322BAB72263230800E57494 /* MovieListServiceTests.swift */,
 				3372A9AA225FAE300064BACD /* MovieDetailsServiceTests.swift */,
 				3372A9B2225FB51B0064BACD /* Seeder.swift */,
@@ -485,6 +488,7 @@
 			files = (
 				3322BAB82263230800E57494 /* MovieListServiceTests.swift in Sources */,
 				3372A9B3225FB51B0064BACD /* Seeder.swift in Sources */,
+				33FFDF042264FF64005890FE /* SimilarMovieServiceTests.swift in Sources */,
 				3372A9AB225FAE300064BACD /* MovieDetailsServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
