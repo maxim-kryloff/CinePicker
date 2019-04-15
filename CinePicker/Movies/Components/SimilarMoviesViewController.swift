@@ -66,11 +66,11 @@ class SimilarMoviesViewController: StatesViewController {
         
         let similarMovieRequest = SimilarMovieRequest(movieId: movie.id, page: requestedPage)
         
-        similarMovieService.requestMovies(request: similarMovieRequest) { (_, requestedMoviesResult, isLoadingDataFailed) in
+        similarMovieService.requestMovies(request: similarMovieRequest) { (_, requestedMoviesResult) in
             OperationQueue.main.addOperation {
                 self.unsetLoadingState()
                 
-                if isLoadingDataFailed {
+                guard let requestedMoviesResult = requestedMoviesResult else {
                     self.setFailedLoadingState()
                     self.updateTable(withData: [])
                     
@@ -80,7 +80,7 @@ class SimilarMoviesViewController: StatesViewController {
                 self.similarMovies = requestedMoviesResult
                 self.updateTable(withData: self.similarMovies)
                 
-                self.isLiveScrollingRelevant = true
+                self.isLiveScrollingRelevant = !requestedMoviesResult.isEmpty
                 
                 if self.similarMovies.isEmpty {
                     self.setMessageState(withMessage: "There are no movies found...")
@@ -98,11 +98,18 @@ class SimilarMoviesViewController: StatesViewController {
         let similarMovieRequest = SimilarMovieRequest(movieId: movie.id, page: requestedPage)
         
         DispatchQueue.main.asyncAfter(deadline: deadline) {
-            self.similarMovieService.requestMovies(request: similarMovieRequest) { (_, requestedMoviesResult, isLoadingDataFailed) in
+            self.similarMovieService.requestMovies(request: similarMovieRequest) { (_, requestedMoviesResult) in
                 OperationQueue.main.addOperation {
                     self.isBeingLiveScrolled = false
-                    self.isLiveScrollingRelevant = !isLoadingDataFailed && !requestedMoviesResult.isEmpty
                     
+                    guard let requestedMoviesResult = requestedMoviesResult else {
+                        self.isLiveScrollingRelevant = false
+                        self.updateTable(withData: self.similarMovies)
+                        
+                        return
+                    }
+                    
+                    self.isLiveScrollingRelevant = !requestedMoviesResult.isEmpty
                     self.updateTable(withData: self.similarMovies + requestedMoviesResult)
                 }
             }
