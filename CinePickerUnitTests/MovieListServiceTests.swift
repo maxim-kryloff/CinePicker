@@ -50,8 +50,6 @@ class MovieListServiceTests: XCTestCase {
             XCTAssertEqual(result!.cast.count, 10)
             XCTAssertEqual(result!.crew.count, 10)
             
-            XCTAssertEqual(self.mockMovieService.callstack, ["getCrewPersonMovies", "getPersonMovies"])
-            
             self.expectationPromise.fulfill()
         }
         
@@ -65,8 +63,6 @@ class MovieListServiceTests: XCTestCase {
         movieListService.requestMovies(by: fakePersonId) { (result) in
             XCTAssertEqual(result!.cast.count, 10)
             XCTAssertEqual(result!.crew.count, 10)
-            
-            XCTAssertEqual(self.mockMovieService.callstack, ["getPersonMovies", "getCrewPersonMovies"])
             
             self.expectationPromise.fulfill()
         }
@@ -110,8 +106,6 @@ extension MovieListServiceTests {
         
         public var isCrewMemberMoviesRequestFailed = false
         
-        public var callstack: [String] = []
-        
         private let seeder = Seeder()
         
         override func getMovies(byPerson personId: Int, callback: @escaping (AsyncResult<[Movie]>) -> Void) {
@@ -123,8 +117,6 @@ extension MovieListServiceTests {
                 let result = self.isPersonMoviesRequestFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movies)
-                
-                self.callstack.append("getPersonMovies")
                 
                 callback(result)
             }
@@ -139,8 +131,6 @@ extension MovieListServiceTests {
                 let result = self.isCrewMemberMoviesRequestFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movies)
-                
-                self.callstack.append("getCrewPersonMovies")
                 
                 callback(result)
             }

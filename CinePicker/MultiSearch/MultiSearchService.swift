@@ -13,42 +13,38 @@ class MultiSearchService {
     
     public func requestEntities(
         request: MultiSearchRequest,
-        callback: @escaping (_: MultiSearchRequest, _: [Popularity], _ isLoadingDataFailed: Bool) -> Void
+        callback: @escaping (_: MultiSearchRequest, _: [Popularity]?) -> Void
     ) {
         let concurrentSearchQueue = DispatchQueue(label: UUID().uuidString, qos: .utility, attributes: [.concurrent])
         
         let dispatchGroup = DispatchGroup()
         
-        var movies: [Movie] = []
-        var isLoadingMoviesFailed = true
-        
-        var popularPeople: [PopularPerson] = []
-        var isLoadingPopularPeopleFailed = true
+        var movies: [Movie]?
+        var popularPeople: [PopularPerson]?
         
         let searchQuery = request.searchQuery
         let page = request.page
         
         concurrentSearchQueue.async(group: dispatchGroup) {
-            self.requestMovies(by: searchQuery, andPage: page, dispatchGroup: dispatchGroup) { (result, isRequestFailed) in
+            self.requestMovies(by: searchQuery, andPage: page, dispatchGroup: dispatchGroup) { (result) in
                 movies = result
-                isLoadingMoviesFailed = isRequestFailed
             }
         }
         
         concurrentSearchQueue.async(group: dispatchGroup) {
-            self.requestPopularPeople(by: searchQuery, andPage: page, dispatchGroup: dispatchGroup) { (result, isRequestFailed) in
+            self.requestPopularPeople(by: searchQuery, andPage: page, dispatchGroup: dispatchGroup) { (result) in
                 popularPeople = result
-                isLoadingPopularPeopleFailed = isRequestFailed
             }
         }
         
         dispatchGroup.notify(queue: concurrentSearchQueue) {
-            let requestedSearchEntities = (popularPeople as [Popularity] + movies as [Popularity])
-                .sorted { $0.popularityValue > $1.popularityValue }
+            var requestedSearchEntities: [Popularity]?
             
-            let isFailed = isLoadingMoviesFailed || isLoadingPopularPeopleFailed
+            if let popularPeople = popularPeople, let movies = movies {
+                requestedSearchEntities = popularPeople + movies
+            }
             
-            callback(request, requestedSearchEntities, isFailed)
+            callback(request, requestedSearchEntities)
         }
     }
     
@@ -56,16 +52,15 @@ class MultiSearchService {
         by searchQuery: String,
         andPage page: Int,
         dispatchGroup: DispatchGroup,
-        callback: @escaping (_ result: [Movie], _ isRequestFailed: Bool) -> Void
+        callback: @escaping (_ result: [Movie]?) -> Void
     ) {
         dispatchGroup.enter()
         
         movieService.searchMovies(by: searchQuery, andPage: page) { (result) in
-            var requestResult: [Movie] = []
-            var isFailed = true
+            var requestResult: [Movie]?
             
             defer {
-                callback(requestResult, isFailed)
+                callback(requestResult)
                 dispatchGroup.leave()
             }
             
@@ -75,9 +70,6 @@ class MultiSearchService {
                 requestResult = movies
                     .filter { !$0.imagePath.isEmpty }
                     .filter { !$0.overview.isEmpty }
-                    .sorted { $0.popularity > $1.popularity }
-                
-                isFailed = false
                 
             } catch ResponseError.dataIsNil {
                 return
@@ -91,16 +83,15 @@ class MultiSearchService {
         by searchQuery: String,
         andPage page: Int,
         dispatchGroup: DispatchGroup,
-        callback: @escaping (_ result: [PopularPerson], _ isRequestFailed: Bool) -> Void
+        callback: @escaping (_ result: [PopularPerson]?) -> Void
     ) {
         dispatchGroup.enter()
         
         personService.searchPopularPeople(by: searchQuery, andPage: page) { (result) in
-            var requestResult: [PopularPerson] = []
-            var isFailed = true
+            var requestResult: [PopularPerson]?
             
             defer {
-                callback(requestResult, isFailed)
+                callback(requestResult)
                 dispatchGroup.leave()
             }
             
@@ -109,9 +100,6 @@ class MultiSearchService {
                 
                 requestResult = popularPeople
                     .filter { !$0.imagePath.isEmpty }
-                    .sorted { $0.popularity > $1.popularity }
-                
-                isFailed = false
 
             } catch ResponseError.dataIsNil {
                 return

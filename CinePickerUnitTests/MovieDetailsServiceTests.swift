@@ -74,8 +74,6 @@ class MovieDetailsServiceTests: XCTestCase {
             XCTAssertEqual(result!.cast.count, 10)
             XCTAssertEqual(result!.crew.count, 10)
             
-            XCTAssertEqual(self.mockPersonService.callstack, ["getCrewPeople", "getCharacters"])
-            
             self.expectationPromise.fulfill()
         }
         
@@ -89,8 +87,6 @@ class MovieDetailsServiceTests: XCTestCase {
         movieDetailsService.requestPeople(by: fakeMovieId) { (result) in
             XCTAssertEqual(result!.cast.count, 10)
             XCTAssertEqual(result!.crew.count, 10)
-            
-            XCTAssertEqual(self.mockPersonService.callstack, ["getCharacters", "getCrewPeople"])
             
             self.expectationPromise.fulfill()
         }
@@ -153,8 +149,6 @@ extension MovieDetailsServiceTests {
         
         public var isDuplicatedCrewPeople = false
         
-        public var callstack: [String] = []
-        
         private let seeder = Seeder()
         
         override func getCharacters(by movieId: Int, callback: @escaping (_: AsyncResult<[Character]>) -> Void) {
@@ -166,8 +160,6 @@ extension MovieDetailsServiceTests {
                 let result = self.isCharactersRequestFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(characters)
-                
-                self.callstack.append("getCharacters")
                 
                 callback(result)
             }
@@ -186,8 +178,6 @@ extension MovieDetailsServiceTests {
                 let result = self.isCrewPeopleRequestFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(crewPeople)
-                
-                self.callstack.append("getCrewPeople")
                 
                 callback(result)
             }

@@ -161,7 +161,7 @@ class MultiSearchViewController: StatesViewController {
         
         let multiSearchRequest = MultiSearchRequest(searchQuery: currentSearchQuery, page: requestedPage)
         
-        multiSearchService.requestEntities(request: multiSearchRequest) { (request, requestedSearchEntities, isLoadingDataFailed) in
+        multiSearchService.requestEntities(request: multiSearchRequest) { (request, requestedSearchEntities) in
             OperationQueue.main.addOperation {
                 if self.currentSearchQuery != request.searchQuery {
                     return
@@ -169,7 +169,7 @@ class MultiSearchViewController: StatesViewController {
                 
                 self.unsetLoadingState()
                 
-                if isLoadingDataFailed {
+                guard let requestedSearchEntities = requestedSearchEntities else {
                     self.setFailedLoadingState()
                     self.updateTable(withData: [])
                     
