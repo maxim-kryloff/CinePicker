@@ -80,4 +80,21 @@ class Seeder {
         return movies
     }
     
+    public func getPopularPeople(count: Int) -> [PopularPerson] {
+        var people: [PopularPerson] = []
+        
+        for index in 0..<count {
+            let person = PopularPerson(
+                id: index,
+                name: "Name \(index)",
+                imagePath: "Image Path \(index)",
+                popularity: Double(index)
+            )
+            
+            people.append(person)
+        }
+        
+        return people
+    }
+    
 }
