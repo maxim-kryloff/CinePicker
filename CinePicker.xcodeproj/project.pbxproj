@@ -58,6 +58,7 @@
 		3390056622429B7A001CAF91 /* MessageUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3390056522429B7A001CAF91 /* MessageUIView.swift */; };
 		339005682242A120001CAF91 /* LoadingUIView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 339005672242A120001CAF91 /* LoadingUIView.xib */; };
 		33A1306D223935FE009B804E /* AsyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A1306C223935FE009B804E /* AsyncResult.swift */; };
+		33A1FAF2226E3E12007003E2 /* DebounceActionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A1FAF1226E3E12007003E2 /* DebounceActionServiceTests.swift */; };
 		33AC4A0D222EEF12001F7EAB /* MovieDetailsOverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC4A0C222EEF12001F7EAB /* MovieDetailsOverviewTableViewCell.swift */; };
 		33AC4A0F222EF7FF001F7EAB /* MovieDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC4A0E222EF7FF001F7EAB /* MovieDetailsTableViewCell.swift */; };
 		33C032A4224277CC009D78F6 /* FailedLoadingUIView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33C032A3224277CC009D78F6 /* FailedLoadingUIView.xib */; };
@@ -143,6 +144,7 @@
 		3390056522429B7A001CAF91 /* MessageUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageUIView.swift; sourceTree = "<group>"; };
 		339005672242A120001CAF91 /* LoadingUIView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingUIView.xib; sourceTree = "<group>"; };
 		33A1306C223935FE009B804E /* AsyncResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncResult.swift; sourceTree = "<group>"; };
+		33A1FAF1226E3E12007003E2 /* DebounceActionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebounceActionServiceTests.swift; sourceTree = "<group>"; };
 		33AC4A0C222EEF12001F7EAB /* MovieDetailsOverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsOverviewTableViewCell.swift; sourceTree = "<group>"; };
 		33AC4A0E222EF7FF001F7EAB /* MovieDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		33C032A3224277CC009D78F6 /* FailedLoadingUIView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FailedLoadingUIView.xib; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 		3372A9A9225FAE300064BACD /* CinePickerUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				33A1FAF1226E3E12007003E2 /* DebounceActionServiceTests.swift */,
 				335503EE22663ECC003ED14C /* MultiSearchServiceTests.swift */,
 				33FFDF032264FF64005890FE /* SimilarMovieServiceTests.swift */,
 				3322BAB72263230800E57494 /* MovieListServiceTests.swift */,
@@ -489,6 +492,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33A1FAF2226E3E12007003E2 /* DebounceActionServiceTests.swift in Sources */,
 				3322BAB82263230800E57494 /* MovieListServiceTests.swift in Sources */,
 				3372A9B3225FB51B0064BACD /* Seeder.swift in Sources */,
 				33FFDF042264FF64005890FE /* SimilarMovieServiceTests.swift in Sources */,
