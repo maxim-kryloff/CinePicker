@@ -5,7 +5,7 @@ class MovieDetailsOverviewTableViewCell: UITableViewCell {
     @IBOutlet weak var overviewLabel: UILabel!
     
     public static var standardHeight: CGFloat {
-        return UITableView.automaticDimension
+        return UITableViewAutomaticDimension
     }
     
     public var overview: String? {

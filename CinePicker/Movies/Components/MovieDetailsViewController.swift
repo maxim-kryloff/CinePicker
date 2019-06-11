@@ -80,7 +80,7 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func defineTableView() {
-        movieDetailsTableView.rowHeight = UITableView.automaticDimension
+        movieDetailsTableView.rowHeight = UITableViewAutomaticDimension
         movieDetailsTableView.estimatedRowHeight = 80
         movieDetailsTableView.tableFooterView = UIView(frame: .zero)
         
