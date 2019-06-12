@@ -9,7 +9,11 @@ protocol ImageFromInternet {
     
     var imageValue: UIImage? { get set }
     
+    var originalImageValue: UIImage? { get set }
+    
     var imageUrl: URL? { get set }
+    
+    var originalImageUrl: URL? { get set }
     
     func activityIndicatorStartAnimating () -> Void
     

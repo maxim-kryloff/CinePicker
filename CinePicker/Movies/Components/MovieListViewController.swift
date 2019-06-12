@@ -22,7 +22,7 @@ class MovieListViewController: StatesViewController {
     
     private var isRequestFailed = false
     
-    private var loadedImages: [String: UIImage] = [:]
+    private var loadedImages: [String: (image: UIImage, originalImage: UIImage)] = [:]
     
     private let movieListService = MovieListService(movieService: MovieService())
     
@@ -38,6 +38,8 @@ class MovieListViewController: StatesViewController {
         } else {
             updateTable(withData: crewMovies)
         }
+        
+        loadedImages = [:]
         
         if movies.isEmpty {
             self.setMessageState(withMessage: "There are no movies found...")
@@ -159,8 +161,8 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         
         var cell = cell as! ImageFromInternet
         
-        UIViewHelper.setImageFromInternet(by: movie.imagePath, at: &cell, using: imageService) { (image) in
-            self.loadedImages[movie.imagePath] = image
+        UIViewHelper.setImagesFromInternet(by: movie.imagePath, at: &cell, using: imageService) { (images) in
+            self.loadedImages[movie.imagePath] = images
         }
     }
     
@@ -169,8 +171,13 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let movie = movies[indexPath.row]
         
-        if let image = loadedImages[movie.imagePath] {
+        if let (image, originalImage) = loadedImages[movie.imagePath] {
             cell.imageValue = image
+            cell.originalImageValue = originalImage
+        }
+        
+        cell.onTapImageViewHandler = { (originalImageValue) in
+            UIViewHelper.openImage(from: self, image: originalImageValue)
         }
         
         cell.title = movie.title
@@ -185,11 +192,13 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let cell = cell as! MovieTableViewCell
         
-        guard let imageUrl = cell.imageUrl else {
-            return
+        if let imageUrl = cell.imageUrl {
+            imageService.cancelDownloading(for: imageUrl)
         }
-    
-        imageService.cancelDownloading(for: imageUrl)
+        
+        if let originalImageUrl = cell.originalImageUrl {
+            imageService.cancelDownloading(for: originalImageUrl)
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
