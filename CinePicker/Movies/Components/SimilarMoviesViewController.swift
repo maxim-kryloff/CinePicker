@@ -20,7 +20,7 @@ class SimilarMoviesViewController: StatesViewController {
     
     private let liveScrollingDellayMilliseconds: Int = 1000
     
-    private var loadedImages: [String: UIImage] = [:]
+    private var loadedImages: [String: (image: UIImage, originalImage: UIImage)] = [:]
     
     private let similarMovieService = SimilarMovieService(movieService: MovieService())
     
@@ -149,8 +149,8 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
         
         var cell = cell as! ImageFromInternet
         
-        UIViewHelper.setImageFromInternet(by: movie.imagePath, at: &cell, using: imageService) { (image) in
-            self.loadedImages[movie.imagePath] = image
+        UIViewHelper.setImagesFromInternet(by: movie.imagePath, at: &cell, using: imageService) { (images) in
+            self.loadedImages[movie.imagePath] = images
         }
     }
     
@@ -169,8 +169,13 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
         
         let movie = similarMovies[indexPath.row]
         
-        if let image = loadedImages[movie.imagePath] {
+        if let (image, originalImage) = loadedImages[movie.imagePath] {
             cell.imageValue = image
+            cell.originalImageValue = originalImage
+        }
+        
+        cell.onTapImageViewHandler = { (originalImageValue) in
+            UIViewHelper.openImage(from: self, image: originalImageValue)
         }
         
         cell.title = movie.title

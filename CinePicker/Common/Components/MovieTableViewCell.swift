@@ -55,9 +55,17 @@ class MovieTableViewCell: UITableViewCell {
         }
     }
     
+    public var onTapImageViewHandler: ((UIImage) -> Void)?
+    
     private var _imageUrl: URL?
     
+    private var _originalImageUrl: URL?
+    
+    private var _originalImageValue: UIImage?
+    
     private let defaultImage = UIImage(named: "default_movie_image")
+    
+    private var imageViewGestureRecognizer: UITapGestureRecognizer!
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -73,6 +81,12 @@ class MovieTableViewCell: UITableViewCell {
     
     private func setDefaultState() {
         movieImageImageView.image = defaultImage
+        
+        if let imageViewGestureRecognizer = imageViewGestureRecognizer {
+            movieImageImageView.removeGestureRecognizer(imageViewGestureRecognizer)
+        }
+        
+        movieImageImageView.isUserInteractionEnabled = false
         titleLabel.text = nil
         originalTitleLabel.text = nil
         releaseYearLabel.text = nil
@@ -83,6 +97,26 @@ class MovieTableViewCell: UITableViewCell {
         movieImageActivityIndicator.alpha = 0.0
         
         imageUrl = nil
+        originalImageUrl = nil
+        originalImageValue = nil
+        
+        imageViewGestureRecognizer = UITapGestureRecognizer(
+            target: self, action: #selector(onImageViewTap(tapGestureRecognizer:))
+        )
+        
+        onTapImageViewHandler = nil
+    }
+    
+    @objc private func onImageViewTap(tapGestureRecognizer: UITapGestureRecognizer) {
+        if !(tapGestureRecognizer.view is UIImageView) {
+            return
+        }
+        
+        guard let originalImageValue = originalImageValue else {
+            return
+        }
+        
+        onTapImageViewHandler?(originalImageValue)
     }
     
 }
@@ -104,9 +138,29 @@ extension MovieTableViewCell: ImageFromInternet {
         set { movieImageImageView.image = newValue ?? defaultImage }
     }
     
+    var originalImageValue: UIImage? {
+        get { return _originalImageValue }
+        set { _originalImageValue = newValue }
+    }
+    
     var imageUrl: URL? {
         get { return _imageUrl }
         set { _imageUrl = newValue }
+    }
+    
+    var originalImageUrl: URL? {
+        get {
+            return _originalImageUrl
+        }
+        
+        set {
+            if let newValue = newValue {
+                movieImageImageView.addGestureRecognizer(imageViewGestureRecognizer)
+                movieImageImageView.isUserInteractionEnabled = true
+                
+                _originalImageUrl = newValue
+            }
+        }
     }
     
     func activityIndicatorStartAnimating() {

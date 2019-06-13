@@ -34,9 +34,17 @@ class PersonTableViewCell: UITableViewCell {
         }
     }
     
+    public var onTapImageViewHandler: ((UIImage) -> Void)?
+    
     private var _imageUrl: URL?
     
+    private var _originalImageUrl: URL?
+    
+    private var _originalImageValue: UIImage?
+    
     private let defaultImage = UIImage(named: "default_person_image")
+    
+    private var imageViewGestureRecognizer: UITapGestureRecognizer!
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -52,6 +60,12 @@ class PersonTableViewCell: UITableViewCell {
     
     private func setDefaultState() {
         personImageImageView.image = defaultImage
+        
+        if let imageViewGestureRecognizer = imageViewGestureRecognizer {
+            personImageImageView.removeGestureRecognizer(imageViewGestureRecognizer)
+        }
+        
+        personImageImageView.isUserInteractionEnabled = false
         personNameLabel.text = nil
         personPositionLabel.text = nil
         personPositionLabel.textColor = UIColor.darkGray
@@ -60,6 +74,26 @@ class PersonTableViewCell: UITableViewCell {
         personImageActivityIndicator.alpha = 0.0
         
         imageUrl = nil
+        originalImageUrl = nil
+        originalImageValue = nil
+        
+        imageViewGestureRecognizer = UITapGestureRecognizer(
+            target: self, action: #selector(onImageViewTap(tapGestureRecognizer:))
+        )
+        
+        onTapImageViewHandler = nil
+    }
+    
+    @objc private func onImageViewTap(tapGestureRecognizer: UITapGestureRecognizer) {
+        if !(tapGestureRecognizer.view is UIImageView) {
+            return
+        }
+        
+        guard let originalImageValue = originalImageValue else {
+            return
+        }
+        
+        onTapImageViewHandler?(originalImageValue)
     }
     
 }
@@ -81,9 +115,29 @@ extension PersonTableViewCell: ImageFromInternet {
         set { personImageImageView.image = newValue ?? defaultImage }
     }
     
+    var originalImageValue: UIImage? {
+        get {
+            return _originalImageValue
+        }
+        
+        set {
+            if let newValue = newValue {
+                personImageImageView.addGestureRecognizer(imageViewGestureRecognizer)
+                personImageImageView.isUserInteractionEnabled = true
+                
+                _originalImageValue = newValue
+            }
+        }
+    }
+    
     var imageUrl: URL? {
         get { return _imageUrl }
         set { _imageUrl = newValue }
+    }
+    
+    var originalImageUrl: URL? {
+        get { return _originalImageUrl }
+        set { _originalImageUrl = newValue }
     }
     
     func activityIndicatorStartAnimating() {

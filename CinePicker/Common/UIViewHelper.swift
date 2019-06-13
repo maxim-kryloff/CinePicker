@@ -1,4 +1,5 @@
 import UIKit
+import Agrume
 
 class UIViewHelper {
     
@@ -11,30 +12,69 @@ class UIViewHelper {
         }
     }
     
-    public static func setImageFromInternet(
+    public static func setImagesFromInternet(
         by imagePath: String,
         at view: inout ImageFromInternet,
         using imageService: ImageService,
-        _ callback: @escaping (_ image: UIImage?) -> Void
+        _ callback: @escaping (_: (image: UIImage, originalImage: UIImage)?) -> Void
     ) {
-        let imageUrl: URL! = URLBuilder(string: CinePickerConfig.imagesPath)
-            .append(pathComponent: imagePath)
-            .build()
+        let imageUrl = getImageUrl(configImagePath: CinePickerConfig.imagePath, imagePath: imagePath)
+        let originalImageUrl = getImageUrl(configImagePath: CinePickerConfig.originalImagePath, imagePath: imagePath)
         
         view.imageUrl = imageUrl
+        view.originalImageUrl = originalImageUrl
         
         update(imageViewWithActivityIndicator: &view, whenIsWaitingForImage: true)
         
         var escapedView = view
         
-        imageService.download(by: imageUrl) { (image) in
-            OperationQueue.main.addOperation {
-                escapedView.imageValue = image
-                update(imageViewWithActivityIndicator: &escapedView, whenIsWaitingForImage: false)
-                
-                callback(image)
+        let concurrentSearchQueue = DispatchQueue(label: UUID().uuidString, qos: .utility, attributes: [.concurrent])
+        
+        let dispatchGroup = DispatchGroup()
+        
+        var image: UIImage?
+        var originalImage: UIImage?
+        
+        concurrentSearchQueue.async(group: dispatchGroup) {
+            dispatchGroup.enter()
+            
+            imageService.download(by: imageUrl) { (receivedImage) in
+                image = receivedImage
+                dispatchGroup.leave()
             }
         }
+        
+        concurrentSearchQueue.async(group: dispatchGroup) {
+            dispatchGroup.enter()
+            
+            imageService.download(by: originalImageUrl) { (receivedOriginalImage) in
+                originalImage = receivedOriginalImage
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: concurrentSearchQueue) {
+            OperationQueue.main.addOperation {
+                var images: (image: UIImage, originalImage: UIImage)?
+                
+                defer {
+                    update(imageViewWithActivityIndicator: &escapedView, whenIsWaitingForImage: false)
+                    callback(images)
+                }
+                
+                if let image = image, let originalImage = originalImage {
+                    escapedView.imageValue = image
+                    escapedView.originalImageValue = originalImage
+                    
+                    images = (image: image, originalImage: originalImage)
+                }
+            }
+        }
+    }
+    
+    public static func openImage(from viewController: UIViewController, image: UIImage) {
+        let agrume = Agrume(image: image, background: .colored(.white))
+        agrume.show(from: viewController)
     }
     
     public static func getHeaderView(
@@ -109,6 +149,10 @@ class UIViewHelper {
             width: tableView.bounds.size.width,
             height: tableView.bounds.size.height
         )
+    }
+    
+    private static func getImageUrl(configImagePath: String, imagePath: String) -> URL {
+        return URLBuilder(string: configImagePath).append(pathComponent: imagePath).build()!
     }
     
 }

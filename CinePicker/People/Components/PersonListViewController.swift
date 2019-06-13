@@ -6,7 +6,7 @@ class PersonListViewController: UIViewController {
     
     public var people: [Person]!
     
-    private var loadedImages: [String: UIImage] = [:]
+    private var loadedImages: [String: (image: UIImage, originalImage: UIImage)] = [:]
     
     private let imageService = ImageService()
     
@@ -45,8 +45,8 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         
         var cell = cell as! ImageFromInternet
         
-        UIViewHelper.setImageFromInternet(by: person.imagePath, at: &cell, using: imageService) { (image) in
-            self.loadedImages[person.imagePath] = image
+        UIViewHelper.setImagesFromInternet(by: person.imagePath, at: &cell, using: imageService) { (images) in
+            self.loadedImages[person.imagePath] = images
         }
     }
     
@@ -55,8 +55,13 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let person = people[indexPath.row]
         
-        if let image = loadedImages[person.imagePath] {
+        if let (image, originalImage) = loadedImages[person.imagePath] {
             cell.imageValue = image
+            cell.originalImageValue = originalImage
+        }
+        
+        cell.onTapImageViewHandler = { (originalImageValue) in
+            UIViewHelper.openImage(from: self, image: originalImageValue)
         }
         
         cell.personName = person.name
@@ -75,11 +80,13 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let cell = cell as! PersonTableViewCell
         
-        guard let imageUrl = cell.imageUrl else {
-            return
+        if let imageUrl = cell.imageUrl {
+            imageService.cancelDownloading(for: imageUrl)
         }
         
-        imageService.cancelDownloading(for: imageUrl)
+        if let originalImageUrl = cell.originalImageUrl {
+            imageService.cancelDownloading(for: originalImageUrl)
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
