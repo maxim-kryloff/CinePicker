@@ -22,7 +22,7 @@ class MovieListViewController: StatesViewController {
     
     private var isRequestFailed = false
     
-    private var loadedImages: [String: (image: UIImage, originalImage: UIImage)] = [:]
+    private var loadedImages: [String: UIImage] = [:]
     
     private let movieListService = MovieListService(movieService: MovieService())
     
@@ -38,8 +38,6 @@ class MovieListViewController: StatesViewController {
         } else {
             updateTable(withData: crewMovies)
         }
-        
-        loadedImages = [:]
         
         if movies.isEmpty {
             self.setMessageState(withMessage: "There are no movies found...")
@@ -149,20 +147,20 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let movie = movies[indexPath.row]
+        let imagePath = movies[indexPath.row].imagePath
         
-        if movie.imagePath.isEmpty {
+        if imagePath.isEmpty {
             return
         }
         
-        if loadedImages[movie.imagePath] != nil {
+        if loadedImages[imagePath] != nil {
             return
         }
         
         var cell = cell as! ImageFromInternet
         
-        UIViewHelper.setImagesFromInternet(by: movie.imagePath, at: &cell, using: imageService) { (images) in
-            self.loadedImages[movie.imagePath] = images
+        UIViewHelper.setImagesFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
+            self.loadedImages[imagePath] = image
         }
     }
     
@@ -171,13 +169,12 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let movie = movies[indexPath.row]
         
-        if let (image, originalImage) = loadedImages[movie.imagePath] {
+        if let image = loadedImages[movie.imagePath] {
             cell.imageValue = image
-            cell.originalImageValue = originalImage
         }
         
-        cell.onTapImageViewHandler = { (originalImageValue) in
-            UIViewHelper.openImage(from: self, image: originalImageValue)
+        cell.onTapImageViewHandler = { (imageValue) in
+            UIViewHelper.openImage(from: self, image: imageValue)
         }
         
         cell.title = movie.title
@@ -194,10 +191,6 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         
         if let imageUrl = cell.imageUrl {
             imageService.cancelDownloading(for: imageUrl)
-        }
-        
-        if let originalImageUrl = cell.originalImageUrl {
-            imageService.cancelDownloading(for: originalImageUrl)
         }
     }
     

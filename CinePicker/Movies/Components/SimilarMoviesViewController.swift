@@ -20,7 +20,7 @@ class SimilarMoviesViewController: StatesViewController {
     
     private let liveScrollingDellayMilliseconds: Int = 1000
     
-    private var loadedImages: [String: (image: UIImage, originalImage: UIImage)] = [:]
+    private var loadedImages: [String: UIImage] = [:]
     
     private let similarMovieService = SimilarMovieService(movieService: MovieService())
     
@@ -137,20 +137,20 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
             return
         }
         
-        let movie = similarMovies[indexPath.row]
+        let imagePath = similarMovies[indexPath.row].imagePath
         
-        if movie.imagePath.isEmpty {
+        if imagePath.isEmpty {
             return
         }
         
-        if self.loadedImages[movie.imagePath] != nil {
+        if self.loadedImages[imagePath] != nil {
             return
         }
         
         var cell = cell as! ImageFromInternet
         
-        UIViewHelper.setImagesFromInternet(by: movie.imagePath, at: &cell, using: imageService) { (images) in
-            self.loadedImages[movie.imagePath] = images
+        UIViewHelper.setImagesFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
+            self.loadedImages[imagePath] = image
         }
     }
     
@@ -169,13 +169,12 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
         
         let movie = similarMovies[indexPath.row]
         
-        if let (image, originalImage) = loadedImages[movie.imagePath] {
+        if let image = loadedImages[movie.imagePath] {
             cell.imageValue = image
-            cell.originalImageValue = originalImage
         }
         
-        cell.onTapImageViewHandler = { (originalImageValue) in
-            UIViewHelper.openImage(from: self, image: originalImageValue)
+        cell.onTapImageViewHandler = { (imageValue) in
+            UIViewHelper.openImage(from: self, image: imageValue)
         }
         
         cell.title = movie.title

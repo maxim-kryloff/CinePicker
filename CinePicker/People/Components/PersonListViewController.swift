@@ -6,7 +6,7 @@ class PersonListViewController: UIViewController {
     
     public var people: [Person]!
     
-    private var loadedImages: [String: (image: UIImage, originalImage: UIImage)] = [:]
+    private var loadedImages: [String: UIImage] = [:]
     
     private let imageService = ImageService()
     
@@ -33,20 +33,20 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let person = people[indexPath.row]
+        let imagePath = people[indexPath.row].imagePath
         
-        if person.imagePath.isEmpty {
+        if imagePath.isEmpty {
             return
         }
         
-        if loadedImages[person.imagePath] != nil {
+        if loadedImages[imagePath] != nil {
             return
         }
         
         var cell = cell as! ImageFromInternet
         
-        UIViewHelper.setImagesFromInternet(by: person.imagePath, at: &cell, using: imageService) { (images) in
-            self.loadedImages[person.imagePath] = images
+        UIViewHelper.setImagesFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
+            self.loadedImages[imagePath] = image
         }
     }
     
@@ -55,13 +55,12 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let person = people[indexPath.row]
         
-        if let (image, originalImage) = loadedImages[person.imagePath] {
+        if let image = loadedImages[person.imagePath] {
             cell.imageValue = image
-            cell.originalImageValue = originalImage
         }
         
-        cell.onTapImageViewHandler = { (originalImageValue) in
-            UIViewHelper.openImage(from: self, image: originalImageValue)
+        cell.onTapImageViewHandler = { (imageValue) in
+            UIViewHelper.openImage(from: self, image: imageValue)
         }
         
         cell.personName = person.name
@@ -82,10 +81,6 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         
         if let imageUrl = cell.imageUrl {
             imageService.cancelDownloading(for: imageUrl)
-        }
-        
-        if let originalImageUrl = cell.originalImageUrl {
-            imageService.cancelDownloading(for: originalImageUrl)
         }
     }
     

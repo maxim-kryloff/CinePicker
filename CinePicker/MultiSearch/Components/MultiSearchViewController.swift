@@ -22,7 +22,7 @@ class MultiSearchViewController: StatesViewController {
     
     private var entities: [Popularity] = []
     
-    private var loadedImages: [String: (image: UIImage, originalImage: UIImage)] = [:]
+    private var loadedImages: [String: UIImage] = [:]
     
     private let multiSearchService = MultiSearchService(movieService: MovieService(), personService: PersonService())
     
@@ -336,8 +336,8 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         
         var cell = cell as! ImageFromInternet
         
-        UIViewHelper.setImagesFromInternet(by: imagePath, at: &cell, using: imageService) { (images) in
-            self.loadedImages[imagePath] = images
+        UIViewHelper.setImagesFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
+            self.loadedImages[imagePath] = image
         }
     }
     
@@ -356,10 +356,6 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         
         if let imageUrl = cell.imageUrl {
             imageService.cancelDownloading(for: imageUrl)
-        }
-        
-        if let originalImageUrl = cell.originalImageUrl {
-            imageService.cancelDownloading(for: originalImageUrl)
         }
     }
     
@@ -390,13 +386,12 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     private func getMovieTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, movie: Movie) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
         
-        if let (image, originalImage) = loadedImages[movie.imagePath] {
+        if let image = loadedImages[movie.imagePath] {
             cell.imageValue = image
-            cell.originalImageValue = originalImage
         }
         
-        cell.onTapImageViewHandler = { (originalImageValue) in
-            UIViewHelper.openImage(from: self, image: originalImageValue)
+        cell.onTapImageViewHandler = { (imageValue) in
+            UIViewHelper.openImage(from: self, image: imageValue)
         }
         
         cell.title = movie.title
@@ -411,13 +406,12 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     private func getPersonTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, person: PopularPerson) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
         
-        if let (image, originalImage) = loadedImages[person.imagePath] {
+        if let image = loadedImages[person.imagePath] {
             cell.imageValue = image
-            cell.originalImageValue = originalImage
         }
         
-        cell.onTapImageViewHandler = { (originalImageValue) in
-            UIViewHelper.openImage(from: self, image: originalImageValue)
+        cell.onTapImageViewHandler = { (imageValue) in
+            UIViewHelper.openImage(from: self, image: imageValue)
         }
         
         cell.personName = person.name
