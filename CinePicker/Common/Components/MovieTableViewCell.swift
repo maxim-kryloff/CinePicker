@@ -59,10 +59,6 @@ class MovieTableViewCell: UITableViewCell {
     
     private var _imageUrl: URL?
     
-    private var _originalImageUrl: URL?
-    
-    private var _originalImageValue: UIImage?
-    
     private let defaultImage = UIImage(named: "default_movie_image")
     
     override func prepareForReuse() {
@@ -86,7 +82,6 @@ class MovieTableViewCell: UITableViewCell {
         
         movieImageImageView.gestureRecognizers = nil
         movieImageImageView.addGestureRecognizer(imageViewTapGestureRecognizer)
-        
         movieImageImageView.isUserInteractionEnabled = false
         titleLabel.text = nil
         originalTitleLabel.text = nil
@@ -97,9 +92,7 @@ class MovieTableViewCell: UITableViewCell {
         movieImageImageView.alpha = 1.0
         movieImageActivityIndicator.alpha = 0.0
         
-        _imageUrl = nil
-        _originalImageUrl = nil
-        _originalImageValue = nil
+        imageUrl = nil
         
         onTapImageViewHandler = nil
     }
@@ -109,11 +102,11 @@ class MovieTableViewCell: UITableViewCell {
             return
         }
         
-        guard let originalImageValue = originalImageValue else {
+        guard let imageValue = imageValue else {
             return
         }
         
-        onTapImageViewHandler?(originalImageValue)
+        onTapImageViewHandler?(imageValue)
     }
     
 }
@@ -131,29 +124,19 @@ extension MovieTableViewCell: ImageFromInternet {
     }
     
     var imageValue: UIImage? {
-        get { return movieImageImageView.image }
-        set { movieImageImageView.image = newValue ?? defaultImage }
-    }
-    
-    var originalImageValue: UIImage? {
         get {
-            return _originalImageValue
+            return movieImageImageView.image
         }
         
         set {
             movieImageImageView.isUserInteractionEnabled = newValue != nil
-            _originalImageValue = newValue
+            movieImageImageView.image = newValue ?? defaultImage
         }
     }
     
     var imageUrl: URL? {
         get { return _imageUrl }
         set { _imageUrl = newValue }
-    }
-    
-    var originalImageUrl: URL? {
-        get { return _originalImageUrl }
-        set { _originalImageUrl = newValue }
     }
     
     func activityIndicatorStartAnimating() {

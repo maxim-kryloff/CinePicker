@@ -38,10 +38,6 @@ class PersonTableViewCell: UITableViewCell {
     
     private var _imageUrl: URL?
     
-    private var _originalImageUrl: URL?
-    
-    private var _originalImageValue: UIImage?
-    
     private let defaultImage = UIImage(named: "default_person_image")
     
     override func prepareForReuse() {
@@ -73,10 +69,8 @@ class PersonTableViewCell: UITableViewCell {
         personImageImageView.alpha = 1.0
         personImageActivityIndicator.alpha = 0.0
         
-        _imageUrl = nil
-        _originalImageUrl = nil
-        _originalImageValue = nil
-        
+        imageUrl = nil
+
         onTapImageViewHandler = nil
     }
     
@@ -85,11 +79,11 @@ class PersonTableViewCell: UITableViewCell {
             return
         }
         
-        guard let originalImageValue = originalImageValue else {
+        guard let imageValue = imageValue else {
             return
         }
         
-        onTapImageViewHandler?(originalImageValue)
+        onTapImageViewHandler?(imageValue)
     }
     
 }
@@ -107,29 +101,19 @@ extension PersonTableViewCell: ImageFromInternet {
     }
     
     var imageValue: UIImage? {
-        get { return personImageImageView.image }
-        set { personImageImageView.image = newValue ?? defaultImage }
-    }
-    
-    var originalImageValue: UIImage? {
         get {
-            return _originalImageValue
+            return personImageImageView.image
         }
         
         set {
             personImageImageView.isUserInteractionEnabled = newValue != nil
-            _originalImageValue = newValue
+            personImageImageView.image = newValue ?? defaultImage
         }
     }
     
     var imageUrl: URL? {
         get { return _imageUrl }
         set { _imageUrl = newValue }
-    }
-    
-    var originalImageUrl: URL? {
-        get { return _originalImageUrl }
-        set { _originalImageUrl = newValue }
     }
     
     func activityIndicatorStartAnimating() {
