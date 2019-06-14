@@ -44,8 +44,6 @@ class PersonTableViewCell: UITableViewCell {
     
     private let defaultImage = UIImage(named: "default_person_image")
     
-    private var imageViewGestureRecognizer: UITapGestureRecognizer!
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -61,10 +59,12 @@ class PersonTableViewCell: UITableViewCell {
     private func setDefaultState() {
         personImageImageView.image = defaultImage
         
-        if let imageViewGestureRecognizer = imageViewGestureRecognizer {
-            personImageImageView.removeGestureRecognizer(imageViewGestureRecognizer)
-        }
+        let imageViewTapGestureRecognizer = UITapGestureRecognizer(
+            target: self, action: #selector(onImageViewTap(tapGestureRecognizer:))
+        )
         
+        personImageImageView.gestureRecognizers = nil
+        personImageImageView.addGestureRecognizer(imageViewTapGestureRecognizer)
         personImageImageView.isUserInteractionEnabled = false
         personNameLabel.text = nil
         personPositionLabel.text = nil
@@ -73,13 +73,9 @@ class PersonTableViewCell: UITableViewCell {
         personImageImageView.alpha = 1.0
         personImageActivityIndicator.alpha = 0.0
         
-        imageUrl = nil
-        originalImageUrl = nil
-        originalImageValue = nil
-        
-        imageViewGestureRecognizer = UITapGestureRecognizer(
-            target: self, action: #selector(onImageViewTap(tapGestureRecognizer:))
-        )
+        _imageUrl = nil
+        _originalImageUrl = nil
+        _originalImageValue = nil
         
         onTapImageViewHandler = nil
     }
@@ -121,12 +117,8 @@ extension PersonTableViewCell: ImageFromInternet {
         }
         
         set {
-            if let newValue = newValue {
-                personImageImageView.addGestureRecognizer(imageViewGestureRecognizer)
-                personImageImageView.isUserInteractionEnabled = true
-                
-                _originalImageValue = newValue
-            }
+            personImageImageView.isUserInteractionEnabled = newValue != nil
+            _originalImageValue = newValue
         }
     }
     
