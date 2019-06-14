@@ -76,8 +76,6 @@ class MovieDetailsTableViewCell: UITableViewCell {
     
     private let defaultImage = UIImage(named: "default_movie_image")
     
-    private var imageViewGestureRecognizer: UITapGestureRecognizer!
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -93,9 +91,12 @@ class MovieDetailsTableViewCell: UITableViewCell {
     private func setDefaultState() {
         movieImageImageView.image = defaultImage
         
-        if let imageViewGestureRecognizer = imageViewGestureRecognizer {
-            movieImageImageView.removeGestureRecognizer(imageViewGestureRecognizer)
-        }
+        let imageViewTapGestureRecognizer = UITapGestureRecognizer(
+            target: self, action: #selector(onImageViewTap(tapGestureRecognizer:))
+        )
+        
+        movieImageImageView.gestureRecognizers = nil
+        movieImageImageView.addGestureRecognizer(imageViewTapGestureRecognizer)
         
         movieImageImageView.isUserInteractionEnabled = false
         titleLabel.text = nil
@@ -107,15 +108,11 @@ class MovieDetailsTableViewCell: UITableViewCell {
         
         movieImageImageView.alpha = 1.0
         movieImageActivityIndicator.alpha = 0.0
-        
-        imageUrl = nil
-        originalImageUrl = nil
-        originalImageValue = nil
-        
-        imageViewGestureRecognizer = UITapGestureRecognizer(
-            target: self, action: #selector(onImageViewTap(tapGestureRecognizer:))
-        )
-        
+
+        _imageUrl = nil
+        _originalImageUrl = nil
+        _originalImageValue = nil
+
         onTapImageViewHandler = nil
     }
     
@@ -130,11 +127,7 @@ class MovieDetailsTableViewCell: UITableViewCell {
         
         onTapImageViewHandler?(originalImageValue)
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
+
 }
 
 extension MovieDetailsTableViewCell: ImageFromInternet {
@@ -155,8 +148,14 @@ extension MovieDetailsTableViewCell: ImageFromInternet {
     }
     
     var originalImageValue: UIImage? {
-        get { return _originalImageValue }
-        set { _originalImageValue = newValue }
+        get {
+            return _originalImageValue
+        }
+        
+        set {
+            movieImageImageView.isUserInteractionEnabled = newValue != nil
+            _originalImageValue = newValue
+        }
     }
     
     public var imageUrl: URL? {
@@ -165,18 +164,8 @@ extension MovieDetailsTableViewCell: ImageFromInternet {
     }
     
     var originalImageUrl: URL? {
-        get {
-            return _originalImageUrl
-        }
-        
-        set {
-            if let newValue = newValue {
-                movieImageImageView.addGestureRecognizer(imageViewGestureRecognizer)
-                movieImageImageView.isUserInteractionEnabled = true
-                
-                _originalImageUrl = newValue
-            }
-        }
+        get { return _originalImageUrl }
+        set { _originalImageUrl = newValue }
     }
     
     func activityIndicatorStartAnimating() {
