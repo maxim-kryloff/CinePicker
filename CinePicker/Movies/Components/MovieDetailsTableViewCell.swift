@@ -66,9 +66,9 @@ class MovieDetailsTableViewCell: UITableViewCell {
         }
     }
     
-    public var onTapImageViewHandler: ((UIImage) -> Void)?
+    public var onTapImageViewHandler: ((String) -> Void)?
     
-    private var _imageUrl: URL?
+    private var _imagePath: String!
     
     private let defaultImage = UIImage(named: "default_movie_image")
     
@@ -104,7 +104,7 @@ class MovieDetailsTableViewCell: UITableViewCell {
         movieImageImageView.alpha = 1.0
         movieImageActivityIndicator.alpha = 0.0
 
-        imageUrl = nil
+        imagePath = ""
 
         onTapImageViewHandler = nil
     }
@@ -114,11 +114,11 @@ class MovieDetailsTableViewCell: UITableViewCell {
             return
         }
         
-        guard let imageValue = imageValue else {
+        if imagePath.isEmpty {
             return
         }
         
-        onTapImageViewHandler?(imageValue)
+        onTapImageViewHandler?(imagePath)
     }
 
 }
@@ -146,9 +146,21 @@ extension MovieDetailsTableViewCell: ImageFromInternet {
         }
     }
     
+    var imagePath: String {
+        get { return _imagePath }
+        set { _imagePath = newValue }
+    }
+    
     var imageUrl: URL? {
-        get { return _imageUrl }
-        set { _imageUrl = newValue }
+        get {
+            if imagePath.isEmpty {
+                return nil
+            }
+            
+            return URLBuilder(string: CinePickerConfig.imagePath)
+                .append(pathComponent: imagePath)
+                .build()
+        }
     }
     
     func activityIndicatorStartAnimating() {

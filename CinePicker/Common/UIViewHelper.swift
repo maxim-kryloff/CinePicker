@@ -18,26 +18,49 @@ class UIViewHelper {
         using imageService: ImageService,
         _ callback: @escaping (_: UIImage?) -> Void
     ) {
-        let imageUrl = getImageUrl(configImagePath: CinePickerConfig.imagePath, imagePath: imagePath)
         
-        view.imageUrl = imageUrl
+        view.imagePath = imagePath
         
         update(imageViewWithActivityIndicator: &view, whenIsWaitingForImage: true)
         
+        if view.imagePath.isEmpty {
+            setImagesFromInternetAsyncResultHandler(view: &view, image: nil, callback: callback)
+            return
+        }
+        
+        guard let url = view.imageUrl else {
+            fatalError("View image url wasn't built...")
+        }
+        
         var escapedView = view
         
-        imageService.download(by: imageUrl) { (image) in
-            OperationQueue.main.addOperation {
-                escapedView.imageValue = image
-                update(imageViewWithActivityIndicator: &escapedView, whenIsWaitingForImage: false)
-                
-                callback(image)
-            }
+        imageService.download(by: url) { (image) in
+            setImagesFromInternetAsyncResultHandler(view: &escapedView, image: image, callback: callback)
         }
     }
     
-    public static func openImage(from viewController: UIViewController, image: UIImage) {
-        let agrume = Agrume(image: image, background: .colored(.white))
+    public static func openImage(
+        from viewController: UIViewController,
+        by imagePath: String,
+        using imageService: ImageService
+    ) {
+        
+        let url = URLBuilder(string: CinePickerConfig.originalImagePath)
+            .append(pathComponent: imagePath)
+            .build()
+        
+        if url == nil {
+            fatalError("Url to open image wasn't built...")
+        }
+        
+        let agrume = Agrume(url: url!, background: .colored(.white))
+        
+        agrume.download = { url, completion in
+            imageService.download(by: url) { (image) in
+                completion(image)
+            }
+        }
+        
         agrume.show(from: viewController)
     }
     
@@ -115,8 +138,20 @@ class UIViewHelper {
         )
     }
     
-    private static func getImageUrl(configImagePath: String, imagePath: String) -> URL {
-        return URLBuilder(string: configImagePath).append(pathComponent: imagePath).build()!
+    private static func setImagesFromInternetAsyncResultHandler(
+        view: inout ImageFromInternet,
+        image: UIImage?,
+        callback: @escaping (_: UIImage?) -> Void
+    ) {
+        
+        var escapedView = view
+        
+        OperationQueue.main.addOperation {
+            escapedView.imageValue = image
+            update(imageViewWithActivityIndicator: &escapedView, whenIsWaitingForImage: false)
+            
+            callback(image)
+        }
     }
-    
+
 }

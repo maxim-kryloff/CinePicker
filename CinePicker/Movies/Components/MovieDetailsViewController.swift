@@ -360,8 +360,12 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             cell.imageValue = image
         }
         
-        cell.onTapImageViewHandler = { (imageValue) in
-            UIViewHelper.openImage(from: self, image: imageValue)
+        if cell.imagePath.isEmpty {
+            cell.imagePath = movieDetails.imagePath
+        }
+        
+        cell.onTapImageViewHandler = { (imagePath) in
+            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
 
         cell.title = movieDetails.title
@@ -416,8 +420,12 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
                 cell.imageValue = image
             }
             
-            cell.onTapImageViewHandler = { (imageValue) in
-                UIViewHelper.openImage(from: self, image: imageValue)
+            if cell.imagePath.isEmpty {
+                cell.imagePath = person.imagePath
+            }
+            
+            cell.onTapImageViewHandler = { (imagePath) in
+                UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
             }
             
             cell.personName = character.name
@@ -440,8 +448,12 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
                 cell.imageValue = image
             }
             
-            cell.onTapImageViewHandler = { (imageValue) in
-                UIViewHelper.openImage(from: self, image: imageValue)
+            if cell.imagePath.isEmpty {
+                cell.imagePath = person.imagePath
+            }
+            
+            cell.onTapImageViewHandler = { (imagePath) in
+                UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
             }
             
             cell.personName = crewPerson.name
