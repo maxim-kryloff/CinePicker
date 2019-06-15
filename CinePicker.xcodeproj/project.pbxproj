@@ -77,6 +77,7 @@
 		33E9823422400EB4004C0AC2 /* MultiSearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E9823322400EB4004C0AC2 /* MultiSearchRequest.swift */; };
 		33EB3A61222DA5A0002956B8 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EB3A60222DA5A0002956B8 /* MovieDetailsViewController.swift */; };
 		33F3A13D2228275A00AE02EF /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F3A13C2228275A00AE02EF /* Movie.swift */; };
+		33F465E122B62F5200AB5240 /* SCLAlertView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33F465E022B62F5200AB5240 /* SCLAlertView.framework */; };
 		33FFDF042264FF64005890FE /* SimilarMovieServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FFDF032264FF64005890FE /* SimilarMovieServiceTests.swift */; };
 		6D7244E164521AA08B00270D /* Pods_CinePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB28B96D0997C9D692FF277F /* Pods_CinePicker.framework */; };
 /* End PBXBuildFile section */
@@ -166,6 +167,7 @@
 		33E9823322400EB4004C0AC2 /* MultiSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSearchRequest.swift; sourceTree = "<group>"; };
 		33EB3A60222DA5A0002956B8 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		33F3A13C2228275A00AE02EF /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		33F465E022B62F5200AB5240 /* SCLAlertView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SCLAlertView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33FFDF032264FF64005890FE /* SimilarMovieServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarMovieServiceTests.swift; sourceTree = "<group>"; };
 		4B2B5DE633215640CD2AF1A3 /* Pods-CinePicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CinePicker.release.xcconfig"; path = "Target Support Files/Pods-CinePicker/Pods-CinePicker.release.xcconfig"; sourceTree = "<group>"; };
 		B0B3617F3497947F0ECAFA5F /* Pods-CinePicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CinePicker.debug.xcconfig"; path = "Target Support Files/Pods-CinePicker/Pods-CinePicker.debug.xcconfig"; sourceTree = "<group>"; };
@@ -184,8 +186,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33D61E2422B2B1E000250997 /* Agrume.framework in Frameworks */,
 				6D7244E164521AA08B00270D /* Pods_CinePicker.framework in Frameworks */,
+				33D61E2422B2B1E000250997 /* Agrume.framework in Frameworks */,
+				33F465E122B62F5200AB5240 /* SCLAlertView.framework in Frameworks */,
 				33D61E2622B2B1E900250997 /* SwiftyGif.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,6 +400,7 @@
 		655AB316821175858F84DFC6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				33F465E022B62F5200AB5240 /* SCLAlertView.framework */,
 				33D61E2522B2B1E900250997 /* SwiftyGif.framework */,
 				33D61E2322B2B1E000250997 /* Agrume.framework */,
 				FB28B96D0997C9D692FF277F /* Pods_CinePicker.framework */,

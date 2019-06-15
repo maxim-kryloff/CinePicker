@@ -12,7 +12,7 @@ class UIViewHelper {
         }
     }
     
-    public static func setImagesFromInternet(
+    public static func setImageFromInternet(
         by imagePath: String,
         at view: inout ImageFromInternet,
         using imageService: ImageService,
@@ -53,7 +53,8 @@ class UIViewHelper {
             fatalError("Url to open image wasn't built...")
         }
         
-        let agrume = Agrume(url: url!, background: .colored(.white))
+        let agrume = Agrume(url: url!, background: .colored(CinePickerColors.black))
+        agrume.statusBarStyle = .lightContent
         
         agrume.download = { url, completion in
             imageService.download(by: url) { (image) in
@@ -62,6 +63,13 @@ class UIViewHelper {
         }
         
         agrume.show(from: viewController)
+    }
+    
+    public static func getUITableViewCellSelectedBackgroundView() -> UIView {
+        let view = UIView()
+        view.backgroundColor = CinePickerColors.darkGray
+        
+        return view
     }
     
     public static func getHeaderView(

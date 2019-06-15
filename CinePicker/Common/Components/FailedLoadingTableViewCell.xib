@@ -1,39 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iQc-03-fyV" customClass="FailedLoadingTableViewCell" customModule="MoviePicker" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iQc-03-fyV" customClass="FailedLoadingTableViewCell" customModule="CinePicker" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Couldn't load data..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8b-x4-YOm">
-                    <rect key="frame" x="106.5" y="12" width="162" height="22"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3M-rk-HQK">
-                    <rect key="frame" x="157" y="38" width="61" height="36"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <state key="normal" title="Reload"/>
-                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ewD-5C-LlC" userLabel="Content View">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Couldn't load data..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8b-x4-YOm">
+                            <rect key="frame" x="106.5" y="12" width="162" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3M-rk-HQK">
+                            <rect key="frame" x="157" y="38" width="61" height="36"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <state key="normal" title="Reload"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="R3M-rk-HQK" firstAttribute="top" secondItem="a8b-x4-YOm" secondAttribute="bottom" constant="4" id="TFg-gw-hxt"/>
+                        <constraint firstItem="a8b-x4-YOm" firstAttribute="top" secondItem="ewD-5C-LlC" secondAttribute="top" constant="12" id="b1a-q1-wzN"/>
+                        <constraint firstItem="a8b-x4-YOm" firstAttribute="centerX" secondItem="ewD-5C-LlC" secondAttribute="centerX" id="sc4-qI-bV8"/>
+                        <constraint firstItem="R3M-rk-HQK" firstAttribute="centerX" secondItem="ewD-5C-LlC" secondAttribute="centerX" id="zRk-9y-wjc"/>
+                    </constraints>
+                </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="a8b-x4-YOm" firstAttribute="top" secondItem="xRt-4N-T86" secondAttribute="top" constant="12" id="AnD-OT-c6E"/>
-                <constraint firstItem="R3M-rk-HQK" firstAttribute="centerX" secondItem="iQc-03-fyV" secondAttribute="centerX" id="IIp-fl-EAv"/>
-                <constraint firstItem="R3M-rk-HQK" firstAttribute="top" secondItem="a8b-x4-YOm" secondAttribute="bottom" constant="4" id="WJW-jq-4lz"/>
-                <constraint firstItem="a8b-x4-YOm" firstAttribute="centerX" secondItem="iQc-03-fyV" secondAttribute="centerX" id="qeW-5b-xye"/>
+                <constraint firstItem="xRt-4N-T86" firstAttribute="trailing" secondItem="ewD-5C-LlC" secondAttribute="trailing" id="5oV-S2-WgG"/>
+                <constraint firstAttribute="bottom" secondItem="ewD-5C-LlC" secondAttribute="bottom" id="6wR-7Z-ggf"/>
+                <constraint firstItem="ewD-5C-LlC" firstAttribute="top" secondItem="iQc-03-fyV" secondAttribute="top" id="R2G-sy-rN9"/>
+                <constraint firstItem="ewD-5C-LlC" firstAttribute="leading" secondItem="xRt-4N-T86" secondAttribute="leading" id="vUF-LJ-9EJ"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
