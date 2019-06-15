@@ -59,8 +59,12 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
             cell.imageValue = image
         }
         
-        cell.onTapImageViewHandler = { (imageValue) in
-            UIViewHelper.openImage(from: self, image: imageValue)
+        if cell.imagePath.isEmpty {
+            cell.imagePath = person.imagePath
+        }
+        
+        cell.onTapImageViewHandler = { (imagePath) in
+            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.personName = person.name
