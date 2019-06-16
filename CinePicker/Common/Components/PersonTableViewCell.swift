@@ -29,7 +29,7 @@ class PersonTableViewCell: UITableViewCell {
     public var isPersonPositionValid: Bool? {
         didSet {
             if let isPersonPositionValid = isPersonPositionValid {
-                personPositionLabel.textColor = isPersonPositionValid ? UIColor.darkGray : CinePickerColors.red
+                personPositionLabel.textColor = isPersonPositionValid ? CinePickerColors.gray : CinePickerColors.red
             }
         }
     }
@@ -64,7 +64,7 @@ class PersonTableViewCell: UITableViewCell {
         personImageImageView.isUserInteractionEnabled = false
         personNameLabel.text = nil
         personPositionLabel.text = nil
-        personPositionLabel.textColor = UIColor.darkGray
+        personPositionLabel.textColor = CinePickerColors.gray
         
         personImageImageView.alpha = 1.0
         personImageActivityIndicator.alpha = 0.0

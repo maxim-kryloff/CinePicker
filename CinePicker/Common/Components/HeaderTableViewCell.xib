@@ -11,22 +11,33 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="BCV-1O-5Ld" customClass="HeaderTableViewCell" customModule="MoviePicker" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="BCV-1O-5Ld" customClass="HeaderTableViewCell" customModule="CinePicker" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUf-o0-zTd">
-                    <rect key="frame" x="155.5" y="2" width="64" height="36"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <state key="normal" title="Header">
-                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </state>
-                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q22-kA-PTR" userLabel="Content View">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                    <subviews>
+                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUf-o0-zTd">
+                            <rect key="frame" x="155.5" y="2" width="64" height="36"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <state key="normal" title="Header">
+                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="iUf-o0-zTd" firstAttribute="centerX" secondItem="Q22-kA-PTR" secondAttribute="centerX" id="cTP-vv-sLh"/>
+                        <constraint firstItem="iUf-o0-zTd" firstAttribute="centerY" secondItem="Q22-kA-PTR" secondAttribute="centerY" id="yx3-QN-QJv"/>
+                    </constraints>
+                </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="iUf-o0-zTd" firstAttribute="centerY" secondItem="BCV-1O-5Ld" secondAttribute="centerY" id="3Eh-r1-6xS"/>
-                <constraint firstItem="iUf-o0-zTd" firstAttribute="centerX" secondItem="BCV-1O-5Ld" secondAttribute="centerX" id="Ne7-d6-jzZ"/>
+                <constraint firstAttribute="bottom" secondItem="Q22-kA-PTR" secondAttribute="bottom" id="5zQ-bf-vee"/>
+                <constraint firstItem="Q22-kA-PTR" firstAttribute="top" secondItem="BCV-1O-5Ld" secondAttribute="top" id="Oz5-38-LBB"/>
+                <constraint firstItem="mbB-05-Eux" firstAttribute="trailing" secondItem="Q22-kA-PTR" secondAttribute="trailing" id="f31-L2-0ME"/>
+                <constraint firstItem="Q22-kA-PTR" firstAttribute="leading" secondItem="mbB-05-Eux" secondAttribute="leading" id="nEQ-Uh-Kqa"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>

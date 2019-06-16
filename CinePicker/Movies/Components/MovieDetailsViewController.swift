@@ -1,4 +1,5 @@
 import UIKit
+import SCLAlertView
 
 // TODO: Try to inherit StatesViewController or remove this TODO
 class MovieDetailsViewController: UIViewController {
@@ -114,25 +115,18 @@ class MovieDetailsViewController: UIViewController {
     }
     
     @objc private func onPressActionsButton() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let appearance = SCLAlertView.SCLAppearance(
+            contentViewColor: CinePickerColors.black,
+            contentViewBorderColor: CinePickerColors.darkGray
+        )
         
-        let setGoToSimilarMovies = UIAlertAction(title: "Go to Similar Movies", style: .default) { (action) in
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        alertView.addButton("Go to Similar Movies", backgroundColor: CinePickerColors.blue) {
             self.performSegue(withIdentifier: SegueIdentifiers.showSimilarMovies, sender: self.movieDetails)
         }
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
-        alert.addAction(setGoToSimilarMovies)
-        alert.addAction(cancel)
-        
-        // TODO: Make more elegant solution
-        if let popoverController = alert.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        present(alert, animated: true, completion: nil)
+        alertView.showSuccess("", subTitle: "", colorStyle: CinePickerColors.blackHex)
     }
     
     private func onSelectBookmarkActionCell() {
@@ -279,6 +273,8 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        
         switch cell {
         case is MovieDetailsTableViewCell: prepare(movieDetailsTableViewCell: (cell as! MovieDetailsTableViewCell))
         case is PersonTableViewCell: prepare(personTableViewCell: (cell as! PersonTableViewCell), forRowAt: indexPath)
@@ -479,7 +475,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         
         var cell = cell as ImageFromInternet
         
-        UIViewHelper.setImagesFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
+        UIViewHelper.setImageFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
             self.loadedImages[imagePath] = image
         }
     }
@@ -497,7 +493,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         
         var cell = cell as ImageFromInternet
         
-        UIViewHelper.setImagesFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
+        UIViewHelper.setImageFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
             self.loadedImages[imagePath] = image
         }
     }

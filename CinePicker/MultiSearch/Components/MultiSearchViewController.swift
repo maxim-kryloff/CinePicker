@@ -1,10 +1,9 @@
 import UIKit
+import SCLAlertView
 
 class MultiSearchViewController: StatesViewController {
     
     @IBOutlet weak var entityTableView: UITableView!
-    
-    @IBOutlet weak var topBarView: UIView!
     
     override var tableViewDefinition: UITableView! {
         return entityTableView
@@ -34,7 +33,7 @@ class MultiSearchViewController: StatesViewController {
         super.viewDidLoad()
         
         defineNavigationController()
-        defineLngButton()
+        defineLangButton()
         defineSearchController()
         defineTableView()
         
@@ -50,10 +49,6 @@ class MultiSearchViewController: StatesViewController {
     override func viewWillAppear(_ animated: Bool) {
         if currentSearchQuery.isEmpty {
             setBookmarks()
-            
-            if entities.isEmpty {
-                showTopBarView()
-            }
         }
     }
     
@@ -73,12 +68,11 @@ class MultiSearchViewController: StatesViewController {
     
     private func defineNavigationController() {
         navigationController?.navigationBar.shadowImage = UIImage()
-        showTopBarView()
     }
     
-    private func defineLngButton() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "Lng",
+    private func defineLangButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Lang",
             style: .plain,
             target: self,
             action: #selector(MultiSearchViewController.onChangeLanguage)
@@ -88,20 +82,17 @@ class MultiSearchViewController: StatesViewController {
     private func defineSearchController() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
-        
         searchController.searchBar.placeholder = "Type movie or actor..."
+        searchController.searchBar.keyboardAppearance = .dark
         
-        let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField
-        searchField?.backgroundColor = CinePickerColors.lightGray
-        
-        navigationItem.titleView = searchController.searchBar
+        navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
 
         OperationQueue.main.addOperation {
             let isBookmarksEmpty = self.checkIfBookmarksEmpty()
+            let didAgreeToUseSource = UserDefaults.standard.bool(forKey: "didAgreeToUseDataSource")
             
-            if isBookmarksEmpty {
+            if isBookmarksEmpty && didAgreeToUseSource {
                 self.searchController.searchBar.becomeFirstResponder()
             }
         }
@@ -118,21 +109,9 @@ class MultiSearchViewController: StatesViewController {
         entityTableView.register(personTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.person)
     }
     
-    private func showTopBarView() {
-        topBarView.isHidden = false
-    }
-    
-    private func hideTopBarView() {
-        topBarView.isHidden = true
-    }
-    
     private func setBookmarks() {
         let bookmarks = BookmarkRepository.shared.getBookmarks()
         let reversedBookmarks = Array(bookmarks.reversed())
-        
-        if !bookmarks.isEmpty {
-            hideTopBarView()
-        }
         
         updateTable(withData: reversedBookmarks)
     }
@@ -142,10 +121,6 @@ class MultiSearchViewController: StatesViewController {
         
         let bookmarks = BookmarkRepository.shared.removeBookmark(movie: movie)
         let reversedBookmarks = Array(bookmarks.reversed())
-        
-        if bookmarks.isEmpty {
-            showTopBarView()
-        }
         
         entities = reversedBookmarks
         entityTableView.deleteRows(at: [indexPath], with: .automatic)
@@ -192,89 +167,48 @@ class MultiSearchViewController: StatesViewController {
     }
     
     @objc private func onChangeLanguage() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let titleFontAttributes = [
-            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15, weight: .regular),
-            NSAttributedString.Key.foregroundColor : UIColor.darkGray
-        ]
-        
-        let messageFontAttributes = [
-            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13, weight: .regular),
-            NSAttributedString.Key.foregroundColor : UIColor.lightGray
-        ]
-        
-        let attributedTitle = NSMutableAttributedString(string: "Choose content language", attributes: titleFontAttributes)
-        
-        let attributedMessage = NSMutableAttributedString(
-            string: "This affects only movie details language: title, genres, overview. This doesn't affect user interface, person details and saved bookmarks",
-            attributes: messageFontAttributes
+        let appearance = SCLAlertView.SCLAppearance(
+            contentViewColor: CinePickerColors.black,
+            contentViewBorderColor: CinePickerColors.darkGray
         )
         
-        alert.setValue(attributedTitle, forKey: "attributedTitle")
-        alert.setValue(attributedMessage, forKey: "attributedMessage")
+        let alertView = SCLAlertView(appearance: appearance)
         
-        let setEnglish = UIAlertAction(title: "English", style: .default) { (action) in
+        alertView.addButton("English", backgroundColor: CinePickerColors.blue) {
             UserDefaults.standard.set("en-US", forKey: "Language")
         }
         
-        let setRussian = UIAlertAction(title: "Russian", style: .default) { (action) in
+        alertView.addButton("Russian", backgroundColor: CinePickerColors.blue) {
             UserDefaults.standard.set("ru-RU", forKey: "Language")
         }
         
-        let setFrench = UIAlertAction(title: "French", style: .default) { (action) in
-            UserDefaults.standard.set("fr-FR", forKey: "Language")
-        }
+        let alertViewIcon = UIImage(named: "lang_image")
         
-        let setGerman = UIAlertAction(title: "German", style: .default) { (action) in
-            UserDefaults.standard.set("de-DE", forKey: "Language")
-        }
-        
-        let setItalian = UIAlertAction(title: "Italian", style: .default) { (action) in
-            UserDefaults.standard.set("it-IT", forKey: "Language")
-        }
-
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(setEnglish)
-        alert.addAction(setRussian)
-        alert.addAction(setFrench)
-        alert.addAction(setGerman)
-        alert.addAction(setItalian)
-        
-        alert.addAction(cancel)
-        
-        // TODO: Make more elegant solution
-        if let popoverController = alert.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        present(alert, animated: true, completion: nil)
+        alertView.showSuccess("", subTitle: "", colorStyle: CinePickerColors.blackHex, circleIconImage: alertViewIcon)
     }
     
     private func showDataSourceAgreementAlert() {
-        let alert = UIAlertController(
-            title: "Data Source",
-            message: "This product uses the TMDb API but is not endorsed or certified by TMDb.",
-            preferredStyle: .alert
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false,
+            contentViewColor: CinePickerColors.black,
+            contentViewBorderColor: CinePickerColors.darkGray
         )
         
-        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        alertView.addButton("OK", backgroundColor: CinePickerColors.blue) {
             UserDefaults.standard.set(true, forKey: "didAgreeToUseDataSource")
             self.searchController.searchBar.becomeFirstResponder()
         }
         
-        let logo = UIImage(named:"data_source_logo")
+        let alertViewIcon = UIImage(named: "data_source_logo")
         
-        let logoImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 30, height: 30))
-        logoImageView.image = logo
-        
-        alert.view.addSubview(logoImageView)
-        alert.addAction(action)
-        
-        self.present(alert, animated: true, completion: nil)
+        alertView.showSuccess(
+            "Data Source",
+            subTitle: "This product uses the TMDb API but is not endorsed or certified by TMDb.",
+            colorStyle: CinePickerColors.blackHex,
+            circleIconImage: alertViewIcon
+        )
     }
 
 }
@@ -313,6 +247,8 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        
         var imagePath: String
         
         switch cell {
@@ -336,7 +272,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         
         var cell = cell as! ImageFromInternet
         
-        UIViewHelper.setImagesFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
+        UIViewHelper.setImageFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
             self.loadedImages[imagePath] = image
         }
     }
@@ -496,9 +432,7 @@ extension MultiSearchViewController: UISearchResultsUpdating {
             }
             
             OperationQueue.main.addOperation {
-                self.showTopBarView()
                 self.unsetAllStates()
-                
                 self.performRequest(shouldScrollToFirstRow: true)
             }
         }

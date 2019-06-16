@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="yF0-lQ-stf">
+        <view contentMode="scaleToFill" id="yF0-lQ-stf" userLabel="Loading UI View">
             <rect key="frame" x="0.0" y="0.0" width="376" height="675"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="kVX-pj-QqH">
-                    <rect key="frame" x="169.5" y="76" width="37" height="37"/>
-                    <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </activityIndicatorView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading data..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iig-gW-eeq">
-                    <rect key="frame" x="128" y="121" width="120" height="22"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i3f-iC-41r" userLabel="Content View">
+                    <rect key="frame" x="0.0" y="0.0" width="376" height="675"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="kVX-pj-QqH">
+                            <rect key="frame" x="169.5" y="56" width="37" height="37"/>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading data..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iig-gW-eeq">
+                            <rect key="frame" x="128" y="101" width="120" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="kVX-pj-QqH" firstAttribute="centerX" secondItem="i3f-iC-41r" secondAttribute="centerX" id="1GK-A0-mG3"/>
+                        <constraint firstItem="iig-gW-eeq" firstAttribute="centerX" secondItem="i3f-iC-41r" secondAttribute="centerX" id="Kom-kp-2dD"/>
+                        <constraint firstItem="iig-gW-eeq" firstAttribute="top" secondItem="kVX-pj-QqH" secondAttribute="bottom" constant="8" id="WVk-pA-oze"/>
+                        <constraint firstItem="kVX-pj-QqH" firstAttribute="top" secondItem="i3f-iC-41r" secondAttribute="top" constant="56" id="d0E-1Y-Qgb"/>
+                    </constraints>
+                </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="kVX-pj-QqH" firstAttribute="top" secondItem="jtn-Ji-nj1" secondAttribute="top" constant="56" id="E9c-HW-5Gm"/>
-                <constraint firstItem="iig-gW-eeq" firstAttribute="top" secondItem="kVX-pj-QqH" secondAttribute="bottom" constant="8" id="pww-9x-eht"/>
-                <constraint firstItem="iig-gW-eeq" firstAttribute="centerX" secondItem="yF0-lQ-stf" secondAttribute="centerX" id="yF2-73-IGO"/>
-                <constraint firstItem="kVX-pj-QqH" firstAttribute="centerX" secondItem="yF0-lQ-stf" secondAttribute="centerX" id="yId-Ps-9qE"/>
+                <constraint firstItem="i3f-iC-41r" firstAttribute="top" secondItem="yF0-lQ-stf" secondAttribute="top" id="1Kt-4K-kEy"/>
+                <constraint firstAttribute="trailing" secondItem="i3f-iC-41r" secondAttribute="trailing" id="25U-Jy-cwX"/>
+                <constraint firstItem="i3f-iC-41r" firstAttribute="leading" secondItem="yF0-lQ-stf" secondAttribute="leading" id="hrG-jo-w13"/>
+                <constraint firstAttribute="bottom" secondItem="i3f-iC-41r" secondAttribute="bottom" id="laK-Zy-F34"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>

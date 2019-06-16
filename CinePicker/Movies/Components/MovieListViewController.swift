@@ -147,6 +147,8 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        
         let imagePath = movies[indexPath.row].imagePath
         
         if imagePath.isEmpty {
@@ -159,7 +161,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         
         var cell = cell as! ImageFromInternet
         
-        UIViewHelper.setImagesFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
+        UIViewHelper.setImageFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
             self.loadedImages[imagePath] = image
         }
     }
