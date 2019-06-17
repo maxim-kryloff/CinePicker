@@ -32,6 +32,7 @@ class MultiSearchViewController: StatesViewController {
         super.viewDidLoad()
         
         defineNavigationController()
+        defineMoreButton()
         defineLangButton()
         defineSearchController()
         defineTableView()
@@ -66,16 +67,30 @@ class MultiSearchViewController: StatesViewController {
     }
     
     private func defineNavigationController() {
+        navigationItem.rightBarButtonItems = []
         navigationController?.navigationBar.shadowImage = UIImage()
     }
     
+    private func defineMoreButton() {
+        let item = UIBarButtonItem(
+            title: "More",
+            style: .plain,
+            target: self,
+            action: #selector(MultiSearchViewController.onPressActionsButton)
+        )
+        
+        navigationItem.rightBarButtonItems?.append(item)
+    }
+    
     private func defineLangButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
+        let item = UIBarButtonItem(
             title: "Lang",
             style: .plain,
             target: self,
             action: #selector(MultiSearchViewController.onChangeLanguage)
         )
+        
+        navigationItem.rightBarButtonItems?.append(item)
     }
     
     private func defineSearchController() {
@@ -163,6 +178,19 @@ class MultiSearchViewController: StatesViewController {
                 }
             }
         }
+    }
+    
+    @objc private func onPressActionsButton() {
+        let eraseBookmarks = {
+            self.entities = BookmarkRepository.shared.eraseBookmarks()
+            self.entityTableView.reloadData()
+        }
+        
+        UIViewHelper.showAlert(
+            [
+                (title: "Erase Bookmarks", action: eraseBookmarks)
+            ]
+        )
     }
     
     @objc private func onChangeLanguage() {

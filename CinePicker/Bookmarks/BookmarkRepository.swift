@@ -87,7 +87,23 @@ class BookmarkRepository {
             try managedContext.save()
 
         } catch let error as NSError {
-            print("Can't read. \(error), \(error.userInfo)")
+            print("Can't delete. \(error), \(error.userInfo)")
+        }
+        
+        return getBookmarks()
+    }
+    
+    public func eraseBookmarks() -> [Movie] {
+        let managedContext = persistentContainer.viewContext
+        let coordinator = persistentContainer.persistentStoreCoordinator
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MovieEntity")
+        let deleteAllRequest = NSBatchDeleteRequest(fetchRequest: request)
+        
+        do {
+            try coordinator.execute(deleteAllRequest, with: managedContext)
+        } catch let error as NSError {
+            print("Can't delete. \(error), \(error.userInfo)")
         }
         
         return getBookmarks()
