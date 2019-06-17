@@ -10,6 +10,8 @@ class SimilarMoviesViewController: StatesViewController {
     
     public var movie: Movie!
     
+    private var actionsBarButtonItem: UIBarButtonItem!
+    
     private var requestedPage: Int = 1
     
     private var similarMovies: [Movie] = []
@@ -31,6 +33,7 @@ class SimilarMoviesViewController: StatesViewController {
         
         navigationItem.title = "Similar to \(movie.originalTitle)"
         
+        defineMoreButton()
         defineTableView()
         
         performRequest()
@@ -50,6 +53,17 @@ class SimilarMoviesViewController: StatesViewController {
         similarMoviesTableView.reloadData()
     }
     
+    private func defineMoreButton() {
+        actionsBarButtonItem = UIBarButtonItem(
+            title: "More",
+            style: .plain,
+            target: self,
+            action: #selector(SimilarMoviesViewController.onPressActionsButton)
+        )
+        
+        navigationItem.rightBarButtonItem = actionsBarButtonItem
+    }
+    
     private func defineTableView() {
         similarMoviesTableView.rowHeight = MovieTableViewCell.standardHeight
         similarMoviesTableView.tableFooterView = UIView(frame: .zero)
@@ -59,6 +73,21 @@ class SimilarMoviesViewController: StatesViewController {
         
         let loadingTableViewCellNib = UINib(nibName: "LoadingTableViewCell", bundle: nil)
         similarMoviesTableView.register(loadingTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.loading)
+    }
+    
+    @objc private func onPressActionsButton() {
+        let backToSearchAction = {
+            self.navigationController?.popToRootViewController(animated: true)
+            return
+        }
+        
+        actionsBarButtonItem.isEnabled = false
+        
+        UIViewHelper.showAlert(
+            [
+                (title: "Back to Search", action: backToSearchAction)
+            ]
+        )
     }
     
     private func performRequest() {
@@ -79,6 +108,8 @@ class SimilarMoviesViewController: StatesViewController {
                 
                 self.similarMovies = requestedMoviesResult
                 self.updateTable(withData: self.similarMovies)
+                
+                self.actionsBarButtonItem.isEnabled = true
                 
                 self.isLiveScrollingRelevant = !requestedMoviesResult.isEmpty
                 
