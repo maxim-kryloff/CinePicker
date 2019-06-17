@@ -1,5 +1,4 @@
 import UIKit
-import SCLAlertView
 
 // TODO: Try to inherit StatesViewController or remove this TODO
 class MovieDetailsViewController: UIViewController {
@@ -115,18 +114,21 @@ class MovieDetailsViewController: UIViewController {
     }
     
     @objc private func onPressActionsButton() {
-        let appearance = SCLAlertView.SCLAppearance(
-            contentViewColor: CinePickerColors.black,
-            contentViewBorderColor: CinePickerColors.darkGray
-        )
-        
-        let alertView = SCLAlertView(appearance: appearance)
-        
-        alertView.addButton("Go to Similar Movies", backgroundColor: CinePickerColors.blue) {
+        let goToSimilarMoviesAction = {
             self.performSegue(withIdentifier: SegueIdentifiers.showSimilarMovies, sender: self.movieDetails)
         }
-
-        alertView.showSuccess("", subTitle: "", colorStyle: CinePickerColors.blackHex)
+        
+        let backToSearchAction = {
+            self.navigationController?.popToRootViewController(animated: true)
+            return
+        }
+        
+        UIViewHelper.showAlert(
+            [
+                (title: "Go to Similar Movies", action: goToSimilarMoviesAction),
+                (title: "Back to Search", action: backToSearchAction)
+            ]
+        )
     }
     
     private func onSelectBookmarkActionCell() {

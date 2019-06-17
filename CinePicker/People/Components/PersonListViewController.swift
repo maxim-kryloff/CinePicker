@@ -6,6 +6,8 @@ class PersonListViewController: UIViewController {
     
     public var people: [Person]!
     
+    private var actionsBarButtonItem: UIBarButtonItem!
+    
     private var loadedImages: [String: UIImage] = [:]
     
     private let imageService = ImageService()
@@ -13,7 +15,19 @@ class PersonListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        defineMoreButton()
         defineTableView()
+    }
+    
+    private func defineMoreButton() {
+        actionsBarButtonItem = UIBarButtonItem(
+            title: "More",
+            style: .plain,
+            target: self,
+            action: #selector(PersonListViewController.onPressActionsButton)
+        )
+        
+        navigationItem.rightBarButtonItem = actionsBarButtonItem
     }
     
     private func defineTableView() {
@@ -22,6 +36,19 @@ class PersonListViewController: UIViewController {
         
         let personTableViewCellNib = UINib(nibName: "PersonTableViewCell", bundle: nil)
         personListTableView.register(personTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.person)
+    }
+    
+    @objc private func onPressActionsButton() {
+        let backToSearchAction = {
+            self.navigationController?.popToRootViewController(animated: true)
+            return
+        }
+        
+        UIViewHelper.showAlert(
+            [
+                (title: "Back to Search", action: backToSearchAction)
+            ]
+        )
     }
     
 }

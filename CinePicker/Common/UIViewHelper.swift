@@ -1,5 +1,6 @@
 import UIKit
 import Agrume
+import SCLAlertView
 
 class UIViewHelper {
     
@@ -112,6 +113,36 @@ class UIViewHelper {
         view.frame = getAdjustedFrame(from: tableView)
         
         return view
+    }
+    
+    public static func showAlert(
+        _ buttonActions: [(title: String, action: () -> Void)],
+        _ imageName: String = "menu_image",
+        _ title: String = "",
+        _ subTitle: String = "",
+        _ showCloseButton: Bool = true
+    ) {
+
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: showCloseButton,
+            contentViewColor: CinePickerColors.black,
+            contentViewBorderColor: CinePickerColors.darkGray
+        )
+        
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        for buttonAction in buttonActions {
+            alertView.addButton(buttonAction.title, backgroundColor: CinePickerColors.blue, action: buttonAction.action)
+        }
+        
+        let circleIconImage = UIImage(named: imageName)
+        
+        alertView.showSuccess(
+            title,
+            subTitle: subTitle,
+            colorStyle: CinePickerColors.blackHex,
+            circleIconImage: circleIconImage
+        )
     }
     
     private static func update(imageViewWithActivityIndicator view: inout ImageFromInternet, whenIsWaitingForImage isWaiting: Bool) {

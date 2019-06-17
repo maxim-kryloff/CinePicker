@@ -1,5 +1,4 @@
 import UIKit
-import SCLAlertView
 
 class MultiSearchViewController: StatesViewController {
     
@@ -167,47 +166,29 @@ class MultiSearchViewController: StatesViewController {
     }
     
     @objc private func onChangeLanguage() {
-        let appearance = SCLAlertView.SCLAppearance(
-            contentViewColor: CinePickerColors.black,
-            contentViewBorderColor: CinePickerColors.darkGray
+        UIViewHelper.showAlert(
+            [
+                (title: "English", action: { UserDefaults.standard.set("en-US", forKey: "Language") }),
+                (title: "Russian", action: { UserDefaults.standard.set("ru-RU", forKey: "Language") })
+            ],
+            "lang_image"
         )
-        
-        let alertView = SCLAlertView(appearance: appearance)
-        
-        alertView.addButton("English", backgroundColor: CinePickerColors.blue) {
-            UserDefaults.standard.set("en-US", forKey: "Language")
-        }
-        
-        alertView.addButton("Russian", backgroundColor: CinePickerColors.blue) {
-            UserDefaults.standard.set("ru-RU", forKey: "Language")
-        }
-        
-        let alertViewIcon = UIImage(named: "lang_image")
-        
-        alertView.showSuccess("", subTitle: "", colorStyle: CinePickerColors.blackHex, circleIconImage: alertViewIcon)
     }
     
     private func showDataSourceAgreementAlert() {
-        let appearance = SCLAlertView.SCLAppearance(
-            showCloseButton: false,
-            contentViewColor: CinePickerColors.black,
-            contentViewBorderColor: CinePickerColors.darkGray
-        )
-        
-        let alertView = SCLAlertView(appearance: appearance)
-        
-        alertView.addButton("OK", backgroundColor: CinePickerColors.blue) {
+        let action = {
             UserDefaults.standard.set(true, forKey: "didAgreeToUseDataSource")
             self.searchController.searchBar.becomeFirstResponder()
         }
         
-        let alertViewIcon = UIImage(named: "data_source_logo")
-        
-        alertView.showSuccess(
+        UIViewHelper.showAlert(
+            [
+                (title: "OK", action: action)
+            ],
+            "data_source_logo",
             "Data Source",
-            subTitle: "This product uses the TMDb API but is not endorsed or certified by TMDb.",
-            colorStyle: CinePickerColors.blackHex,
-            circleIconImage: alertViewIcon
+            "This product uses the TMDb API but is not endorsed or certified by TMDb.",
+            false
         )
     }
 

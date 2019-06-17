@@ -12,6 +12,8 @@ class MovieListViewController: StatesViewController {
     
     public var person: Person!
     
+    private var actionsBarButtonItem: UIBarButtonItem!
+    
     private var movies: [Movie] = []
     
     private var castMovies: [Movie] = []
@@ -54,6 +56,7 @@ class MovieListViewController: StatesViewController {
 
         navigationItem.title = "\(person.name)'s Movies"
         
+        defineMoreButton()
         defineSegmentControl()
         defineTableView()
 
@@ -74,6 +77,19 @@ class MovieListViewController: StatesViewController {
         movieListTableView.reloadData()
     }
     
+    private func defineMoreButton() {
+        actionsBarButtonItem = UIBarButtonItem(
+            title: "More",
+            style: .plain,
+            target: self,
+            action: #selector(MovieListViewController.onPressActionsButton)
+        )
+        
+        actionsBarButtonItem.isEnabled = false
+        
+        navigationItem.rightBarButtonItem = actionsBarButtonItem
+    }
+    
     private func defineSegmentControl() {
         personTypeSegmentControl.setTitleTextAttributes(
             [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)],
@@ -92,6 +108,19 @@ class MovieListViewController: StatesViewController {
         
         let movieTableViewCellNib = UINib(nibName: "MovieTableViewCell", bundle: nil)
         movieListTableView.register(movieTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movie)
+    }
+    
+    @objc private func onPressActionsButton() {
+        let backToSearchAction = {
+            self.navigationController?.popToRootViewController(animated: true)
+            return
+        }
+        
+        UIViewHelper.showAlert(
+            [
+                (title: "Back to Search", action: backToSearchAction)
+            ]
+        )
     }
 
     private func performRequest() {
@@ -117,6 +146,8 @@ class MovieListViewController: StatesViewController {
                 
                 self.castMovies = requestedMoviesResult.cast
                 self.crewMovies = requestedMoviesResult.crew
+                
+                self.actionsBarButtonItem.isEnabled = true
                 
                 if self.crewMovies.count > self.castMovies.count {
                     self.personTypeSegmentControl.selectedSegmentIndex = 1
