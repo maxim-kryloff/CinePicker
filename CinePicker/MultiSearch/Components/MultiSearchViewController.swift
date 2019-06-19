@@ -4,6 +4,10 @@ class MultiSearchViewController: StatesViewController {
     
     @IBOutlet weak var entityTableView: UITableView!
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override var tableViewDefinition: UITableView! {
         return entityTableView
     }

@@ -6,6 +6,10 @@ class MovieListViewController: StatesViewController {
     
     @IBOutlet weak var personTypeSegmentControl: UISegmentedControl!
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override var tableViewDefinition: UITableView! {
         return movieListTableView
     }
