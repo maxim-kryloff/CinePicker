@@ -4,6 +4,10 @@ class SimilarMoviesViewController: StatesViewController {
 
     @IBOutlet weak var similarMoviesTableView: UITableView!
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override var tableViewDefinition: UITableView! {
         return similarMoviesTableView
     }

@@ -9,6 +9,10 @@ class MovieDetailsViewController: UIViewController {
     
     public var movieOriginalTitle: String?
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     private var actionsBarButtonItem: UIBarButtonItem!
     
     private var movieDetails: MovieDetails!

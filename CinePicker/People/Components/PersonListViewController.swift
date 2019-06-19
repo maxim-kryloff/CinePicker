@@ -6,6 +6,10 @@ class PersonListViewController: UIViewController {
     
     public var people: [Person]!
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     private var actionsBarButtonItem: UIBarButtonItem!
     
     private var loadedImages: [String: UIImage] = [:]
