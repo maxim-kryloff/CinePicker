@@ -19,13 +19,20 @@ class PersonListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        defineNavigationController()
         defineMoreButton()
         defineTableView()
     }
     
+    private func defineNavigationController() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
+        )
+    }
+    
     private func defineMoreButton() {
         actionsBarButtonItem = UIBarButtonItem(
-            title: "More",
+            title: CinePickerCaptions.more,
             style: .plain,
             target: self,
             action: #selector(PersonListViewController.onPressActionsButton)
@@ -50,7 +57,7 @@ class PersonListViewController: UIViewController {
         
         UIViewHelper.showAlert(
             [
-                (title: "Back to Search", action: backToSearchAction)
+                (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
         )
     }

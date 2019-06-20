@@ -49,6 +49,10 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="xRt-4N-T86"/>
+            <connections>
+                <outlet property="actionButton" destination="R3M-rk-HQK" id="2ah-KQ-efu"/>
+                <outlet property="messageLabel" destination="a8b-x4-YOm" id="urd-zj-YpN"/>
+            </connections>
             <point key="canvasLocation" x="168.80000000000001" y="90.854572713643179"/>
         </view>
     </objects>

@@ -34,20 +34,7 @@ class MultiSearchViewController: StatesViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        defineNavigationController()
-        defineMoreButton()
-        defineLangButton()
-        defineSearchController()
-        defineTableView()
-        
-        setBookmarks()
-        
-        if !UserDefaults.standard.bool(forKey: "didAgreeToUseDataSource") {
-            showDataSourceAgreementAlert()
-        }
-        
-        definesPresentationContext = true
+        onViewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,13 +58,16 @@ class MultiSearchViewController: StatesViewController {
     }
     
     private func defineNavigationController() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
+        )
         navigationItem.rightBarButtonItems = []
         navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     private func defineMoreButton() {
         let item = UIBarButtonItem(
-            title: "More",
+            title: CinePickerCaptions.more,
             style: .plain,
             target: self,
             action: #selector(MultiSearchViewController.onPressActionsButton)
@@ -88,7 +78,7 @@ class MultiSearchViewController: StatesViewController {
     
     private func defineLangButton() {
         let item = UIBarButtonItem(
-            title: "Lang",
+            title: CinePickerCaptions.lang,
             style: .plain,
             target: self,
             action: #selector(MultiSearchViewController.onChangeLanguage)
@@ -100,11 +90,13 @@ class MultiSearchViewController: StatesViewController {
     private func defineSearchController() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Type movie or actor..."
+        searchController.searchBar.placeholder = CinePickerCaptions.typeMovieOrActor
         searchController.searchBar.keyboardAppearance = .dark
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = CinePickerCaptions.cancel
 
         OperationQueue.main.addOperation {
             let isBookmarksEmpty = self.checkIfBookmarksEmpty()
@@ -172,7 +164,7 @@ class MultiSearchViewController: StatesViewController {
                 self.updateTable(withData: requestedSearchEntities)
                 
                 if self.entities.isEmpty {
-                    self.setMessageState(withMessage: "There is no data found...")
+                    self.setMessageState(withMessage: CinePickerCaptions.thereIsNoDataFound)
                     return
                 }
                 
@@ -184,6 +176,22 @@ class MultiSearchViewController: StatesViewController {
         }
     }
     
+    private func onViewDidLoad() {
+        defineNavigationController()
+        defineMoreButton()
+        defineLangButton()
+        defineSearchController()
+        defineTableView()
+        
+        setBookmarks()
+        
+        if !UserDefaults.standard.bool(forKey: "didAgreeToUseDataSource") {
+            showDataSourceAgreementAlert()
+        }
+        
+        definesPresentationContext = true
+    }
+    
     @objc private func onPressActionsButton() {
         let eraseBookmarks = {
             self.entities = BookmarkRepository.shared.eraseBookmarks()
@@ -192,7 +200,7 @@ class MultiSearchViewController: StatesViewController {
         
         UIViewHelper.showAlert(
             [
-                (title: "Erase Bookmarks", action: eraseBookmarks)
+                (title: CinePickerCaptions.eraseBookmarks, action: eraseBookmarks)
             ]
         )
     }
@@ -200,8 +208,20 @@ class MultiSearchViewController: StatesViewController {
     @objc private func onChangeLanguage() {
         UIViewHelper.showAlert(
             [
-                (title: "English", action: { UserDefaults.standard.set("en-US", forKey: "Language") }),
-                (title: "Russian", action: { UserDefaults.standard.set("ru-RU", forKey: "Language") })
+                (
+                    title: CinePickerCaptions.english,
+                    action: {
+                        UserDefaults.standard.set("en-US", forKey: "Language")
+                        self.onViewDidLoad()
+                    }
+                ),
+                (
+                    title: CinePickerCaptions.russian,
+                    action: {
+                        UserDefaults.standard.set("ru-RU", forKey: "Language")
+                        self.onViewDidLoad()
+                    }
+                )
             ],
             "lang_image"
         )
@@ -234,7 +254,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if currentSearchQuery.isEmpty {
-            return UIViewHelper.getHeaderView(for: entityTableView, withText: "Bookmarks")
+            return UIViewHelper.getHeaderView(for: entityTableView, withText: CinePickerCaptions.bookmarks)
         }
         
         return nil
@@ -399,7 +419,7 @@ extension MultiSearchViewController {
             let movie = entity as! Movie
             
             movieDetailsViewController.movieId = movie.id
-            movieDetailsViewController.movieOriginalTitle = movie.originalTitle
+            movieDetailsViewController.movieTitle = movie.title
             
             return
         }
