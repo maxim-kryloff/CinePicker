@@ -91,12 +91,11 @@ class MultiSearchViewController: StatesViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = CinePickerCaptions.typeMovieOrActor
+        searchController.searchBar.setValue(CinePickerCaptions.cancel, forKey: "cancelButtonText")
         searchController.searchBar.keyboardAppearance = .dark
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = CinePickerCaptions.cancel
 
         OperationQueue.main.addOperation {
             let isBookmarksEmpty = self.checkIfBookmarksEmpty()
@@ -230,7 +229,7 @@ class MultiSearchViewController: StatesViewController {
     private func showDataSourceAgreementAlert() {
         let action = {
             UserDefaults.standard.set(true, forKey: "didAgreeToUseDataSource")
-            self.searchController.searchBar.becomeFirstResponder()
+            self.onChangeLanguage()
         }
         
         UIViewHelper.showAlert(
