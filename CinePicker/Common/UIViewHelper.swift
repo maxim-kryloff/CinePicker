@@ -141,6 +141,7 @@ class UIViewHelper {
         alertView.showSuccess(
             title,
             subTitle: subTitle,
+            closeButtonTitle: CinePickerCaptions.cancel,
             colorStyle: CinePickerColors.blackHex,
             circleIconImage: circleIconImage
         )
