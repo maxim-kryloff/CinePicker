@@ -126,7 +126,8 @@ class UIViewHelper {
         let appearance = SCLAlertView.SCLAppearance(
             showCloseButton: showCloseButton,
             contentViewColor: CinePickerColors.black,
-            contentViewBorderColor: CinePickerColors.darkGray
+            contentViewBorderColor: CinePickerColors.darkGray,
+            titleColor: CinePickerColors.gray
         )
         
         let alertView = SCLAlertView(appearance: appearance)
