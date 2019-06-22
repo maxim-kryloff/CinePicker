@@ -35,8 +35,9 @@ class SimilarMoviesViewController: StatesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Similar to \(movie.originalTitle)"
+        navigationItem.title = CinePickerCaptions.moviesSimilar(to: movie.title)
         
+        defineNavigationController()
         defineMoreButton()
         defineTableView()
         
@@ -57,9 +58,15 @@ class SimilarMoviesViewController: StatesViewController {
         similarMoviesTableView.reloadData()
     }
     
+    private func defineNavigationController() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
+        )
+    }
+    
     private func defineMoreButton() {
         actionsBarButtonItem = UIBarButtonItem(
-            title: "More",
+            title: CinePickerCaptions.more,
             style: .plain,
             target: self,
             action: #selector(SimilarMoviesViewController.onPressActionsButton)
@@ -89,7 +96,7 @@ class SimilarMoviesViewController: StatesViewController {
         
         UIViewHelper.showAlert(
             [
-                (title: "Back to Search", action: backToSearchAction)
+                (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
         )
     }
@@ -118,7 +125,7 @@ class SimilarMoviesViewController: StatesViewController {
                 self.isLiveScrollingRelevant = !requestedMoviesResult.isEmpty
                 
                 if self.similarMovies.isEmpty {
-                    self.setMessageState(withMessage: "There are no movies found...")
+                    self.setMessageState(withMessage: CinePickerCaptions.thereAreNoMoviesFound)
                     return
                 }
             }
@@ -267,7 +274,7 @@ extension SimilarMoviesViewController {
             let indexPath = sender.indexPath
             
             movieDetailsViewController.movieId = similarMovies[indexPath.row].id
-            movieDetailsViewController.movieOriginalTitle = similarMovies[indexPath.row].originalTitle
+            movieDetailsViewController.movieTitle = similarMovies[indexPath.row].title
             
             return
         }

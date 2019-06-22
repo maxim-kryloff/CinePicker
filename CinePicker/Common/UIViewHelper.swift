@@ -85,8 +85,8 @@ class UIViewHelper {
         return view
     }
     
-    public static func getLoadingView(for tableView: UITableView) -> UIView {
-        let view = Bundle.main.loadNibNamed("LoadingUIView", owner: tableView, options: nil)!.first as! UIView
+    public static func getLoadingView(for tableView: UITableView) -> LoadingUIView {
+        let view = Bundle.main.loadNibNamed("LoadingUIView", owner: tableView, options: nil)!.first as! LoadingUIView
         
         view.frame = getAdjustedFrame(from: tableView)
         

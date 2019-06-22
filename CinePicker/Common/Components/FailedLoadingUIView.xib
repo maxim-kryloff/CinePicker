@@ -18,16 +18,16 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bop-2A-nwU" userLabel="Content View">
                     <rect key="frame" x="0.0" y="0.0" width="374" height="669"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Couldn't load data..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v48-SZ-1KO">
-                            <rect key="frame" x="106" y="64" width="162" height="21.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v48-SZ-1KO">
+                            <rect key="frame" x="150.5" y="64" width="73" height="21.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22G-uv-oul">
-                            <rect key="frame" x="156.5" y="89.5" width="61" height="36"/>
+                            <rect key="frame" x="159" y="89.5" width="56" height="36"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                            <state key="normal" title="Reload"/>
+                            <state key="normal" title="Action"/>
                             <connections>
                                 <action selector="onTouchDown:" destination="KCj-ek-YmK" eventType="touchDown" id="b6r-gp-lCP"/>
                             </connections>
@@ -52,6 +52,10 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="y7k-h9-OZy"/>
+            <connections>
+                <outlet property="actionButton" destination="22G-uv-oul" id="eOJ-15-pKB"/>
+                <outlet property="messageLabel" destination="v48-SZ-1KO" id="Jfy-h9-BHW"/>
+            </connections>
             <point key="canvasLocation" x="0.0" y="-178.56071964017991"/>
         </view>
     </objects>

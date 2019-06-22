@@ -7,7 +7,7 @@ class MovieDetailsViewController: UIViewController {
     
     public var movieId: Int!
     
-    public var movieOriginalTitle: String?
+    public var movieTitle: String?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -17,7 +17,7 @@ class MovieDetailsViewController: UIViewController {
     
     private var movieDetails: MovieDetails!
     
-    private var loadingView: UIView!
+    private var loadingView: LoadingUIView!
     
     private var failedLoadingView: FailedLoadingUIView!
     
@@ -60,8 +60,9 @@ class MovieDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = movieOriginalTitle
+        navigationItem.title = movieTitle
         
+        defineNavigationController()
         defineMoreButton()
         defineLoadingView()
         defineFailedLoadingView()
@@ -70,9 +71,15 @@ class MovieDetailsViewController: UIViewController {
         performMovieDetailsRequest()
     }
     
+    private func defineNavigationController() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
+        )
+    }
+    
     private func defineMoreButton() {
         actionsBarButtonItem = UIBarButtonItem(
-            title: "More",
+            title: CinePickerCaptions.more,
             style: .plain,
             target: self,
             action: #selector(MovieDetailsViewController.onPressActionsButton)
@@ -129,8 +136,8 @@ class MovieDetailsViewController: UIViewController {
         
         UIViewHelper.showAlert(
             [
-                (title: "Go to Similar Movies", action: goToSimilarMoviesAction),
-                (title: "Back to Search", action: backToSearchAction)
+                (title: CinePickerCaptions.goToSimilarMovies, action: goToSimilarMoviesAction),
+                (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
         )
     }
@@ -412,7 +419,8 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         if let character = person as? Character {
             if indexPath.row == getGoToFullCastIndex() {
                 let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
-                cell.header = "Go to Full Cast"
+                cell.header = CinePickerCaptions.goToFullCast
+                
                 return cell
             }
             
@@ -440,7 +448,8 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         if let crewPerson = person as? CrewPerson {
             if indexPath.row == getGoToFullCrewIndex() {
                 let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
-                cell.header = "Go to Full Crew"
+                cell.header = CinePickerCaptions.goToFullCrew
+                
                 return cell
             }
             
@@ -577,7 +586,7 @@ extension MovieDetailsViewController {
             let personListViewController = segue.destination as! PersonListViewController
             let sender = sender as! GoToPersonListTableViewCellSender
 
-            personListViewController.title = movieOriginalTitle
+            personListViewController.title = movieTitle
             personListViewController.people = sender.personListType == PersonListType.cast ? characters : crewPeople
             
             return

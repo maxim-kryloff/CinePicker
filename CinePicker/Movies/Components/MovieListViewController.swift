@@ -46,7 +46,7 @@ class MovieListViewController: StatesViewController {
         }
         
         if movies.isEmpty {
-            self.setMessageState(withMessage: "There are no movies found...")
+            self.setMessageState(withMessage: CinePickerCaptions.thereAreNoMoviesFound)
         } else {
             unsetMessageState()
             
@@ -58,8 +58,9 @@ class MovieListViewController: StatesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = "\(person.name)'s Movies"
+        navigationItem.title = CinePickerCaptions.movies(ofPerson: person.name)
         
+        defineNavigationController()
         defineMoreButton()
         defineSegmentControl()
         defineTableView()
@@ -81,9 +82,15 @@ class MovieListViewController: StatesViewController {
         movieListTableView.reloadData()
     }
     
+    private func defineNavigationController() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
+        )
+    }
+    
     private func defineMoreButton() {
         actionsBarButtonItem = UIBarButtonItem(
-            title: "More",
+            title: CinePickerCaptions.more,
             style: .plain,
             target: self,
             action: #selector(MovieListViewController.onPressActionsButton)
@@ -95,6 +102,9 @@ class MovieListViewController: StatesViewController {
     }
     
     private func defineSegmentControl() {
+        personTypeSegmentControl.setTitle(CinePickerCaptions.cast, forSegmentAt: 0)
+        personTypeSegmentControl.setTitle(CinePickerCaptions.crew, forSegmentAt: 1)
+            
         personTypeSegmentControl.setTitleTextAttributes(
             [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)],
             for: .normal
@@ -122,7 +132,7 @@ class MovieListViewController: StatesViewController {
         
         UIViewHelper.showAlert(
             [
-                (title: "Back to Search", action: backToSearchAction)
+                (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
         )
     }
@@ -166,7 +176,7 @@ class MovieListViewController: StatesViewController {
                 }
                 
                 if self.movies.isEmpty {
-                    self.setMessageState(withMessage: "There are no movies found...")
+                    self.setMessageState(withMessage: CinePickerCaptions.thereAreNoMoviesFound)
                     return
                 }
             }
@@ -263,7 +273,7 @@ extension MovieListViewController {
             let indexPath = sender.indexPath
             
             movieListViewController.movieId = movies[indexPath.row].id
-            movieListViewController.movieOriginalTitle = movies[indexPath.row].originalTitle
+            movieListViewController.movieTitle = movies[indexPath.row].title
             
             return
         }

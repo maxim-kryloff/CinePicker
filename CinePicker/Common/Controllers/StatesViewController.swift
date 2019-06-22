@@ -6,9 +6,7 @@ class StatesViewController: UIViewController {
         fatalError("tableViewDefinition must be overriden...'")
     }
 
-    private var loadingView: UIView!
-    
-    private var isInLoadingState = false
+    private var loadingView: LoadingUIView!
     
     private var failedLoadingView: FailedLoadingUIView!
     
@@ -43,15 +41,12 @@ class StatesViewController: UIViewController {
 extension StatesViewController {
     
     public func setLoadingState() {
-        isInLoadingState = true
-        
         tableViewDefinition.backgroundView = loadingView
         updateTable(withData: [])
     }
     
     public func unsetLoadingState() {
-        if isInLoadingState {
-            isInLoadingState = false
+        if tableViewDefinition.backgroundView is LoadingUIView {
             tableViewDefinition.backgroundView = nil
         }
     }
