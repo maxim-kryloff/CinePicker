@@ -34,13 +34,11 @@ class MovieDetails: Movie {
         
         var genres: [Genre] = []
         
-        let genresJson = json["genres"] as? [[String: Any]]
+        let genresJson = json["genres"] as? [[String: Any]] ?? []
         
-        if let genresJson = genresJson {
-            for item in genresJson {
-                let genre = Genre.buildGenre(fromJson: item)
-                genres.append(genre)
-            }
+        for item in genresJson {
+            let genre = Genre.buildGenre(fromJson: item)
+            genres.append(genre)
         }
         
         let movieDetails = MovieDetails(

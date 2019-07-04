@@ -42,18 +42,42 @@ class Movie {
         self.popularity = popularity
     }
     
+    convenience init(
+        id: Int,
+        title: String,
+        originalTitle: String,
+        imagePath: String,
+        releaseYear: String
+    ) {
+        self.init(
+            id: id,
+            title: title,
+            originalTitle: originalTitle,
+            imagePath: imagePath,
+            rating: 0.0,
+            voteCount: 0,
+            releaseYear: releaseYear,
+            overview: "",
+            popularity: 0.0
+        )
+    }
+    
     public static func buildMovie(fromJson json: [String: Any]) -> Movie {
-        let id = json["id"] as! Int
+        guard let id = json["id"] as? Int else {
+            fatalError("Movie must have an id...")
+        }
         
-        let title = json["title"] as? String
+        guard let title = json["title"] as? String else {
+            fatalError("Movie must have an title...")
+        }
         
-        let originalTitle = json["original_title"] as? String
+        let originalTitle = json["original_title"] as? String ?? ""
         
-        let poster_path = json["poster_path"] as? String
+        let poster_path = json["poster_path"] as? String ?? ""
         
-        let vote_average = json["vote_average"] as? Double
+        let vote_average = json["vote_average"] as? Double ?? 0.0
         
-        let vote_count = json["vote_count"] as? Int
+        let vote_count = json["vote_count"] as? Int ?? 0
         
         let release_date = json["release_date"] as? String
         var releaseDateSubstring: Substring?
@@ -63,26 +87,26 @@ class Movie {
             releaseDateSubstring = release_date[...index]
         }
         
-        var releaseYear: String?
+        var releaseYear = ""
         
         if let releaseDateSubstring = releaseDateSubstring {
             releaseYear = String(releaseDateSubstring)
         }
         
-        let overview = json["overview"] as? String
+        let overview = json["overview"] as? String ?? ""
         
-        let popularity = json["popularity"] as? Double
+        let popularity = json["popularity"] as? Double ?? 0.0
         
         let movie = Movie(
             id: id,
-            title: title ?? "",
-            originalTitle: originalTitle ?? "",
-            imagePath: poster_path ?? "",
-            rating: vote_average ?? 0,
-            voteCount: vote_count ?? 0,
-            releaseYear: releaseYear ?? "",
-            overview: overview ?? "",
-            popularity: popularity ?? 0
+            title: title,
+            originalTitle: originalTitle,
+            imagePath: poster_path,
+            rating: vote_average,
+            voteCount: vote_count,
+            releaseYear: releaseYear,
+            overview: overview,
+            popularity: popularity
         )
         
         return movie
@@ -104,11 +128,7 @@ class Movie {
             title: title,
             originalTitle: originalTitle,
             imagePath: imagePath,
-            rating: 0,
-            voteCount: 0,
-            releaseYear: releaseYear,
-            overview: "",
-            popularity: 0
+            releaseYear: releaseYear
         )
         
         return movie

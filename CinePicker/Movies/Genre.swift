@@ -10,9 +10,13 @@ class Genre {
     }
     
     public static func buildGenre(fromJson json: [String: Any]) -> Genre {
-        let id = json["id"] as! Int
+        guard let id = json["id"] as? Int else {
+            fatalError("Genre must have an id...")
+        }
         
-        let name = json["name"] as! String
+        guard let name = json["name"] as? String else {
+            fatalError("Genre must have a name...")
+        }
         
         let genre = Genre(id: id, name: name)
         
