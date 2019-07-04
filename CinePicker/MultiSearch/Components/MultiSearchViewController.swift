@@ -31,6 +31,10 @@ class MultiSearchViewController: StatesViewController {
     private let imageService = ImageService()
     
     private let debounceActionService = DebounceActionService()
+    
+    private var isBookmarkMode: Bool {
+        return currentSearchQuery.isEmpty
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +42,7 @@ class MultiSearchViewController: StatesViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if currentSearchQuery.isEmpty {
+        if isBookmarkMode {
             setBookmarks()
         }
     }
@@ -252,7 +256,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if currentSearchQuery.isEmpty {
+        if isBookmarkMode {
             return UIViewHelper.getHeaderView(for: entityTableView, withText: CinePickerCaptions.bookmarks)
         }
         
@@ -260,7 +264,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if currentSearchQuery.isEmpty {
+        if isBookmarkMode {
             let isBookmarksEmpty = checkIfBookmarksEmpty()
             return !isBookmarksEmpty ? bookmarkHeaderHeight : 0
         }
@@ -269,7 +273,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return currentSearchQuery.isEmpty
+        return isBookmarkMode
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -369,8 +373,13 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         cell.title = movie.title
         cell.originalTitle = movie.originalTitle
         cell.releaseYear = movie.releaseYear
-        cell.voteCount = movie.voteCount
-        cell.rating = movie.rating
+        
+        if isBookmarkMode {
+            cell.isVoteResultsHidden = true
+        } else {
+            cell.voteCount = movie.voteCount
+            cell.rating = movie.rating
+        }
         
         return cell
     }

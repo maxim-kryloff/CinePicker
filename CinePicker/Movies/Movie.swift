@@ -97,10 +97,6 @@ class Movie {
         
         let imagePath = movieDAO.value(forKey: "imagePath") as! String
         
-        let rating = movieDAO.value(forKey: "rating") as! Double
-        
-        let voteCount = movieDAO.value(forKey: "voteCount") as! Int
-        
         let releaseYear = movieDAO.value(forKey: "releaseYear") as! String
         
         let movie = Movie(
@@ -108,10 +104,9 @@ class Movie {
             title: title,
             originalTitle: originalTitle,
             imagePath: imagePath,
-            rating: rating,
-            voteCount: voteCount,
+            rating: 0,
+            voteCount: 0,
             releaseYear: releaseYear,
-            
             overview: "",
             popularity: 0
         )

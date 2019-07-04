@@ -60,10 +60,6 @@ class BookmarkRepository {
         
         movieDAO.setValue(movie.imagePath, forKey: "imagePath")
         
-        movieDAO.setValue(movie.rating, forKey: "rating")
-        
-        movieDAO.setValue(movie.voteCount, forKey: "voteCount")
-        
         movieDAO.setValue(movie.releaseYear, forKey: "releaseYear")
         
         do {

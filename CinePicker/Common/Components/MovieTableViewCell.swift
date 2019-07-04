@@ -12,6 +12,8 @@ class MovieTableViewCell: UITableViewCell {
     
     @IBOutlet weak var releaseYearLabel: UILabel!
     
+    @IBOutlet weak var voteResultsStackView: UIStackView!
+    
     @IBOutlet weak var voteCountLabel: UILabel!
     
     @IBOutlet weak var ratingLabel: UILabel!
@@ -36,6 +38,11 @@ class MovieTableViewCell: UITableViewCell {
         didSet {
             releaseYearLabel.text = releaseYear
         }
+    }
+    
+    public var isVoteResultsHidden: Bool {
+        set { voteResultsStackView.isHidden = newValue }
+        get { return voteResultsStackView.isHidden }
     }
     
     public var voteCount: Int? {
@@ -86,6 +93,7 @@ class MovieTableViewCell: UITableViewCell {
         titleLabel.text = nil
         originalTitleLabel.text = nil
         releaseYearLabel.text = nil
+        voteResultsStackView.isHidden = false
         voteCountLabel.text = "--"
         ratingLabel.text = "--"
         
