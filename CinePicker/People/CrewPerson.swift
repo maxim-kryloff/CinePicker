@@ -10,13 +10,13 @@ class CrewPerson: Person {
     public static func buildCrewPerson(fromJson json: [String: Any]) -> CrewPerson {
         let person = buildPerson(fromJson: json)
         
-        let job = json["job"] as? String
+        let job = json["job"] as? String ?? ""
         
         let crewPerson = CrewPerson(
             id: person.id,
             name: person.name,
             imagePath: person.imagePath,
-            job: job ?? ""
+            job: job
         )
         
         return crewPerson

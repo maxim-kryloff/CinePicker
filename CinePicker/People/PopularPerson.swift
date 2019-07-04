@@ -10,13 +10,13 @@ class PopularPerson: Person {
     public static func buildPopularPerson(fromJson json: [String: Any]) -> PopularPerson {
         let person = buildPerson(fromJson: json)
         
-        let popularity = json["popularity"] as? Double
+        let popularity = json["popularity"] as? Double ?? 0.0
         
         let popularPerson = PopularPerson(
             id: person.id,
             name: person.name,
             imagePath: person.imagePath,
-            popularity: popularity ?? 0
+            popularity: popularity
         )
         
         return popularPerson

@@ -14,13 +14,13 @@ class Character: Person {
     public static func buildCharacter(fromJson json: [String: Any]) -> Character {
         let person = buildPerson(fromJson: json)
         
-        let characterName = json["character"] as? String
+        let characterName = json["character"] as? String ?? ""
         
         let character = Character(
             id: person.id,
             name: person.name,
             imagePath: person.imagePath,
-            characterName: characterName ?? ""
+            characterName: characterName
         )
         
         return character
