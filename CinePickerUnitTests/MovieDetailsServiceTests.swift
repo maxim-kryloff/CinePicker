@@ -11,6 +11,8 @@ class MovieDetailsServiceTests: XCTestCase {
     
     private var fakeMovieId: Int!
     
+    private var fakeCollectionId: Int!
+    
     private var expectationPromise: XCTestExpectation!
     
     override func setUp() {
@@ -21,6 +23,7 @@ class MovieDetailsServiceTests: XCTestCase {
         movieDetailsService = MovieDetailsService(movieService: mockMovieService, personService: mockPersonService)
         
         fakeMovieId = 0
+        fakeCollectionId = 0
         expectationPromise = expectation(description: "")
     }
 
@@ -30,6 +33,7 @@ class MovieDetailsServiceTests: XCTestCase {
         movieDetailsService = nil
         
         fakeMovieId = nil
+        fakeCollectionId = nil
         expectationPromise = nil
         
         super.tearDown()
@@ -48,6 +52,26 @@ class MovieDetailsServiceTests: XCTestCase {
         mockMovieService.isMovieDetailsRequestFaield = true
         
         movieDetailsService.requestMovieDetails(by: fakeMovieId) { (result) in
+            XCTAssertNil(result)
+            self.expectationPromise.fulfill()
+        }
+        
+        waitForExpectations(timeout: 0.1, handler: nil)
+    }
+    
+    func testShouldReturnMoviesByCollectionId() {
+        movieDetailsService.requestMovies(byCollectionId: fakeCollectionId) { (result) in
+            XCTAssertEqual(result!.count, 10)
+            self.expectationPromise.fulfill()
+        }
+        
+        waitForExpectations(timeout: 0.1, handler: nil)
+    }
+    
+    func testShouldReturnNilWhenRequestingMoviesByCollectionIdIsFailed() {
+        mockMovieService.isMoviesByCollectionIdRequestFailed = true
+        
+        movieDetailsService.requestMovies(byCollectionId: fakeCollectionId) { (result) in
             XCTAssertNil(result)
             self.expectationPromise.fulfill()
         }
@@ -189,6 +213,8 @@ extension MovieDetailsServiceTests {
         
         public var isMovieDetailsRequestFaield = false
         
+        public var isMoviesByCollectionIdRequestFailed = false
+        
         private let seeder = Seeder()
         
         override func getMovieDetails(by movieId: Int, callback: @escaping (AsyncResult<MovieDetails>) -> Void) {
@@ -198,6 +224,18 @@ extension MovieDetailsServiceTests {
                 let result = self.isMovieDetailsRequestFaield
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movieDetails)
+                
+                callback(result)
+            }
+        }
+        
+        override func getMovies(byCollectionId collectionId: Int, callback: @escaping (_: AsyncResult<[Movie]>) -> Void) {
+            DispatchQueue.main.async {
+                let movies = self.seeder.getMovies(count: 10)
+                
+                let result = self.isMoviesByCollectionIdRequestFailed
+                    ? AsyncResult.failure(ResponseError.dataIsNil)
+                    : AsyncResult.success(movies)
                 
                 callback(result)
             }

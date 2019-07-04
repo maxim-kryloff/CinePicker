@@ -21,7 +21,7 @@ class MovieDetailsViewController: UIViewController {
     
     private var failedLoadingView: FailedLoadingUIView!
     
-    private let numberOfSections: Int = 4
+    private let numberOfSections: Int = 5
     
     private let movieDetailsSectionNumber: Int = 0
     
@@ -29,13 +29,23 @@ class MovieDetailsViewController: UIViewController {
     
     private let movieDetailsOverviewSectionNumber: Int = 2
     
-    private let movieDetailsPeopleSectionNumber: Int = 3
+    private let movieDetailsMovieCollectionSectionNumber: Int = 3
+    
+    private let movieDetailsPeopleSectionNumber: Int = 4
+    
+    private var isMovieCollectionGoingToBeRequested = false
+    
+    private var isMovieCollectionBeingRequested = false
+    
+    private var isMovieCollectionRequestFailed = false
     
     private var isPeopleGoingToBeRequested = false
     
     private var isPeopleBeingRequested = false
     
     private var isPeopleRequestFailed = false
+    
+    private var movieCollection: [Movie] = []
     
     private var people: [Person] = []
     
@@ -106,6 +116,9 @@ class MovieDetailsViewController: UIViewController {
         
         let headerTableViewCellNib = UINib(nibName: "HeaderTableViewCell", bundle: nil)
         movieDetailsTableView.register(headerTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.header)
+        
+        let movieCollectionTableViewCellNib = UINib(nibName: "MovieCollectionTableViewCell", bundle: nil)
+        movieDetailsTableView.register(movieCollectionTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movieCollection)
     }
     
     private func defineLoadingView() {
@@ -120,7 +133,11 @@ class MovieDetailsViewController: UIViewController {
         performMovieDetailsRequest()
     }
     
-    private func onSelectFailedLoadingCell() {
+    private func onReloadGettingMovieCollection() {
+        performMovieCollectionRequest(fromReloading: true)
+    }
+    
+    private func onReloadGettingPeople() {
         performPeopleRequest(fromReloading: true)
     }
     
@@ -164,6 +181,7 @@ class MovieDetailsViewController: UIViewController {
             OperationQueue.main.addOperation {
                 guard let requestedMovieDetails = requestedMovieDetails else {
                     self.movieDetailsTableView.backgroundView = self.failedLoadingView
+                    self.isMovieCollectionGoingToBeRequested = false
                     self.isPeopleGoingToBeRequested = false
                     
                     return
@@ -175,10 +193,55 @@ class MovieDetailsViewController: UIViewController {
                 
                 self.actionsBarButtonItem.isEnabled = true
                 
+                self.isMovieCollectionGoingToBeRequested = true
                 self.isPeopleGoingToBeRequested = true
                 self.movieDetailsTableView.reloadData()
                 
+                if self.movieDetails.collectionId != nil {
+                    self.performMovieCollectionRequest(fromReloading: false)
+                }
+                
                 self.performPeopleRequest(fromReloading: false)
+            }
+        }
+    }
+    
+    private func performMovieCollectionRequest(fromReloading: Bool) {
+        guard let collectionId = movieDetails.collectionId else {
+            fatalError("Collection ID must not be nil...")
+        }
+        
+        isMovieCollectionGoingToBeRequested = false
+        isMovieCollectionBeingRequested = true
+        isMovieCollectionRequestFailed = false
+        
+        if fromReloading {
+            let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsMovieCollectionSectionNumber)
+            self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
+        }
+        
+        movieDetailsService.requestMovies(byCollectionId: collectionId) { (requestedMovies) in
+            OperationQueue.main.addOperation {
+                self.isMovieCollectionBeingRequested = false
+                
+                let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsMovieCollectionSectionNumber)
+                
+                guard let requestedMovies = requestedMovies else {
+                    self.isMovieCollectionRequestFailed = true
+                    self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
+                    
+                    return
+                }
+                
+                if requestedMovies.isEmpty {
+                    self.movieDetailsTableView.deleteRows(at: [firstIndexPath], with: .automatic)
+                    return
+                }
+                
+                self.movieCollection = requestedMovies
+                    .filter { $0.id != self.movieId }
+                
+                self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
             }
         }
     }
@@ -189,24 +252,24 @@ class MovieDetailsViewController: UIViewController {
         isPeopleRequestFailed = false
         
         if fromReloading {
-            let firstPeopleIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
-            self.movieDetailsTableView.reloadRows(at: [firstPeopleIndexPath], with: .automatic)
+            let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
+            self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
         }
         
         movieDetailsService.requestPeople(by: movieDetails.id) { (requestedMoviePeople) in
             OperationQueue.main.addOperation {
                 self.isPeopleBeingRequested = false
                 
-                let firstPeopleIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
+                let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
                 
                 guard let requestedMoviePeople = requestedMoviePeople else {
                     self.isPeopleRequestFailed = true
-                    self.movieDetailsTableView.reloadRows(at: [firstPeopleIndexPath], with: .automatic)
+                    self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
                     
                     return
                 }
                 
-                self.movieDetailsTableView.deleteRows(at: [firstPeopleIndexPath], with: .automatic)
+                self.movieDetailsTableView.deleteRows(at: [firstIndexPath], with: .automatic)
                 
                 self.characters = requestedMoviePeople.cast
                 self.crewPeople = requestedMoviePeople.crew
@@ -270,6 +333,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         case movieDetailsSectionNumber: return 1
         case movieDetailsBookmarkActionSectionNumber: return 1
         case movieDetailsOverviewSectionNumber: return 1
+        case movieDetailsMovieCollectionSectionNumber: return getMovieCollectionSectionNumberOfRows()
         case movieDetailsPeopleSectionNumber: return getMovieDetailsPeopleSectionNumberOfRows()
         default: fatalError("Section number is out of range...")
         }
@@ -280,6 +344,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         case (movieDetailsSectionNumber, _): return MovieDetailsTableViewCell.standardHeight
         case (movieDetailsBookmarkActionSectionNumber, _): return MovieDetailsBookmarkActionTableViewCell.standardHeight
         case (movieDetailsOverviewSectionNumber, _): return MovieDetailsOverviewTableViewCell.standardHeight
+        case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionSectionRowHeight()
         case (movieDetailsPeopleSectionNumber, _): return getMovieDetailsPeopleSectionRowHeight(at: indexPath)
         default: fatalError("Section number is out of range...")
         }
@@ -300,6 +365,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         case (movieDetailsSectionNumber, _): return getMovieDetailsTableViewCell(tableView, cellForRowAt: indexPath)
         case (movieDetailsBookmarkActionSectionNumber, _): return getMovieDetailsBookmarkActionTableViewCell(tableView, cellForRowAt: indexPath)
         case (movieDetailsOverviewSectionNumber, _): return getMovieDetailsOverviewTableViewCell(tableView, cellForRowAt: indexPath)
+        case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionTableViewCell(tableView, cellForRowAt: indexPath)
         case (movieDetailsPeopleSectionNumber, _): return getPersonTableViewCell(tableView, cellForRowAt: indexPath)
         default: fatalError("Section number is out of range...")
         }
@@ -328,8 +394,18 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             return
         }
         
+        if indexPath.section == movieDetailsMovieCollectionSectionNumber {
+            if isMovieCollectionRequestFailed {
+                onReloadGettingMovieCollection()
+                return
+            }
+            
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        
         if isPeopleRequestFailed {
-            onSelectFailedLoadingCell()
+            onReloadGettingPeople()
             return
         }
         
@@ -403,8 +479,37 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         return cell
     }
     
+    private func getMovieCollectionTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if isMovieCollectionGoingToBeRequested || isMovieCollectionBeingRequested {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
+            return cell
+        }
+        
+        if isMovieCollectionRequestFailed {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.failedLoading) as! FailedLoadingTableViewCell
+            return cell
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieCollection, for: indexPath) as! MovieCollectionTableViewCell
+        
+        cell.header = CinePickerCaptions.otherInCollection
+        cell.movieCollection = movieCollection
+        
+        cell.onTouchDownHandler = { (movie) in
+            let storyboard = UIStoryboard(name: MainStoryboardIdentifiers.main, bundle: nil)
+            let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: MainStoryboardIdentifiers.movieDetailsViewController) as! MovieDetailsViewController
+            
+            movieDetailsViewController.movieId = movie.id
+            movieDetailsViewController.movieTitle = movie.title
+            
+            self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
+        }
+        
+        return cell
+    }
+    
     private func getPersonTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isPeopleBeingRequested {
+        if isPeopleGoingToBeRequested || isPeopleBeingRequested {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
             return cell
         }
@@ -513,6 +618,22 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
     
+    private func getMovieCollectionSectionNumberOfRows() -> Int {
+        if movieDetails.collectionId == nil {
+            return 0
+        }
+        
+        if isMovieCollectionGoingToBeRequested || isMovieCollectionBeingRequested || isMovieCollectionRequestFailed {
+            return 1
+        }
+        
+        if movieCollection.isEmpty {
+            return 0
+        }
+        
+        return 1
+    }
+    
     private func getMovieDetailsPeopleSectionNumberOfRows() -> Int {
         if isPeopleGoingToBeRequested || isPeopleBeingRequested || isPeopleRequestFailed {
             return 1
@@ -521,8 +642,20 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         return people.count
     }
     
+    private func getMovieCollectionSectionRowHeight() -> CGFloat {
+        if isMovieCollectionGoingToBeRequested || isMovieCollectionBeingRequested {
+            return LoadingTableViewCell.standardHeight
+        }
+        
+        if isMovieCollectionRequestFailed {
+            return FailedLoadingTableViewCell.standardHeight
+        }
+        
+        return MovieCollectionTableViewCell.standardHeight
+    }
+    
     private func getMovieDetailsPeopleSectionRowHeight(at indexPath: IndexPath) -> CGFloat {
-        if isPeopleBeingRequested {
+        if isPeopleGoingToBeRequested || isPeopleBeingRequested {
             return LoadingTableViewCell.standardHeight
         }
         
