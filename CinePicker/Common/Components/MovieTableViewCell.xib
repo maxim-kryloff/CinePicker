@@ -115,6 +115,7 @@
                 <outlet property="releaseYearLabel" destination="eHQ-Wf-sEa" id="qB0-U2-49I"/>
                 <outlet property="titleLabel" destination="bmn-Pm-LQQ" id="i1R-uh-Clc"/>
                 <outlet property="voteCountLabel" destination="Ltt-3m-28c" id="cXi-uL-3QR"/>
+                <outlet property="voteResultsStackView" destination="7R6-dG-0tF" id="99K-3X-zQk"/>
             </connections>
             <point key="canvasLocation" x="-39" y="269"/>
         </view>
