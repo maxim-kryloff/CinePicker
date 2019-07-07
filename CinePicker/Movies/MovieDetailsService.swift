@@ -63,6 +63,30 @@ class MovieDetailsService {
         }
     }
     
+    public func requestMovies(byCollectionId collectionId: Int, _ callback: @escaping (_: [Movie]?) -> Void) {
+        movieService.getMovies(byCollectionId: collectionId) { (result) in
+            var requestResult: [Movie]?
+            
+            defer {
+                callback(requestResult)
+            }
+            
+            do {
+                let movies = try result.getValue()
+                
+                requestResult = movies
+                    .filter { !$0.imagePath.isEmpty }
+                    .filter { !$0.overview.isEmpty }
+                    .sorted { $0.releaseYear < $1.releaseYear }
+                
+            } catch ResponseError.dataIsNil {
+                return
+            } catch {
+                fatalError("Unexpected async result...")
+            }
+        }
+    }
+    
     private func requestCharacters(
         by movieId: Int,
         dispatchGroup: DispatchGroup,
@@ -80,7 +104,9 @@ class MovieDetailsService {
             
             do {
                 let characters = try result.getValue()
-                requestResult = characters.filter { !$0.imagePath.isEmpty }
+                
+                requestResult = characters
+                    .filter { !$0.imagePath.isEmpty }
                 
             } catch ResponseError.dataIsNil {
                 return
@@ -107,7 +133,9 @@ class MovieDetailsService {
             
             do {
                 var crewPeople = try result.getValue()
-                crewPeople = crewPeople.filter { !$0.imagePath.isEmpty }
+                
+                crewPeople = crewPeople
+                    .filter { !$0.imagePath.isEmpty }
                 
                 var compactCrewPeople: [CrewPerson] = []
                 

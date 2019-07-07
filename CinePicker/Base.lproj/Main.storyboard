@@ -106,7 +106,7 @@
         <!--Movie Details View Controller-->
         <scene sceneID="Dld-VK-j1z">
             <objects>
-                <viewController id="xLm-8S-XWy" customClass="MovieDetailsViewController" customModule="CinePicker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieDetailsViewController" id="xLm-8S-XWy" customClass="MovieDetailsViewController" customModule="CinePicker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bBC-3g-pTl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -431,6 +431,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6Rr-Qk-OvN"/>
-        <segue reference="XCY-oZ-kcm"/>
+        <segue reference="Hkb-x9-9mw"/>
     </inferredMetricsTieBreakers>
 </document>

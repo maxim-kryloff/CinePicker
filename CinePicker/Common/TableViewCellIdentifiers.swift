@@ -16,4 +16,6 @@ class TableViewCellIdentifiers {
     
     public static let header = "HeaderTableViewCellIdentifier"
     
+    public static let movieCollection = "MovieCollectionTableViewCellIdentifier"
+    
 }

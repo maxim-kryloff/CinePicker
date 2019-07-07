@@ -18,7 +18,8 @@ class Seeder {
             releaseYear: "2000",
             overview: "Overview",
             popularity: 10,
-            genres: genres
+            genres: genres,
+            collectionId: 0
         )
         
         return movieDetails

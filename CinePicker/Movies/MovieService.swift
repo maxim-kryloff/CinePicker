@@ -101,6 +101,25 @@ class MovieService {
         getSimilarMoviesOperationQueue.addOperation(operation)
     }
     
+    private let getMoviesByCollectionIdOperationQueue = OperationQueue()
+    
+    public func getMovies(byCollectionId collectionId: Int, callback: @escaping (_: AsyncResult<[Movie]>) -> Void) {
+        getMoviesByCollectionIdOperationQueue.cancelAllOperations()
+        
+        let operation = GetMoviesByCollectionIdOperation()
+        
+        operation.collectionId = collectionId
+        operation.qualityOfService = .utility
+        
+        operation.completionBlock = {
+            if let result = operation.result {
+                callback(result)
+            }
+        }
+        
+        getMoviesByCollectionIdOperationQueue.addOperation(operation)
+    }
+    
 }
 
 extension MovieService {
@@ -370,9 +389,9 @@ extension MovieService {
                     return
                 }
                 
-                let movieDetails = self.getSimilarMovies(from: data)
+                let movies = self.getSimilarMovies(from: data)
                 
-                self.result = AsyncResult.success(movieDetails)
+                self.result = AsyncResult.success(movies)
                 self.state = .isFinished
             }
             
@@ -400,6 +419,77 @@ extension MovieService {
                 
                 for item in jsonResults {
                     let movie = Movie.buildMovie(fromJson: item)
+                    movies.append(movie)
+                }
+                
+                return movies
+                
+            } catch {
+                fatalError("Recieved json wasn't serialized...")
+            }
+        }
+        
+    }
+    
+}
+
+extension MovieService {
+    
+    private class GetMoviesByCollectionIdOperation: AsyncOperation {
+        
+        public var result: AsyncResult<[Movie]>?
+        
+        public var collectionId: Int!
+        
+        override func main() {
+            if isCancelled {
+                return
+            }
+            
+            let session = URLSession.shared
+            let getMoviesByCollectionIdRequest = buildGetMoviesByCollectionIdRequest(withCollectionId: collectionId)
+            
+            let task = session.dataTask(with: getMoviesByCollectionIdRequest) { (data, _, _) in
+                if self.isCancelled {
+                    return
+                }
+                
+                guard let data = data else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
+                
+                let movies = self.getMovies(from: data)
+                
+                self.result = AsyncResult.success(movies)
+                self.state = .isFinished
+            }
+            
+            task.resume()
+        }
+        
+        private func buildGetMoviesByCollectionIdRequest(withCollectionId collectionId: Int) -> URLRequest {
+            let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
+                .append(pathComponent: "/collection/\(collectionId)")
+                .append(queryItem: ("api_key", CinePickerConfig.apiToken))
+                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
+                .build()
+            
+            return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
+        }
+        
+        private func getMovies(from responseData: Data) -> [Movie] {
+            do {
+                let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
+                
+                let jsonResults = json["parts"] as! [[String: Any]]
+                
+                var movies: [Movie] = []
+                
+                for part in jsonResults {
+                    let movie = Movie.buildMovie(fromJson: part)
                     movies.append(movie)
                 }
                 

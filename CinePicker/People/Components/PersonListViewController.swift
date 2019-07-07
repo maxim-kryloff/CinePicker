@@ -4,7 +4,7 @@ class PersonListViewController: UIViewController {
 
     @IBOutlet weak var personListTableView: UITableView!
     
-    public var people: [Person]!
+    public var people: [Person] = []
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

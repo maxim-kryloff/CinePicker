@@ -267,13 +267,13 @@ extension MovieListViewController {
         loadedImages = [:]
         
         if segueIdentifier == SegueIdentifiers.showMovieDetails {
-            let movieListViewController = segue.destination as! MovieDetailsViewController
+            let movieDetailsViewController = segue.destination as! MovieDetailsViewController
             let sender = sender as! TableViewCellSender
             
             let indexPath = sender.indexPath
             
-            movieListViewController.movieId = movies[indexPath.row].id
-            movieListViewController.movieTitle = movies[indexPath.row].title
+            movieDetailsViewController.movieId = movies[indexPath.row].id
+            movieDetailsViewController.movieTitle = movies[indexPath.row].title
             
             return
         }
