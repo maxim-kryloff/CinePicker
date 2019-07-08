@@ -176,12 +176,12 @@ class CinePickerCaptions {
         return "Cancel"
     }
     
-    public static var otherInCollection: String {
+    public static var alsoInSeries: String {
         if CinePickerConfig.getLanguage() == "ru-RU" {
             return "Другие части"
         }
         
-        return "Other in Collection"
+        return "Also in Series"
     }
     
     public static func movies(ofPerson personName: String) -> String {

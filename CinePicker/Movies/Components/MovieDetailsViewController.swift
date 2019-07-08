@@ -492,7 +492,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieCollection, for: indexPath) as! MovieCollectionTableViewCell
         
-        cell.header = CinePickerCaptions.otherInCollection
+        cell.header = CinePickerCaptions.alsoInSeries
         cell.movieCollection = movieCollection
         
         cell.onTouchDownHandler = { (movie) in
