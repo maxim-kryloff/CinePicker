@@ -111,28 +111,6 @@ class Movie {
         
         return movie
     }
-    
-    public static func buildMovie(fromDAO movieDAO: NSManagedObject) -> Movie {
-        let id = movieDAO.value(forKey: "id") as! Int
-        
-        let title = movieDAO.value(forKey: "title") as! String
-        
-        let originalTitle = movieDAO.value(forKey: "originalTitle") as! String
-        
-        let imagePath = movieDAO.value(forKey: "imagePath") as! String
-        
-        let releaseYear = movieDAO.value(forKey: "releaseYear") as! String
-        
-        let movie = Movie(
-            id: id,
-            title: title,
-            originalTitle: originalTitle,
-            imagePath: imagePath,
-            releaseYear: releaseYear
-        )
-        
-        return movie
-    }
 
 }
 

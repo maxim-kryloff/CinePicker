@@ -1,31 +1,21 @@
 import CoreData
 
-class BookmarkRepository {
+class MovieRepository {
     
-    private static var instance: BookmarkRepository?
+    private static var instance: MovieRepository?
     
-    public static var shared: BookmarkRepository {
+    public static var shared: MovieRepository {
         if instance == nil {
-            instance = BookmarkRepository()
+            instance = MovieRepository()
         }
         
         return instance!
     }
     
-    private let persistentContainer: NSPersistentContainer
-    
-    private init() {
-        persistentContainer = NSPersistentContainer(name: "Bookmarks")
-        
-        persistentContainer.loadPersistentStores { (_, error) in
-            if let err = error as NSError? {
-                fatalError("Unresolved error \(err), \(err.userInfo)")
-            }
-        }
-    }
+    private init() { }
     
     public func getBookmarks() -> [Movie] {
-        let managedContext = persistentContainer.viewContext
+        let managedContext = CoreDataManager.shared.viewContext
         let request = NSFetchRequest<NSManagedObject>(entityName: "MovieEntity")
         
         do {
@@ -47,9 +37,9 @@ class BookmarkRepository {
     }
     
     public func saveBookmark(movie: Movie) -> [Movie] {
-        let managedContext = persistentContainer.viewContext
+        let managedContext = CoreDataManager.shared.viewContext
         
-        let entity = NSEntityDescription.entity(forEntityName: "MovieEntity", in: managedContext)!
+        let entity = CoreDataManager.shared.getEntityDescription(forEntityName: "MovieEntity")
         let movieDAO = NSManagedObject(entity: entity, insertInto: managedContext)
         
         movieDAO.setValue(movie.id, forKey: "id")
@@ -62,17 +52,13 @@ class BookmarkRepository {
         
         movieDAO.setValue(movie.releaseYear, forKey: "releaseYear")
         
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Can't write. \(error), \(error.userInfo)")
-        }
+        CoreDataManager.shared.saveContext()
         
         return getBookmarks()
     }
     
     public func removeBookmark(movie: Movie) -> [Movie] {
-        let managedContext = persistentContainer.viewContext
+        let managedContext = CoreDataManager.shared.viewContext
         let request = NSFetchRequest<NSManagedObject>(entityName: "MovieEntity")
         
         do {
@@ -80,7 +66,7 @@ class BookmarkRepository {
             let modelToDelete = movieDAOs.first { $0.value(forKey: "id") as! Int == movie.id }!
             
             managedContext.delete(modelToDelete)
-            try managedContext.save()
+            CoreDataManager.shared.saveContext()
 
         } catch let error as NSError {
             print("Can't delete. \(error), \(error.userInfo)")
@@ -90,8 +76,8 @@ class BookmarkRepository {
     }
     
     public func eraseBookmarks() -> [Movie] {
-        let managedContext = persistentContainer.viewContext
-        let coordinator = persistentContainer.persistentStoreCoordinator
+        let managedContext = CoreDataManager.shared.viewContext
+        let coordinator = CoreDataManager.shared.persistentStoreCoordinator
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MovieEntity")
         let deleteAllRequest = NSBatchDeleteRequest(fetchRequest: request)
