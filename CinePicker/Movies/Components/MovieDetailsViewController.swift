@@ -168,9 +168,9 @@ class MovieDetailsViewController: UIViewController {
         let isSavedInBookmarks = checkIfSavedInBookmarks()
         
         if isSavedInBookmarks {
-            _ = BookmarkRepository.shared.removeBookmark(movie: movieDetails)
+            _ = MovieRepository.shared.remove(movie: movieDetails)
         } else {
-            _ = BookmarkRepository.shared.saveBookmark(movie: movieDetails)
+            _ = MovieRepository.shared.save(movie: movieDetails)
         }
     }
     
@@ -292,7 +292,7 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func checkIfSavedInBookmarks() -> Bool {
-        let bookmarks = BookmarkRepository.shared.getBookmarks()
+        let bookmarks = MovieRepository.shared.getAll()
         return bookmarks.contains { $0.id == movieDetails.id }
     }
     

@@ -123,7 +123,7 @@ class MultiSearchViewController: StatesViewController {
     }
     
     private func setBookmarks() {
-        let bookmarks = BookmarkRepository.shared.getBookmarks()
+        let bookmarks = MovieRepository.shared.getAll()
         let reversedBookmarks = Array(bookmarks.reversed())
         
         updateTable(withData: reversedBookmarks)
@@ -132,7 +132,7 @@ class MultiSearchViewController: StatesViewController {
     private func removeBookmark(at indexPath: IndexPath) {
         let movie = entities[indexPath.row] as! Movie
         
-        let bookmarks = BookmarkRepository.shared.removeBookmark(movie: movie)
+        let bookmarks = MovieRepository.shared.remove(movie: movie)
         let reversedBookmarks = Array(bookmarks.reversed())
         
         entities = reversedBookmarks
@@ -140,7 +140,7 @@ class MultiSearchViewController: StatesViewController {
     }
     
     private func checkIfBookmarksEmpty() -> Bool {
-        let bookmarks = BookmarkRepository.shared.getBookmarks()
+        let bookmarks = MovieRepository.shared.getAll()
         return bookmarks.isEmpty
     }
     
@@ -197,7 +197,7 @@ class MultiSearchViewController: StatesViewController {
     
     @objc private func onPressActionsButton() {
         let eraseBookmarks = {
-            self.entities = BookmarkRepository.shared.eraseBookmarks()
+            self.entities = MovieRepository.shared.removeAll()
             self.entityTableView.reloadData()
         }
         
