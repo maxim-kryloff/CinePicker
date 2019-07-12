@@ -1,31 +1,15 @@
 class CinePickerCaptions {
     
-    public static var bookmarks: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
-            return "Закладки"
+    public static var wontCheckItOut: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Не буду смотреть"
         }
         
-        return "Bookmarks"
-    }
-    
-    public static var saveToBookmarks: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
-            return "Добавить в закладки"
-        }
-        
-        return "Save to Bookmarks"
-    }
-    
-    public static var removeFromBookmarks: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
-            return "Убрать из закладок"
-        }
-        
-        return "Remove from Bookmarks"
+        return "Won't check it out"
     }
     
     public static var goToFullCast: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Все актеры"
         }
         
@@ -33,7 +17,7 @@ class CinePickerCaptions {
     }
     
     public static var goToFullCrew: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Съемочная группа"
         }
         
@@ -41,7 +25,7 @@ class CinePickerCaptions {
     }
     
     public static var cast: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Актер"
         }
         
@@ -49,7 +33,7 @@ class CinePickerCaptions {
     }
     
     public static var crew: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Участник съемок"
         }
         
@@ -57,7 +41,7 @@ class CinePickerCaptions {
     }
     
     public static var loadingData: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Загрузка данных..."
         }
         
@@ -65,7 +49,7 @@ class CinePickerCaptions {
     }
     
     public static var couldntReloadData: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Ошибка загрузки данных..."
         }
         
@@ -73,7 +57,7 @@ class CinePickerCaptions {
     }
     
     public static var reload: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Загрузить"
         }
         
@@ -81,7 +65,7 @@ class CinePickerCaptions {
     }
     
     public static var thereIsNoDataFound: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Данные не найдены..."
         }
         
@@ -89,7 +73,7 @@ class CinePickerCaptions {
     }
     
     public static var thereAreNoMoviesFound: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Фильмы не найдены..."
         }
         
@@ -97,7 +81,7 @@ class CinePickerCaptions {
     }
     
     public static var more: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Еще"
         }
         
@@ -105,7 +89,7 @@ class CinePickerCaptions {
     }
     
     public static var lang: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Язык"
         }
         
@@ -113,23 +97,23 @@ class CinePickerCaptions {
     }
     
     public static var typeMovieOrActor: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Название фильма, имя актера..."
         }
         
         return "Type movie or actor..."
     }
     
-    public static var eraseBookmarks: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
-            return "Очистить закладки"
+    public static var eraseSavedMovies: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Очистить список фильмов"
         }
         
-        return "Erase Bookmarks"
+        return "Erase Saved Movies"
     }
     
     public static var english: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Английский язык"
         }
         
@@ -137,7 +121,7 @@ class CinePickerCaptions {
     }
     
     public static var russian: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Русский язык"
         }
         
@@ -145,7 +129,7 @@ class CinePickerCaptions {
     }
     
     public static var backToSearch: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Назад к поиску"
         }
         
@@ -153,7 +137,7 @@ class CinePickerCaptions {
     }
     
     public static var goToSimilarMovies: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Похожие фильмы"
         }
         
@@ -161,7 +145,7 @@ class CinePickerCaptions {
     }
     
     public static var back: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Назад"
         }
         
@@ -169,7 +153,7 @@ class CinePickerCaptions {
     }
     
     public static var cancel: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Отмена"
         }
         
@@ -177,7 +161,7 @@ class CinePickerCaptions {
     }
     
     public static var alsoInSeries: String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Другие части"
         }
         
@@ -185,7 +169,7 @@ class CinePickerCaptions {
     }
     
     public static func movies(ofPerson personName: String) -> String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "Фильмы \(personName)"
         }
         
@@ -193,11 +177,11 @@ class CinePickerCaptions {
     }
     
     public static func moviesSimilar(to movieTitle: String) -> String {
-        if CinePickerConfig.getLanguage() == "ru-RU" {
+        if CinePickerConfig.getLanguage() == .ru {
             return "\(movieTitle). Похожие фильмы"
         }
         
         return "Similar to \(movieTitle)"
     }
-
+    
 }

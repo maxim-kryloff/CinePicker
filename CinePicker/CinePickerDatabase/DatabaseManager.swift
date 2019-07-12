@@ -41,6 +41,10 @@ class DatabaseManager {
         return description
     }
     
+    public func getFetchRequest(forEntity entity: DatabaseEntity) -> NSFetchRequest<NSManagedObject> {
+        return NSFetchRequest<NSManagedObject>(entityName: entity.rawValue)
+    }
+    
     public func saveContext() {
         do {
             try viewContext.save()

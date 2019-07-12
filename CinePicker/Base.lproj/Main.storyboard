@@ -232,7 +232,7 @@
                                             <outlet property="voteCountLabel" destination="GTB-sT-3md" id="EM4-js-JzG"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsBookmarkActionTableViewCellIdentifier" rowHeight="40" id="kxo-ji-saJ" customClass="MovieDetailsBookmarkActionTableViewCell" customModule="CinePicker" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsTagsTableViewCellIdentifier" rowHeight="40" id="kxo-ji-saJ" customClass="MovieDetailsTagsTableViewCell" customModule="CinePicker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="148" width="375" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kxo-ji-saJ" id="FVQ-JD-sP9">
@@ -240,9 +240,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iA0-o9-7Xg">
-                                                    <rect key="frame" x="104" y="2" width="167" height="36"/>
+                                                    <rect key="frame" x="143.5" y="2" width="88" height="36"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <state key="normal" title="Save to Bookmarks"/>
+                                                    <state key="normal" title="Tag Name"/>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -252,7 +252,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="bookmarkActionButton" destination="iA0-o9-7Xg" id="IW2-uZ-kMd"/>
+                                            <outlet property="tagButton" destination="iA0-o9-7Xg" id="IW2-uZ-kMd"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsOverviewTableViewCellIdentifier" rowHeight="80" id="Asg-lF-N0F" customClass="MovieDetailsOverviewTableViewCell" customModule="CinePicker" customModuleProvider="target">
@@ -431,6 +431,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6Rr-Qk-OvN"/>
-        <segue reference="Hkb-x9-9mw"/>
+        <segue reference="XCY-oZ-kcm"/>
     </inferredMetricsTieBreakers>
 </document>

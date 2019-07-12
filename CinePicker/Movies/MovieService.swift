@@ -163,7 +163,7 @@ extension MovieService {
             let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId)")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
-                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
+                .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .build()
             
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
@@ -236,7 +236,7 @@ extension MovieService {
             let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/person/\(personId)/movie_credits")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
-                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
+                .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .build()
 
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
@@ -327,7 +327,7 @@ extension MovieService {
             let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/search/movie")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
-                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
+                .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .append(queryItem: ("query", query))
                 .append(queryItem: ("page", String(page)))
                 .build()
@@ -402,7 +402,7 @@ extension MovieService {
             let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId)/similar")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
-                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
+                .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .append(queryItem: ("page", String(page)))
                 .build()
             
@@ -474,7 +474,7 @@ extension MovieService {
             let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/collection/\(collectionId)")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
-                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
+                .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .build()
             
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)

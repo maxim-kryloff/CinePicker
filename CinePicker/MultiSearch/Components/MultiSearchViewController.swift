@@ -20,7 +20,7 @@ class MultiSearchViewController: StatesViewController {
     
     private let searchDebounceDelayMilliseconds: Int = 500
     
-    private let bookmarkHeaderHeight: CGFloat = 40
+    private let savedMovieHeader: CGFloat = 40
     
     private var entities: [Popularity] = []
     
@@ -32,18 +32,14 @@ class MultiSearchViewController: StatesViewController {
     
     private let debounceActionService = DebounceActionService()
     
-    private var isBookmarkMode: Bool {
-        return currentSearchQuery.isEmpty
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         onViewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if isBookmarkMode {
-            setBookmarks()
+        if currentSearchQuery.isEmpty {
+            setSavedMovieState()
         }
     }
     
@@ -102,10 +98,10 @@ class MultiSearchViewController: StatesViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
 
         OperationQueue.main.addOperation {
-            let isBookmarksEmpty = self.checkIfBookmarksEmpty()
+            let isMovieListEmpty = self.checkIfSavedMovieListIsEmpty()
             let didAgreeToUseSource = UserDefaults.standard.bool(forKey: "didAgreeToUseDataSource")
             
-            if isBookmarksEmpty && didAgreeToUseSource {
+            if isMovieListEmpty && didAgreeToUseSource {
                 self.searchController.searchBar.becomeFirstResponder()
             }
         }
@@ -122,26 +118,28 @@ class MultiSearchViewController: StatesViewController {
         entityTableView.register(personTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.person)
     }
     
-    private func setBookmarks() {
-        let bookmarks = MovieRepository.shared.getAll()
-        let reversedBookmarks = Array(bookmarks.reversed())
+    private func setSavedMovieState() {
+        let savedMovies = MovieRepository.shared.getAll()
+        let reversedSavedMovies = Array(savedMovies.reversed())
         
-        updateTable(withData: reversedBookmarks)
+        updateTable(withData: reversedSavedMovies)
     }
     
-    private func removeBookmark(at indexPath: IndexPath) {
-        let movie = entities[indexPath.row] as! Movie
+    private func removeSavedMovie(at indexPath: IndexPath) {
+        let movie = entities[indexPath.row] as! SavedMovie
         
-        let bookmarks = MovieRepository.shared.remove(movie: movie)
-        let reversedBookmarks = Array(bookmarks.reversed())
+        MovieRepository.shared.remove(movie: movie)
         
-        entities = reversedBookmarks
+        let savedMovies = MovieRepository.shared.getAll()
+        let reversedSavedMovies = Array(savedMovies.reversed())
+        
+        entities = reversedSavedMovies
         entityTableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
-    private func checkIfBookmarksEmpty() -> Bool {
-        let bookmarks = MovieRepository.shared.getAll()
-        return bookmarks.isEmpty
+    private func checkIfSavedMovieListIsEmpty() -> Bool {
+        let savedMovies = MovieRepository.shared.getAll()
+        return savedMovies.isEmpty
     }
     
     private func performRequest(shouldScrollToFirstRow: Bool) {
@@ -186,24 +184,29 @@ class MultiSearchViewController: StatesViewController {
         defineSearchController()
         defineTableView()
         
-        setBookmarks()
+        setSavedMovieState()
         
         if !UserDefaults.standard.bool(forKey: "didAgreeToUseDataSource") {
             showDataSourceAgreementAlert()
+            
+            let tag = Tag(name: SystemTagName.willCheckItOut.rawValue, russianName: "Буду смотреть")
+            TagRepository.shared.save(tag: tag)
         }
         
         definesPresentationContext = true
     }
     
     @objc private func onPressActionsButton() {
-        let eraseBookmarks = {
-            self.entities = MovieRepository.shared.removeAll()
+        let eraseSavedMovies = {
+            MovieRepository.shared.removeAll()
+            
+            self.entities = []
             self.entityTableView.reloadData()
         }
         
         UIViewHelper.showAlert(
             [
-                (title: CinePickerCaptions.eraseBookmarks, action: eraseBookmarks)
+                (title: CinePickerCaptions.eraseSavedMovies, action: eraseSavedMovies)
             ]
         )
     }
@@ -214,14 +217,14 @@ class MultiSearchViewController: StatesViewController {
                 (
                     title: CinePickerCaptions.english,
                     action: {
-                        UserDefaults.standard.set("en-US", forKey: "Language")
+                        CinePickerConfig.setLanguage(language: .en)
                         self.onViewDidLoad()
                     }
                 ),
                 (
                     title: CinePickerCaptions.russian,
                     action: {
-                        UserDefaults.standard.set("ru-RU", forKey: "Language")
+                        CinePickerConfig.setLanguage(language: .ru)
                         self.onViewDidLoad()
                     }
                 )
@@ -256,29 +259,35 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if isBookmarkMode {
-            return UIViewHelper.getHeaderView(for: entityTableView, withText: CinePickerCaptions.bookmarks)
+        if currentSearchQuery.isEmpty {
+            let systemTag = TagRepository.shared.getSystemTag(byName: .willCheckItOut)
+            
+            let systemTagName = CinePickerConfig.getLanguage() == .ru
+                ? systemTag.russianName
+                : systemTag.name
+            
+            return UIViewHelper.getHeaderView(for: entityTableView, withText: systemTagName)
         }
         
         return nil
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if isBookmarkMode {
-            let isBookmarksEmpty = checkIfBookmarksEmpty()
-            return !isBookmarksEmpty ? bookmarkHeaderHeight : 0
+        if currentSearchQuery.isEmpty {
+            let isSavedMovieListEmpty = checkIfSavedMovieListIsEmpty()
+            return !isSavedMovieListEmpty ? savedMovieHeader : 0
         }
         
         return 0
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return isBookmarkMode
+        return currentSearchQuery.isEmpty
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            removeBookmark(at: indexPath)
+            removeSavedMovie(at: indexPath)
         }
     }
     
@@ -374,7 +383,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         cell.originalTitle = movie.originalTitle
         cell.releaseYear = movie.releaseYear
         
-        if isBookmarkMode {
+        if currentSearchQuery.isEmpty {
             cell.isVoteResultsHidden = true
         } else {
             cell.voteCount = movie.voteCount
@@ -462,7 +471,7 @@ extension MultiSearchViewController: UISearchResultsUpdating {
 
         if currentSearchQuery.isEmpty {
             unsetAllStates()
-            setBookmarks()
+            setSavedMovieState()
             
             return
         }

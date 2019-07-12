@@ -25,7 +25,7 @@ class MovieDetailsViewController: UIViewController {
     
     private let movieDetailsSectionNumber: Int = 0
     
-    private let movieDetailsBookmarkActionSectionNumber: Int = 1
+    private let movieDetailsTagsSectionNumber: Int = 1
     
     private let movieDetailsOverviewSectionNumber: Int = 2
     
@@ -44,6 +44,8 @@ class MovieDetailsViewController: UIViewController {
     private var isPeopleBeingRequested = false
     
     private var isPeopleRequestFailed = false
+    
+    private var savedMovie: SavedMovie?
     
     private var movieCollection: [Movie] = []
     
@@ -159,19 +161,32 @@ class MovieDetailsViewController: UIViewController {
         )
     }
     
-    private func onSelectBookmarkActionCell() {
+    private func onSelectTagsCell() {
         defer {
-            let bookmarkActionIndexPath = IndexPath(row: 0, section: movieDetailsBookmarkActionSectionNumber)
-            movieDetailsTableView.reloadRows(at: [bookmarkActionIndexPath], with: .automatic)
+            let tagsIndexPath = IndexPath(row: 0, section: movieDetailsTagsSectionNumber)
+            movieDetailsTableView.reloadRows(at: [tagsIndexPath], with: .automatic)
         }
         
-        let isSavedInBookmarks = checkIfSavedInBookmarks()
-        
-        if isSavedInBookmarks {
-            _ = MovieRepository.shared.remove(movie: movieDetails)
-        } else {
-            _ = MovieRepository.shared.save(movie: movieDetails)
+        if let savedMovie = savedMovie {
+            MovieRepository.shared.remove(movie: savedMovie)
+            self.savedMovie = nil
+            
+            return
         }
+        
+        let systemTag = TagRepository.shared.getSystemTag(byName: .willCheckItOut)
+        
+        let savedMovie = SavedMovie(
+            id: movieDetails.id,
+            title: movieDetails.title,
+            originalTitle: movieDetails.originalTitle,
+            imagePath: movieDetails.imagePath,
+            releaseYear: movieDetails.releaseYear,
+            tag: systemTag
+        )
+        
+        MovieRepository.shared.save(savedMovie: savedMovie)
+        self.savedMovie = MovieRepository.shared.get(byId: movieDetails.id)
     }
     
     private func performMovieDetailsRequest() {
@@ -190,6 +205,7 @@ class MovieDetailsViewController: UIViewController {
                 self.movieDetailsTableView.backgroundView = nil
                 
                 self.movieDetails = requestedMovieDetails
+                self.savedMovie = MovieRepository.shared.get(byId: self.movieId)
                 
                 self.actionsBarButtonItem.isEnabled = true
                 
@@ -291,11 +307,6 @@ class MovieDetailsViewController: UIViewController {
         }
     }
     
-    private func checkIfSavedInBookmarks() -> Bool {
-        let bookmarks = MovieRepository.shared.getAll()
-        return bookmarks.contains { $0.id == movieDetails.id }
-    }
-    
     private func getGoToFullCastIndex() -> Int {
         return charactersLimit - 1
     }
@@ -331,7 +342,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         
         switch section {
         case movieDetailsSectionNumber: return 1
-        case movieDetailsBookmarkActionSectionNumber: return 1
+        case movieDetailsTagsSectionNumber: return 1
         case movieDetailsOverviewSectionNumber: return 1
         case movieDetailsMovieCollectionSectionNumber: return getMovieCollectionSectionNumberOfRows()
         case movieDetailsPeopleSectionNumber: return getMovieDetailsPeopleSectionNumberOfRows()
@@ -342,7 +353,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch (indexPath.section, indexPath.row) {
         case (movieDetailsSectionNumber, _): return MovieDetailsTableViewCell.standardHeight
-        case (movieDetailsBookmarkActionSectionNumber, _): return MovieDetailsBookmarkActionTableViewCell.standardHeight
+        case (movieDetailsTagsSectionNumber, _): return MovieDetailsTagsTableViewCell.standardHeight
         case (movieDetailsOverviewSectionNumber, _): return MovieDetailsOverviewTableViewCell.standardHeight
         case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionSectionRowHeight()
         case (movieDetailsPeopleSectionNumber, _): return getMovieDetailsPeopleSectionRowHeight(at: indexPath)
@@ -363,7 +374,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch (indexPath.section, indexPath.row) {
         case (movieDetailsSectionNumber, _): return getMovieDetailsTableViewCell(tableView, cellForRowAt: indexPath)
-        case (movieDetailsBookmarkActionSectionNumber, _): return getMovieDetailsBookmarkActionTableViewCell(tableView, cellForRowAt: indexPath)
+        case (movieDetailsTagsSectionNumber, _): return getMovieDetailsTagsTableViewCell(tableView, cellForRowAt: indexPath)
         case (movieDetailsOverviewSectionNumber, _): return getMovieDetailsOverviewTableViewCell(tableView, cellForRowAt: indexPath)
         case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionTableViewCell(tableView, cellForRowAt: indexPath)
         case (movieDetailsPeopleSectionNumber, _): return getPersonTableViewCell(tableView, cellForRowAt: indexPath)
@@ -389,8 +400,8 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             return
         }
         
-        if indexPath.section == movieDetailsBookmarkActionSectionNumber {
-            onSelectBookmarkActionCell()
+        if indexPath.section == movieDetailsTagsSectionNumber {
+            onSelectTagsCell()
             return
         }
         
@@ -463,10 +474,10 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         return cell
     }
     
-    private func getMovieDetailsBookmarkActionTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsBookmarkAction, for: indexPath) as! MovieDetailsBookmarkActionTableViewCell
+    private func getMovieDetailsTagsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsTags, for: indexPath) as! MovieDetailsTagsTableViewCell
 
-        cell.isRemoveAction = checkIfSavedInBookmarks()
+        cell.isRemoveAction = savedMovie != nil
         
         return cell
     }
