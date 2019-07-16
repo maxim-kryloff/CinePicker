@@ -10,8 +10,16 @@ class CinePickerConfig {
     
     public static let apiToken = ""
     
-    public static func getLanguage() -> String {
-        return UserDefaults.standard.string(forKey: "Language") ?? "en-US"
+    public static func setLanguage(language: CinePickerLanguageCode) {
+        UserDefaults.standard.set(language.rawValue, forKey: "Language")
+    }
+    
+    public static func getLanguage() -> CinePickerLanguageCode {
+        return getLanguageCode() == CinePickerLanguageCode.ru.rawValue ? .ru : .en
+    }
+    
+    public static func getLanguageCode() -> String {
+        return UserDefaults.standard.string(forKey: "Language") ?? CinePickerLanguageCode.en.rawValue
     }
 
 }

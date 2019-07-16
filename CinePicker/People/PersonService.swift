@@ -105,7 +105,7 @@ extension PersonService {
             let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/search/person")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
-                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
+                .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .append(queryItem: ("query", query))
                 .append(queryItem: ("page", String(page)))
                 .build()
@@ -178,7 +178,7 @@ extension PersonService {
             let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId)/credits")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
-                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
+                .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .build()
             
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
@@ -249,7 +249,7 @@ extension PersonService {
             let url: URL! = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId)/credits")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
-                .append(queryItem: ("language", CinePickerConfig.getLanguage()))
+                .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .build()
             
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)

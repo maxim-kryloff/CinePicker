@@ -6,7 +6,7 @@ class TableViewCellIdentifiers {
     
     public static let movieDetails = "MovieDetailsTableViewCellIdentifier"
     
-    public static let movieDetailsBookmarkAction = "MovieDetailsBookmarkActionTableViewCellIdentifier"
+    public static let movieDetailsTags = "MovieDetailsTagsTableViewCellIdentifier"
     
     public static let movieDetailsOverview = "MovieDetailsOverviewTableViewCellIdentifier"
     

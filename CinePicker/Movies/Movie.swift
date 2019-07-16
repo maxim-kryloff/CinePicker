@@ -42,26 +42,6 @@ class Movie {
         self.popularity = popularity
     }
     
-    convenience init(
-        id: Int,
-        title: String,
-        originalTitle: String,
-        imagePath: String,
-        releaseYear: String
-    ) {
-        self.init(
-            id: id,
-            title: title,
-            originalTitle: originalTitle,
-            imagePath: imagePath,
-            rating: 0.0,
-            voteCount: 0,
-            releaseYear: releaseYear,
-            overview: "",
-            popularity: 0.0
-        )
-    }
-    
     public static func buildMovie(fromJson json: [String: Any]) -> Movie {
         guard let id = json["id"] as? Int else {
             fatalError("Movie must have an id...")
