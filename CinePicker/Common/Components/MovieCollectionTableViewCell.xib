@@ -38,15 +38,25 @@
                         <color key="textColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ihH-r5-Yca" userLabel="Bottom Bar View">
+                        <rect key="frame" x="0.0" y="159" width="375" height="0.5"/>
+                        <color key="backgroundColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="ckh-Nn-Zxf"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="ngY-H8-D1r" secondAttribute="bottom" id="2yx-GV-WGw"/>
                     <constraint firstAttribute="trailing" secondItem="ngY-H8-D1r" secondAttribute="trailing" id="9iO-uM-QFM"/>
+                    <constraint firstItem="ihH-r5-Yca" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Cow-3u-7bE"/>
                     <constraint firstItem="ngY-H8-D1r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="K2p-en-Hsa"/>
                     <constraint firstItem="3T2-GH-vj6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="Wf5-Ij-1sC"/>
                     <constraint firstItem="ngY-H8-D1r" firstAttribute="top" secondItem="3T2-GH-vj6" secondAttribute="bottom" id="id1-lf-Jyp"/>
                     <constraint firstItem="3T2-GH-vj6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="kgV-eu-8hJ"/>
+                    <constraint firstAttribute="trailing" secondItem="ihH-r5-Yca" secondAttribute="trailing" id="nqd-1z-7qT"/>
+                    <constraint firstAttribute="bottom" secondItem="ihH-r5-Yca" secondAttribute="bottom" id="uEu-XY-Vwr"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

@@ -1,24 +1,28 @@
 PODS:
   - Agrume (5.3.1):
     - SwiftyGif
+  - LGButton (1.1.6)
   - SCLAlertView (0.8)
   - SwiftyGif (5.1.1)
 
 DEPENDENCIES:
   - Agrume
+  - LGButton
   - SCLAlertView
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Agrume
+    - LGButton
     - SCLAlertView
     - SwiftyGif
 
 SPEC CHECKSUMS:
   Agrume: dd627819c7965ca99b08d2f76054bf3a3e824d34
+  LGButton: 9f0a7f9d3030e3f504108342f6b66d64a429371b
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   SwiftyGif: f7702483db93586a41f04f4927cd682852a2fa10
 
-PODFILE CHECKSUM: 1cb6d3c3c574875f021ad0678fc66de9f6eb7703
+PODFILE CHECKSUM: 2da5a36e75e2fac1aa1f9dfc1e85ebf345a80cb9
 
 COCOAPODS: 1.7.1

@@ -161,15 +161,12 @@ class MovieDetailsViewController: UIViewController {
         )
     }
     
-    private func onSelectTagsCell() {
-        defer {
-            let tagsIndexPath = IndexPath(row: 0, section: movieDetailsTagsSectionNumber)
-            movieDetailsTableView.reloadRows(at: [tagsIndexPath], with: .automatic)
-        }
-        
+    private func onTapWillCheckItOutSystemTag(cell: MovieDetailsTagsTableViewCell) {
         if let savedMovie = savedMovie {
             MovieRepository.shared.remove(movie: savedMovie)
             self.savedMovie = nil
+            
+            cell.isWillCheckItOutSelected = false
             
             return
         }
@@ -187,6 +184,8 @@ class MovieDetailsViewController: UIViewController {
         
         MovieRepository.shared.save(savedMovie: savedMovie)
         self.savedMovie = MovieRepository.shared.get(byId: movieDetails.id)
+        
+        cell.isWillCheckItOutSelected = true
     }
     
     private func performMovieDetailsRequest() {
@@ -395,13 +394,8 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == movieDetailsSectionNumber {
+        if indexPath.section == movieDetailsSectionNumber || indexPath.section == movieDetailsTagsSectionNumber {
             tableView.deselectRow(at: indexPath, animated: true)
-            return
-        }
-        
-        if indexPath.section == movieDetailsTagsSectionNumber {
-            onSelectTagsCell()
             return
         }
         
@@ -476,8 +470,9 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     
     private func getMovieDetailsTagsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsTags, for: indexPath) as! MovieDetailsTagsTableViewCell
-
-        cell.isRemoveAction = savedMovie != nil
+        
+        cell.isWillCheckItOutSelected = savedMovie != nil
+        cell.onTapWillCheckItOut = onTapWillCheckItOutSystemTag
         
         return cell
     }

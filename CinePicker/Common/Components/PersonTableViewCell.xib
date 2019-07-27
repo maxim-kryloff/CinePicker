@@ -39,9 +39,17 @@
                             <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G0e-4B-kep" userLabel="Bottom Bar View">
+                            <rect key="frame" x="0.0" y="79.5" width="375" height="0.5"/>
+                            <color key="backgroundColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="gX1-GV-0in"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="G0e-4B-kep" secondAttribute="bottom" id="2rF-me-xIp"/>
                         <constraint firstAttribute="bottom" secondItem="X6g-68-gJp" secondAttribute="bottom" id="2zG-Qp-gRy"/>
                         <constraint firstItem="PC3-M1-hgO" firstAttribute="leading" secondItem="xmc-nF-0Fs" secondAttribute="leading" constant="20" id="43J-Kj-tMx"/>
                         <constraint firstAttribute="trailing" secondItem="azh-Ro-oDI" secondAttribute="trailing" constant="8" id="9yX-3I-yYg"/>
@@ -51,6 +59,8 @@
                         <constraint firstItem="qoD-OF-90c" firstAttribute="leading" secondItem="X6g-68-gJp" secondAttribute="trailing" constant="16" id="boT-2Y-Jho"/>
                         <constraint firstItem="qoD-OF-90c" firstAttribute="top" secondItem="xmc-nF-0Fs" secondAttribute="top" constant="8" id="dxF-5e-Fg3"/>
                         <constraint firstAttribute="trailing" secondItem="qoD-OF-90c" secondAttribute="trailing" constant="8" id="fWk-KK-yOm"/>
+                        <constraint firstAttribute="trailing" secondItem="G0e-4B-kep" secondAttribute="trailing" id="mfs-pl-XhQ"/>
+                        <constraint firstItem="G0e-4B-kep" firstAttribute="leading" secondItem="xmc-nF-0Fs" secondAttribute="leading" id="rdw-K0-eLl"/>
                         <constraint firstItem="azh-Ro-oDI" firstAttribute="top" secondItem="qoD-OF-90c" secondAttribute="bottom" id="ydq-mh-H8n"/>
                         <constraint firstItem="PC3-M1-hgO" firstAttribute="centerY" secondItem="xmc-nF-0Fs" secondAttribute="centerY" id="zNu-2C-JNR"/>
                     </constraints>
@@ -72,7 +82,7 @@
                 <outlet property="personNameLabel" destination="qoD-OF-90c" id="TsX-o6-fuf"/>
                 <outlet property="personPositionLabel" destination="azh-Ro-oDI" id="w5u-23-tN1"/>
             </connections>
-            <point key="canvasLocation" x="-4" y="-550"/>
+            <point key="canvasLocation" x="-4" y="-550.52473763118439"/>
         </view>
     </objects>
     <resources>

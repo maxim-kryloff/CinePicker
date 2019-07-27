@@ -25,10 +25,20 @@
                                 <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                         </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gDd-0w-zxx" userLabel="Bottom Bar View">
+                            <rect key="frame" x="0.0" y="39.5" width="375" height="0.5"/>
+                            <color key="backgroundColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="lmT-Cu-UmT"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="gDd-0w-zxx" secondAttribute="bottom" id="R9G-km-ejO"/>
                         <constraint firstItem="iUf-o0-zTd" firstAttribute="centerX" secondItem="Q22-kA-PTR" secondAttribute="centerX" id="cTP-vv-sLh"/>
+                        <constraint firstAttribute="trailing" secondItem="gDd-0w-zxx" secondAttribute="trailing" id="u7M-Ou-nI3"/>
+                        <constraint firstItem="gDd-0w-zxx" firstAttribute="leading" secondItem="Q22-kA-PTR" secondAttribute="leading" id="xF0-X4-m5R"/>
                         <constraint firstItem="iUf-o0-zTd" firstAttribute="centerY" secondItem="Q22-kA-PTR" secondAttribute="centerY" id="yx3-QN-QJv"/>
                     </constraints>
                 </view>
@@ -46,7 +56,7 @@
             <connections>
                 <outlet property="headerButton" destination="iUf-o0-zTd" id="2Jp-bE-9OW"/>
             </connections>
-            <point key="canvasLocation" x="-89.855072463768124" y="235.37946428571428"/>
+            <point key="canvasLocation" x="-90.400000000000006" y="234.78260869565219"/>
         </view>
     </objects>
 </document>

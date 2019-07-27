@@ -7,38 +7,74 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1885535A7CE6D1912C5866477A82A013 /* AgrumeServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E83FC2E525F544B69D0F345CCB47180 /* AgrumeServiceLocator.swift */; };
-		1A5698F70BE94D074ED5AF6A5CAF068F /* UIKit+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995B8DDE108B119F2DD0DCDBD33F7448 /* UIKit+Agrume.swift */; };
-		1F7B74FB796F007623CDD38842844C49 /* UIImageView+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427F5163DB2328CFE10DF80A139193DC /* UIImageView+SwiftyGif.swift */; };
-		219FDC7BF016FEE9D8E1BD26E367FD7F /* SwiftyGifManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A5CBC3272A13133EACC8672BB405F0 /* SwiftyGifManager.swift */; };
-		21F54E13D7A07659754BC35B4D04EAED /* UIImage+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF9448A7BC7A82AE81FD7B51886CC36 /* UIImage+SwiftyGif.swift */; };
-		23A208C9FBB0F5E07A2F41FC19A862B5 /* Pods-CinePicker-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C10E587FF0677BA30BE5C83FE2418CA4 /* Pods-CinePicker-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05C2BB0DC434102A1281F2BE8540D9A4 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAB68FD03F6DC87EB55D54B6876C71D /* ImageDownloader.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		09D500E9424A7C1D9AEF061869F2FE43 /* themify.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8DD6D8E2BAFFE035228842BBD4A482EC /* themify.ttf */; };
+		1B04035383FB463A99C09259E70FCBF1 /* AgrumeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2220C0B9C424E0392A40D34F87D54A8 /* AgrumeImage.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		1B2EC050E286E1241D96E94C4D2E8E38 /* LGButton-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC2F11C6A00E9E942C6182D065BD6AA /* LGButton-dummy.m */; };
+		1F66F91CB4951CCF5AE4C273FA5661E7 /* map-icons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 740415B10231F9CE3A03FAC9E7899041 /* map-icons.ttf */; };
+		27033FEA0D2A7DA4218B84AE5BCF0D85 /* Pods-CinePicker-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C10E587FF0677BA30BE5C83FE2418CA4 /* Pods-CinePicker-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		298A93E42E372E53DD1CE52D6E9C0807 /* FontIon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BC1E686795DF31B82B5F2BA9F9FF1D /* FontIon.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		3334773478875A3C80CB325F76AE516A /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C9A2D8CF5893F01F5A50F97A115636 /* SCLAlertView.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		3546FCE45C6BE60F78B88E7E83EE9DFE /* LGButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E4FD21779A31F593B2F4D8EB1204B0D /* LGButton.xib */; };
+		36C3197FCE4A708DF45123DBCFF46E61 /* open-iconic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D5AF9AB89608858A67C7C73F97BFF86 /* open-iconic.ttf */; };
 		399A52F5029E167E7A3D32C38A1016B6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75BB7F204FD4A2B06C52C44EB83E4777 /* Foundation.framework */; };
-		3BEA38BD37231F95A9604AFA936371DC /* SCLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8AAE923F1DA35420C4D0BE1C8714E6 /* SCLExtensions.swift */; };
-		45CC8A2BE64B9F6040B56CD298E017DF /* AgrumeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4360E288AC59CC6D6072BB6C3C0D66 /* AgrumeCell.swift */; };
-		48384AED6A0155E68176EFBE978D9AF8 /* Pods-CinePicker-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2A9468FFEE9C54C1BD0897004DFE9C /* Pods-CinePicker-dummy.m */; };
-		4CA7BA4DC96E8EA1F26C7A9418943ABF /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CE9A61915D256AA2900E2A7906558 /* SCLAlertView.swift */; };
+		427C8D0E1EA8F0C35699BB2AA7D2275E /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA9FD6F4D2FB84BBE3CA2EAF6BB53C47 /* FontAwesome.ttf */; };
+		435EAEA70334DF0BDD92027B258652D2 /* FontOpenic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495103E2A92A79DA6635160AF6F76069 /* FontOpenic.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		469BCB63B4282BB6265EB81486F6C328 /* MaterialIcons-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D52D0177B7FBAF763DF112C1A90EE45 /* MaterialIcons-Regular.ttf */; };
+		4A8BFB7EA0D34319F0B5C02DE5752EC5 /* UIImage+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F778B76DFE32A383BCBEA029A4DB824 /* UIImage+SwiftyGif.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		4E2A3CDF66F5D6B9BE64427484282DC3 /* FontAwesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450038AE31DD3E2AA512D1B8EF6242F4 /* FontAwesome.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		55FB2E53CD68CBB5452B233AE535AEE8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75BB7F204FD4A2B06C52C44EB83E4777 /* Foundation.framework */; };
-		602CF818484244FCCDA5B5E73F6BC70A /* SwiftyGif-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB70FCDEA0004207F0F50DE8D2FFF38 /* SwiftyGif-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6B6EFBD4ECF4ABAD02B555C8EE444634 /* Foundation+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = D151F4C34E11DE8204F0C6915B813657 /* Foundation+Agrume.swift */; };
-		7CC3D419E497E40619BF7140F5FD1BB8 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676C0B53D6EE191DD7FCE0AC7379F4EB /* ImageDownloader.swift */; };
-		7D2E6F38955D9D93D4A0904CE864C342 /* AgrumeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A79E5F243B10FD4855F337E106D505E /* AgrumeImage.swift */; };
-		7F46151BB3461184E5AB035B253959AB /* AgrumeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DA72C371C0AFA333E54ADDA53707ED /* AgrumeDataSource.swift */; };
-		7FE3F063F4D392609C9E248D619C3EEB /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E1367E39D0188CC809DCF73A8CB2D4 /* Configuration.swift */; };
-		81D94A3F5C8155D750EA2785745432E6 /* Agrume-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AA1CD6C1426CFC9FBB2FA07B8A298F33 /* Agrume-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		934357A9E3C964213AE84775FFC6BB3C /* Agrume-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE81CFE55C0DADCF9DF150F76B78AD6 /* Agrume-dummy.m */; };
-		A64A016B6194594A0F4D2BA4F1860D5A /* AgrumeOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EAB8DD9D177E47DC593E19A60A28D7 /* AgrumeOverlayView.swift */; };
+		602CF818484244FCCDA5B5E73F6BC70A /* SwiftyGif-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EEABC21B6B482E5F599F39D9B54467D7 /* SwiftyGif-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		690CB9058FF784B34CFD9B52BA9443A3 /* SwiftIconFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CBC4C05B16B7C17041D3E96DF702DC /* SwiftIconFont.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		69DEF995EC073CCED57AB5E4D9ECC2F5 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2257C21B3B12FAE40A650611BE137371 /* Configuration.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		710781C2B946B53B756160609BC7D382 /* LGButton-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A691E1936D912A0714B3780E5F39DF6F /* LGButton-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7611BA2986FFE109AB74C9CC8F13C0D4 /* FontThemify.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FF1F0854443ECCAD3526CD4EE33251 /* FontThemify.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		7614381C707B12A0C8A752A4E82B0A11 /* SwiftyGifManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8502B9C8AF069BCB05D47741E0E951 /* SwiftyGifManager.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		7B40B6B738C52218210D95281431085D /* FontLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195B6535732B4E2460BBEC816CCAC723 /* FontLoader.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		7D0C35D611A3702B0BC107C47FC45CCF /* FontOct.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD8DBC1A7601EF5943B2133023F834B /* FontOct.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		81D94A3F5C8155D750EA2785745432E6 /* Agrume-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F549BE6D110C68C6DFFB9660FF04A7F1 /* Agrume-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9308D9509359A1B68DDFD91BFE1AF849 /* Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11162D28BCFA19D7FE1D2032F382C41 /* Agrume.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		960281F0CF189286EC4372370E0C809E /* AgrumeOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FB1A88EC95D94E5A8FA6B32C00420F /* AgrumeOverlayView.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		9738668FD83F5B20DB7F0A327989B77B /* SwiftIconLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52EFEC32B70C078AD9CD6E50A20E6DC /* SwiftIconLabel.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		97E1EDCD6FB35C081D40CFBE7B325337 /* Pods-CinePicker-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2A9468FFEE9C54C1BD0897004DFE9C /* Pods-CinePicker-dummy.m */; };
+		A3CC91C0111981C37BF199DC3905165E /* FontMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13163EE054181B47CF842DB86F3D56C /* FontMap.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		A73BF557F0CAF38F2903ECAEF1D2B93D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75BB7F204FD4A2B06C52C44EB83E4777 /* Foundation.framework */; };
-		A8AFB765CB7A28B6DF5FFD9BB8BBDC47 /* SCLAlertView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1B7C02D3E1066014DDA82BFCD0E6E3 /* SCLAlertView-dummy.m */; };
+		A9338F8E9A4DF29C134FC027A82F6574 /* SCLAlertView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D735595629D3E0F8DB4600A9F15BE6 /* SCLAlertView-dummy.m */; };
+		ACCA50B7F6814D29EE3DC8387FC46D5A /* LGButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5563401AAFB8C5798B3EBCEDCE2EFE6 /* LGButton.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		AE50072E2A5C63C2C553E22608E2C840 /* SwiftyGif.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27443A8B3630B931EEE32C5FD8664F78 /* SwiftyGif.framework */; };
-		C083F3B4489DFCBD9179C7CD5313B6A9 /* SCLAlertView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 06B711F1368802FE167C5F8449C95F76 /* SCLAlertView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C976D787C64A0B076493195C605F5350 /* SwiftyGif.h in Headers */ = {isa = PBXBuildFile; fileRef = 0330192D9E15DDFDACDA18F0970B8562 /* SwiftyGif.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D7E6745F466BFE0F60BDCD55396D851E /* Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA590FA5A35C9A95A6706768CE27D05B /* Agrume.swift */; };
-		DD5A2BDDD08D398DB41CCABB709397A7 /* SwiftyGif-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 91106C7C71F321674A2DB15B6F09D3E4 /* SwiftyGif-dummy.m */; };
-		E4E4A67897E2F1B2A97B6B3E3B5189F7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75BB7F204FD4A2B06C52C44EB83E4777 /* Foundation.framework */; };
+		AF1468150E7B8B5E06CE5953BCE40852 /* UIKit+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCB484197F9D6977E7C75B6F1D07939 /* UIKit+Agrume.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		B16983A92AB5A24B88BC099714FFCB58 /* FontMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA98834D9F5FBA3FC809CEFD821FAD2 /* FontMaterial.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		B5984CD805E26A38C7504D03758956D6 /* AgrumeServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222B01E73EF2525D3356CF5A863C3F1E /* AgrumeServiceLocator.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		BA4851FA95D391DFD672953D909A6390 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75BB7F204FD4A2B06C52C44EB83E4777 /* Foundation.framework */; };
+		C083F3B4489DFCBD9179C7CD5313B6A9 /* SCLAlertView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 32182E3F09DD6EF215D7694574890504 /* SCLAlertView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4069F1EF5C7B752D5EFDAEBBA420939 /* Agrume-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 088AD3382F77FECFB0300F80304CD75C /* Agrume-dummy.m */; };
+		C911E82D5BDBB4193175310CB381722D /* SwiftyGif-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6533B8B54A3689D7C14C3CE72FEBF00D /* SwiftyGif-dummy.m */; };
+		C976D787C64A0B076493195C605F5350 /* SwiftyGif.h in Headers */ = {isa = PBXBuildFile; fileRef = 4037BA426AA81912602EA0765A9D2272 /* SwiftyGif.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9BC6D12A4C5743D1CD83549BDBC1CE3 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79C3D59F3860D4BE4818F35ADC464BD8 /* Ionicons.ttf */; };
+		D7218567475F3DA66B3424E3A54B0980 /* UIImageView+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0217769DC7903E45D87E95C1FDCA6D /* UIImageView+SwiftyGif.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		DF8108E3865C44255E0334C05844EE3A /* SCLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112FEB628196501F2C0B3051A742902 /* SCLExtensions.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		E06505413EA97B45C39A83DD25410989 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75BB7F204FD4A2B06C52C44EB83E4777 /* Foundation.framework */; };
+		EDE925B3B5F531AF93FE69096227A0AA /* octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F08E8B989045B6C0F6A15AA0CD76398F /* octicons.ttf */; };
+		EEEDFE3A9010F1139CBDD85A3723CE60 /* Foundation+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274860DA21EB44D5CF180F860FE2FA1D /* Foundation+Agrume.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		F4851A60B66239A8B63ED8142191EC04 /* AgrumeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7A4FBEC4042C52DA2B81976ADE0D22 /* AgrumeDataSource.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		F9017D18F2863CB7216D9453D3CA7F83 /* AgrumeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC0CE0D926C4021311B582073D1D9E9 /* AgrumeCell.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		07FACBCBCF47DEE9AF06FF5EF5B5649D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 15AEBAFA43912F898FC2E1A73025C946;
+			remoteInfo = SwiftyGif;
+		};
+		2FBE2ABF6BF14F9944581FFC2CC2F53A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FD999FE212F29E29DEEA0A85E1DC4D4E;
+			remoteInfo = LGButton;
+		};
 		51816B01274A4BA3D85EF9D7C9124A96 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -46,80 +82,99 @@
 			remoteGlobalIDString = 15AEBAFA43912F898FC2E1A73025C946;
 			remoteInfo = SwiftyGif;
 		};
-		8F85083EC9C954BD8B08458B3BB4266D /* PBXContainerItemProxy */ = {
+		6649E49ED126B8BFB370D9F9FC66F971 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 6574B2C3F6F3AFF48D01C27506C3CCC4;
 			remoteInfo = Agrume;
 		};
-		ADAB8A4A5F8F8BAA7D7EFB22EAEA7265 /* PBXContainerItemProxy */ = {
+		CD9751010A7062A033DC9E79694F6477 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = E0152970E5467A11DF89E7D22C63B47C;
 			remoteInfo = SCLAlertView;
 		};
-		C34E3AA2587D12E75DD9D90E52D941B5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 15AEBAFA43912F898FC2E1A73025C946;
-			remoteInfo = SwiftyGif;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0330192D9E15DDFDACDA18F0970B8562 /* SwiftyGif.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SwiftyGif.h; path = SwiftyGif/SwiftyGif.h; sourceTree = "<group>"; };
-		05ABC28235F71728A20CC744BE310913 /* SwiftyGif.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwiftyGif.modulemap; sourceTree = "<group>"; };
-		06B711F1368802FE167C5F8449C95F76 /* SCLAlertView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SCLAlertView-umbrella.h"; sourceTree = "<group>"; };
+		03A1777E8E82B0C981E413F2E5487898 /* Agrume-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Agrume-prefix.pch"; sourceTree = "<group>"; };
+		07D735595629D3E0F8DB4600A9F15BE6 /* SCLAlertView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SCLAlertView-dummy.m"; sourceTree = "<group>"; };
+		088AD3382F77FECFB0300F80304CD75C /* Agrume-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Agrume-dummy.m"; sourceTree = "<group>"; };
 		0A2541D3FA548060ADCA3D219ED84288 /* Pods-CinePicker.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CinePicker.modulemap"; sourceTree = "<group>"; };
-		14D2DDC9938188B9714B65CF7E574D54 /* Agrume-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Agrume-Info.plist"; sourceTree = "<group>"; };
 		186D1BB4DD559A92E92D80551FC20EA8 /* Agrume.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Agrume.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		195B6535732B4E2460BBEC816CCAC723 /* FontLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontLoader.swift; path = LGButton/Classes/SwiftIconFont/FontLoader.swift; sourceTree = "<group>"; };
+		196D5533F8D2F2A7D428BE5E38BDAC1F /* LGButton.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = LGButton.xcconfig; sourceTree = "<group>"; };
+		2112FEB628196501F2C0B3051A742902 /* SCLExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SCLExtensions.swift; path = SCLAlertView/SCLExtensions.swift; sourceTree = "<group>"; };
+		222B01E73EF2525D3356CF5A863C3F1E /* AgrumeServiceLocator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgrumeServiceLocator.swift; path = Agrume/AgrumeServiceLocator.swift; sourceTree = "<group>"; };
+		2257C21B3B12FAE40A650611BE137371 /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = Agrume/Configuration.swift; sourceTree = "<group>"; };
 		27443A8B3630B931EEE32C5FD8664F78 /* SwiftyGif.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyGif.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CB70FCDEA0004207F0F50DE8D2FFF38 /* SwiftyGif-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyGif-umbrella.h"; sourceTree = "<group>"; };
+		274860DA21EB44D5CF180F860FE2FA1D /* Foundation+Agrume.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Foundation+Agrume.swift"; path = "Agrume/Foundation+Agrume.swift"; sourceTree = "<group>"; };
+		2EC0CE0D926C4021311B582073D1D9E9 /* AgrumeCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgrumeCell.swift; path = Agrume/AgrumeCell.swift; sourceTree = "<group>"; };
+		32182E3F09DD6EF215D7694574890504 /* SCLAlertView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SCLAlertView-umbrella.h"; sourceTree = "<group>"; };
+		3D5AF9AB89608858A67C7C73F97BFF86 /* open-iconic.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "open-iconic.ttf"; path = "LGButton/Resources/open-iconic.ttf"; sourceTree = "<group>"; };
+		3F86DE9D2EBDFC1AD063FB63E325567A /* LGButton.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = LGButton.modulemap; sourceTree = "<group>"; };
+		4037BA426AA81912602EA0765A9D2272 /* SwiftyGif.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SwiftyGif.h; path = SwiftyGif/SwiftyGif.h; sourceTree = "<group>"; };
 		40C641F6771783B43E53F4C26B5FB33B /* Pods-CinePicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CinePicker.debug.xcconfig"; sourceTree = "<group>"; };
-		427F5163DB2328CFE10DF80A139193DC /* UIImageView+SwiftyGif.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImageView+SwiftyGif.swift"; path = "SwiftyGif/UIImageView+SwiftyGif.swift"; sourceTree = "<group>"; };
-		4E4360E288AC59CC6D6072BB6C3C0D66 /* AgrumeCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgrumeCell.swift; path = Agrume/AgrumeCell.swift; sourceTree = "<group>"; };
+		434CE452C3125896EE6158B5951AB92A /* SCLAlertView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SCLAlertView-Info.plist"; sourceTree = "<group>"; };
+		450038AE31DD3E2AA512D1B8EF6242F4 /* FontAwesome.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontAwesome.swift; path = LGButton/Classes/SwiftIconFont/FontAwesome.swift; sourceTree = "<group>"; };
+		495103E2A92A79DA6635160AF6F76069 /* FontOpenic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontOpenic.swift; path = LGButton/Classes/SwiftIconFont/FontOpenic.swift; sourceTree = "<group>"; };
+		49CBC4C05B16B7C17041D3E96DF702DC /* SwiftIconFont.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftIconFont.swift; path = LGButton/Classes/SwiftIconFont/SwiftIconFont.swift; sourceTree = "<group>"; };
+		4BAB68FD03F6DC87EB55D54B6876C71D /* ImageDownloader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageDownloader.swift; path = Agrume/ImageDownloader.swift; sourceTree = "<group>"; };
+		4C21C166B4C9C3EC6F2A2F33AE067D98 /* SCLAlertView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SCLAlertView.xcconfig; sourceTree = "<group>"; };
+		4D6B9E28FBE608E8F9FA0DB2F74EAF72 /* Agrume.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Agrume.modulemap; sourceTree = "<group>"; };
 		5790BB589D7C97117B23A245B61F4EB5 /* Pods-CinePicker-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CinePicker-Info.plist"; sourceTree = "<group>"; };
-		59C507A5F29A508AF069EB9F252E80B6 /* SCLAlertView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SCLAlertView.xcconfig; sourceTree = "<group>"; };
-		5A79E5F243B10FD4855F337E106D505E /* AgrumeImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgrumeImage.swift; path = Agrume/AgrumeImage.swift; sourceTree = "<group>"; };
 		5C1EFA9FC9BFE7BE01DBDB819B67B531 /* Pods-CinePicker-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CinePicker-acknowledgements.markdown"; sourceTree = "<group>"; };
-		676C0B53D6EE191DD7FCE0AC7379F4EB /* ImageDownloader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageDownloader.swift; path = Agrume/ImageDownloader.swift; sourceTree = "<group>"; };
-		6AF9448A7BC7A82AE81FD7B51886CC36 /* UIImage+SwiftyGif.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+SwiftyGif.swift"; path = "SwiftyGif/UIImage+SwiftyGif.swift"; sourceTree = "<group>"; };
-		6D7CE9A61915D256AA2900E2A7906558 /* SCLAlertView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SCLAlertView.swift; path = SCLAlertView/SCLAlertView.swift; sourceTree = "<group>"; };
-		70DA72C371C0AFA333E54ADDA53707ED /* AgrumeDataSource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgrumeDataSource.swift; path = Agrume/AgrumeDataSource.swift; sourceTree = "<group>"; };
-		75A5CBC3272A13133EACC8672BB405F0 /* SwiftyGifManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyGifManager.swift; path = SwiftyGif/SwiftyGifManager.swift; sourceTree = "<group>"; };
+		6533B8B54A3689D7C14C3CE72FEBF00D /* SwiftyGif-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyGif-dummy.m"; sourceTree = "<group>"; };
+		6D52D0177B7FBAF763DF112C1A90EE45 /* MaterialIcons-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "MaterialIcons-Regular.ttf"; path = "LGButton/Resources/MaterialIcons-Regular.ttf"; sourceTree = "<group>"; };
+		6EF2E632B83EADC0568E05F280E32AC0 /* LGButton-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "LGButton-Info.plist"; sourceTree = "<group>"; };
+		740415B10231F9CE3A03FAC9E7899041 /* map-icons.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "map-icons.ttf"; path = "LGButton/Resources/map-icons.ttf"; sourceTree = "<group>"; };
 		75BB7F204FD4A2B06C52C44EB83E4777 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		79C3D59F3860D4BE4818F35ADC464BD8 /* Ionicons.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = Ionicons.ttf; path = LGButton/Resources/Ionicons.ttf; sourceTree = "<group>"; };
 		7AD67EFB9A7864151301DC2890207AA2 /* SwiftyGif.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyGif.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D2A9468FFEE9C54C1BD0897004DFE9C /* Pods-CinePicker-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CinePicker-dummy.m"; sourceTree = "<group>"; };
-		7E83FC2E525F544B69D0F345CCB47180 /* AgrumeServiceLocator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgrumeServiceLocator.swift; path = Agrume/AgrumeServiceLocator.swift; sourceTree = "<group>"; };
+		7F778B76DFE32A383BCBEA029A4DB824 /* UIImage+SwiftyGif.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+SwiftyGif.swift"; path = "SwiftyGif/UIImage+SwiftyGif.swift"; sourceTree = "<group>"; };
+		8058C6F5F0E50B1C6611595842B1C53A /* SwiftyGif-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SwiftyGif-Info.plist"; sourceTree = "<group>"; };
 		80BCBCC592EC41BA96CC34853828598A /* Pods-CinePicker-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CinePicker-frameworks.sh"; sourceTree = "<group>"; };
-		8A6AD15BA88B4005C179A75E171E53C2 /* Agrume-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Agrume-prefix.pch"; sourceTree = "<group>"; };
-		91106C7C71F321674A2DB15B6F09D3E4 /* SwiftyGif-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyGif-dummy.m"; sourceTree = "<group>"; };
-		930300728259CA899AE143671D36927D /* SCLAlertView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SCLAlertView-prefix.pch"; sourceTree = "<group>"; };
+		8A1A224098A2D03DE8EF13B72EB48B83 /* SwiftyGif.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyGif.xcconfig; sourceTree = "<group>"; };
+		8A22C2497CFF86CC73DDE9F76460341B /* SwiftyGif-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyGif-prefix.pch"; sourceTree = "<group>"; };
+		8DD6D8E2BAFFE035228842BBD4A482EC /* themify.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = themify.ttf; path = LGButton/Resources/themify.ttf; sourceTree = "<group>"; };
+		8E4FD21779A31F593B2F4D8EB1204B0D /* LGButton.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = LGButton.xib; path = LGButton/Resources/LGButton.xib; sourceTree = "<group>"; };
+		8ED98865147FC1CB3624C1B4C573247D /* SwiftyGif.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwiftyGif.modulemap; sourceTree = "<group>"; };
 		962A4B1F73A781D3BB906D0525BD2A8A /* SCLAlertView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCLAlertView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		995B8DDE108B119F2DD0DCDBD33F7448 /* UIKit+Agrume.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIKit+Agrume.swift"; path = "Agrume/UIKit+Agrume.swift"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A89889A4C3E3014F6C68E815B388CE97 /* Agrume.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Agrume.xcconfig; sourceTree = "<group>"; };
-		AA1CD6C1426CFC9FBB2FA07B8A298F33 /* Agrume-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Agrume-umbrella.h"; sourceTree = "<group>"; };
+		9EC2F11C6A00E9E942C6182D065BD6AA /* LGButton-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "LGButton-dummy.m"; sourceTree = "<group>"; };
+		A02563157639D634A7BB9A88F71FD772 /* Agrume-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Agrume-Info.plist"; sourceTree = "<group>"; };
+		A05673774DF6B9C44202EF8344BB11F9 /* Agrume.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Agrume.xcconfig; sourceTree = "<group>"; };
+		A13163EE054181B47CF842DB86F3D56C /* FontMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontMap.swift; path = LGButton/Classes/SwiftIconFont/FontMap.swift; sourceTree = "<group>"; };
+		A2FB1A88EC95D94E5A8FA6B32C00420F /* AgrumeOverlayView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgrumeOverlayView.swift; path = Agrume/AgrumeOverlayView.swift; sourceTree = "<group>"; };
+		A691E1936D912A0714B3780E5F39DF6F /* LGButton-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LGButton-umbrella.h"; sourceTree = "<group>"; };
 		AB1F2BDC12A8DC918656567B92F20710 /* Pods_CinePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CinePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB8AAE923F1DA35420C4D0BE1C8714E6 /* SCLExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SCLExtensions.swift; path = SCLAlertView/SCLExtensions.swift; sourceTree = "<group>"; };
-		AEBDDC653034F88ECF90206B615EA7C7 /* SCLAlertView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SCLAlertView.modulemap; sourceTree = "<group>"; };
-		B4005E4C935F47C154D148E1E8792B04 /* SCLAlertView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SCLAlertView-Info.plist"; sourceTree = "<group>"; };
+		AE7A4FBEC4042C52DA2B81976ADE0D22 /* AgrumeDataSource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgrumeDataSource.swift; path = Agrume/AgrumeDataSource.swift; sourceTree = "<group>"; };
+		B11162D28BCFA19D7FE1D2032F382C41 /* Agrume.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Agrume.swift; path = Agrume/Agrume.swift; sourceTree = "<group>"; };
+		B2316B3EC954D1E687FE04BA597D9478 /* SCLAlertView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SCLAlertView-prefix.pch"; sourceTree = "<group>"; };
+		B5C9A2D8CF5893F01F5A50F97A115636 /* SCLAlertView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SCLAlertView.swift; path = SCLAlertView/SCLAlertView.swift; sourceTree = "<group>"; };
+		B6CE3F23193FD3BC8FCC2BAEDF019421 /* SCLAlertView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SCLAlertView.modulemap; sourceTree = "<group>"; };
 		BB8A6FB340ECFACB5AB703162F30FE86 /* Pods-CinePicker-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CinePicker-acknowledgements.plist"; sourceTree = "<group>"; };
-		BFE81CFE55C0DADCF9DF150F76B78AD6 /* Agrume-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Agrume-dummy.m"; sourceTree = "<group>"; };
+		BBA98834D9F5FBA3FC809CEFD821FAD2 /* FontMaterial.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontMaterial.swift; path = LGButton/Classes/SwiftIconFont/FontMaterial.swift; sourceTree = "<group>"; };
+		BEB5730D0C9DB3D9997CC93D0C703557 /* LGButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LGButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFD8DBC1A7601EF5943B2133023F834B /* FontOct.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontOct.swift; path = LGButton/Classes/SwiftIconFont/FontOct.swift; sourceTree = "<group>"; };
 		C10E587FF0677BA30BE5C83FE2418CA4 /* Pods-CinePicker-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CinePicker-umbrella.h"; sourceTree = "<group>"; };
-		CBFEED565965D919A1E40E5DFAA44677 /* SwiftyGif-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SwiftyGif-Info.plist"; sourceTree = "<group>"; };
-		D151F4C34E11DE8204F0C6915B813657 /* Foundation+Agrume.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Foundation+Agrume.swift"; path = "Agrume/Foundation+Agrume.swift"; sourceTree = "<group>"; };
+		C52EFEC32B70C078AD9CD6E50A20E6DC /* SwiftIconLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftIconLabel.swift; path = LGButton/Classes/SwiftIconFont/SwiftIconLabel.swift; sourceTree = "<group>"; };
+		CB0217769DC7903E45D87E95C1FDCA6D /* UIImageView+SwiftyGif.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImageView+SwiftyGif.swift"; path = "SwiftyGif/UIImageView+SwiftyGif.swift"; sourceTree = "<group>"; };
+		D2BC1E686795DF31B82B5F2BA9F9FF1D /* FontIon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontIon.swift; path = LGButton/Classes/SwiftIconFont/FontIon.swift; sourceTree = "<group>"; };
+		D3FF1F0854443ECCAD3526CD4EE33251 /* FontThemify.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontThemify.swift; path = LGButton/Classes/SwiftIconFont/FontThemify.swift; sourceTree = "<group>"; };
+		D4F083723AE83D5FF74AA30237984AB2 /* LGButton-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LGButton-prefix.pch"; sourceTree = "<group>"; };
 		D68AD2C29BD97AF971DFD7EA44304DDB /* Pods-CinePicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CinePicker.release.xcconfig"; sourceTree = "<group>"; };
-		DB1B7C02D3E1066014DDA82BFCD0E6E3 /* SCLAlertView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SCLAlertView-dummy.m"; sourceTree = "<group>"; };
-		E028BA3F4B1A6C9DD9768D9724E5E367 /* Agrume.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Agrume.modulemap; sourceTree = "<group>"; };
-		EA590FA5A35C9A95A6706768CE27D05B /* Agrume.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Agrume.swift; path = Agrume/Agrume.swift; sourceTree = "<group>"; };
-		EBFE93713ACBD993E9F2C43C694C97A3 /* SwiftyGif.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyGif.xcconfig; sourceTree = "<group>"; };
-		EED5AC343ED8B6C7DA7A824BDB75E884 /* SwiftyGif-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyGif-prefix.pch"; sourceTree = "<group>"; };
-		F2E1367E39D0188CC809DCF73A8CB2D4 /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = Agrume/Configuration.swift; sourceTree = "<group>"; };
-		F3EAB8DD9D177E47DC593E19A60A28D7 /* AgrumeOverlayView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgrumeOverlayView.swift; path = Agrume/AgrumeOverlayView.swift; sourceTree = "<group>"; };
+		DD8502B9C8AF069BCB05D47741E0E951 /* SwiftyGifManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyGifManager.swift; path = SwiftyGif/SwiftyGifManager.swift; sourceTree = "<group>"; };
+		E2220C0B9C424E0392A40D34F87D54A8 /* AgrumeImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgrumeImage.swift; path = Agrume/AgrumeImage.swift; sourceTree = "<group>"; };
+		EEABC21B6B482E5F599F39D9B54467D7 /* SwiftyGif-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyGif-umbrella.h"; sourceTree = "<group>"; };
+		F08E8B989045B6C0F6A15AA0CD76398F /* octicons.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = octicons.ttf; path = LGButton/Resources/octicons.ttf; sourceTree = "<group>"; };
+		F549BE6D110C68C6DFFB9660FF04A7F1 /* Agrume-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Agrume-umbrella.h"; sourceTree = "<group>"; };
+		F5563401AAFB8C5798B3EBCEDCE2EFE6 /* LGButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LGButton.swift; path = LGButton/Classes/LGButton.swift; sourceTree = "<group>"; };
+		FA9FD6F4D2FB84BBE3CA2EAF6BB53C47 /* FontAwesome.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = FontAwesome.ttf; path = LGButton/Resources/FontAwesome.ttf; sourceTree = "<group>"; };
+		FCCB484197F9D6977E7C75B6F1D07939 /* UIKit+Agrume.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIKit+Agrume.swift"; path = "Agrume/UIKit+Agrume.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +187,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2DF94932693C8E97F96AB0BF7A0FDA0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E06505413EA97B45C39A83DD25410989 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DB77704889208F1F6A4DE94F629738F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -140,11 +203,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9C4FBCFE1146A685AC815BA424994FEF /* Frameworks */ = {
+		6A1A2BDE4A4806E0475B01125F75C487 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4E4A67897E2F1B2A97B6B3E3B5189F7 /* Foundation.framework in Frameworks */,
+				BA4851FA95D391DFD672953D909A6390 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,28 +222,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		306688B48C9FED76290974698B305016 /* Pods */ = {
+		3CF35360E848163C5035CE1A20A1DBED /* Agrume */ = {
 			isa = PBXGroup;
 			children = (
-				CCCF5D6A4F4E2439D3A25487ACEE10CC /* Agrume */,
-				A7A5679D6211025E7C30DFA7B0BF99BE /* SCLAlertView */,
-				A8DDEE9F44F80C881BCC3A8DEE0206ED /* SwiftyGif */,
+				B11162D28BCFA19D7FE1D2032F382C41 /* Agrume.swift */,
+				2EC0CE0D926C4021311B582073D1D9E9 /* AgrumeCell.swift */,
+				AE7A4FBEC4042C52DA2B81976ADE0D22 /* AgrumeDataSource.swift */,
+				E2220C0B9C424E0392A40D34F87D54A8 /* AgrumeImage.swift */,
+				A2FB1A88EC95D94E5A8FA6B32C00420F /* AgrumeOverlayView.swift */,
+				222B01E73EF2525D3356CF5A863C3F1E /* AgrumeServiceLocator.swift */,
+				2257C21B3B12FAE40A650611BE137371 /* Configuration.swift */,
+				274860DA21EB44D5CF180F860FE2FA1D /* Foundation+Agrume.swift */,
+				4BAB68FD03F6DC87EB55D54B6876C71D /* ImageDownloader.swift */,
+				FCCB484197F9D6977E7C75B6F1D07939 /* UIKit+Agrume.swift */,
+				7B98917A9D2A683D1D48F2AC74A2C2EC /* Support Files */,
 			);
-			name = Pods;
+			path = Agrume;
 			sourceTree = "<group>";
 		};
-		7938EFB69082A20898A7EDE29624C70F /* Support Files */ = {
+		577E027C7BDD43370A236BF9EDAB034F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AEBDDC653034F88ECF90206B615EA7C7 /* SCLAlertView.modulemap */,
-				59C507A5F29A508AF069EB9F252E80B6 /* SCLAlertView.xcconfig */,
-				DB1B7C02D3E1066014DDA82BFCD0E6E3 /* SCLAlertView-dummy.m */,
-				B4005E4C935F47C154D148E1E8792B04 /* SCLAlertView-Info.plist */,
-				930300728259CA899AE143671D36927D /* SCLAlertView-prefix.pch */,
-				06B711F1368802FE167C5F8449C95F76 /* SCLAlertView-umbrella.h */,
+				FA9FD6F4D2FB84BBE3CA2EAF6BB53C47 /* FontAwesome.ttf */,
+				79C3D59F3860D4BE4818F35ADC464BD8 /* Ionicons.ttf */,
+				8E4FD21779A31F593B2F4D8EB1204B0D /* LGButton.xib */,
+				740415B10231F9CE3A03FAC9E7899041 /* map-icons.ttf */,
+				6D52D0177B7FBAF763DF112C1A90EE45 /* MaterialIcons-Regular.ttf */,
+				F08E8B989045B6C0F6A15AA0CD76398F /* octicons.ttf */,
+				3D5AF9AB89608858A67C7C73F97BFF86 /* open-iconic.ttf */,
+				8DD6D8E2BAFFE035228842BBD4A482EC /* themify.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		7B98917A9D2A683D1D48F2AC74A2C2EC /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4D6B9E28FBE608E8F9FA0DB2F74EAF72 /* Agrume.modulemap */,
+				A05673774DF6B9C44202EF8344BB11F9 /* Agrume.xcconfig */,
+				088AD3382F77FECFB0300F80304CD75C /* Agrume-dummy.m */,
+				A02563157639D634A7BB9A88F71FD772 /* Agrume-Info.plist */,
+				03A1777E8E82B0C981E413F2E5487898 /* Agrume-prefix.pch */,
+				F549BE6D110C68C6DFFB9660FF04A7F1 /* Agrume-umbrella.h */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/SCLAlertView";
+			path = "../Target Support Files/Agrume";
 			sourceTree = "<group>";
 		};
 		7C990A5F7302B3DADF8B8D0446EB853A /* Frameworks */ = {
@@ -190,6 +276,43 @@
 				BAD849F6812F4F766448FB5CC16D269F /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8281E466B6BD235DCE94F96D176A2E46 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3CF35360E848163C5035CE1A20A1DBED /* Agrume */,
+				CE3B9EE32BB61CC9622D9FFF90937570 /* LGButton */,
+				C4E04A7AC0CB3123ACD985E2C825E856 /* SCLAlertView */,
+				8B6E7BF1A40E1FD77E303C5FFBEE3CFF /* SwiftyGif */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8412B1D8F3DEF8D805A51218F6EA8D34 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3F86DE9D2EBDFC1AD063FB63E325567A /* LGButton.modulemap */,
+				196D5533F8D2F2A7D428BE5E38BDAC1F /* LGButton.xcconfig */,
+				9EC2F11C6A00E9E942C6182D065BD6AA /* LGButton-dummy.m */,
+				6EF2E632B83EADC0568E05F280E32AC0 /* LGButton-Info.plist */,
+				D4F083723AE83D5FF74AA30237984AB2 /* LGButton-prefix.pch */,
+				A691E1936D912A0714B3780E5F39DF6F /* LGButton-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/LGButton";
+			sourceTree = "<group>";
+		};
+		8B6E7BF1A40E1FD77E303C5FFBEE3CFF /* SwiftyGif */ = {
+			isa = PBXGroup;
+			children = (
+				4037BA426AA81912602EA0765A9D2272 /* SwiftyGif.h */,
+				DD8502B9C8AF069BCB05D47741E0E951 /* SwiftyGifManager.swift */,
+				7F778B76DFE32A383BCBEA029A4DB824 /* UIImage+SwiftyGif.swift */,
+				CB0217769DC7903E45D87E95C1FDCA6D /* UIImageView+SwiftyGif.swift */,
+				F560BB61151242A189C7CFE4E1413B72 /* Support Files */,
+			);
+			path = SwiftyGif;
 			sourceTree = "<group>";
 		};
 		9BEB0076A948B32AC09082266340D736 /* Targets Support Files */ = {
@@ -217,28 +340,6 @@
 			path = "Target Support Files/Pods-CinePicker";
 			sourceTree = "<group>";
 		};
-		A7A5679D6211025E7C30DFA7B0BF99BE /* SCLAlertView */ = {
-			isa = PBXGroup;
-			children = (
-				6D7CE9A61915D256AA2900E2A7906558 /* SCLAlertView.swift */,
-				AB8AAE923F1DA35420C4D0BE1C8714E6 /* SCLExtensions.swift */,
-				7938EFB69082A20898A7EDE29624C70F /* Support Files */,
-			);
-			path = SCLAlertView;
-			sourceTree = "<group>";
-		};
-		A8DDEE9F44F80C881BCC3A8DEE0206ED /* SwiftyGif */ = {
-			isa = PBXGroup;
-			children = (
-				0330192D9E15DDFDACDA18F0970B8562 /* SwiftyGif.h */,
-				75A5CBC3272A13133EACC8672BB405F0 /* SwiftyGifManager.swift */,
-				6AF9448A7BC7A82AE81FD7B51886CC36 /* UIImage+SwiftyGif.swift */,
-				427F5163DB2328CFE10DF80A139193DC /* UIImageView+SwiftyGif.swift */,
-				E17FC05A7FA55C0D4C1ECCEDF9E137AD /* Support Files */,
-			);
-			path = SwiftyGif;
-			sourceTree = "<group>";
-		};
 		BAD849F6812F4F766448FB5CC16D269F /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,53 +348,21 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		CCCF5D6A4F4E2439D3A25487ACEE10CC /* Agrume */ = {
+		C4E04A7AC0CB3123ACD985E2C825E856 /* SCLAlertView */ = {
 			isa = PBXGroup;
 			children = (
-				EA590FA5A35C9A95A6706768CE27D05B /* Agrume.swift */,
-				4E4360E288AC59CC6D6072BB6C3C0D66 /* AgrumeCell.swift */,
-				70DA72C371C0AFA333E54ADDA53707ED /* AgrumeDataSource.swift */,
-				5A79E5F243B10FD4855F337E106D505E /* AgrumeImage.swift */,
-				F3EAB8DD9D177E47DC593E19A60A28D7 /* AgrumeOverlayView.swift */,
-				7E83FC2E525F544B69D0F345CCB47180 /* AgrumeServiceLocator.swift */,
-				F2E1367E39D0188CC809DCF73A8CB2D4 /* Configuration.swift */,
-				D151F4C34E11DE8204F0C6915B813657 /* Foundation+Agrume.swift */,
-				676C0B53D6EE191DD7FCE0AC7379F4EB /* ImageDownloader.swift */,
-				995B8DDE108B119F2DD0DCDBD33F7448 /* UIKit+Agrume.swift */,
-				D38702076D23AA26FCCF75443692E81D /* Support Files */,
+				B5C9A2D8CF5893F01F5A50F97A115636 /* SCLAlertView.swift */,
+				2112FEB628196501F2C0B3051A742902 /* SCLExtensions.swift */,
+				DFEB98FDAF7F6861F776BFB5DD641AFC /* Support Files */,
 			);
-			path = Agrume;
+			path = SCLAlertView;
 			sourceTree = "<group>";
 		};
-		CF1408CF629C7361332E53B88F7BD30C = {
-			isa = PBXGroup;
-			children = (
-				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
-				7C990A5F7302B3DADF8B8D0446EB853A /* Frameworks */,
-				306688B48C9FED76290974698B305016 /* Pods */,
-				D5686DDD73757798965136404F9800D9 /* Products */,
-				9BEB0076A948B32AC09082266340D736 /* Targets Support Files */,
-			);
-			sourceTree = "<group>";
-		};
-		D38702076D23AA26FCCF75443692E81D /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				E028BA3F4B1A6C9DD9768D9724E5E367 /* Agrume.modulemap */,
-				A89889A4C3E3014F6C68E815B388CE97 /* Agrume.xcconfig */,
-				BFE81CFE55C0DADCF9DF150F76B78AD6 /* Agrume-dummy.m */,
-				14D2DDC9938188B9714B65CF7E574D54 /* Agrume-Info.plist */,
-				8A6AD15BA88B4005C179A75E171E53C2 /* Agrume-prefix.pch */,
-				AA1CD6C1426CFC9FBB2FA07B8A298F33 /* Agrume-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/Agrume";
-			sourceTree = "<group>";
-		};
-		D5686DDD73757798965136404F9800D9 /* Products */ = {
+		CA76754136E3953EAA1B2B18CE90CD30 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				186D1BB4DD559A92E92D80551FC20EA8 /* Agrume.framework */,
+				BEB5730D0C9DB3D9997CC93D0C703557 /* LGButton.framework */,
 				AB1F2BDC12A8DC918656567B92F20710 /* Pods_CinePicker.framework */,
 				962A4B1F73A781D3BB906D0525BD2A8A /* SCLAlertView.framework */,
 				7AD67EFB9A7864151301DC2890207AA2 /* SwiftyGif.framework */,
@@ -301,15 +370,60 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E17FC05A7FA55C0D4C1ECCEDF9E137AD /* Support Files */ = {
+		CE3B9EE32BB61CC9622D9FFF90937570 /* LGButton */ = {
 			isa = PBXGroup;
 			children = (
-				05ABC28235F71728A20CC744BE310913 /* SwiftyGif.modulemap */,
-				EBFE93713ACBD993E9F2C43C694C97A3 /* SwiftyGif.xcconfig */,
-				91106C7C71F321674A2DB15B6F09D3E4 /* SwiftyGif-dummy.m */,
-				CBFEED565965D919A1E40E5DFAA44677 /* SwiftyGif-Info.plist */,
-				EED5AC343ED8B6C7DA7A824BDB75E884 /* SwiftyGif-prefix.pch */,
-				2CB70FCDEA0004207F0F50DE8D2FFF38 /* SwiftyGif-umbrella.h */,
+				450038AE31DD3E2AA512D1B8EF6242F4 /* FontAwesome.swift */,
+				D2BC1E686795DF31B82B5F2BA9F9FF1D /* FontIon.swift */,
+				195B6535732B4E2460BBEC816CCAC723 /* FontLoader.swift */,
+				A13163EE054181B47CF842DB86F3D56C /* FontMap.swift */,
+				BBA98834D9F5FBA3FC809CEFD821FAD2 /* FontMaterial.swift */,
+				BFD8DBC1A7601EF5943B2133023F834B /* FontOct.swift */,
+				495103E2A92A79DA6635160AF6F76069 /* FontOpenic.swift */,
+				D3FF1F0854443ECCAD3526CD4EE33251 /* FontThemify.swift */,
+				F5563401AAFB8C5798B3EBCEDCE2EFE6 /* LGButton.swift */,
+				49CBC4C05B16B7C17041D3E96DF702DC /* SwiftIconFont.swift */,
+				C52EFEC32B70C078AD9CD6E50A20E6DC /* SwiftIconLabel.swift */,
+				577E027C7BDD43370A236BF9EDAB034F /* Resources */,
+				8412B1D8F3DEF8D805A51218F6EA8D34 /* Support Files */,
+			);
+			path = LGButton;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				7C990A5F7302B3DADF8B8D0446EB853A /* Frameworks */,
+				8281E466B6BD235DCE94F96D176A2E46 /* Pods */,
+				CA76754136E3953EAA1B2B18CE90CD30 /* Products */,
+				9BEB0076A948B32AC09082266340D736 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		DFEB98FDAF7F6861F776BFB5DD641AFC /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE3F23193FD3BC8FCC2BAEDF019421 /* SCLAlertView.modulemap */,
+				4C21C166B4C9C3EC6F2A2F33AE067D98 /* SCLAlertView.xcconfig */,
+				07D735595629D3E0F8DB4600A9F15BE6 /* SCLAlertView-dummy.m */,
+				434CE452C3125896EE6158B5951AB92A /* SCLAlertView-Info.plist */,
+				B2316B3EC954D1E687FE04BA597D9478 /* SCLAlertView-prefix.pch */,
+				32182E3F09DD6EF215D7694574890504 /* SCLAlertView-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SCLAlertView";
+			sourceTree = "<group>";
+		};
+		F560BB61151242A189C7CFE4E1413B72 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8ED98865147FC1CB3624C1B4C573247D /* SwiftyGif.modulemap */,
+				8A1A224098A2D03DE8EF13B72EB48B83 /* SwiftyGif.xcconfig */,
+				6533B8B54A3689D7C14C3CE72FEBF00D /* SwiftyGif-dummy.m */,
+				8058C6F5F0E50B1C6611595842B1C53A /* SwiftyGif-Info.plist */,
+				8A22C2497CFF86CC73DDE9F76460341B /* SwiftyGif-prefix.pch */,
+				EEABC21B6B482E5F599F39D9B54467D7 /* SwiftyGif-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SwiftyGif";
@@ -318,6 +432,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		0CC97DA1DFB8566959A18501960B9C3D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				710781C2B946B53B756160609BC7D382 /* LGButton-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F8B832BC560C74B394EC57CAE7B9A5E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27033FEA0D2A7DA4218B84AE5BCF0D85 /* Pods-CinePicker-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7D4B840C371BD4F276E0EEB2A30E8BAC /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -332,14 +462,6 @@
 			files = (
 				602CF818484244FCCDA5B5E73F6BC70A /* SwiftyGif-umbrella.h in Headers */,
 				C976D787C64A0B076493195C605F5350 /* SwiftyGif.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E8BB0D749185576A05E1101D25EAF7CA /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				23A208C9FBB0F5E07A2F41FC19A862B5 /* Pods-CinePicker-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,7 +481,7 @@
 			buildConfigurationList = 6F14080EC9D87C384084824841071CEA /* Build configuration list for PBXNativeTarget "SwiftyGif" */;
 			buildPhases = (
 				BEA9511B7DCF615EC2510A93C0055690 /* Headers */,
-				12F7D6328C9576F1E0184078CE5394EB /* Sources */,
+				6414291077503605198342604EA9A463 /* Sources */,
 				4DB77704889208F1F6A4DE94F629738F /* Frameworks */,
 				49897F092D713A1FC763A979B399CB2B /* Resources */,
 			);
@@ -377,7 +499,7 @@
 			buildConfigurationList = 97E8F52D20B4632D7F2D82F528022DA4 /* Build configuration list for PBXNativeTarget "Agrume" */;
 			buildPhases = (
 				F658456FFD6EAFE17B75E5E3355C4895 /* Headers */,
-				CD92EA4F719D0574EFA926A4E965E742 /* Sources */,
+				4E39E18F6B4E28FBDAE035D3CB2998B1 /* Sources */,
 				2B99C8A93514A82D0C92353032929C0F /* Frameworks */,
 				55F5A61F87480F1ABAAD72D8021AE282 /* Resources */,
 			);
@@ -393,19 +515,20 @@
 		};
 		C14A5CEECD4470909CE1967CFBD7F29F /* Pods-CinePicker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0290E5DFDC559E5D71E5DB6B2F808454 /* Build configuration list for PBXNativeTarget "Pods-CinePicker" */;
+			buildConfigurationList = 91AC7098E5CCB9DDB7822A70A07915B8 /* Build configuration list for PBXNativeTarget "Pods-CinePicker" */;
 			buildPhases = (
-				E8BB0D749185576A05E1101D25EAF7CA /* Headers */,
-				C40041F17BF79D572B328C0531B33423 /* Sources */,
-				9C4FBCFE1146A685AC815BA424994FEF /* Frameworks */,
-				A41F44467E7CF7A62A2216F5212336C7 /* Resources */,
+				2F8B832BC560C74B394EC57CAE7B9A5E /* Headers */,
+				F23A81B437CAD9EE66FC07719A451978 /* Sources */,
+				6A1A2BDE4A4806E0475B01125F75C487 /* Frameworks */,
+				3B12D07665616A731392010C9F44768E /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				49861D36D2E4B15FA3ABE1DF67320CA4 /* PBXTargetDependency */,
-				4A763E6F6C790DCC94ACD18D750F8480 /* PBXTargetDependency */,
-				301C43E278C545C395F0F009D9C1AB08 /* PBXTargetDependency */,
+				FABC5C09B6DA983437EE24DAEFC1812E /* PBXTargetDependency */,
+				551BEEC54858125EF84573D688B6BB22 /* PBXTargetDependency */,
+				9E7B1E0E74EAAA4BD6896A5EEF648A76 /* PBXTargetDependency */,
+				2E769CAA6F4904CF43FFA1EDA976DA53 /* PBXTargetDependency */,
 			);
 			name = "Pods-CinePicker";
 			productName = "Pods-CinePicker";
@@ -417,7 +540,7 @@
 			buildConfigurationList = 1CDC2C0021A1AEAE5B84106D1B5F9B11 /* Build configuration list for PBXNativeTarget "SCLAlertView" */;
 			buildPhases = (
 				7D4B840C371BD4F276E0EEB2A30E8BAC /* Headers */,
-				5A41E5FFCB05286A91262112150EAF82 /* Sources */,
+				22CC03499DDA82F401B57BA4D9FF6A2C /* Sources */,
 				D91915328A3EE2D9451CCE82F8B84F94 /* Frameworks */,
 				CBF68F64417C58855B6C822520CBCAAF /* Resources */,
 			);
@@ -430,6 +553,24 @@
 			productReference = 962A4B1F73A781D3BB906D0525BD2A8A /* SCLAlertView.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		FD999FE212F29E29DEEA0A85E1DC4D4E /* LGButton */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3342B9696E29324EE7463C687DCB5E7 /* Build configuration list for PBXNativeTarget "LGButton" */;
+			buildPhases = (
+				0CC97DA1DFB8566959A18501960B9C3D /* Headers */,
+				556D50B826F06AF2B9CFBB2C9F36244B /* Sources */,
+				2DF94932693C8E97F96AB0BF7A0FDA0F /* Frameworks */,
+				8BBB024CC91AA7D33B0E29E0A4E064C1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LGButton;
+			productName = LGButton;
+			productReference = BEB5730D0C9DB3D9997CC93D0C703557 /* LGButton.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -440,7 +581,10 @@
 				LastUpgradeCheck = 1020;
 				TargetAttributes = {
 					E0152970E5467A11DF89E7D22C63B47C = {
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1030;
+					};
+					FD999FE212F29E29DEEA0A85E1DC4D4E = {
+						LastSwiftMigration = 1030;
 					};
 				};
 			};
@@ -450,13 +594,15 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = D5686DDD73757798965136404F9800D9 /* Products */;
+			productRefGroup = CA76754136E3953EAA1B2B18CE90CD30 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				6574B2C3F6F3AFF48D01C27506C3CCC4 /* Agrume */,
+				FD999FE212F29E29DEEA0A85E1DC4D4E /* LGButton */,
 				C14A5CEECD4470909CE1967CFBD7F29F /* Pods-CinePicker */,
 				E0152970E5467A11DF89E7D22C63B47C /* SCLAlertView */,
 				15AEBAFA43912F898FC2E1A73025C946 /* SwiftyGif */,
@@ -465,6 +611,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3B12D07665616A731392010C9F44768E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		49897F092D713A1FC763A979B399CB2B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -479,10 +632,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A41F44467E7CF7A62A2216F5212336C7 /* Resources */ = {
+		8BBB024CC91AA7D33B0E29E0A4E064C1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				427C8D0E1EA8F0C35699BB2AA7D2275E /* FontAwesome.ttf in Resources */,
+				C9BC6D12A4C5743D1CD83549BDBC1CE3 /* Ionicons.ttf in Resources */,
+				3546FCE45C6BE60F78B88E7E83EE9DFE /* LGButton.xib in Resources */,
+				1F66F91CB4951CCF5AE4C273FA5661E7 /* map-icons.ttf in Resources */,
+				469BCB63B4282BB6265EB81486F6C328 /* MaterialIcons-Regular.ttf in Resources */,
+				EDE925B3B5F531AF93FE69096227A0AA /* octicons.ttf in Resources */,
+				36C3197FCE4A708DF45123DBCFF46E61 /* open-iconic.ttf in Resources */,
+				09D500E9424A7C1D9AEF061869F2FE43 /* themify.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,73 +657,92 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		12F7D6328C9576F1E0184078CE5394EB /* Sources */ = {
+		22CC03499DDA82F401B57BA4D9FF6A2C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD5A2BDDD08D398DB41CCABB709397A7 /* SwiftyGif-dummy.m in Sources */,
-				219FDC7BF016FEE9D8E1BD26E367FD7F /* SwiftyGifManager.swift in Sources */,
-				21F54E13D7A07659754BC35B4D04EAED /* UIImage+SwiftyGif.swift in Sources */,
-				1F7B74FB796F007623CDD38842844C49 /* UIImageView+SwiftyGif.swift in Sources */,
+				A9338F8E9A4DF29C134FC027A82F6574 /* SCLAlertView-dummy.m in Sources */,
+				3334773478875A3C80CB325F76AE516A /* SCLAlertView.swift in Sources */,
+				DF8108E3865C44255E0334C05844EE3A /* SCLExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5A41E5FFCB05286A91262112150EAF82 /* Sources */ = {
+		4E39E18F6B4E28FBDAE035D3CB2998B1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8AFB765CB7A28B6DF5FFD9BB8BBDC47 /* SCLAlertView-dummy.m in Sources */,
-				4CA7BA4DC96E8EA1F26C7A9418943ABF /* SCLAlertView.swift in Sources */,
-				3BEA38BD37231F95A9604AFA936371DC /* SCLExtensions.swift in Sources */,
+				C4069F1EF5C7B752D5EFDAEBBA420939 /* Agrume-dummy.m in Sources */,
+				9308D9509359A1B68DDFD91BFE1AF849 /* Agrume.swift in Sources */,
+				F9017D18F2863CB7216D9453D3CA7F83 /* AgrumeCell.swift in Sources */,
+				F4851A60B66239A8B63ED8142191EC04 /* AgrumeDataSource.swift in Sources */,
+				1B04035383FB463A99C09259E70FCBF1 /* AgrumeImage.swift in Sources */,
+				960281F0CF189286EC4372370E0C809E /* AgrumeOverlayView.swift in Sources */,
+				B5984CD805E26A38C7504D03758956D6 /* AgrumeServiceLocator.swift in Sources */,
+				69DEF995EC073CCED57AB5E4D9ECC2F5 /* Configuration.swift in Sources */,
+				EEEDFE3A9010F1139CBDD85A3723CE60 /* Foundation+Agrume.swift in Sources */,
+				05C2BB0DC434102A1281F2BE8540D9A4 /* ImageDownloader.swift in Sources */,
+				AF1468150E7B8B5E06CE5953BCE40852 /* UIKit+Agrume.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C40041F17BF79D572B328C0531B33423 /* Sources */ = {
+		556D50B826F06AF2B9CFBB2C9F36244B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48384AED6A0155E68176EFBE978D9AF8 /* Pods-CinePicker-dummy.m in Sources */,
+				4E2A3CDF66F5D6B9BE64427484282DC3 /* FontAwesome.swift in Sources */,
+				298A93E42E372E53DD1CE52D6E9C0807 /* FontIon.swift in Sources */,
+				7B40B6B738C52218210D95281431085D /* FontLoader.swift in Sources */,
+				A3CC91C0111981C37BF199DC3905165E /* FontMap.swift in Sources */,
+				B16983A92AB5A24B88BC099714FFCB58 /* FontMaterial.swift in Sources */,
+				7D0C35D611A3702B0BC107C47FC45CCF /* FontOct.swift in Sources */,
+				435EAEA70334DF0BDD92027B258652D2 /* FontOpenic.swift in Sources */,
+				7611BA2986FFE109AB74C9CC8F13C0D4 /* FontThemify.swift in Sources */,
+				1B2EC050E286E1241D96E94C4D2E8E38 /* LGButton-dummy.m in Sources */,
+				ACCA50B7F6814D29EE3DC8387FC46D5A /* LGButton.swift in Sources */,
+				690CB9058FF784B34CFD9B52BA9443A3 /* SwiftIconFont.swift in Sources */,
+				9738668FD83F5B20DB7F0A327989B77B /* SwiftIconLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD92EA4F719D0574EFA926A4E965E742 /* Sources */ = {
+		6414291077503605198342604EA9A463 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				934357A9E3C964213AE84775FFC6BB3C /* Agrume-dummy.m in Sources */,
-				D7E6745F466BFE0F60BDCD55396D851E /* Agrume.swift in Sources */,
-				45CC8A2BE64B9F6040B56CD298E017DF /* AgrumeCell.swift in Sources */,
-				7F46151BB3461184E5AB035B253959AB /* AgrumeDataSource.swift in Sources */,
-				7D2E6F38955D9D93D4A0904CE864C342 /* AgrumeImage.swift in Sources */,
-				A64A016B6194594A0F4D2BA4F1860D5A /* AgrumeOverlayView.swift in Sources */,
-				1885535A7CE6D1912C5866477A82A013 /* AgrumeServiceLocator.swift in Sources */,
-				7FE3F063F4D392609C9E248D619C3EEB /* Configuration.swift in Sources */,
-				6B6EFBD4ECF4ABAD02B555C8EE444634 /* Foundation+Agrume.swift in Sources */,
-				7CC3D419E497E40619BF7140F5FD1BB8 /* ImageDownloader.swift in Sources */,
-				1A5698F70BE94D074ED5AF6A5CAF068F /* UIKit+Agrume.swift in Sources */,
+				C911E82D5BDBB4193175310CB381722D /* SwiftyGif-dummy.m in Sources */,
+				7614381C707B12A0C8A752A4E82B0A11 /* SwiftyGifManager.swift in Sources */,
+				4A8BFB7EA0D34319F0B5C02DE5752EC5 /* UIImage+SwiftyGif.swift in Sources */,
+				D7218567475F3DA66B3424E3A54B0980 /* UIImageView+SwiftyGif.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F23A81B437CAD9EE66FC07719A451978 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97E1EDCD6FB35C081D40CFBE7B325337 /* Pods-CinePicker-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		301C43E278C545C395F0F009D9C1AB08 /* PBXTargetDependency */ = {
+		2E769CAA6F4904CF43FFA1EDA976DA53 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftyGif;
 			target = 15AEBAFA43912F898FC2E1A73025C946 /* SwiftyGif */;
-			targetProxy = C34E3AA2587D12E75DD9D90E52D941B5 /* PBXContainerItemProxy */;
+			targetProxy = 07FACBCBCF47DEE9AF06FF5EF5B5649D /* PBXContainerItemProxy */;
 		};
-		49861D36D2E4B15FA3ABE1DF67320CA4 /* PBXTargetDependency */ = {
+		551BEEC54858125EF84573D688B6BB22 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = Agrume;
-			target = 6574B2C3F6F3AFF48D01C27506C3CCC4 /* Agrume */;
-			targetProxy = 8F85083EC9C954BD8B08458B3BB4266D /* PBXContainerItemProxy */;
+			name = LGButton;
+			target = FD999FE212F29E29DEEA0A85E1DC4D4E /* LGButton */;
+			targetProxy = 2FBE2ABF6BF14F9944581FFC2CC2F53A /* PBXContainerItemProxy */;
 		};
-		4A763E6F6C790DCC94ACD18D750F8480 /* PBXTargetDependency */ = {
+		9E7B1E0E74EAAA4BD6896A5EEF648A76 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SCLAlertView;
 			target = E0152970E5467A11DF89E7D22C63B47C /* SCLAlertView */;
-			targetProxy = ADAB8A4A5F8F8BAA7D7EFB22EAEA7265 /* PBXContainerItemProxy */;
+			targetProxy = CD9751010A7062A033DC9E79694F6477 /* PBXContainerItemProxy */;
 		};
 		D3B884AD00DB008C8AABEC8446848681 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -570,47 +750,15 @@
 			target = 15AEBAFA43912F898FC2E1A73025C946 /* SwiftyGif */;
 			targetProxy = 51816B01274A4BA3D85EF9D7C9124A96 /* PBXContainerItemProxy */;
 		};
+		FABC5C09B6DA983437EE24DAEFC1812E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Agrume;
+			target = 6574B2C3F6F3AFF48D01C27506C3CCC4 /* Agrume */;
+			targetProxy = 6649E49ED126B8BFB370D9F9FC66F971 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		095B51C6C77B8560C4D3D313759D5E80 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 40C641F6771783B43E53F4C26B5FB33B /* Pods-CinePicker.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-CinePicker/Pods-CinePicker-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-CinePicker/Pods-CinePicker.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		131356BE54884448CA49C07BEDF4BB2A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -675,9 +823,82 @@
 			};
 			name = Debug;
 		};
+		25BC0AF940E3EBB0C941DB833823545A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 196D5533F8D2F2A7D428BE5E38BDAC1F /* LGButton.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/LGButton/LGButton-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/LGButton/LGButton-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/LGButton/LGButton.modulemap";
+				PRODUCT_MODULE_NAME = LGButton;
+				PRODUCT_NAME = LGButton;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		2A3A610625672D71860A04F88709BE87 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 40C641F6771783B43E53F4C26B5FB33B /* Pods-CinePicker.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-CinePicker/Pods-CinePicker-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CinePicker/Pods-CinePicker.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		316118511CD0E8EEE962FB221BA5FA95 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 59C507A5F29A508AF069EB9F252E80B6 /* SCLAlertView.xcconfig */;
+			baseConfigurationReference = 4C21C166B4C9C3EC6F2A2F33AE067D98 /* SCLAlertView.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -713,7 +934,7 @@
 		};
 		40539FBDAADCEE9C749E18FC9C7385F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EBFE93713ACBD993E9F2C43C694C97A3 /* SwiftyGif.xcconfig */;
+			baseConfigurationReference = 8A1A224098A2D03DE8EF13B72EB48B83 /* SwiftyGif.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -748,7 +969,7 @@
 		};
 		537523165F93C774C7184AA3C87850A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 59C507A5F29A508AF069EB9F252E80B6 /* SCLAlertView.xcconfig */;
+			baseConfigurationReference = 4C21C166B4C9C3EC6F2A2F33AE067D98 /* SCLAlertView.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -781,7 +1002,7 @@
 			};
 			name = Debug;
 		};
-		589930DBA3C3FB362B9E9EA08020E57F /* Release */ = {
+		5BBEA7668D1C7CCCC94BDD5E9516D10D /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D68AD2C29BD97AF971DFD7EA44304DDB /* Pods-CinePicker.release.xcconfig */;
 			buildSettings = {
@@ -822,7 +1043,7 @@
 		};
 		5D14F55CFF9E7B22BCEE749FAD87C285 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EBFE93713ACBD993E9F2C43C694C97A3 /* SwiftyGif.xcconfig */;
+			baseConfigurationReference = 8A1A224098A2D03DE8EF13B72EB48B83 /* SwiftyGif.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -856,9 +1077,45 @@
 			};
 			name = Release;
 		};
+		6CEE5216BA21FDFD2FCB45238AF27E05 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 196D5533F8D2F2A7D428BE5E38BDAC1F /* LGButton.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/LGButton/LGButton-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/LGButton/LGButton-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/LGButton/LGButton.modulemap";
+				PRODUCT_MODULE_NAME = LGButton;
+				PRODUCT_NAME = LGButton;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		964895F460BB3EFD184DAF208F6E41B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A89889A4C3E3014F6C68E815B388CE97 /* Agrume.xcconfig */;
+			baseConfigurationReference = A05673774DF6B9C44202EF8344BB11F9 /* Agrume.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -893,7 +1150,7 @@
 		};
 		EB80116DDE846B8F51937F4A6C8BE9A2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A89889A4C3E3014F6C68E815B388CE97 /* Agrume.xcconfig */;
+			baseConfigurationReference = A05673774DF6B9C44202EF8344BB11F9 /* Agrume.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -990,15 +1247,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0290E5DFDC559E5D71E5DB6B2F808454 /* Build configuration list for PBXNativeTarget "Pods-CinePicker" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				095B51C6C77B8560C4D3D313759D5E80 /* Debug */,
-				589930DBA3C3FB362B9E9EA08020E57F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		1CDC2C0021A1AEAE5B84106D1B5F9B11 /* Build configuration list for PBXNativeTarget "SCLAlertView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1026,11 +1274,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		91AC7098E5CCB9DDB7822A70A07915B8 /* Build configuration list for PBXNativeTarget "Pods-CinePicker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A3A610625672D71860A04F88709BE87 /* Debug */,
+				5BBEA7668D1C7CCCC94BDD5E9516D10D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		97E8F52D20B4632D7F2D82F528022DA4 /* Build configuration list for PBXNativeTarget "Agrume" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				964895F460BB3EFD184DAF208F6E41B0 /* Debug */,
 				EB80116DDE846B8F51937F4A6C8BE9A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3342B9696E29324EE7463C687DCB5E7 /* Build configuration list for PBXNativeTarget "LGButton" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25BC0AF940E3EBB0C941DB833823545A /* Debug */,
+				6CEE5216BA21FDFD2FCB45238AF27E05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
