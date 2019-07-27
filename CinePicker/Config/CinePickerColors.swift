@@ -20,6 +20,10 @@ class CinePickerColors {
     
     public static let lightGray = UIColor(red: 240 / 255.0, green: 240 / 255.0, blue: 240 / 255.0, alpha: 1.0)
     
+    public static let lightBlue = UIColor(red: 25 / 255.0, green: 156 / 255.0, blue: 255 / 255.0, alpha: 1.0)
+    
+    public static let lightPink = UIColor(red: 251 / 255.0, green: 160 / 255.0, blue: 227 / 255.0, alpha: 1.0)
+    
     
     public static let blackHex: UInt = 0x323232
     

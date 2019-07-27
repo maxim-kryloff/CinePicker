@@ -69,6 +69,15 @@ class MovieDetailsViewController: UIViewController {
     
     private var movieDetailsService = MovieDetailsService(movieService: MovieService(), personService: PersonService())
     
+    override func viewWillAppear(_ animated: Bool) {
+        savedMovie = MovieRepository.shared.get(byId: self.movieId)
+        
+        if movieDetails != nil {
+            let tagsIndexPath = IndexPath(row: 0, section: movieDetailsTagsSectionNumber)
+            movieDetailsTableView.reloadRows(at: [tagsIndexPath], with: .automatic)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -162,30 +171,53 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func onTapWillCheckItOutSystemTag(cell: MovieDetailsTagsTableViewCell) {
-        if let savedMovie = savedMovie {
-            MovieRepository.shared.remove(movie: savedMovie)
-            self.savedMovie = nil
-            
-            cell.isWillCheckItOutSelected = false
+        guard let savedMovie = savedMovie else {
+            saveMovie(withTag: .willCheckItOut)
+            cell.isWillCheckItOutSelected = true
             
             return
         }
         
-        let systemTag = TagRepository.shared.getSystemTag(byName: .willCheckItOut)
+        if !savedMovie.containsTag(byName: .willCheckItOut) {
+            updateSavedMovie(withTag: .willCheckItOut)
+            cell.isWillCheckItOutSelected = true
+            
+            return
+        }
         
-        let savedMovie = SavedMovie(
-            id: movieDetails.id,
-            title: movieDetails.title,
-            originalTitle: movieDetails.originalTitle,
-            imagePath: movieDetails.imagePath,
-            releaseYear: movieDetails.releaseYear,
-            tag: systemTag
-        )
+        cell.isWillCheckItOutSelected = false
         
-        MovieRepository.shared.save(savedMovie: savedMovie)
-        self.savedMovie = MovieRepository.shared.get(byId: movieDetails.id)
+        if savedMovie.tags.count > 1 {
+            updateSavedMovie(withoutTag: .willCheckItOut)
+            return
+        }
         
-        cell.isWillCheckItOutSelected = true
+        removeSavedMovie()
+    }
+    
+    private func onTapILikeItSystemTag(cell: MovieDetailsTagsTableViewCell) {
+        guard let savedMovie = savedMovie else {
+            saveMovie(withTag: .iLikeIt)
+            cell.isILikeItSelected = true
+            
+            return
+        }
+        
+        if !savedMovie.containsTag(byName: .iLikeIt) {
+            updateSavedMovie(withTag: .iLikeIt)
+            cell.isILikeItSelected = true
+            
+            return
+        }
+        
+        cell.isILikeItSelected = false
+        
+        if savedMovie.tags.count > 1 {
+            updateSavedMovie(withoutTag: .iLikeIt)
+            return
+        }
+        
+        removeSavedMovie()
     }
     
     private func performMovieDetailsRequest() {
@@ -204,7 +236,6 @@ class MovieDetailsViewController: UIViewController {
                 self.movieDetailsTableView.backgroundView = nil
                 
                 self.movieDetails = requestedMovieDetails
-                self.savedMovie = MovieRepository.shared.get(byId: self.movieId)
                 
                 self.actionsBarButtonItem.isEnabled = true
                 
@@ -322,6 +353,53 @@ class MovieDetailsViewController: UIViewController {
         return Array(people[0..<limit])
     }
     
+    private func saveMovie(withTag tagName: SystemTagName) {
+        let tag = TagRepository.shared.getSystemTag(byName: tagName)
+        
+        let savedMovie = SavedMovie(
+            id: movieDetails.id,
+            title: movieDetails.title,
+            originalTitle: movieDetails.originalTitle,
+            imagePath: movieDetails.imagePath,
+            releaseYear: movieDetails.releaseYear,
+            tags: [tag]
+        )
+        
+        MovieRepository.shared.save(movie: savedMovie)
+        self.savedMovie = MovieRepository.shared.get(byId: movieId)
+    }
+    
+    private func updateSavedMovie(withTag tagName: SystemTagName) {
+        guard let savedMovie = savedMovie else {
+            fatalError("Movie that's going to be updated doesn't exist...")
+        }
+        
+        let tag = TagRepository.shared.getSystemTag(byName: tagName)
+        savedMovie.addTag(tag: tag)
+        
+        MovieRepository.shared.update(movie: savedMovie)
+        self.savedMovie = MovieRepository.shared.get(byId: movieId)
+    }
+    
+    private func updateSavedMovie(withoutTag tagName: SystemTagName) {
+        guard let savedMovie = savedMovie else {
+            fatalError("Movie that's going to be updated doesn't exist...")
+        }
+        
+        savedMovie.removeTag(byName: tagName)
+        
+        MovieRepository.shared.update(movie: savedMovie)
+        self.savedMovie = MovieRepository.shared.get(byId: movieId)
+    }
+    
+    private func removeSavedMovie() {
+        guard let savedMovie = savedMovie else {
+            fatalError("Movie that's going to be removed doesn't exist...")
+        }
+        
+        MovieRepository.shared.remove(movie: savedMovie)
+        self.savedMovie = nil
+    }
 }
 
 extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate {
@@ -471,8 +549,13 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     private func getMovieDetailsTagsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsTags, for: indexPath) as! MovieDetailsTagsTableViewCell
         
-        cell.isWillCheckItOutSelected = savedMovie != nil
+        if let savedMovie = savedMovie {
+            cell.isWillCheckItOutSelected = savedMovie.containsTag(byName: .willCheckItOut)
+            cell.isILikeItSelected = savedMovie.containsTag(byName: .iLikeIt)
+        }
+        
         cell.onTapWillCheckItOut = onTapWillCheckItOutSystemTag
+        cell.onTapILikeIt = onTapILikeItSystemTag
         
         return cell
     }

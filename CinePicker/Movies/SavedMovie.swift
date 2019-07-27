@@ -1,6 +1,6 @@
 class SavedMovie: Movie {
     
-    public let tag: Tag
+    public var tags: [Tag]
     
     init(
         id: Int,
@@ -12,9 +12,9 @@ class SavedMovie: Movie {
         releaseYear: String,
         overview: String,
         popularity: Double,
-        tag: Tag
+        tags: [Tag]
     ) {
-        self.tag = tag
+        self.tags = tags
         
         super.init(
             id: id,
@@ -35,7 +35,7 @@ class SavedMovie: Movie {
         originalTitle: String,
         imagePath: String,
         releaseYear: String,
-        tag: Tag
+        tags: [Tag]
     ) {
         self.init(
             id: id,
@@ -47,8 +47,20 @@ class SavedMovie: Movie {
             releaseYear: releaseYear,
             overview: "",
             popularity: 0.0,
-            tag: tag
+            tags: tags
         )
+    }
+    
+    public func containsTag(byName tagName: SystemTagName) -> Bool {
+        return tags.contains { $0.name == tagName.rawValue }
+    }
+    
+    public func addTag(tag: Tag) {
+        tags.append(tag)
+    }
+    
+    public func removeTag(byName tagName: SystemTagName) {
+        tags.removeAll { $0.name == tagName.rawValue }
     }
     
 }
