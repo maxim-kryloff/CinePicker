@@ -76,6 +76,13 @@
                                 <constraint firstAttribute="height" constant="20" id="brE-bV-H3A"/>
                             </constraints>
                         </stackView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kou-Sp-Zcy" userLabel="Bottom Bar View">
+                            <rect key="frame" x="0.0" y="79.5" width="375" height="0.5"/>
+                            <color key="backgroundColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="rds-2t-WcQ"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -84,14 +91,17 @@
                         <constraint firstItem="aPd-bn-Sy8" firstAttribute="centerY" secondItem="JCM-U3-HG5" secondAttribute="centerY" id="8Tb-bI-2BR"/>
                         <constraint firstAttribute="trailing" secondItem="QVe-AU-tJV" secondAttribute="trailing" constant="8" id="DsG-P0-Fhq"/>
                         <constraint firstAttribute="bottom" secondItem="7R6-dG-0tF" secondAttribute="bottom" constant="8" id="FMg-0f-VdP"/>
+                        <constraint firstAttribute="trailing" secondItem="kou-Sp-Zcy" secondAttribute="trailing" id="GlC-Vq-oia"/>
                         <constraint firstItem="QVe-AU-tJV" firstAttribute="leading" secondItem="sgF-xJ-6yN" secondAttribute="trailing" constant="16" id="YS3-Zg-6Gs"/>
                         <constraint firstItem="bmn-Pm-LQQ" firstAttribute="top" secondItem="JCM-U3-HG5" secondAttribute="top" constant="8" id="Yef-4A-CzQ"/>
                         <constraint firstItem="aPd-bn-Sy8" firstAttribute="leading" secondItem="JCM-U3-HG5" secondAttribute="leading" constant="20" id="bfw-gw-Ggu"/>
                         <constraint firstItem="sgF-xJ-6yN" firstAttribute="leading" secondItem="JCM-U3-HG5" secondAttribute="leading" id="cpL-Kd-2Nj"/>
+                        <constraint firstItem="kou-Sp-Zcy" firstAttribute="leading" secondItem="JCM-U3-HG5" secondAttribute="leading" id="d18-To-REu"/>
                         <constraint firstItem="QVe-AU-tJV" firstAttribute="top" secondItem="bmn-Pm-LQQ" secondAttribute="bottom" id="ea1-lA-GIW"/>
                         <constraint firstAttribute="bottom" secondItem="sgF-xJ-6yN" secondAttribute="bottom" id="fps-NK-1dv"/>
                         <constraint firstAttribute="bottom" secondItem="47C-hP-1Gr" secondAttribute="bottom" constant="8" id="oaM-A3-cn9"/>
                         <constraint firstItem="sgF-xJ-6yN" firstAttribute="top" secondItem="JCM-U3-HG5" secondAttribute="top" id="oiM-id-eMA"/>
+                        <constraint firstAttribute="bottom" secondItem="kou-Sp-Zcy" secondAttribute="bottom" id="ozc-x1-sKC"/>
                         <constraint firstAttribute="trailing" secondItem="bmn-Pm-LQQ" secondAttribute="trailing" constant="8" id="qZX-tm-K3e"/>
                         <constraint firstAttribute="trailing" secondItem="7R6-dG-0tF" secondAttribute="trailing" constant="8" id="w1P-hu-VK1"/>
                     </constraints>
@@ -117,7 +127,7 @@
                 <outlet property="voteCountLabel" destination="Ltt-3m-28c" id="cXi-uL-3QR"/>
                 <outlet property="voteResultsStackView" destination="7R6-dG-0tF" id="99K-3X-zQk"/>
             </connections>
-            <point key="canvasLocation" x="-39" y="269"/>
+            <point key="canvasLocation" x="-39.200000000000003" y="268.96551724137936"/>
         </view>
     </objects>
     <resources>

@@ -260,13 +260,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if currentSearchQuery.isEmpty {
-            let systemTag = TagRepository.shared.getSystemTag(byName: .willCheckItOut)
-            
-            let systemTagName = CinePickerConfig.getLanguage() == .ru
-                ? systemTag.russianName
-                : systemTag.name
-            
-            return UIViewHelper.getHeaderView(for: entityTableView, withText: systemTagName)
+            return UIViewHelper.getHeaderView(for: entityTableView, withText: CinePickerCaptions.savedMovies)
         }
         
         return nil

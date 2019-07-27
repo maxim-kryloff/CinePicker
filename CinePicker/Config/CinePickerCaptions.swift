@@ -104,6 +104,14 @@ class CinePickerCaptions {
         return "Type movie or actor..."
     }
     
+    public static var savedMovies: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Сохраненные"
+        }
+        
+        return "Saved Movies"
+    }
+    
     public static var eraseSavedMovies: String {
         if CinePickerConfig.getLanguage() == .ru {
             return "Очистить список фильмов"

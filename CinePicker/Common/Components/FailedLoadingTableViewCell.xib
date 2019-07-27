@@ -29,11 +29,21 @@
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <state key="normal" title="Reload"/>
                         </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jnL-bp-dwb" userLabel="Bottom Bar View">
+                            <rect key="frame" x="0.0" y="79.5" width="375" height="0.5"/>
+                            <color key="backgroundColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="WqT-gd-2N2"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="jnL-bp-dwb" secondAttribute="bottom" id="EuL-kw-ASc"/>
                         <constraint firstItem="R3M-rk-HQK" firstAttribute="top" secondItem="a8b-x4-YOm" secondAttribute="bottom" constant="4" id="TFg-gw-hxt"/>
                         <constraint firstItem="a8b-x4-YOm" firstAttribute="top" secondItem="ewD-5C-LlC" secondAttribute="top" constant="12" id="b1a-q1-wzN"/>
+                        <constraint firstAttribute="trailing" secondItem="jnL-bp-dwb" secondAttribute="trailing" id="ckQ-UF-5dq"/>
+                        <constraint firstItem="jnL-bp-dwb" firstAttribute="leading" secondItem="ewD-5C-LlC" secondAttribute="leading" id="pdV-G1-Urk"/>
                         <constraint firstItem="a8b-x4-YOm" firstAttribute="centerX" secondItem="ewD-5C-LlC" secondAttribute="centerX" id="sc4-qI-bV8"/>
                         <constraint firstItem="R3M-rk-HQK" firstAttribute="centerX" secondItem="ewD-5C-LlC" secondAttribute="centerX" id="zRk-9y-wjc"/>
                     </constraints>

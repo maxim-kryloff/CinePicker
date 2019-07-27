@@ -1,31 +1,30 @@
 import UIKit
+import LGButton
 
 class MovieDetailsTagsTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var tagButton: UIButton!
-
+    @IBOutlet weak var willCheckItOutLGButton: LGButton!
+    
     public static var standardHeight: CGFloat {
-        return 40
+        return 50
     }
     
-    private var systemTag: Tag!
-    
-    private var systemTagName: String {
-        return CinePickerConfig.getLanguage() == .ru ? systemTag.russianName : systemTag.name
-    }
-    
-    public var isRemoveAction: Bool? {
+    public var isWillCheckItOutSelected: Bool? {
         didSet {
-            guard let isRemoveAction = isRemoveAction else {
+            guard let isWillCheckItOutSelected = isWillCheckItOutSelected else {
                 return
             }
             
-            let title = isRemoveAction ? CinePickerCaptions.wontCheckItOut : systemTagName
-            let titleColor = isRemoveAction ? CinePickerColors.red : CinePickerColors.blue
-            
-            tagButton.setTitle(title, for: UIControl.State.normal)
-            tagButton.setTitleColor(titleColor, for: UIControl.State.normal)
+            isWillCheckItOutSelected ? selectWillCheckItOut() : deselectWillCheckItOut()
         }
+    }
+    
+    public var onTapWillCheckItOut: ((_ cell: MovieDetailsTagsTableViewCell) -> Void)?
+    
+    private var willCheckItOutSystemTag: Tag!
+    
+    private var willCheckItOutSystemTagName: String {
+        return CinePickerConfig.getLanguage() == .ru ? willCheckItOutSystemTag.russianName : willCheckItOutSystemTag.name
     }
     
     override func prepareForReuse() {
@@ -37,14 +36,29 @@ class MovieDetailsTagsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.systemTag = TagRepository.shared.getSystemTag(byName: .willCheckItOut)
+        willCheckItOutSystemTag = TagRepository.shared.getSystemTag(byName: .willCheckItOut)
         
         setDefaultState()
     }
 
     private func setDefaultState() {
-        tagButton.setTitle(systemTagName, for: UIControl.State.normal)
-        tagButton.setTitleColor(CinePickerColors.blue, for: UIControl.State.normal)
+        willCheckItOutLGButton.titleString = willCheckItOutSystemTagName
+        isWillCheckItOutSelected = false
+    }
+    
+    private func selectWillCheckItOut() {
+        willCheckItOutLGButton.borderColor = CinePickerColors.yellow
+        willCheckItOutLGButton.titleColor = CinePickerColors.yellow
+        willCheckItOutLGButton.rightIconColor = CinePickerColors.yellow
+    }
+    
+    private func deselectWillCheckItOut() {
+        willCheckItOutLGButton.borderColor = CinePickerColors.white
+        willCheckItOutLGButton.titleColor = CinePickerColors.white
+        willCheckItOutLGButton.rightIconColor = CinePickerColors.white
     }
 
+    @IBAction func onWillCheckItOutLGButtonTouchUpInside(_ sender: LGButton) {
+        onTapWillCheckItOut?(self)
+    }
 }
