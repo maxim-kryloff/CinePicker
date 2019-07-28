@@ -16,6 +16,10 @@ class PersonListViewController: UIViewController {
     
     private let imageService = ImageService()
     
+    override func viewWillAppear(_ animated: Bool) {
+        personListTableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
