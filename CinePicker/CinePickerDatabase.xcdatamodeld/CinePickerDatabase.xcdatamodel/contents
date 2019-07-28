@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G84" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="MovieEntity" representedClassName="MovieEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES">
             <userInfo>
@@ -10,12 +10,12 @@
         <attribute name="originalTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="releaseYear" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
-        <relationship name="tag" maxCount="1" deletionRule="Nullify" destinationEntity="TagEntity" inverseName="movies" inverseEntity="TagEntity" syncable="YES"/>
+        <relationship name="tags" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="TagEntity" inverseName="movies" inverseEntity="TagEntity" syncable="YES"/>
     </entity>
     <entity name="TagEntity" representedClassName="TagEntity" syncable="YES" codeGenerationType="class">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="russianName" attributeType="String" syncable="YES"/>
-        <relationship name="movies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MovieEntity" inverseName="tag" inverseEntity="MovieEntity" syncable="YES"/>
+        <relationship name="movies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MovieEntity" inverseName="tags" inverseEntity="MovieEntity" syncable="YES"/>
     </entity>
     <elements>
         <element name="MovieEntity" positionX="-63" positionY="-18" width="128" height="135"/>

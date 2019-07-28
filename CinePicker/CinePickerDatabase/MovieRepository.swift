@@ -39,19 +39,26 @@ class MovieRepository {
             
             let releaseYear = movieDAO.value(forKey: "releaseYear") as? String ?? ""
             
-            guard let tagDAO = movieDAO.value(forKey: "tag") as? NSManagedObject else {
-                fatalError("Movie must have a tag...")
+            guard let tagDAOs = movieDAO.value(forKey: "tags") as? NSSet else {
+                fatalError("Movie must have tags...")
             }
             
-            guard let tagName = tagDAO.value(forKey: "name") as? String else {
-                fatalError("Tag must have a name...")
+            let tags: [Tag] = tagDAOs.map { (tagDAO) in
+                guard let tagDAO = tagDAO as? NSManagedObject else {
+                     fatalError("TagDAO must be instance of NSManagedObject...")
+                }
+                
+                guard let tagName = tagDAO.value(forKey: "name") as? String else {
+                    fatalError("Tag must have a name...")
+                }
+                
+                guard let tagRussianName = tagDAO.value(forKey: "russianName") as? String else {
+                    fatalError("Tag must have a russian name...")
+                }
+                
+                let tag = Tag(name: tagName, russianName: tagRussianName)
+                return tag
             }
-            
-            guard let tagRussianName = tagDAO.value(forKey: "russianName") as? String else {
-                fatalError("Tag must have a russian name...")
-            }
-            
-            let tag = Tag(name: tagName, russianName: tagRussianName)
             
             let savedMovie = SavedMovie(
                 id: id,
@@ -59,7 +66,7 @@ class MovieRepository {
                 originalTitle: originalTitle,
                 imagePath: imagePath,
                 releaseYear: releaseYear,
-                tag: tag
+                tags: tags
             )
             
             return savedMovie
@@ -75,30 +82,32 @@ class MovieRepository {
         return savedMovie
     }
     
-    public func save(savedMovie: SavedMovie) {
+    public func save(movie: SavedMovie) {
         let viewContext = DatabaseManager.shared.viewContext
         
         let entity = DatabaseManager.shared.getEntityDescription(forEntity: .movie)
         let movieDAO = NSManagedObject(entity: entity, insertInto: viewContext)
         
-        let tagRequest = DatabaseManager.shared.getFetchRequest(forEntity: .tag)
-        let tagDAOs: [NSManagedObject]
+        updateManagedObject(viewContext: viewContext, movieDAO: movieDAO, movie: movie)
+        
+        DatabaseManager.shared.saveContext()
+    }
+    
+    public func update(movie: SavedMovie) {
+        let viewContext = DatabaseManager.shared.viewContext
+        let request = DatabaseManager.shared.getFetchRequest(forEntity: .movie)
+        
+        let movieDAOs: [NSManagedObject]
         
         do {
-            tagDAOs = try viewContext.fetch(tagRequest)
+            movieDAOs = try viewContext.fetch(request)
         } catch let error as NSError {
-            fatalError("Couldn't get all tags from DB. \(error), \(error.userInfo)")
+            fatalError("Couldn't remove movie from DB. \(error), \(error.userInfo)")
         }
         
-        let tagDAO = tagDAOs.first { $0.value(forKey: "name") as! String == savedMovie.tag.name }!
+        let movieDAO = movieDAOs.first { $0.value(forKey: "id") as! Int == movie.id }!
         
-        movieDAO.setValue(savedMovie.id, forKey: "id")
-        movieDAO.setValue(savedMovie.title, forKey: "title")
-        movieDAO.setValue(savedMovie.originalTitle, forKey: "originalTitle")
-        movieDAO.setValue(savedMovie.imagePath, forKey: "imagePath")
-        movieDAO.setValue(savedMovie.releaseYear, forKey: "releaseYear")
-        
-        movieDAO.setValue(tagDAO, forKey: "tag")
+        updateManagedObject(viewContext: viewContext, movieDAO: movieDAO, movie: movie)
         
         DatabaseManager.shared.saveContext()
     }
@@ -138,6 +147,31 @@ class MovieRepository {
         }
         
         DatabaseManager.shared.saveContext()
+    }
+    
+    private func updateManagedObject(viewContext: NSManagedObjectContext, movieDAO: NSManagedObject, movie: SavedMovie) {
+        let tagRequest = DatabaseManager.shared.getFetchRequest(forEntity: .tag)
+        var tagDAOs: [NSManagedObject]
+        
+        do {
+            tagDAOs = try viewContext.fetch(tagRequest)
+        } catch let error as NSError {
+            fatalError("Couldn't get all tags from DB. \(error), \(error.userInfo)")
+        }
+        
+        tagDAOs = tagDAOs.filter { (tagDAO) in
+            let tagNameFromDAO = tagDAO.value(forKey: "name") as! String
+            return movie.tags.contains { $0.name == tagNameFromDAO }
+        }
+        
+        movieDAO.setValue(movie.id, forKey: "id")
+        movieDAO.setValue(movie.title, forKey: "title")
+        movieDAO.setValue(movie.originalTitle, forKey: "originalTitle")
+        movieDAO.setValue(movie.imagePath, forKey: "imagePath")
+        movieDAO.setValue(movie.releaseYear, forKey: "releaseYear")
+        
+        let tagDAOSet = NSSet(array: tagDAOs)
+        movieDAO.setValue(tagDAOSet, forKey: "tags")
     }
     
 }

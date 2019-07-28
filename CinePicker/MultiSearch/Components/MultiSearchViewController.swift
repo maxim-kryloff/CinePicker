@@ -32,15 +32,15 @@ class MultiSearchViewController: StatesViewController {
     
     private let debounceActionService = DebounceActionService()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        onViewDidLoad()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         if currentSearchQuery.isEmpty {
             setSavedMovieState()
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        onViewDidLoad()
     }
     
     override func onReloadData() {
@@ -189,8 +189,11 @@ class MultiSearchViewController: StatesViewController {
         if !UserDefaults.standard.bool(forKey: "didAgreeToUseDataSource") {
             showDataSourceAgreementAlert()
             
-            let tag = Tag(name: SystemTagName.willCheckItOut.rawValue, russianName: "Буду смотреть")
-            TagRepository.shared.save(tag: tag)
+            let willCheckItOut = Tag(name: SystemTagName.willCheckItOut.rawValue, russianName: "Буду смотреть")
+            TagRepository.shared.save(tag: willCheckItOut)
+            
+            let iLikeIt = Tag(name: SystemTagName.iLikeIt.rawValue, russianName: "Нравится!")
+            TagRepository.shared.save(tag: iLikeIt)
         }
         
         definesPresentationContext = true
