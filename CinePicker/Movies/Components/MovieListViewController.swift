@@ -24,6 +24,18 @@ class MovieListViewController: StatesViewController {
     
     private var crewMovies: [Movie] = []
     
+    private var savedMovies: [SavedMovie] = [] {
+        didSet {
+            savedMovieMap = [:]
+            
+            for movie in savedMovies {
+                savedMovieMap[movie.id] = movie
+            }
+        }
+    }
+    
+    private var savedMovieMap: [Int: SavedMovie] = [:]
+    
     private var isBeingRequested = false
     
     private var isRequestFailed = false
@@ -53,6 +65,11 @@ class MovieListViewController: StatesViewController {
             let firstRowIndexPath = IndexPath(row: 0, section: 0)
             movieListTableView.scrollToRow(at: firstRowIndexPath, at: .top, animated: true)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        savedMovies = MovieRepository.shared.getAll()
+        movieListTableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -231,6 +248,12 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.title = movie.title
         cell.originalTitle = movie.originalTitle
         cell.releaseYear = movie.releaseYear
+        
+        if let savedMovie = savedMovieMap[movie.id] {
+            cell.isWillCheckItOutHidden = !savedMovie.containsTag(byName: .willCheckItOut)
+            cell.isILikeItHidden = !savedMovie.containsTag(byName: .iLikeIt)
+        }
+        
         cell.voteCount = movie.voteCount
         cell.rating = movie.rating
         

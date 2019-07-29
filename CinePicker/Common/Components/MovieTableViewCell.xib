@@ -39,7 +39,7 @@
                             <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="47C-hP-1Gr">
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="47C-hP-1Gr" userLabel="Year Stack View">
                             <rect key="frame" x="76" y="54" width="30.5" height="18"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHQ-Wf-sEa">
@@ -49,6 +49,64 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="QWJ-qK-ydw" userLabel="Tags Stack View">
+                            <rect key="frame" x="114.5" y="54" width="30" height="18"/>
+                            <subviews>
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oJq-97-qzc" userLabel="Will Check It Out LGButton" customClass="LGButton" customModule="LGButton">
+                                    <rect key="frame" x="0.0" y="0.0" width="10" height="18"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="rightIconFontName" value="fa"/>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="rightIconString" value="bookmark-o"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="spacingTop">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="spacingBottom">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="spacingLeading">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="spacingTrailing">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="rightIconColor">
+                                            <color key="value" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                            <color key="value" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bwm-Fj-WMT" userLabel="I like it LGButton" customClass="LGButton" customModule="LGButton">
+                                    <rect key="frame" x="18" y="0.0" width="12" height="18"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                            <color key="value" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="rightIconFontName" value="fa"/>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="rightIconString" value="thumbs-o-up"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="spacingTop">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="spacingBottom">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="spacingLeading">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="spacingTrailing">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="rightIconColor">
+                                            <color key="value" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="18" id="Pf5-Y1-uGL"/>
+                            </constraints>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="7R6-dG-0tF">
                             <rect key="frame" x="320" y="52" width="47" height="20"/>
@@ -86,9 +144,11 @@
                     </subviews>
                     <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="QWJ-qK-ydw" secondAttribute="bottom" constant="8" id="34q-eW-Xe4"/>
                         <constraint firstItem="bmn-Pm-LQQ" firstAttribute="leading" secondItem="sgF-xJ-6yN" secondAttribute="trailing" constant="16" id="6tW-Qj-arw"/>
                         <constraint firstItem="47C-hP-1Gr" firstAttribute="leading" secondItem="sgF-xJ-6yN" secondAttribute="trailing" constant="16" id="72B-p7-LUd"/>
                         <constraint firstItem="aPd-bn-Sy8" firstAttribute="centerY" secondItem="JCM-U3-HG5" secondAttribute="centerY" id="8Tb-bI-2BR"/>
+                        <constraint firstItem="QWJ-qK-ydw" firstAttribute="leading" secondItem="47C-hP-1Gr" secondAttribute="trailing" constant="8" id="9sh-by-tsk"/>
                         <constraint firstAttribute="trailing" secondItem="QVe-AU-tJV" secondAttribute="trailing" constant="8" id="DsG-P0-Fhq"/>
                         <constraint firstAttribute="bottom" secondItem="7R6-dG-0tF" secondAttribute="bottom" constant="8" id="FMg-0f-VdP"/>
                         <constraint firstAttribute="trailing" secondItem="kou-Sp-Zcy" secondAttribute="trailing" id="GlC-Vq-oia"/>
@@ -118,6 +178,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="iVN-9g-U4a"/>
             <connections>
+                <outlet property="iLikeItLGButton" destination="Bwm-Fj-WMT" id="nsl-NS-z8f"/>
                 <outlet property="movieImageActivityIndicator" destination="aPd-bn-Sy8" id="l8u-3y-oDX"/>
                 <outlet property="movieImageImageView" destination="sgF-xJ-6yN" id="N9S-hf-ZTH"/>
                 <outlet property="originalTitleLabel" destination="QVe-AU-tJV" id="uOY-wu-5F3"/>
@@ -126,6 +187,7 @@
                 <outlet property="titleLabel" destination="bmn-Pm-LQQ" id="i1R-uh-Clc"/>
                 <outlet property="voteCountLabel" destination="Ltt-3m-28c" id="cXi-uL-3QR"/>
                 <outlet property="voteResultsStackView" destination="7R6-dG-0tF" id="99K-3X-zQk"/>
+                <outlet property="willCheckItOutLGButton" destination="oJq-97-qzc" id="vze-X1-oPp"/>
             </connections>
             <point key="canvasLocation" x="-39.200000000000003" y="268.96551724137936"/>
         </view>

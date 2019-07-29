@@ -26,6 +26,18 @@ class MultiSearchViewController: StatesViewController {
     
     private var loadedImages: [String: UIImage] = [:]
     
+    private var savedMovies: [SavedMovie] = [] {
+        didSet {
+            savedMovieMap = [:]
+            
+            for movie in savedMovies {
+                savedMovieMap[movie.id] = movie
+            }
+        }
+    }
+    
+    private var savedMovieMap: [Int: SavedMovie] = [:]
+    
     private let multiSearchService = MultiSearchService(movieService: MovieService(), personService: PersonService())
     
     private let imageService = ImageService()
@@ -33,9 +45,14 @@ class MultiSearchViewController: StatesViewController {
     private let debounceActionService = DebounceActionService()
     
     override func viewWillAppear(_ animated: Bool) {
+        savedMovies = MovieRepository.shared.getAll()
+        
         if currentSearchQuery.isEmpty {
             setSavedMovieState()
+            return
         }
+        
+        tableViewDefinition.reloadData()
     }
     
     override func viewDidLoad() {
@@ -98,10 +115,10 @@ class MultiSearchViewController: StatesViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
 
         OperationQueue.main.addOperation {
-            let isMovieListEmpty = self.checkIfSavedMovieListIsEmpty()
+            let isSavedMoviesEmpty = self.savedMovies.isEmpty
             let didAgreeToUseSource = UserDefaults.standard.bool(forKey: "didAgreeToUseDataSource")
             
-            if isMovieListEmpty && didAgreeToUseSource {
+            if isSavedMoviesEmpty && didAgreeToUseSource {
                 self.searchController.searchBar.becomeFirstResponder()
             }
         }
@@ -119,9 +136,7 @@ class MultiSearchViewController: StatesViewController {
     }
     
     private func setSavedMovieState() {
-        let savedMovies = MovieRepository.shared.getAll()
         let reversedSavedMovies = Array(savedMovies.reversed())
-        
         updateTable(withData: reversedSavedMovies)
     }
     
@@ -130,16 +145,11 @@ class MultiSearchViewController: StatesViewController {
         
         MovieRepository.shared.remove(movie: movie)
         
-        let savedMovies = MovieRepository.shared.getAll()
+        savedMovies = MovieRepository.shared.getAll()
         let reversedSavedMovies = Array(savedMovies.reversed())
         
         entities = reversedSavedMovies
         entityTableView.deleteRows(at: [indexPath], with: .automatic)
-    }
-    
-    private func checkIfSavedMovieListIsEmpty() -> Bool {
-        let savedMovies = MovieRepository.shared.getAll()
-        return savedMovies.isEmpty
     }
     
     private func performRequest(shouldScrollToFirstRow: Bool) {
@@ -184,8 +194,6 @@ class MultiSearchViewController: StatesViewController {
         defineSearchController()
         defineTableView()
         
-        setSavedMovieState()
-        
         if !UserDefaults.standard.bool(forKey: "didAgreeToUseDataSource") {
             showDataSourceAgreementAlert()
             
@@ -203,8 +211,8 @@ class MultiSearchViewController: StatesViewController {
         let eraseSavedMovies = {
             MovieRepository.shared.removeAll()
             
-            self.entities = []
-            self.entityTableView.reloadData()
+            self.savedMovies = MovieRepository.shared.getAll()
+            self.setSavedMovieState()
         }
         
         UIViewHelper.showAlert(
@@ -270,12 +278,15 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if currentSearchQuery.isEmpty {
-            let isSavedMovieListEmpty = checkIfSavedMovieListIsEmpty()
-            return !isSavedMovieListEmpty ? savedMovieHeight : 0
+        if !currentSearchQuery.isEmpty {
+            return 0
         }
         
-        return 0
+        if savedMovies.isEmpty {
+            return 0
+        }
+        
+        return savedMovieHeight
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -380,12 +391,22 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         cell.originalTitle = movie.originalTitle
         cell.releaseYear = movie.releaseYear
         
-        if currentSearchQuery.isEmpty {
+        if let savedMovie = movie as? SavedMovie {
+            cell.isWillCheckItOutHidden = !savedMovie.containsTag(byName: .willCheckItOut)
+            cell.isILikeItHidden = !savedMovie.containsTag(byName: .iLikeIt)
+            
             cell.isVoteResultsHidden = true
-        } else {
-            cell.voteCount = movie.voteCount
-            cell.rating = movie.rating
+            
+            return cell
         }
+        
+        if let savedMovie = savedMovieMap[movie.id] {
+            cell.isWillCheckItOutHidden = !savedMovie.containsTag(byName: .willCheckItOut)
+            cell.isILikeItHidden = !savedMovie.containsTag(byName: .iLikeIt)
+        }
+        
+        cell.voteCount = movie.voteCount
+        cell.rating = movie.rating
         
         return cell
     }

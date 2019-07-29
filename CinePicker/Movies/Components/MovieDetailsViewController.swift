@@ -71,11 +71,7 @@ class MovieDetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         savedMovie = MovieRepository.shared.get(byId: self.movieId)
-        
-        if movieDetails != nil {
-            let tagsIndexPath = IndexPath(row: 0, section: movieDetailsTagsSectionNumber)
-            movieDetailsTableView.reloadRows(at: [tagsIndexPath], with: .automatic)
-        }
+        movieDetailsTableView.reloadData()
     }
     
     override func viewDidLoad() {

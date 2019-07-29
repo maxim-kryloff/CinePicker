@@ -1,4 +1,5 @@
 import UIKit
+import LGButton
 
 class MovieTableViewCell: UITableViewCell {
     
@@ -11,6 +12,10 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet weak var originalTitleLabel: UILabel!
     
     @IBOutlet weak var releaseYearLabel: UILabel!
+    
+    @IBOutlet weak var willCheckItOutLGButton: LGButton!
+    
+    @IBOutlet weak var iLikeItLGButton: LGButton!
     
     @IBOutlet weak var voteResultsStackView: UIStackView!
     
@@ -38,6 +43,16 @@ class MovieTableViewCell: UITableViewCell {
         didSet {
             releaseYearLabel.text = releaseYear
         }
+    }
+    
+    public var isWillCheckItOutHidden: Bool {
+        set { willCheckItOutLGButton.isHidden = newValue }
+        get { return willCheckItOutLGButton.isHidden }
+    }
+    
+    public var isILikeItHidden: Bool {
+        set { iLikeItLGButton.isHidden = newValue }
+        get { return iLikeItLGButton.isHidden }
     }
     
     public var isVoteResultsHidden: Bool {
@@ -93,6 +108,8 @@ class MovieTableViewCell: UITableViewCell {
         titleLabel.text = nil
         originalTitleLabel.text = nil
         releaseYearLabel.text = nil
+        willCheckItOutLGButton.rightIconColor = CinePickerColors.lightBlue
+        iLikeItLGButton.rightIconColor = CinePickerColors.lightPink
         voteResultsStackView.isHidden = false
         voteCountLabel.text = "--"
         ratingLabel.text = "--"
@@ -101,6 +118,8 @@ class MovieTableViewCell: UITableViewCell {
         movieImageActivityIndicator.alpha = 0.0
         
         imagePath = ""
+        isWillCheckItOutHidden = true
+        isILikeItHidden = true
         
         onTapImageViewHandler = nil
     }

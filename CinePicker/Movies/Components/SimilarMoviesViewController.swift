@@ -20,6 +20,18 @@ class SimilarMoviesViewController: StatesViewController {
     
     private var similarMovies: [Movie] = []
     
+    private var savedMovies: [SavedMovie] = [] {
+        didSet {
+            savedMovieMap = [:]
+            
+            for movie in savedMovies {
+                savedMovieMap[movie.id] = movie
+            }
+        }
+    }
+    
+    private var savedMovieMap: [Int: SavedMovie] = [:]
+    
     private var isLiveScrollingRelevant = false
 
     private var isBeingLiveScrolled = false
@@ -31,6 +43,11 @@ class SimilarMoviesViewController: StatesViewController {
     private let similarMovieService = SimilarMovieService(movieService: MovieService())
     
     private let imageService = ImageService()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        savedMovies = MovieRepository.shared.getAll()
+        similarMoviesTableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -228,6 +245,12 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
         cell.title = movie.title
         cell.originalTitle = movie.originalTitle
         cell.releaseYear = movie.releaseYear
+        
+        if let savedMovie = savedMovieMap[movie.id] {
+            cell.isWillCheckItOutHidden = !savedMovie.containsTag(byName: .willCheckItOut)
+            cell.isILikeItHidden = !savedMovie.containsTag(byName: .iLikeIt)
+        }
+        
         cell.voteCount = movie.voteCount
         cell.rating = movie.rating
         
