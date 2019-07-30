@@ -73,15 +73,8 @@ class UIViewHelper {
         return view
     }
     
-    public static func getHeaderView(
-        for tableView: UITableView,
-        withText text: String
-    ) -> HeaderUIView {
-        
-        let view = Bundle.main.loadNibNamed("HeaderUIView", owner: tableView, options: nil)!.first as! HeaderUIView
-        
-        view.header = text
-        
+    public static func getHeaderWithTagsView(for tableView: UITableView) -> HeaderWithTagsUIView {
+        let view = Bundle.main.loadNibNamed("HeaderWithTagsUIView", owner: tableView, options: nil)!.first as! HeaderWithTagsUIView
         return view
     }
     
