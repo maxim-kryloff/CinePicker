@@ -55,7 +55,18 @@ class MultiSearchViewController: StatesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        onViewDidLoad()
+        
+        defineNavigationController()
+        defineMoreButton()
+        defineLangButton()
+        defineSearchController()
+        defineTableView()
+        
+        if !UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource) {
+            showDataSourceAgreementAlert()
+        }
+        
+        definesPresentationContext = true
     }
     
     override func onReloadData() {
@@ -188,20 +199,6 @@ class MultiSearchViewController: StatesViewController {
         }
     }
     
-    private func onViewDidLoad() {
-        defineNavigationController()
-        defineMoreButton()
-        defineLangButton()
-        defineSearchController()
-        defineTableView()
-        
-        if !UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource) {
-            showDataSourceAgreementAlert()
-        }
-        
-        definesPresentationContext = true
-    }
-    
     @objc private func onPressActionsButton() {
         let eraseSavedMovies = {
             MovieRepository.shared.removeAll()
@@ -226,7 +223,7 @@ class MultiSearchViewController: StatesViewController {
                         CinePickerConfig.setLanguage(language: .en)
                         
                         self.viewWillAppear(false)
-                        self.onViewDidLoad()
+                        self.viewDidLoad()
                     }
                 ),
                 (
@@ -235,7 +232,7 @@ class MultiSearchViewController: StatesViewController {
                         CinePickerConfig.setLanguage(language: .ru)
                         
                         self.viewWillAppear(false)
-                        self.onViewDidLoad()
+                        self.viewDidLoad()
                     }
                 )
             ],
