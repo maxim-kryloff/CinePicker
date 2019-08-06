@@ -24,11 +24,10 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iig-gW-eeq">
                             <rect key="frame" x="151.5" y="101" width="73" height="22"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="kVX-pj-QqH" firstAttribute="centerX" secondItem="i3f-iC-41r" secondAttribute="centerX" id="1GK-A0-mG3"/>
                         <constraint firstItem="iig-gW-eeq" firstAttribute="centerX" secondItem="i3f-iC-41r" secondAttribute="centerX" id="Kom-kp-2dD"/>
@@ -48,7 +47,9 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="jtn-Ji-nj1"/>
             <connections>
-                <outlet property="messageLabel" destination="iig-gW-eeq" id="4RK-PK-PMc"/>
+                <outlet property="contentUIView" destination="i3f-iC-41r" id="AGF-bD-gk2"/>
+                <outlet property="loadingActivityIndicator" destination="kVX-pj-QqH" id="7wk-8T-QSW"/>
+                <outlet property="messageLabel" destination="iig-gW-eeq" id="HAL-JQ-Kzj"/>
             </connections>
             <point key="canvasLocation" x="182.40000000000001" y="-289.20539730134936"/>
         </view>

@@ -2,6 +2,8 @@ import UIKit
 
 class SimilarMoviesViewController: StatesViewController {
 
+    @IBOutlet weak var topBarView: UIView!
+    
     @IBOutlet weak var similarMoviesTableView: UITableView!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -58,6 +60,8 @@ class SimilarMoviesViewController: StatesViewController {
         defineMoreButton()
         defineTableView()
         
+        setDefaultColors()
+        
         performRequest()
     }
     
@@ -101,6 +105,11 @@ class SimilarMoviesViewController: StatesViewController {
         
         let loadingTableViewCellNib = UINib(nibName: "LoadingTableViewCell", bundle: nil)
         similarMoviesTableView.register(loadingTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.loading)
+    }
+    
+    private func setDefaultColors() {
+        topBarView.backgroundColor = CinePickerColors.topBarColor
+        similarMoviesTableView.backgroundColor = CinePickerColors.backgroundColor
     }
     
     @objc private func onPressActionsButton() {

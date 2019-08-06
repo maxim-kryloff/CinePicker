@@ -3,6 +3,8 @@ import LGButton
 
 class MovieTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var contentUIView: UIView!
+    
     @IBOutlet weak var movieImageImageView: UIImageView!
     
     @IBOutlet weak var movieImageActivityIndicator: UIActivityIndicatorView!
@@ -21,7 +23,11 @@ class MovieTableViewCell: UITableViewCell {
     
     @IBOutlet weak var voteCountLabel: UILabel!
     
+    @IBOutlet weak var voteSeparatorLabel: UILabel!
+    
     @IBOutlet weak var ratingLabel: UILabel!
+    
+    @IBOutlet weak var bottomBarView: UIView!
     
     public static var standardHeight: CGFloat {
         return 80
@@ -96,6 +102,8 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     private func setDefaultState() {
+        setDefaultColors()
+        
         movieImageImageView.image = defaultImage
         
         let imageViewTapGestureRecognizer = UITapGestureRecognizer(
@@ -108,8 +116,6 @@ class MovieTableViewCell: UITableViewCell {
         titleLabel.text = nil
         originalTitleLabel.text = nil
         releaseYearLabel.text = nil
-        willCheckItOutLGButton.rightIconColor = CinePickerColors.lightBlue
-        iLikeItLGButton.rightIconColor = CinePickerColors.lightPink
         voteResultsStackView.isHidden = false
         voteCountLabel.text = "--"
         ratingLabel.text = "--"
@@ -122,6 +128,19 @@ class MovieTableViewCell: UITableViewCell {
         isILikeItHidden = true
         
         onTapImageViewHandler = nil
+    }
+    
+    private func setDefaultColors() {
+        contentUIView.backgroundColor = CinePickerColors.backgroundColor
+        movieImageActivityIndicator.color = CinePickerColors.activityIndicatorColor
+        titleLabel.textColor = CinePickerColors.titleColor
+        originalTitleLabel.textColor = CinePickerColors.subtitleColor
+        releaseYearLabel.textColor = CinePickerColors.releaseYearColor
+        willCheckItOutLGButton.rightIconColor = CinePickerColors.willCheckItOutTagColor
+        iLikeItLGButton.rightIconColor = CinePickerColors.iLikeItTagColor
+        voteCountLabel.textColor = CinePickerColors.voteCountColor
+        voteSeparatorLabel.textColor = CinePickerColors.voteSeparatorColor
+        bottomBarView.backgroundColor = CinePickerColors.bottomBarColor
     }
     
     @objc private func onImageViewTap(tapGestureRecognizer: UITapGestureRecognizer) {

@@ -21,29 +21,19 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZt-KC-F9T">
                             <rect key="frame" x="24" y="9.5" width="57.5" height="21"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                            <color key="textColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U22-VJ-wzl" userLabel="Will Check It Out LGButton" customClass="LGButton" customModule="LGButton">
                             <rect key="frame" x="257" y="5" width="42" height="30"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
-                                    <color key="value" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
-                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                    <color key="value" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                     <real key="value" value="2"/>
                                 </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="string" keyPath="rightIconFontName" value="fa"/>
                                 <userDefinedRuntimeAttribute type="string" keyPath="rightIconString" value="bookmark-o"/>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="NO"/>
-                                <userDefinedRuntimeAttribute type="color" keyPath="rightIconColor">
-                                    <color key="value" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onWillCheckItOutLGButtonTouchUpInside:" destination="EqA-6N-dTf" eventType="touchUpInside" id="rUL-fr-2vd"/>
@@ -51,24 +41,14 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X6t-c1-F1S" userLabel="I like it LGButton" customClass="LGButton" customModule="LGButton">
                             <rect key="frame" x="307" y="5" width="44" height="30"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
-                                    <color key="value" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
-                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                    <color key="value" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                     <real key="value" value="2"/>
                                 </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="string" keyPath="rightIconFontName" value="fa"/>
                                 <userDefinedRuntimeAttribute type="string" keyPath="rightIconString" value="thumbs-o-up"/>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="NO"/>
-                                <userDefinedRuntimeAttribute type="color" keyPath="rightIconColor">
-                                    <color key="value" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onILikeItLGButtonTouchUpInside:" destination="EqA-6N-dTf" eventType="touchUpInside" id="fFD-d3-WPl"/>
@@ -76,13 +56,11 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxA-wR-KXF" userLabel="Bottom Bar View">
                             <rect key="frame" x="0.0" y="39.5" width="375" height="0.5"/>
-                            <color key="backgroundColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="GFh-Mh-5Zb"/>
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="X6t-c1-F1S" firstAttribute="centerY" secondItem="jHL-Jy-dPy" secondAttribute="centerY" id="1kj-CE-XlY"/>
                         <constraint firstAttribute="trailing" secondItem="X6t-c1-F1S" secondAttribute="trailing" constant="24" id="3Hm-5J-fBb"/>
@@ -107,6 +85,8 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="BTI-Bm-W3Y"/>
             <connections>
+                <outlet property="bottomBarView" destination="jxA-wR-KXF" id="fFk-cP-LHH"/>
+                <outlet property="contentUIView" destination="jHL-Jy-dPy" id="dIl-gf-NX4"/>
                 <outlet property="headerLabel" destination="dZt-KC-F9T" id="5MQ-e7-EXd"/>
                 <outlet property="iLikeItLGButton" destination="X6t-c1-F1S" id="TAk-4i-2dy"/>
                 <outlet property="willCheckItOutLGButton" destination="U22-VJ-wzl" id="uuk-LR-TSc"/>

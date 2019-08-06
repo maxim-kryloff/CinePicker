@@ -2,6 +2,8 @@ import UIKit
 
 class PersonTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var contentUIView: UIView!
+    
     @IBOutlet weak var personImageImageView: UIImageView!
     
     @IBOutlet weak var personImageActivityIndicator: UIActivityIndicatorView!
@@ -9,6 +11,8 @@ class PersonTableViewCell: UITableViewCell {
     @IBOutlet weak var personNameLabel: UILabel!
     
     @IBOutlet weak var personPositionLabel: UILabel!
+    
+    @IBOutlet weak var bottomBarView: UIView!
     
     public static var standardHeight: CGFloat {
         return 80
@@ -29,7 +33,9 @@ class PersonTableViewCell: UITableViewCell {
     public var isPersonPositionValid: Bool? {
         didSet {
             if let isPersonPositionValid = isPersonPositionValid {
-                personPositionLabel.textColor = isPersonPositionValid ? CinePickerColors.gray : CinePickerColors.red
+                personPositionLabel.textColor = isPersonPositionValid
+                    ? CinePickerColors.subtitleColor
+                    : CinePickerColors.textNegativeColor
             }
         }
     }
@@ -53,6 +59,8 @@ class PersonTableViewCell: UITableViewCell {
     }
     
     private func setDefaultState() {
+        setDefaultColors()
+        
         personImageImageView.image = defaultImage
         
         let imageViewTapGestureRecognizer = UITapGestureRecognizer(
@@ -64,7 +72,6 @@ class PersonTableViewCell: UITableViewCell {
         personImageImageView.isUserInteractionEnabled = false
         personNameLabel.text = nil
         personPositionLabel.text = nil
-        personPositionLabel.textColor = CinePickerColors.gray
         
         personImageImageView.alpha = 1.0
         personImageActivityIndicator.alpha = 0.0
@@ -72,6 +79,14 @@ class PersonTableViewCell: UITableViewCell {
         imagePath = ""
 
         onTapImageViewHandler = nil
+    }
+    
+    private func setDefaultColors() {
+        contentUIView.backgroundColor = CinePickerColors.backgroundColor
+        personImageActivityIndicator.color = CinePickerColors.activityIndicatorColor
+        personNameLabel.textColor = CinePickerColors.titleColor
+        personPositionLabel.textColor = CinePickerColors.subtitleColor
+        bottomBarView.backgroundColor = CinePickerColors.bottomBarColor
     }
     
     @objc private func onImageViewTap(tapGestureRecognizer: UITapGestureRecognizer) {

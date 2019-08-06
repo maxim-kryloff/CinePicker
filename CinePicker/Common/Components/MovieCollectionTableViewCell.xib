@@ -20,7 +20,6 @@
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ngY-H8-D1r">
                         <rect key="frame" x="0.0" y="33" width="375" height="126.5"/>
-                        <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="77S-Ig-UGa">
                             <size key="itemSize" width="95" height="120"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -35,18 +34,16 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3T2-GH-vj6">
                         <rect key="frame" x="12" y="12" width="57.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                        <color key="textColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ihH-r5-Yca" userLabel="Bottom Bar View">
                         <rect key="frame" x="0.0" y="159" width="375" height="0.5"/>
-                        <color key="backgroundColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="0.5" id="ckh-Nn-Zxf"/>
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="ngY-H8-D1r" secondAttribute="bottom" id="2yx-GV-WGw"/>
                     <constraint firstAttribute="trailing" secondItem="ngY-H8-D1r" secondAttribute="trailing" id="9iO-uM-QFM"/>
@@ -61,6 +58,8 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="bottomBarView" destination="ihH-r5-Yca" id="Eeo-jU-Wuj"/>
+                <outlet property="contentUIView" destination="H2p-sc-9uM" id="QeL-M0-wGi"/>
                 <outlet property="headerLabel" destination="3T2-GH-vj6" id="vZX-tk-kNN"/>
                 <outlet property="movieCollectionCollectionView" destination="ngY-H8-D1r" id="Ji1-jS-ekh"/>
             </connections>

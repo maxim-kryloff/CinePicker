@@ -24,19 +24,19 @@
                                 <constraint firstAttribute="width" secondItem="sgF-xJ-6yN" secondAttribute="height" multiplier="3:4" id="61i-Tv-ifI"/>
                             </constraints>
                         </imageView>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="aPd-bn-Sy8">
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="aPd-bn-Sy8">
                             <rect key="frame" x="20" y="30" width="20" height="20"/>
                         </activityIndicatorView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmn-Pm-LQQ">
                             <rect key="frame" x="76" y="8" width="291" height="24"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                            <color key="textColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Original Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QVe-AU-tJV">
                             <rect key="frame" x="76" y="32" width="291" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="47C-hP-1Gr" userLabel="Year Stack View">
@@ -45,7 +45,7 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHQ-Wf-sEa">
                                     <rect key="frame" x="0.0" y="0.0" width="30.5" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -70,11 +70,8 @@
                                         <userDefinedRuntimeAttribute type="number" keyPath="spacingTrailing">
                                             <real key="value" value="0.0"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="color" keyPath="rightIconColor">
-                                            <color key="value" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        </userDefinedRuntimeAttribute>
                                         <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
-                                            <color key="value" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
@@ -82,7 +79,7 @@
                                     <rect key="frame" x="18" y="0.0" width="12" height="18"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
-                                            <color key="value" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                            <color key="value" red="0.00017198834393639117" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         </userDefinedRuntimeAttribute>
                                         <userDefinedRuntimeAttribute type="string" keyPath="rightIconFontName" value="fa"/>
                                         <userDefinedRuntimeAttribute type="string" keyPath="rightIconString" value="thumbs-o-up"/>
@@ -98,9 +95,6 @@
                                         <userDefinedRuntimeAttribute type="number" keyPath="spacingTrailing">
                                             <real key="value" value="0.0"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="color" keyPath="rightIconColor">
-                                            <color key="value" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
                             </subviews>
@@ -114,19 +108,19 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ltt-3m-28c">
                                     <rect key="frame" x="0.0" y="0.0" width="14" height="20"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="suQ-Ly-iSg">
                                     <rect key="frame" x="18" y="0.0" width="7" height="20"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                    <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBt-9R-PZM">
                                     <rect key="frame" x="29" y="0.0" width="18" height="20"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                    <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -136,13 +130,11 @@
                         </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kou-Sp-Zcy" userLabel="Bottom Bar View">
                             <rect key="frame" x="0.0" y="79.5" width="375" height="0.5"/>
-                            <color key="backgroundColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="rds-2t-WcQ"/>
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="QWJ-qK-ydw" secondAttribute="bottom" constant="8" id="34q-eW-Xe4"/>
                         <constraint firstItem="bmn-Pm-LQQ" firstAttribute="leading" secondItem="sgF-xJ-6yN" secondAttribute="trailing" constant="16" id="6tW-Qj-arw"/>
@@ -178,6 +170,8 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="iVN-9g-U4a"/>
             <connections>
+                <outlet property="bottomBarView" destination="kou-Sp-Zcy" id="jgM-mU-TJx"/>
+                <outlet property="contentUIView" destination="JCM-U3-HG5" id="fTh-A4-jqK"/>
                 <outlet property="iLikeItLGButton" destination="Bwm-Fj-WMT" id="nsl-NS-z8f"/>
                 <outlet property="movieImageActivityIndicator" destination="aPd-bn-Sy8" id="l8u-3y-oDX"/>
                 <outlet property="movieImageImageView" destination="sgF-xJ-6yN" id="N9S-hf-ZTH"/>
@@ -187,6 +181,7 @@
                 <outlet property="titleLabel" destination="bmn-Pm-LQQ" id="i1R-uh-Clc"/>
                 <outlet property="voteCountLabel" destination="Ltt-3m-28c" id="cXi-uL-3QR"/>
                 <outlet property="voteResultsStackView" destination="7R6-dG-0tF" id="99K-3X-zQk"/>
+                <outlet property="voteSeparatorLabel" destination="suQ-Ly-iSg" id="UmY-fo-QuH"/>
                 <outlet property="willCheckItOutLGButton" destination="oJq-97-qzc" id="vze-X1-oPp"/>
             </connections>
             <point key="canvasLocation" x="-39.200000000000003" y="268.96551724137936"/>

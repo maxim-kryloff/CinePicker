@@ -2,6 +2,8 @@ import UIKit
 
 class PersonListViewController: UIViewController {
 
+    @IBOutlet weak var topBarView: UIView!
+    
     @IBOutlet weak var personListTableView: UITableView!
     
     public var people: [Person] = []
@@ -26,6 +28,8 @@ class PersonListViewController: UIViewController {
         defineNavigationController()
         defineMoreButton()
         defineTableView()
+        
+        setDefaultColors()
     }
     
     private func defineNavigationController() {
@@ -51,6 +55,11 @@ class PersonListViewController: UIViewController {
         
         let personTableViewCellNib = UINib(nibName: "PersonTableViewCell", bundle: nil)
         personListTableView.register(personTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.person)
+    }
+    
+    private func setDefaultColors() {
+        topBarView.backgroundColor = CinePickerColors.topBarColor
+        personListTableView.backgroundColor = CinePickerColors.backgroundColor
     }
     
     @objc private func onPressActionsButton() {
