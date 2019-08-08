@@ -3,11 +3,15 @@ import LGButton
 
 class HeaderWithTagsUIView: UIView {
     
+    @IBOutlet weak var contentUIView: UIView!
+    
     @IBOutlet weak var headerLabel: UILabel!
     
     @IBOutlet weak var willCheckItOutLGButton: LGButton!
     
     @IBOutlet weak var iLikeItLGButton: LGButton!
+    
+    @IBOutlet weak var bottomBarView: UIView!
     
     public static var standardHeight: CGFloat {
         return 50
@@ -50,34 +54,46 @@ class HeaderWithTagsUIView: UIView {
     }
     
     private func setDefaultState() {
+        setDefaultColors()
+        
         header = nil
         
         isWillCheckItOutSelected = false
         isILikeItSelected = false
     }
     
+    private func setDefaultColors() {
+        contentUIView.backgroundColor = CinePickerColors.backgroundColor
+        headerLabel.textColor = CinePickerColors.titleColor
+        bottomBarView.backgroundColor = CinePickerColors.bottomBarColor
+    }
+    
     private func selectWillCheckItOut() {
-        willCheckItOutLGButton.borderColor = CinePickerColors.lightBlue
-        willCheckItOutLGButton.titleColor = CinePickerColors.lightBlue
-        willCheckItOutLGButton.rightIconColor = CinePickerColors.lightBlue
+        willCheckItOutLGButton.bgColor = CinePickerColors.backgroundColor
+        willCheckItOutLGButton.borderColor = CinePickerColors.willCheckItOutTagColor
+        willCheckItOutLGButton.titleColor = CinePickerColors.willCheckItOutTagColor
+        willCheckItOutLGButton.rightIconColor = CinePickerColors.willCheckItOutTagColor
     }
     
     private func deselectWillCheckItOut() {
-        willCheckItOutLGButton.borderColor = CinePickerColors.white
-        willCheckItOutLGButton.titleColor = CinePickerColors.white
-        willCheckItOutLGButton.rightIconColor = CinePickerColors.white
+        willCheckItOutLGButton.bgColor = CinePickerColors.backgroundColor
+        willCheckItOutLGButton.borderColor = CinePickerColors.tagColor
+        willCheckItOutLGButton.titleColor = CinePickerColors.tagColor
+        willCheckItOutLGButton.rightIconColor = CinePickerColors.tagColor
     }
     
     private func selectILikeIt() {
-        iLikeItLGButton.borderColor = CinePickerColors.lightPink
-        iLikeItLGButton.titleColor = CinePickerColors.lightPink
-        iLikeItLGButton.rightIconColor = CinePickerColors.lightPink
+        iLikeItLGButton.bgColor = CinePickerColors.backgroundColor
+        iLikeItLGButton.borderColor = CinePickerColors.iLikeItTagColor
+        iLikeItLGButton.titleColor = CinePickerColors.iLikeItTagColor
+        iLikeItLGButton.rightIconColor = CinePickerColors.iLikeItTagColor
     }
     
     private func deselectILikeIt() {
-        iLikeItLGButton.borderColor = CinePickerColors.white
-        iLikeItLGButton.titleColor = CinePickerColors.white
-        iLikeItLGButton.rightIconColor = CinePickerColors.white
+        iLikeItLGButton.bgColor = CinePickerColors.backgroundColor
+        iLikeItLGButton.borderColor = CinePickerColors.tagColor
+        iLikeItLGButton.titleColor = CinePickerColors.tagColor
+        iLikeItLGButton.rightIconColor = CinePickerColors.tagColor
     }
     
     @IBAction func onWillCheckItOutLGButtonTouchUpInside(_ sender: LGButton) {

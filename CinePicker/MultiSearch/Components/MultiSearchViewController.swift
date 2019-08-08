@@ -62,6 +62,8 @@ class MultiSearchViewController: StatesViewController {
         defineSearchController()
         defineTableView()
         
+        setDefaultColors()
+        
         if !UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource) {
             showDataSourceAgreementAlert()
         }
@@ -118,6 +120,7 @@ class MultiSearchViewController: StatesViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = CinePickerCaptions.typeMovieOrActor
         searchController.searchBar.setValue(CinePickerCaptions.cancel, forKey: "cancelButtonText")
+        // TODO: Issue for different themes
         searchController.searchBar.keyboardAppearance = .dark
         
         navigationItem.searchController = searchController
@@ -142,6 +145,16 @@ class MultiSearchViewController: StatesViewController {
         
         let personTableViewCellNib = UINib(nibName: "PersonTableViewCell", bundle: nil)
         entityTableView.register(personTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.person)
+    }
+
+    private func setDefaultColors() {
+        navigationController?.navigationBar.barTintColor = CinePickerColors.navigationBarTintColor
+        navigationController?.navigationBar.tintColor = CinePickerColors.actionColor
+        // TODO: Issue for different themes
+        navigationController?.navigationBar.barStyle = .black
+        // TODO: This is workaround to 'hide' disappearing search bar when changing VC
+        navigationController?.navigationBar.isTranslucent = true
+        entityTableView.backgroundColor = CinePickerColors.backgroundColor
     }
     
     private func showSavedMovies() {

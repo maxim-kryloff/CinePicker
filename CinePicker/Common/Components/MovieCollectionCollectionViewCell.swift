@@ -2,6 +2,8 @@ import UIKit
 
 class MovieCollectionCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var contentUIView: UIView!
+    
     @IBOutlet weak var movieImageImageView: UIImageView!
     
     @IBOutlet weak var movieImageActivityIndicator: UIActivityIndicatorView!
@@ -12,14 +14,21 @@ class MovieCollectionCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        setDefaultColors()
         
         movieImageImageView.image = defaultImage
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setDefaultColors()
         
         movieImageImageView.image = defaultImage
+    }
+    
+    private func setDefaultColors() {
+        contentUIView.backgroundColor = CinePickerColors.backgroundColor
+        movieImageActivityIndicator.color = CinePickerColors.activityIndicatorColor
     }
 
 }

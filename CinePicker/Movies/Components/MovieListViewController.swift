@@ -2,6 +2,8 @@ import UIKit
 
 class MovieListViewController: StatesViewController {
     
+    @IBOutlet var contentUIView: UIView!
+    
     @IBOutlet weak var movieListTableView: UITableView!
     
     @IBOutlet weak var personTypeSegmentControl: UISegmentedControl!
@@ -81,6 +83,8 @@ class MovieListViewController: StatesViewController {
         defineMoreButton()
         defineSegmentControl()
         defineTableView()
+        
+        setDefaultColors()
 
         performRequest()
     }
@@ -139,6 +143,12 @@ class MovieListViewController: StatesViewController {
         
         let movieTableViewCellNib = UINib(nibName: "MovieTableViewCell", bundle: nil)
         movieListTableView.register(movieTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movie)
+    }
+    
+    private func setDefaultColors() {
+        contentUIView.backgroundColor = CinePickerColors.backgroundColor
+        personTypeSegmentControl.tintColor = CinePickerColors.actionColor
+        movieListTableView.backgroundColor = CinePickerColors.backgroundColor
     }
     
     @objc private func onPressActionsButton() {

@@ -21,11 +21,10 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5bo-nz-8Xw">
                             <rect key="frame" x="148.5" y="64" width="73" height="22"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="5bo-nz-8Xw" firstAttribute="centerX" secondItem="Za9-dP-PZd" secondAttribute="centerX" id="QbB-Dh-h9k"/>
                         <constraint firstItem="5bo-nz-8Xw" firstAttribute="top" secondItem="Za9-dP-PZd" secondAttribute="top" constant="64" id="iPC-EX-egc"/>
@@ -43,6 +42,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="O7L-n3-dC5"/>
             <connections>
+                <outlet property="contentUIView" destination="Za9-dP-PZd" id="lDV-Ym-LTx"/>
                 <outlet property="messageLabel" destination="5bo-nz-8Xw" id="Ye7-Dv-mae"/>
             </connections>
             <point key="canvasLocation" x="-56" y="-6.746626686656672"/>

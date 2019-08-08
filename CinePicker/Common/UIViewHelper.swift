@@ -6,9 +6,9 @@ class UIViewHelper {
     
     public static func getMovieRatingColor(rating: Double) -> UIColor {
         switch(rating) {
-        case 0.0..<5.0: return CinePickerColors.red
-        case 5.0..<6.5: return CinePickerColors.yellow
-        case 6.5...10: return CinePickerColors.green
+        case 0.0..<5.0: return CinePickerColors.textNegativeColor
+        case 5.0..<6.5: return CinePickerColors.textNeutralColor
+        case 6.5...10: return CinePickerColors.textPositiveColor
         default: fatalError("Rating is out of allowed range...")
         }
     }
@@ -54,7 +54,8 @@ class UIViewHelper {
             fatalError("Url to open image wasn't built...")
         }
         
-        let agrume = Agrume(url: url!, background: .colored(CinePickerColors.black))
+        let agrume = Agrume(url: url!, background: .colored(CinePickerColors.backgroundColor))
+        // TODO: Issue for different themes
         agrume.statusBarStyle = .lightContent
         
         agrume.download = { url, completion in
@@ -68,7 +69,7 @@ class UIViewHelper {
     
     public static func getUITableViewCellSelectedBackgroundView() -> UIView {
         let view = UIView()
-        view.backgroundColor = CinePickerColors.darkGray
+        view.backgroundColor = CinePickerColors.selectedBackgroundColor
         
         return view
     }
@@ -118,15 +119,15 @@ class UIViewHelper {
 
         let appearance = SCLAlertView.SCLAppearance(
             showCloseButton: showCloseButton,
-            contentViewColor: CinePickerColors.black,
-            contentViewBorderColor: CinePickerColors.darkGray,
-            titleColor: CinePickerColors.gray
+            contentViewColor: CinePickerColors.backgroundColor,
+            contentViewBorderColor: CinePickerColors.alertBorderColor,
+            titleColor: CinePickerColors.titleColor
         )
         
         let alertView = SCLAlertView(appearance: appearance)
         
         for buttonAction in buttonActions {
-            alertView.addButton(buttonAction.title, backgroundColor: CinePickerColors.blue, action: buttonAction.action)
+            alertView.addButton(buttonAction.title, backgroundColor: CinePickerColors.actionColor, action: buttonAction.action)
         }
         
         let circleIconImage = UIImage(named: imageName)
@@ -135,7 +136,9 @@ class UIViewHelper {
             title,
             subTitle: subTitle,
             closeButtonTitle: CinePickerCaptions.cancel,
+            // TODO: Issue for different themes
             colorStyle: CinePickerColors.blackHex,
+            // TODO: Issue for different themes
             circleIconImage: circleIconImage
         )
     }

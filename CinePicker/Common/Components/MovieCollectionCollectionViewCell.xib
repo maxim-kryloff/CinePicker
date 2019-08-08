@@ -27,11 +27,10 @@
                                     <constraint firstAttribute="width" secondItem="5p1-Lo-WPw" secondAttribute="height" multiplier="3:4" id="61Y-68-2hF"/>
                                 </constraints>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="WyX-84-jJY">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="WyX-84-jJY">
                                 <rect key="frame" x="37.5" y="50" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="WyX-84-jJY" firstAttribute="centerY" secondItem="HqL-9v-tcH" secondAttribute="centerY" id="6qe-ik-gan"/>
                             <constraint firstItem="5p1-Lo-WPw" firstAttribute="top" secondItem="HqL-9v-tcH" secondAttribute="top" constant="12" id="J0i-Pu-1lo"/>
@@ -42,7 +41,6 @@
                     </view>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="HqL-9v-tcH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="0Yn-o8-fkV"/>
                 <constraint firstAttribute="bottom" secondItem="HqL-9v-tcH" secondAttribute="bottom" id="FLm-oj-Img"/>
@@ -52,6 +50,7 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="270" height="223"/>
             <connections>
+                <outlet property="contentUIView" destination="HqL-9v-tcH" id="sig-p3-ExA"/>
                 <outlet property="movieImageActivityIndicator" destination="WyX-84-jJY" id="Qfy-ST-Wa5"/>
                 <outlet property="movieImageImageView" destination="5p1-Lo-WPw" id="nqQ-V6-8ex"/>
             </connections>

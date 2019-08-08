@@ -2,9 +2,13 @@ import UIKit
 
 class MovieCollectionTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var contentUIView: UIView!
+    
     @IBOutlet weak var movieCollectionCollectionView: UICollectionView!
     
     @IBOutlet weak var headerLabel: UILabel!
+    
+    @IBOutlet weak var bottomBarView: UIView!
     
     public static var standardHeight: CGFloat {
         return 160
@@ -46,10 +50,19 @@ class MovieCollectionTableViewCell: UITableViewCell {
     }
     
     private func setDefaultState() {
+        setDefaultColors()
+        
         headerLabel.text = nil
         
         movieCollection = []
         loadedImages = [:]
+    }
+    
+    private func setDefaultColors() {
+        contentUIView.backgroundColor = CinePickerColors.backgroundColor
+        movieCollectionCollectionView.backgroundColor = CinePickerColors.backgroundColor
+        headerLabel.textColor = CinePickerColors.titleColor
+        bottomBarView.backgroundColor = CinePickerColors.bottomBarColor
     }
     
 }

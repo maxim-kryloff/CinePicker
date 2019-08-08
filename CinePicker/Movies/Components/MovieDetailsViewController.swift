@@ -3,6 +3,8 @@ import UIKit
 // TODO: Try to inherit StatesViewController or remove this TODO
 class MovieDetailsViewController: UIViewController {
     
+    @IBOutlet weak var topBarView: UIView!
+    
     @IBOutlet weak var movieDetailsTableView: UITableView!
     
     public var movieId: Int!
@@ -85,6 +87,8 @@ class MovieDetailsViewController: UIViewController {
         defineFailedLoadingView()
         defineTableView()
         
+        setDefaultColors()
+        
         performMovieDetailsRequest()
     }
     
@@ -134,6 +138,11 @@ class MovieDetailsViewController: UIViewController {
     
     private func defineFailedLoadingView() {
         failedLoadingView = UIViewHelper.getFailedLoadingView(for: movieDetailsTableView, onTouchDownHandler: onReloadGettingMovieDetails)
+    }
+    
+    private func setDefaultColors() {
+        topBarView.backgroundColor = CinePickerColors.topBarColor
+        movieDetailsTableView.backgroundColor = CinePickerColors.backgroundColor
     }
     
     private func onReloadGettingMovieDetails() {

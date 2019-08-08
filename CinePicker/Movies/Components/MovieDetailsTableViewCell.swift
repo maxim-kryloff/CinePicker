@@ -2,6 +2,8 @@ import UIKit
 
 class MovieDetailsTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var contentUIView: UIView!
+    
     @IBOutlet weak var movieImageImageView: UIImageView!
     
     @IBOutlet weak var movieImageActivityIndicator: UIActivityIndicatorView!
@@ -15,6 +17,8 @@ class MovieDetailsTableViewCell: UITableViewCell {
     @IBOutlet weak var releaseYearLabel: UILabel!
     
     @IBOutlet weak var voteCountLabel: UILabel!
+    
+    @IBOutlet weak var voteSeparatorLabel: UILabel!
     
     @IBOutlet weak var ratingLabel: UILabel!
     
@@ -85,6 +89,8 @@ class MovieDetailsTableViewCell: UITableViewCell {
     }
     
     private func setDefaultState() {
+        setDefaultColors()
+        
         movieImageImageView.image = defaultImage
         
         let imageViewTapGestureRecognizer = UITapGestureRecognizer(
@@ -107,6 +113,17 @@ class MovieDetailsTableViewCell: UITableViewCell {
         imagePath = ""
 
         onTapImageViewHandler = nil
+    }
+    
+    private func setDefaultColors() {
+        contentUIView.backgroundColor = CinePickerColors.backgroundColor
+        movieImageActivityIndicator.color = CinePickerColors.activityIndicatorColor
+        titleLabel.textColor = CinePickerColors.titleColor
+        originalTitleLabel.textColor = CinePickerColors.subtitleColor
+        genresLabel.textColor = CinePickerColors.genresColor
+        releaseYearLabel.textColor = CinePickerColors.releaseYearColor
+        voteCountLabel.textColor = CinePickerColors.voteCountColor
+        voteSeparatorLabel.textColor = CinePickerColors.voteSeparatorColor
     }
     
     @objc private func onImageViewTap(tapGestureRecognizer: UITapGestureRecognizer) {

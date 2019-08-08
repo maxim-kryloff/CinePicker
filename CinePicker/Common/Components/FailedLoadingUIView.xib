@@ -21,7 +21,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v48-SZ-1KO">
                             <rect key="frame" x="150.5" y="64" width="73" height="21.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <color key="textColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22G-uv-oul">
@@ -33,7 +33,6 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="22G-uv-oul" firstAttribute="top" secondItem="v48-SZ-1KO" secondAttribute="bottom" constant="4" id="0Un-kc-mli"/>
                         <constraint firstItem="v48-SZ-1KO" firstAttribute="top" secondItem="Bop-2A-nwU" secondAttribute="top" constant="64" id="E0Y-Yv-3yx"/>
@@ -54,6 +53,7 @@
             <viewLayoutGuide key="safeArea" id="y7k-h9-OZy"/>
             <connections>
                 <outlet property="actionButton" destination="22G-uv-oul" id="eOJ-15-pKB"/>
+                <outlet property="contentUIView" destination="Bop-2A-nwU" id="szh-0I-2nR"/>
                 <outlet property="messageLabel" destination="v48-SZ-1KO" id="Jfy-h9-BHW"/>
             </connections>
             <point key="canvasLocation" x="0.0" y="-178.56071964017991"/>
