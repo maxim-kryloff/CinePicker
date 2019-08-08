@@ -292,6 +292,11 @@ class MovieDetailsViewController: UIViewController {
                 self.movieCollection = requestedMovies
                     .filter { $0.id != self.movieId }
                 
+                if self.movieCollection.isEmpty {
+                    self.movieDetailsTableView.deleteRows(at: [firstIndexPath], with: .automatic)
+                    return
+                }
+                
                 self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
             }
         }
