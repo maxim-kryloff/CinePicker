@@ -59,6 +59,7 @@ class MultiSearchViewController: StatesViewController {
         defineNavigationController()
         defineMoreButton()
         defineLangButton()
+        defineThemeButtom()
         defineSearchController()
         defineTableView()
         
@@ -115,13 +116,22 @@ class MultiSearchViewController: StatesViewController {
         navigationItem.rightBarButtonItems?.append(item)
     }
     
+    private func defineThemeButtom() {
+        let item = UIBarButtonItem(
+            title: CinePickerCaptions.theme,
+            style: .plain,
+            target: self,
+            action: #selector(MultiSearchViewController.onChangeTheme)
+        )
+        
+        navigationItem.rightBarButtonItems?.append(item)
+    }
+    
     private func defineSearchController() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = CinePickerCaptions.typeMovieOrActor
         searchController.searchBar.setValue(CinePickerCaptions.cancel, forKey: "cancelButtonText")
-        // TODO: Issue for different themes
-        searchController.searchBar.keyboardAppearance = .dark
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -148,12 +158,13 @@ class MultiSearchViewController: StatesViewController {
     }
 
     private func setDefaultColors() {
-        navigationController?.navigationBar.barTintColor = CinePickerColors.navigationBarTintColor
+        navigationController?.navigationBar.barTintColor = CinePickerColors.backgroundColor
         navigationController?.navigationBar.tintColor = CinePickerColors.actionColor
-        // TODO: Issue for different themes
-        navigationController?.navigationBar.barStyle = .black
-        // TODO: This is workaround to 'hide' disappearing search bar when changing VC
-        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.barStyle = CinePickerColors.navigationBarStyle
+        
+        searchController.searchBar.tintColor = CinePickerColors.actionColor
+        searchController.searchBar.keyboardAppearance = CinePickerColors.searchBarKeyboardAppearance
+        
         entityTableView.backgroundColor = CinePickerColors.backgroundColor
     }
     
@@ -250,6 +261,32 @@ class MultiSearchViewController: StatesViewController {
                 )
             ],
             "lang_image"
+        )
+    }
+    
+    @objc private func onChangeTheme() {
+        UIViewHelper.showAlert(
+            [
+                (
+                    title: CinePickerCaptions.lightTheme,
+                    action: {
+                        CinePickerConfig.setTheme(theme: .light)
+                        
+                        self.viewWillAppear(false)
+                        self.viewDidLoad()
+                    }
+                ),
+                (
+                    title: CinePickerCaptions.darkTheme,
+                    action: {
+                        CinePickerConfig.setTheme(theme: .dark)
+                        
+                        self.viewWillAppear(false)
+                        self.viewDidLoad()
+                    }
+                )
+            ],
+            "theme_image"
         )
     }
     

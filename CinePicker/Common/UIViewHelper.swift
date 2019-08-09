@@ -55,8 +55,7 @@ class UIViewHelper {
         }
         
         let agrume = Agrume(url: url!, background: .colored(CinePickerColors.backgroundColor))
-        // TODO: Issue for different themes
-        agrume.statusBarStyle = .lightContent
+        agrume.statusBarStyle = CinePickerColors.agrumeStatusBarStyle
         
         agrume.download = { url, completion in
             imageService.download(by: url) { (image) in
@@ -136,9 +135,7 @@ class UIViewHelper {
             title,
             subTitle: subTitle,
             closeButtonTitle: CinePickerCaptions.cancel,
-            // TODO: Issue for different themes
-            colorStyle: CinePickerColors.blackHex,
-            // TODO: Issue for different themes
+            colorStyle: CinePickerColors.alertCircleBackgroundColor,
             circleIconImage: circleIconImage
         )
     }
