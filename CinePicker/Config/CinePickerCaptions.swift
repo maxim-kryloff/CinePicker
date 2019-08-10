@@ -96,6 +96,14 @@ class CinePickerCaptions {
         return "Lang"
     }
     
+    public static var theme: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Тема"
+        }
+        
+        return "Theme"
+    }
+    
     public static var typeMovieOrActor: String {
         if CinePickerConfig.getLanguage() == .ru {
             return "Название фильма, имя актера..."
@@ -134,6 +142,22 @@ class CinePickerCaptions {
         }
         
         return "Russian"
+    }
+    
+    public static var lightTheme: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Светлая"
+        }
+        
+        return "Light"
+    }
+    
+    public static var darkTheme: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Темная"
+        }
+        
+        return "Dark"
     }
     
     public static var backToSearch: String {

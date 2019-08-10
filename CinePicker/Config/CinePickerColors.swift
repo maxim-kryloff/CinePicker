@@ -3,10 +3,18 @@ import UIKit
 class CinePickerColors {
     
     public static var backgroundColor: UIColor {
+        if CinePickerConfig.getTheme() == .light {
+            return getUIColorFromRGB(255, 255, 255)
+        }
+        
         return getUIColorFromRGB(26, 26, 26)
     }
     
     public static var selectedBackgroundColor: UIColor {
+        if CinePickerConfig.getTheme() == .light {
+            return getUIColorFromRGB(220, 220, 220)
+        }
+        
         return getUIColorFromRGB(50, 50, 50)
     }
     
@@ -15,10 +23,18 @@ class CinePickerColors {
     }
     
     public static var titleColor: UIColor {
+        if CinePickerConfig.getTheme() == .light {
+            return getUIColorFromRGB(20, 20, 20)
+        }
+        
         return getUIColorFromRGB(247, 247, 247)
     }
     
     public static var subtitleColor: UIColor {
+        if CinePickerConfig.getTheme() == .light {
+            return getUIColorFromRGB(66, 66, 66)
+        }
+        
         return getUIColorFromRGB(153, 153, 153)
     }
     
@@ -31,30 +47,58 @@ class CinePickerColors {
     }
     
     public static var bottomBarColor: UIColor {
+        if CinePickerConfig.getTheme() == .light {
+            return getUIColorFromRGB(200, 200, 200)
+        }
+        
         return getUIColorFromRGB(65, 65, 65)
     }
     
     public static var textNegativeColor: UIColor {
+        if CinePickerConfig.getTheme() == .light {
+            return subtitleColor
+        }
+        
         return getUIColorFromRGB(252, 54, 53)
     }
     
     public static var textNeutralColor: UIColor {
-        return getUIColorFromRGB(255, 150, 0)
+        if CinePickerConfig.getTheme() == .light {
+            return subtitleColor
+        }
+        
+        return getUIColorFromRGB(254, 173, 0)
     }
     
     public static var textPositiveColor: UIColor {
-        return getUIColorFromRGB(0, 180, 0)
+        if CinePickerConfig.getTheme() == .light {
+            return actionColor
+        }
+        
+        return getUIColorFromRGB(32, 150, 0)
     }
     
     public static var tagColor: UIColor {
+        if CinePickerConfig.getTheme() == .light {
+            return getUIColorFromRGB(66, 66, 66)
+        }
+        
         return titleColor
     }
     
     public static var willCheckItOutTagColor: UIColor {
+        if CinePickerConfig.getTheme() == .light {
+            return actionColor
+        }
+        
         return getUIColorFromRGB(230, 144, 90)
     }
     
     public static var iLikeItTagColor: UIColor {
+        if CinePickerConfig.getTheme() == .light {
+            return actionColor
+        }
+        
         return getUIColorFromRGB(227, 102, 95)
     }
     
@@ -79,6 +123,10 @@ class CinePickerColors {
     }
     
     public static var actionColor: UIColor {
+        if CinePickerConfig.getTheme() == .light {
+            return getUIColorFromRGB(225, 45, 85)
+        }
+        
         return getUIColorFromRGB(1, 122, 255)
     }
     
@@ -86,13 +134,37 @@ class CinePickerColors {
         return bottomBarColor
     }
     
-    // TODO: This is workaround to 'hide' disappearing search bar when changing VC
-    public static var navigationBarTintColor: UIColor {
-        return getUIColorFromRGB(8, 8, 8)
+    public static var navigationBarStyle: UIBarStyle {
+        if CinePickerConfig.getTheme() == .light {
+            return .default
+        }
+        
+        return .black
     }
     
-    // TODO: Issue for different themes
-    public static let blackHex: UInt = 0x323232
+    public static var searchBarKeyboardAppearance: UIKeyboardAppearance {
+        if CinePickerConfig.getTheme() == .light {
+            return .light
+        }
+        
+        return .dark
+    }
+    
+    public static var agrumeStatusBarStyle: UIStatusBarStyle {
+        if CinePickerConfig.getTheme() == .light {
+             return .default
+        }
+        
+        return .lightContent
+    }
+    
+    public static var alertCircleBackgroundColor: UInt {
+        if CinePickerConfig.getTheme() == .light {
+            return 0xB4B4B4
+        }
+        
+        return 0x323232
+    }
     
     private static func getUIColorFromRGB(_ red: Int, _ green: Int, _ blue: Int) -> UIColor {
         let red = CGFloat(Double(red) / 255.0)

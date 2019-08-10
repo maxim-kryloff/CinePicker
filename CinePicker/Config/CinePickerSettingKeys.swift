@@ -8,6 +8,10 @@ class CinePickerSettingKeys {
         return "language"
     }
     
+    public static var theme: String {
+        return "theme"
+    }
+    
     public static var willCheckItOutFilter: String {
         return "willCheckItOutFilter"
     }

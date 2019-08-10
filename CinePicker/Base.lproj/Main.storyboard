@@ -52,11 +52,11 @@
             <objects>
                 <viewController id="igN-2x-NPg" customClass="MovieListViewController" customModule="CinePicker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nca-Eg-rci">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7fY-3H-5bL">
-                                <rect key="frame" x="8" y="25" width="359" height="31"/>
+                                <rect key="frame" x="8" y="5" width="359" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="gKj-1p-G7O"/>
                                 </constraints>
@@ -69,7 +69,7 @@
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0ee-El-F5W">
-                                <rect key="frame" x="0.0" y="63" width="375" height="604"/>
+                                <rect key="frame" x="0.0" y="43" width="375" height="560"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
@@ -105,17 +105,17 @@
             <objects>
                 <viewController storyboardIdentifier="MovieDetailsViewController" id="xLm-8S-XWy" customClass="MovieDetailsViewController" customModule="CinePicker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bBC-3g-pTl">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YqC-Sp-M9K" userLabel="Top Bar View">
-                                <rect key="frame" x="0.0" y="20" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="veh-yt-zxf"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hWT-bd-Joq">
-                                <rect key="frame" x="0.0" y="20.5" width="375" height="646.5"/>
+                                <rect key="frame" x="0.0" y="0.5" width="375" height="602.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -355,17 +355,17 @@
             <objects>
                 <viewController id="qMz-EX-DC4" customClass="PersonListViewController" customModule="CinePicker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aPr-WI-Il1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0fL-dU-Nm3" userLabel="Top Bar View">
-                                <rect key="frame" x="0.0" y="20" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="fgD-Zh-pOu"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nIN-dc-ZYm">
-                                <rect key="frame" x="0.0" y="20.5" width="375" height="646.5"/>
+                                <rect key="frame" x="0.0" y="0.5" width="375" height="602.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
@@ -400,17 +400,17 @@
             <objects>
                 <viewController id="Sda-Ih-6cJ" customClass="SimilarMoviesViewController" customModule="CinePicker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qWz-C9-RXN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZhK-nf-Dro" userLabel="Top Bar View">
-                                <rect key="frame" x="0.0" y="20" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="aXe-Rx-cRA"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gkw-Ih-anI">
-                                <rect key="frame" x="0.0" y="20.5" width="375" height="646.5"/>
+                                <rect key="frame" x="0.0" y="0.5" width="375" height="602.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
@@ -463,8 +463,7 @@
         <image name="default_movie_image" width="388.5" height="449.5"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bkA-No-Cab"/>
-        <segue reference="chE-Kq-mov"/>
+        <segue reference="6Rr-Qk-OvN"/>
         <segue reference="Hkb-x9-9mw"/>
     </inferredMetricsTieBreakers>
 </document>
