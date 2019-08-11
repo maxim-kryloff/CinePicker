@@ -28,7 +28,7 @@ class CinePickerConfig {
     
     public static func getTheme() -> CinePickerTheme {
         guard let themeRawValue = UserDefaults.standard.string(forKey: CinePickerSettingKeys.theme) else {
-            return .light
+            return .dark
         }
         
         return themeRawValue == CinePickerTheme.light.rawValue ? .light : .dark

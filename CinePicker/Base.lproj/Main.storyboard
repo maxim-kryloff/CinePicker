@@ -17,8 +17,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="09U-oq-L87">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="RZJ-lp-NgT"/>
+                                </connections>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eic-RW-Wdl">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
@@ -27,18 +34,21 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="eic-RW-Wdl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9qD-RJ-yuv"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eic-RW-Wdl" secondAttribute="trailing" id="FiE-rm-zRd"/>
+                            <constraint firstItem="09U-oq-L87" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GqZ-BL-ZRk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eic-RW-Wdl" secondAttribute="bottom" id="HnM-Zz-DU4"/>
-                            <constraint firstItem="eic-RW-Wdl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="y4C-d9-E1k"/>
+                            <constraint firstItem="09U-oq-L87" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="jer-4J-RSh"/>
+                            <constraint firstItem="09U-oq-L87" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="uVZ-k0-ECI"/>
+                            <constraint firstItem="eic-RW-Wdl" firstAttribute="top" secondItem="09U-oq-L87" secondAttribute="bottom" id="zyj-zJ-GDH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="RZU-kS-9aX"/>
                     <connections>
                         <outlet property="entityTableView" destination="eic-RW-Wdl" id="ayQ-kh-reZ"/>
+                        <outlet property="searchBar" destination="09U-oq-L87" id="TwI-wy-vc8"/>
                         <segue destination="igN-2x-NPg" kind="show" identifier="ShowPersonMovies" id="XCY-oZ-kcm"/>
                         <segue destination="xLm-8S-XWy" kind="show" identifier="ShowMovieDetails" id="6Rr-Qk-OvN"/>
                     </connections>
@@ -235,11 +245,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Gub-No-7VY">
-                                                    <rect key="frame" x="45.5" y="8.5" width="284" height="33"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Gub-No-7VY">
+                                                    <rect key="frame" x="45.5" y="8.5" width="284" height="50"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BH4-gU-Lga" userLabel="Wil Check It Out LGButton" customClass="LGButton" customModule="LGButton">
-                                                            <rect key="frame" x="0.0" y="0.0" width="166.5" height="33"/>
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BH4-gU-Lga" userLabel="Wil Check It Out LGButton" customClass="LGButton" customModule="LGButton">
+                                                            <rect key="frame" x="0.0" y="0.0" width="166.5" height="50"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -254,8 +264,8 @@
                                                                 <action selector="onWillCheckItOutLGButtonTouchUpInside:" destination="kxo-ji-saJ" eventType="touchUpInside" id="UFg-Si-n44"/>
                                                             </connections>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5XM-VO-slN" userLabel="I like it LGButton" customClass="LGButton" customModule="LGButton">
-                                                            <rect key="frame" x="178.5" y="0.0" width="105.5" height="33"/>
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5XM-VO-slN" userLabel="I like it LGButton" customClass="LGButton" customModule="LGButton">
+                                                            <rect key="frame" x="178.5" y="0.0" width="105.5" height="50"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="NO"/>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
@@ -464,6 +474,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6Rr-Qk-OvN"/>
-        <segue reference="Hkb-x9-9mw"/>
+        <segue reference="XCY-oZ-kcm"/>
     </inferredMetricsTieBreakers>
 </document>

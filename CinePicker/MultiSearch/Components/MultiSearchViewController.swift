@@ -2,6 +2,8 @@ import UIKit
 
 class MultiSearchViewController: StatesViewController {
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     @IBOutlet weak var entityTableView: UITableView!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -11,8 +13,6 @@ class MultiSearchViewController: StatesViewController {
     override var tableViewDefinition: UITableView! {
         return entityTableView
     }
-    
-    private let searchController = UISearchController(searchResultsController: nil)
     
     private var currentSearchQuery = ""
     
@@ -60,7 +60,7 @@ class MultiSearchViewController: StatesViewController {
         defineMoreButton()
         defineLangButton()
         defineThemeButtom()
-        defineSearchController()
+        defineSearchBar()
         defineTableView()
         
         setDefaultColors()
@@ -68,8 +68,6 @@ class MultiSearchViewController: StatesViewController {
         if !UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource) {
             showDataSourceAgreementAlert()
         }
-        
-        definesPresentationContext = true
     }
     
     override func onReloadData() {
@@ -127,21 +125,18 @@ class MultiSearchViewController: StatesViewController {
         navigationItem.rightBarButtonItems?.append(item)
     }
     
-    private func defineSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = CinePickerCaptions.typeMovieOrActor
-        searchController.searchBar.setValue(CinePickerCaptions.cancel, forKey: "cancelButtonText")
+    private func defineSearchBar() {
+        searchBar.tintColor = CinePickerColors.actionColor
+        searchBar.placeholder = CinePickerCaptions.typeMovieOrActor
+        // TODO: Bug related to changing language
+        searchBar.setValue(CinePickerCaptions.cancel, forKey: "cancelButtonText")
         
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-
         OperationQueue.main.addOperation {
             let isSavedMoviesEmpty = self.savedMovies.isEmpty
             let didAgreeToUseDataSource = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource)
             
             if isSavedMoviesEmpty && didAgreeToUseDataSource {
-                self.searchController.searchBar.becomeFirstResponder()
+                self.searchBar.becomeFirstResponder()
             }
         }
     }
@@ -160,10 +155,12 @@ class MultiSearchViewController: StatesViewController {
     private func setDefaultColors() {
         navigationController?.navigationBar.barTintColor = CinePickerColors.backgroundColor
         navigationController?.navigationBar.tintColor = CinePickerColors.actionColor
-        navigationController?.navigationBar.barStyle = CinePickerColors.navigationBarStyle
+        navigationController?.navigationBar.barStyle = CinePickerColors.barStyle
         
-        searchController.searchBar.tintColor = CinePickerColors.actionColor
-        searchController.searchBar.keyboardAppearance = CinePickerColors.searchBarKeyboardAppearance
+        searchBar.tintColor = CinePickerColors.actionColor
+        searchBar.backgroundColor = CinePickerColors.backgroundColor
+        searchBar.barStyle = CinePickerColors.barStyle
+        searchBar.keyboardAppearance = CinePickerColors.searchBarKeyboardAppearance
         
         entityTableView.backgroundColor = CinePickerColors.backgroundColor
     }
@@ -224,16 +221,15 @@ class MultiSearchViewController: StatesViewController {
     }
     
     @objc private func onPressActionsButton() {
-        let eraseSavedMovies = {
-            MovieRepository.shared.removeAll()
-            
-            self.savedMovies = MovieRepository.shared.getAll()
-            self.showSavedMovies()
-        }
-        
         UIViewHelper.showAlert(
             [
-                (title: CinePickerCaptions.eraseSavedMovies, action: eraseSavedMovies)
+                (
+                    title: CinePickerCaptions.eraseSavedMovies,
+                    action: {
+                        MovieRepository.shared.removeAll()
+                        self.resetViewController()
+                    }
+                )
             ]
         )
     }
@@ -245,18 +241,14 @@ class MultiSearchViewController: StatesViewController {
                     title: CinePickerCaptions.english,
                     action: {
                         CinePickerConfig.setLanguage(language: .en)
-                        
-                        self.viewWillAppear(false)
-                        self.viewDidLoad()
+                        self.resetViewController()
                     }
                 ),
                 (
                     title: CinePickerCaptions.russian,
                     action: {
                         CinePickerConfig.setLanguage(language: .ru)
-                        
-                        self.viewWillAppear(false)
-                        self.viewDidLoad()
+                        self.resetViewController()
                     }
                 )
             ],
@@ -271,18 +263,14 @@ class MultiSearchViewController: StatesViewController {
                     title: CinePickerCaptions.lightTheme,
                     action: {
                         CinePickerConfig.setTheme(theme: .light)
-                        
-                        self.viewWillAppear(false)
-                        self.viewDidLoad()
+                        self.resetViewController()
                     }
                 ),
                 (
                     title: CinePickerCaptions.darkTheme,
                     action: {
                         CinePickerConfig.setTheme(theme: .dark)
-                        
-                        self.viewWillAppear(false)
-                        self.viewDidLoad()
+                        self.resetViewController()
                     }
                 )
             ],
@@ -302,6 +290,8 @@ class MultiSearchViewController: StatesViewController {
             
             UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.willCheckItOutFilter)
             UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.iLikeItFilter)
+            
+            CinePickerConfig.setTheme(theme: .light)
 
             self.onChangeLanguage()
         }
@@ -348,6 +338,13 @@ class MultiSearchViewController: StatesViewController {
         }
         
         return filteredSavedMovies
+    }
+    
+    private func resetViewController() {
+        self.searchBarCancelButtonClicked(self.searchBar)
+        
+        self.viewWillAppear(false)
+        self.viewDidLoad()
     }
     
 }
@@ -572,20 +569,16 @@ extension MultiSearchViewController {
     
 }
 
-extension MultiSearchViewController: UISearchResultsUpdating {
+extension MultiSearchViewController: UISearchBarDelegate {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else {
-            return
-        }
-        
-        if currentSearchQuery == text {
-            return
-        }
-        
-        currentSearchQuery = text
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        currentSearchQuery = searchText
         loadedImages = [:]
-
+        
         if currentSearchQuery.isEmpty {
             unsetAllStates()
             showSavedMovies()
@@ -605,4 +598,22 @@ extension MultiSearchViewController: UISearchResultsUpdating {
         }
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        defer {
+            searchBar.setShowsCancelButton(false, animated: true)
+            searchBar.endEditing(true)
+        }
+        
+        guard let searchBarText = searchBar.text else {
+            return
+        }
+        
+        if searchBarText.isEmpty {
+            return
+        }
+        
+        searchBar.text = nil
+        self.searchBar(searchBar, textDidChange: "")
+    }
+
 }
