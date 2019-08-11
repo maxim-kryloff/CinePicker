@@ -76,6 +76,7 @@
 		33A1FAF2226E3E12007003E2 /* DebounceActionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A1FAF1226E3E12007003E2 /* DebounceActionServiceTests.swift */; };
 		33AC4A0D222EEF12001F7EAB /* MovieDetailsOverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC4A0C222EEF12001F7EAB /* MovieDetailsOverviewTableViewCell.swift */; };
 		33AC4A0F222EF7FF001F7EAB /* MovieDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC4A0E222EF7FF001F7EAB /* MovieDetailsTableViewCell.swift */; };
+		33ADA7E22300BB13003D9CC3 /* LGButton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33ADA7E12300BB13003D9CC3 /* LGButton.framework */; };
 		33B47D3422D8C71900F9D5C3 /* CinePickerLanguageCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B47D3322D8C71900F9D5C3 /* CinePickerLanguageCode.swift */; };
 		33B5C7DF22FD96F200983774 /* CinePickerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B5C7DE22FD96F200983774 /* CinePickerTheme.swift */; };
 		33C032A4224277CC009D78F6 /* FailedLoadingUIView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33C032A3224277CC009D78F6 /* FailedLoadingUIView.xib */; };
@@ -183,6 +184,7 @@
 		33A1FAF1226E3E12007003E2 /* DebounceActionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebounceActionServiceTests.swift; sourceTree = "<group>"; };
 		33AC4A0C222EEF12001F7EAB /* MovieDetailsOverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsOverviewTableViewCell.swift; sourceTree = "<group>"; };
 		33AC4A0E222EF7FF001F7EAB /* MovieDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		33ADA7E12300BB13003D9CC3 /* LGButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LGButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B47D3322D8C71900F9D5C3 /* CinePickerLanguageCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinePickerLanguageCode.swift; sourceTree = "<group>"; };
 		33B5C7DE22FD96F200983774 /* CinePickerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinePickerTheme.swift; sourceTree = "<group>"; };
 		33C032A3224277CC009D78F6 /* FailedLoadingUIView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FailedLoadingUIView.xib; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			files = (
 				6D7244E164521AA08B00270D /* Pods_CinePicker.framework in Frameworks */,
 				33D61E2422B2B1E000250997 /* Agrume.framework in Frameworks */,
+				33ADA7E22300BB13003D9CC3 /* LGButton.framework in Frameworks */,
 				33F465E122B62F5200AB5240 /* SCLAlertView.framework in Frameworks */,
 				33D61E2622B2B1E900250997 /* SwiftyGif.framework in Frameworks */,
 			);
@@ -451,6 +454,7 @@
 		655AB316821175858F84DFC6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				33ADA7E12300BB13003D9CC3 /* LGButton.framework */,
 				33F465E022B62F5200AB5240 /* SCLAlertView.framework */,
 				33D61E2522B2B1E900250997 /* SwiftyGif.framework */,
 				33D61E2322B2B1E000250997 /* Agrume.framework */,
