@@ -7,7 +7,7 @@ class CinePickerColors {
             return getUIColorFromRGB(255, 255, 255)
         }
         
-        return getUIColorFromRGB(26, 26, 26)
+        return getUIColorFromRGB(20, 20, 20)
     }
     
     public static var selectedBackgroundColor: UIColor {
@@ -134,7 +134,7 @@ class CinePickerColors {
         return bottomBarColor
     }
     
-    public static var navigationBarStyle: UIBarStyle {
+    public static var barStyle: UIBarStyle {
         if CinePickerConfig.getTheme() == .light {
             return .default
         }
