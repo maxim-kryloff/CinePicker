@@ -72,6 +72,8 @@ class MovieDetailsViewController: UIViewController {
     private var movieDetailsService = MovieDetailsService(movieService: MovieService(), personService: PersonService())
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         savedMovie = MovieRepository.shared.get(byId: self.movieId)
         movieDetailsTableView.reloadData()
     }
@@ -90,6 +92,12 @@ class MovieDetailsViewController: UIViewController {
         setDefaultColors()
         
         performMovieDetailsRequest()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        loadedImages = [:]
     }
     
     private func defineNavigationController() {
@@ -789,8 +797,6 @@ extension MovieDetailsViewController {
         guard let segueIdentifier = segue.identifier else {
             return
         }
-        
-        loadedImages = [:]
         
         if segueIdentifier == SegueIdentifiers.showSimilarMovies {
             let similarMoviesController = segue.destination as! SimilarMoviesViewController

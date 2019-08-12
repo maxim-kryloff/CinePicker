@@ -47,6 +47,8 @@ class SimilarMoviesViewController: StatesViewController {
     private let imageService = ImageService()
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         savedMovies = MovieRepository.shared.getAll()
         similarMoviesTableView.reloadData()
     }
@@ -63,6 +65,12 @@ class SimilarMoviesViewController: StatesViewController {
         setDefaultColors()
         
         performRequest()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        loadedImages = [:]
     }
     
     override func onReloadData() {
@@ -296,8 +304,6 @@ extension SimilarMoviesViewController {
         guard let segueIdentifier = segue.identifier else {
             return
         }
-        
-        loadedImages = [:]
         
         if segueIdentifier == SegueIdentifiers.showMovieDetails {
             let movieDetailsViewController = segue.destination as! MovieDetailsViewController

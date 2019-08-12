@@ -19,6 +19,8 @@ class PersonListViewController: UIViewController {
     private let imageService = ImageService()
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         personListTableView.reloadData()
     }
     
@@ -30,6 +32,12 @@ class PersonListViewController: UIViewController {
         defineTableView()
         
         setDefaultColors()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        loadedImages = [:]
     }
     
     private func defineNavigationController() {
@@ -159,8 +167,6 @@ extension PersonListViewController {
         guard let segueIdentifier = segue.identifier else {
             return
         }
-        
-        loadedImages = [:]
         
         if segueIdentifier == SegueIdentifiers.showPersonMovies {
             let movieListViewController = segue.destination as! MovieListViewController
