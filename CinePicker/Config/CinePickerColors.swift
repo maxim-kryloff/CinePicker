@@ -142,6 +142,14 @@ class CinePickerColors {
         return .black
     }
     
+    public static var statusBarStyle: UIStatusBarStyle {
+        if CinePickerConfig.getTheme() == .light {
+            return .default
+        }
+        
+        return .lightContent
+    }
+    
     public static var searchBarKeyboardAppearance: UIKeyboardAppearance {
         if CinePickerConfig.getTheme() == .light {
             return .light

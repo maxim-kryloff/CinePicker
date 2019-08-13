@@ -32,7 +32,7 @@
                         </connections>
                     </collectionView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3T2-GH-vj6">
-                        <rect key="frame" x="12" y="12" width="57.5" height="21"/>
+                        <rect key="frame" x="16" y="12" width="57.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -49,7 +49,7 @@
                     <constraint firstAttribute="trailing" secondItem="ngY-H8-D1r" secondAttribute="trailing" id="9iO-uM-QFM"/>
                     <constraint firstItem="ihH-r5-Yca" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Cow-3u-7bE"/>
                     <constraint firstItem="ngY-H8-D1r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="K2p-en-Hsa"/>
-                    <constraint firstItem="3T2-GH-vj6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="Wf5-Ij-1sC"/>
+                    <constraint firstItem="3T2-GH-vj6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Wf5-Ij-1sC"/>
                     <constraint firstItem="ngY-H8-D1r" firstAttribute="top" secondItem="3T2-GH-vj6" secondAttribute="bottom" id="id1-lf-Jyp"/>
                     <constraint firstItem="3T2-GH-vj6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="kgV-eu-8hJ"/>
                     <constraint firstAttribute="trailing" secondItem="ihH-r5-Yca" secondAttribute="trailing" id="nqd-1z-7qT"/>

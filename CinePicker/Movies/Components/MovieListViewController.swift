@@ -70,6 +70,8 @@ class MovieListViewController: StatesViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         savedMovies = MovieRepository.shared.getAll()
         movieListTableView.reloadData()
     }
@@ -87,6 +89,12 @@ class MovieListViewController: StatesViewController {
         setDefaultColors()
 
         performRequest()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        loadedImages = [:]
     }
     
     override func onReloadData() {
@@ -296,8 +304,6 @@ extension MovieListViewController {
         guard let segueIdentifier = segue.identifier else {
             return
         }
-        
-        loadedImages = [:]
         
         if segueIdentifier == SegueIdentifiers.showMovieDetails {
             let movieDetailsViewController = segue.destination as! MovieDetailsViewController

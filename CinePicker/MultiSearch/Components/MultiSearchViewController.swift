@@ -2,12 +2,14 @@ import UIKit
 
 class MultiSearchViewController: StatesViewController {
     
+    @IBOutlet var contentUIView: UIView!
+    
     @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var entityTableView: UITableView!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return CinePickerColors.statusBarStyle
     }
     
     override var tableViewDefinition: UITableView! {
@@ -43,6 +45,8 @@ class MultiSearchViewController: StatesViewController {
     private let debounceActionService = DebounceActionService()
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         savedMovies = MovieRepository.shared.getAll()
         
         if currentSearchQuery.isEmpty {
@@ -68,6 +72,12 @@ class MultiSearchViewController: StatesViewController {
         if !UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource) {
             showDataSourceAgreementAlert()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        loadedImages = [:]
     }
     
     override func onReloadData() {
@@ -153,6 +163,8 @@ class MultiSearchViewController: StatesViewController {
     }
 
     private func setDefaultColors() {
+        contentUIView.backgroundColor = CinePickerColors.backgroundColor
+        
         navigationController?.navigationBar.barTintColor = CinePickerColors.backgroundColor
         navigationController?.navigationBar.tintColor = CinePickerColors.actionColor
         navigationController?.navigationBar.barStyle = CinePickerColors.barStyle
@@ -290,8 +302,6 @@ class MultiSearchViewController: StatesViewController {
             
             UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.willCheckItOutFilter)
             UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.iLikeItFilter)
-            
-            CinePickerConfig.setTheme(theme: .light)
 
             self.onChangeLanguage()
         }
@@ -537,8 +547,6 @@ extension MultiSearchViewController {
         guard let segueIdentifier = segue.identifier else {
             return
         }
-        
-        loadedImages = [:]
         
         let sender = sender as! TableViewCellSender
         let indexPath = sender.indexPath

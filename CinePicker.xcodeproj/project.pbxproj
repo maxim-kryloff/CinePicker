@@ -351,14 +351,14 @@
 				33349E6F224390D700970A55 /* LoadingTableViewCell.xib */,
 				33DABDA42243C7F3003BF008 /* FailedLoadingTableViewCell.swift */,
 				33DABDA22243C592003BF008 /* FailedLoadingTableViewCell.xib */,
-				33D548BB2248F2CA001F5A66 /* HeaderWithTagsUIView.xib */,
 				33D548BD2248F6E0001F5A66 /* HeaderWithTagsUIView.swift */,
-				330A59F9224BDB6200B0ED22 /* HeaderTableViewCell.xib */,
+				33D548BB2248F2CA001F5A66 /* HeaderWithTagsUIView.xib */,
 				330A59FB224C098100B0ED22 /* HeaderTableViewCell.swift */,
-				33027F6622CFA914007626BD /* MovieCollectionTableViewCell.xib */,
+				330A59F9224BDB6200B0ED22 /* HeaderTableViewCell.xib */,
 				33027F6522CFA914007626BD /* MovieCollectionTableViewCell.swift */,
-				33027F6A22D1DF35007626BD /* MovieCollectionCollectionViewCell.xib */,
+				33027F6622CFA914007626BD /* MovieCollectionTableViewCell.xib */,
 				33027F6922D1DF35007626BD /* MovieCollectionCollectionViewCell.swift */,
+				33027F6A22D1DF35007626BD /* MovieCollectionCollectionViewCell.xib */,
 			);
 			path = Components;
 			sourceTree = "<group>";
