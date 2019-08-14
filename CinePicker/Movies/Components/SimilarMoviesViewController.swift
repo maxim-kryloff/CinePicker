@@ -2,6 +2,8 @@ import UIKit
 
 class SimilarMoviesViewController: StatesViewController {
 
+    @IBOutlet var contentUIView: UIView!
+    
     @IBOutlet weak var topBarView: UIView!
     
     @IBOutlet weak var similarMoviesTableView: UITableView!
@@ -116,6 +118,7 @@ class SimilarMoviesViewController: StatesViewController {
     }
     
     private func setDefaultColors() {
+        contentUIView.backgroundColor = CinePickerColors.backgroundColor
         topBarView.backgroundColor = CinePickerColors.topBarColor
         similarMoviesTableView.backgroundColor = CinePickerColors.backgroundColor
     }

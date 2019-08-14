@@ -3,6 +3,8 @@ import UIKit
 // TODO: Try to inherit StatesViewController or remove this TODO
 class MovieDetailsViewController: UIViewController {
     
+    @IBOutlet var contentUIView: UIView!
+    
     @IBOutlet weak var topBarView: UIView!
     
     @IBOutlet weak var movieDetailsTableView: UITableView!
@@ -149,6 +151,7 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func setDefaultColors() {
+        contentUIView.backgroundColor = CinePickerColors.backgroundColor
         topBarView.backgroundColor = CinePickerColors.topBarColor
         movieDetailsTableView.backgroundColor = CinePickerColors.backgroundColor
     }
