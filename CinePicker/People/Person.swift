@@ -13,13 +13,9 @@ class Person {
     }
     
     public static func buildPerson(fromJson json: [String: Any]) -> Person {
-        guard let id = json["id"] as? Int else {
-            fatalError("Person must have an id...")
-        }
+        let id = json["id"] as! Int
         
-        guard let name = json["name"] as? String else {
-            fatalError("Person must have a name...")
-        }
+        let name = json["name"] as! String
         
         let profilePath = json["profile_path"] as? String ?? ""
         

@@ -9,7 +9,7 @@ class UIViewHelper {
         case 0.0..<5.0: return CinePickerColors.textNegativeColor
         case 5.0..<6.5: return CinePickerColors.textNeutralColor
         case 6.5...10: return CinePickerColors.textPositiveColor
-        default: fatalError("Rating is out of allowed range...")
+        default: return CinePickerColors.subtitleColor
         }
     }
     

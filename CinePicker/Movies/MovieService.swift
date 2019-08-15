@@ -150,7 +150,12 @@ extension MovieService {
                     return
                 }
                 
-                let movieDetails = self.getMovieDetails(from: data)
+                guard let movieDetails = self.getMovieDetails(from: data) else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
                 
                 self.result = AsyncResult.success(movieDetails)
                 self.state = .isFinished
@@ -169,7 +174,7 @@ extension MovieService {
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
         }
         
-        private func getMovieDetails(from responseData: Data) -> MovieDetails {
+        private func getMovieDetails(from responseData: Data) -> MovieDetails? {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 let movieDetails = MovieDetails.buildMovieDetails(fromJson: json)
@@ -177,7 +182,7 @@ extension MovieService {
                 return movieDetails
                 
             } catch {
-                fatalError("Recieved json wasn't serialized...")
+                return nil
             }
         }
         
@@ -223,7 +228,12 @@ extension MovieService {
                     return
                 }
                 
-                let movies = self.getMovies(from: data, personType: self.personType)
+                guard let movies = self.getMovies(from: data, personType: self.personType) else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
                 
                 self.result = AsyncResult.success(movies)
                 self.state = .isFinished
@@ -242,7 +252,7 @@ extension MovieService {
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
         }
         
-        private func getMovies(from responseData: Data, personType: PersonType) -> [Movie] {
+        private func getMovies(from responseData: Data, personType: PersonType) -> [Movie]? {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
@@ -262,7 +272,7 @@ extension MovieService {
                 return uniqueMovies
                 
             } catch {
-                fatalError("Recieved json wasn't serialized...")
+                return nil
             }
         }
         
@@ -314,7 +324,12 @@ extension MovieService {
                     return
                 }
                 
-                let movies = self.getMovies(from: data)
+                guard let movies = self.getMovies(from: data) else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
                 
                 self.result = AsyncResult.success(movies)
                 self.state = .isFinished
@@ -335,7 +350,7 @@ extension MovieService {
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
         }
         
-        private func getMovies(from responseData: Data) -> [Movie] {
+        private func getMovies(from responseData: Data) -> [Movie]? {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
@@ -351,7 +366,7 @@ extension MovieService {
                 return movies
                 
             } catch {
-                fatalError("Recieved json wasn't serialized...")
+                return nil
             }
         }
         
@@ -389,7 +404,12 @@ extension MovieService {
                     return
                 }
                 
-                let movies = self.getSimilarMovies(from: data)
+                guard let movies = self.getSimilarMovies(from: data) else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
                 
                 self.result = AsyncResult.success(movies)
                 self.state = .isFinished
@@ -409,7 +429,7 @@ extension MovieService {
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
         }
         
-        private func getSimilarMovies(from responseData: Data) -> [Movie] {
+        private func getSimilarMovies(from responseData: Data) -> [Movie]? {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
@@ -425,7 +445,7 @@ extension MovieService {
                 return movies
                 
             } catch {
-                fatalError("Recieved json wasn't serialized...")
+                return nil
             }
         }
         
@@ -461,7 +481,12 @@ extension MovieService {
                     return
                 }
                 
-                let movies = self.getMovies(from: data)
+                guard let movies = self.getMovies(from: data) else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
                 
                 self.result = AsyncResult.success(movies)
                 self.state = .isFinished
@@ -480,7 +505,7 @@ extension MovieService {
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
         }
         
-        private func getMovies(from responseData: Data) -> [Movie] {
+        private func getMovies(from responseData: Data) -> [Movie]? {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
@@ -496,7 +521,7 @@ extension MovieService {
                 return movies
                 
             } catch {
-                fatalError("Recieved json wasn't serialized...")
+                return nil
             }
         }
         
