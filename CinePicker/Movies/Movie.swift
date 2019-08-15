@@ -43,13 +43,9 @@ class Movie {
     }
     
     public static func buildMovie(fromJson json: [String: Any]) -> Movie {
-        guard let id = json["id"] as? Int else {
-            fatalError("Movie must have an id...")
-        }
+        let id = json["id"] as! Int
         
-        guard let title = json["title"] as? String else {
-            fatalError("Movie must have an title...")
-        }
+        let title = json["title"] as! String
         
         let originalTitle = json["original_title"] as? String ?? ""
         

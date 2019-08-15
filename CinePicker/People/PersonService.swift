@@ -92,7 +92,12 @@ extension PersonService {
                     return
                 }
                 
-                let popularPeople = self.getPopularPeople(from: data)
+                guard let popularPeople = self.getPopularPeople(from: data) else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
                 
                 self.result = AsyncResult.success(popularPeople)
                 self.state = .isFinished
@@ -113,7 +118,7 @@ extension PersonService {
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
         }
         
-        private func getPopularPeople(from responseData: Data) -> [PopularPerson] {
+        private func getPopularPeople(from responseData: Data) -> [PopularPerson]? {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
@@ -129,7 +134,7 @@ extension PersonService {
                 return popularPeople
                 
             } catch {
-                fatalError("Recieved json wasn't serialized...")
+                return nil
             }
         }
         
@@ -165,7 +170,12 @@ extension PersonService {
                     return
                 }
                 
-                let characters = self.getCharacters(from: data)
+                guard let characters = self.getCharacters(from: data) else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
                 
                 self.result = AsyncResult.success(characters)
                 self.state = .isFinished
@@ -184,7 +194,7 @@ extension PersonService {
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
         }
         
-        private func getCharacters(from responseData: Data) -> [Character] {
+        private func getCharacters(from responseData: Data) -> [Character]? {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
@@ -200,7 +210,7 @@ extension PersonService {
                 return characters
                 
             } catch {
-                fatalError("Recieved json wasn't serialized...")
+                return nil
             }
         }
         
@@ -236,7 +246,12 @@ extension PersonService {
                     return
                 }
                 
-                let crewPeople = self.getCrewPeople(from: data)
+                guard let crewPeople = self.getCrewPeople(from: data) else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
                 
                 self.result = AsyncResult.success(crewPeople)
                 self.state = .isFinished
@@ -255,7 +270,7 @@ extension PersonService {
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
         }
         
-        private func getCrewPeople(from responseData: Data) -> [CrewPerson] {
+        private func getCrewPeople(from responseData: Data) -> [CrewPerson]? {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
@@ -271,7 +286,7 @@ extension PersonService {
                 return crewPeople
                 
             } catch {
-                fatalError("Recieved json wasn't serialized...")
+                return nil
             }
         }
         
