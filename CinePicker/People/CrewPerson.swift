@@ -7,8 +7,8 @@ class CrewPerson: Person {
         super.init(id: id, name: name, imagePath: imagePath)
     }
     
-    public static func buildCrewPerson(fromJson json: [String: Any]) -> CrewPerson {
-        let person = buildPerson(fromJson: json)
+    public static func buildCrewPerson(fromJson json: [String: Any]) throws -> CrewPerson {
+        let person = try buildPerson(fromJson: json)
         
         let job = json["job"] as? String ?? ""
         

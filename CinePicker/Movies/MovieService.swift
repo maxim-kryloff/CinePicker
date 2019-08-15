@@ -177,7 +177,7 @@ extension MovieService {
         private func getMovieDetails(from responseData: Data) -> MovieDetails? {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
-                let movieDetails = MovieDetails.buildMovieDetails(fromJson: json)
+                let movieDetails = try MovieDetails.buildMovieDetails(fromJson: json)
                 
                 return movieDetails
                 
@@ -258,12 +258,14 @@ extension MovieService {
                 
                 let key = personType == .actor ? "cast" : "crew"
                 
-                let jsonResults = json[key] as! [[String: Any]]
+                guard let jsonResults = json[key] as? [[String: Any]] else {
+                    throw ResponseError.jsonDoesNotHaveProperty
+                }
                 
                 var movies: [Movie] = []
                 
                 for item in jsonResults {
-                    let movie = Movie.buildMovie(fromJson: item)
+                    let movie = try Movie.buildMovie(fromJson: item)
                     movies.append(movie)
                 }
                 
@@ -354,12 +356,14 @@ extension MovieService {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
-                let jsonResults = json["results"] as! [[String: Any]]
+                guard let jsonResults = json["results"] as? [[String: Any]] else {
+                    throw ResponseError.jsonDoesNotHaveProperty
+                }
                 
                 var movies: [Movie] = []
                 
                 for item in jsonResults {
-                    let movie = Movie.buildMovie(fromJson: item)
+                    let movie = try Movie.buildMovie(fromJson: item)
                     movies.append(movie)
                 }
                 
@@ -433,12 +437,14 @@ extension MovieService {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
-                let jsonResults = json["results"] as! [[String: Any]]
+                guard let jsonResults = json["results"] as? [[String: Any]] else {
+                    throw ResponseError.jsonDoesNotHaveProperty
+                }
                 
                 var movies: [Movie] = []
                 
                 for item in jsonResults {
-                    let movie = Movie.buildMovie(fromJson: item)
+                    let movie = try Movie.buildMovie(fromJson: item)
                     movies.append(movie)
                 }
                 
@@ -509,12 +515,14 @@ extension MovieService {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
-                let jsonResults = json["parts"] as! [[String: Any]]
+                guard let jsonResults = json["parts"] as? [[String: Any]] else {
+                    throw ResponseError.jsonDoesNotHaveProperty
+                }
                 
                 var movies: [Movie] = []
                 
                 for part in jsonResults {
-                    let movie = Movie.buildMovie(fromJson: part)
+                    let movie = try Movie.buildMovie(fromJson: part)
                     movies.append(movie)
                 }
                 

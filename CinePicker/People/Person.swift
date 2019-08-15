@@ -12,10 +12,14 @@ class Person {
         self.imagePath = imagePath
     }
     
-    public static func buildPerson(fromJson json: [String: Any]) -> Person {
-        let id = json["id"] as! Int
+    public static func buildPerson(fromJson json: [String: Any]) throws -> Person {
+        guard let id = json["id"] as? Int else {
+            throw ResponseError.jsonDoesNotHaveProperty
+        }
         
-        let name = json["name"] as! String
+        guard let name = json["name"] as? String else {
+            throw ResponseError.jsonDoesNotHaveProperty
+        }
         
         let profilePath = json["profile_path"] as? String ?? ""
         

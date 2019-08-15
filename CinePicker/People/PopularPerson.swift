@@ -7,8 +7,8 @@ class PopularPerson: Person {
         super.init(id: id, name: name, imagePath: imagePath)
     }
     
-    public static func buildPopularPerson(fromJson json: [String: Any]) -> PopularPerson {
-        let person = buildPerson(fromJson: json)
+    public static func buildPopularPerson(fromJson json: [String: Any]) throws -> PopularPerson {
+        let person = try buildPerson(fromJson: json)
         
         let popularity = json["popularity"] as? Double ?? 0.0
         

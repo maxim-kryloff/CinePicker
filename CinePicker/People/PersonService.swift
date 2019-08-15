@@ -122,12 +122,14 @@ extension PersonService {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
-                let jsonResults = json["results"] as! [[String: Any]]
+                guard let jsonResults = json["results"] as? [[String: Any]] else {
+                    throw ResponseError.jsonDoesNotHaveProperty
+                }
                 
                 var popularPeople: [PopularPerson] = []
                 
                 for item in jsonResults {
-                    let person = PopularPerson.buildPopularPerson(fromJson: item)
+                    let person = try PopularPerson.buildPopularPerson(fromJson: item)
                     popularPeople.append(person)
                 }
                 
@@ -198,12 +200,14 @@ extension PersonService {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
-                let jsonResults = json["cast"] as! [[String: Any]]
+                guard let jsonResults = json["cast"] as? [[String: Any]] else {
+                    throw ResponseError.jsonDoesNotHaveProperty
+                }
                 
                 var characters: [Character] = []
                 
                 for item in jsonResults {
-                    let character = Character.buildCharacter(fromJson: item)
+                    let character = try Character.buildCharacter(fromJson: item)
                     characters.append(character)
                 }
                 
@@ -274,12 +278,14 @@ extension PersonService {
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
                 
-                let jsonResults = json["crew"] as! [[String: Any]]
+                guard let jsonResults = json["crew"] as? [[String: Any]] else {
+                    throw ResponseError.jsonDoesNotHaveProperty
+                }
                 
                 var crewPeople: [CrewPerson] = []
                 
                 for item in jsonResults {
-                    let crewPerson = CrewPerson.buildCrewPerson(fromJson: item)
+                    let crewPerson = try CrewPerson.buildCrewPerson(fromJson: item)
                     crewPeople.append(crewPerson)
                 }
                 

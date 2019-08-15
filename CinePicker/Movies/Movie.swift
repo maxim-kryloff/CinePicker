@@ -42,10 +42,14 @@ class Movie {
         self.popularity = popularity
     }
     
-    public static func buildMovie(fromJson json: [String: Any]) -> Movie {
-        let id = json["id"] as! Int
+    public static func buildMovie(fromJson json: [String: Any]) throws -> Movie {
+        guard let id = json["id"] as? Int else {
+            throw ResponseError.jsonDoesNotHaveProperty
+        }
         
-        let title = json["title"] as! String
+        guard let title = json["title"] as? String else {
+            throw ResponseError.jsonDoesNotHaveProperty
+        }
         
         let originalTitle = json["original_title"] as? String ?? ""
         

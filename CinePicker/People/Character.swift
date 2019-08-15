@@ -11,8 +11,8 @@ class Character: Person {
         super.init(id: id, name: name, imagePath: imagePath)
     }
     
-    public static func buildCharacter(fromJson json: [String: Any]) -> Character {
-        let person = buildPerson(fromJson: json)
+    public static func buildCharacter(fromJson json: [String: Any]) throws -> Character {
+        let person = try buildPerson(fromJson: json)
         
         let characterName = json["character"] as? String ?? ""
         

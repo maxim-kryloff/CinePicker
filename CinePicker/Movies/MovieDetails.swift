@@ -33,15 +33,15 @@ class MovieDetails: Movie {
         )
     }
     
-    public static func buildMovieDetails(fromJson json: [String: Any]) -> MovieDetails {
-        let movie = buildMovie(fromJson: json)
+    public static func buildMovieDetails(fromJson json: [String: Any]) throws -> MovieDetails {
+        let movie = try buildMovie(fromJson: json)
         
         var genres: [Genre] = []
         
         let genresJson = json["genres"] as? [[String: Any]] ?? []
         
         for item in genresJson {
-            let genre = Genre.buildGenre(fromJson: item)
+            let genre = try Genre.buildGenre(fromJson: item)
             genres.append(genre)
         }
         
