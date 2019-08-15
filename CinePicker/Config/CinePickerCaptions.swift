@@ -88,20 +88,20 @@ class CinePickerCaptions {
         return "More"
     }
     
-    public static var lang: String {
+    public static var selectLanguage: String {
         if CinePickerConfig.getLanguage() == .ru {
-            return "Язык"
+            return "Выбрать язык"
         }
         
-        return "Lang"
+        return "Select Language"
     }
     
-    public static var theme: String {
+    public static var chooseTheme: String {
         if CinePickerConfig.getLanguage() == .ru {
-            return "Тема"
+            return "Выбрать тему"
         }
         
-        return "Theme"
+        return "Choose Theme"
     }
     
     public static var typeMovieOrActor: String {
@@ -146,7 +146,7 @@ class CinePickerCaptions {
     
     public static var lightTheme: String {
         if CinePickerConfig.getLanguage() == .ru {
-            return "Светлая"
+            return "Светлая тема"
         }
         
         return "Light"
@@ -154,7 +154,7 @@ class CinePickerCaptions {
     
     public static var darkTheme: String {
         if CinePickerConfig.getLanguage() == .ru {
-            return "Темная"
+            return "Темная тема"
         }
         
         return "Dark"

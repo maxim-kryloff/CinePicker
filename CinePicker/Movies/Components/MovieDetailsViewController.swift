@@ -179,7 +179,7 @@ class MovieDetailsViewController: UIViewController {
         }
         
         UIViewHelper.showAlert(
-            [
+            buttonActions: [
                 (title: CinePickerCaptions.goToSimilarMovies, action: goToSimilarMoviesAction),
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]

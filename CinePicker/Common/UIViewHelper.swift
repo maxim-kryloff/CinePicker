@@ -109,11 +109,12 @@ class UIViewHelper {
     }
     
     public static func showAlert(
-        _ buttonActions: [(title: String, action: () -> Void)],
-        _ imageName: String = "menu_image",
-        _ title: String = "",
-        _ subTitle: String = "",
-        _ showCloseButton: Bool = true
+        buttonActions: [(title: String, action: () -> Void)],
+        imageName: String = "menu_image",
+        title: String = "",
+        subTitle: String = "",
+        showCloseButton: Bool = true,
+        isAnimationRightToLeft: Bool = false
     ) {
 
         let appearance = SCLAlertView.SCLAppearance(
@@ -131,12 +132,15 @@ class UIViewHelper {
         
         let circleIconImage = UIImage(named: imageName)
         
+        let animationStyle: SCLAnimationStyle = isAnimationRightToLeft ? .rightToLeft : .topToBottom
+        
         alertView.showSuccess(
             title,
             subTitle: subTitle,
             closeButtonTitle: CinePickerCaptions.cancel,
             colorStyle: CinePickerColors.alertCircleBackgroundColor,
-            circleIconImage: circleIconImage
+            circleIconImage: circleIconImage,
+            animationStyle: animationStyle
         )
     }
     
