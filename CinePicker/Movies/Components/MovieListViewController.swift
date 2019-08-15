@@ -166,7 +166,7 @@ class MovieListViewController: StatesViewController {
         }
         
         UIViewHelper.showAlert(
-            [
+            buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
         )

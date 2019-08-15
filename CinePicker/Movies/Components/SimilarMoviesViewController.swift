@@ -132,7 +132,7 @@ class SimilarMoviesViewController: StatesViewController {
         actionsBarButtonItem.isEnabled = false
         
         UIViewHelper.showAlert(
-            [
+            buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
         )

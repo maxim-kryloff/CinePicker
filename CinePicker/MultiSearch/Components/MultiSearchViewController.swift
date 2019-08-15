@@ -62,8 +62,6 @@ class MultiSearchViewController: StatesViewController {
         
         defineNavigationController()
         defineMoreButton()
-        defineLangButton()
-        defineThemeButtom()
         defineSearchBar()
         defineTableView()
         
@@ -108,28 +106,6 @@ class MultiSearchViewController: StatesViewController {
             style: .plain,
             target: self,
             action: #selector(MultiSearchViewController.onPressActionsButton)
-        )
-        
-        navigationItem.rightBarButtonItems?.append(item)
-    }
-    
-    private func defineLangButton() {
-        let item = UIBarButtonItem(
-            title: CinePickerCaptions.lang,
-            style: .plain,
-            target: self,
-            action: #selector(MultiSearchViewController.onChangeLanguage)
-        )
-        
-        navigationItem.rightBarButtonItems?.append(item)
-    }
-    
-    private func defineThemeButtom() {
-        let item = UIBarButtonItem(
-            title: CinePickerCaptions.theme,
-            style: .plain,
-            target: self,
-            action: #selector(MultiSearchViewController.onChangeTheme)
         )
         
         navigationItem.rightBarButtonItems?.append(item)
@@ -233,22 +209,29 @@ class MultiSearchViewController: StatesViewController {
     }
     
     @objc private func onPressActionsButton() {
+        self.searchBarCancelButtonClicked(self.searchBar)
+
         UIViewHelper.showAlert(
-            [
+            buttonActions: [
+                (
+                    title: CinePickerCaptions.selectLanguage,
+                    action: onChangeLanguage
+                ),
+                (
+                    title: CinePickerCaptions.chooseTheme,
+                    action: onChangeTheme
+                ),
                 (
                     title: CinePickerCaptions.eraseSavedMovies,
-                    action: {
-                        MovieRepository.shared.removeAll()
-                        self.resetViewController()
-                    }
+                    action: onEraseSavedMovies
                 )
             ]
         )
     }
     
-    @objc private func onChangeLanguage() {
+    private func onChangeLanguage() {
         UIViewHelper.showAlert(
-            [
+            buttonActions: [
                 (
                     title: CinePickerCaptions.english,
                     action: {
@@ -264,13 +247,14 @@ class MultiSearchViewController: StatesViewController {
                     }
                 )
             ],
-            "lang_image"
+            imageName: "lang_image",
+            isAnimationRightToLeft: true
         )
     }
     
-    @objc private func onChangeTheme() {
+    private func onChangeTheme() {
         UIViewHelper.showAlert(
-            [
+            buttonActions: [
                 (
                     title: CinePickerCaptions.lightTheme,
                     action: {
@@ -286,8 +270,14 @@ class MultiSearchViewController: StatesViewController {
                     }
                 )
             ],
-            "theme_image"
+            imageName: "theme_image",
+            isAnimationRightToLeft: true
         )
+    }
+    
+    private func onEraseSavedMovies() {
+        MovieRepository.shared.removeAll()
+        resetViewController()
     }
     
     private func showDataSourceAgreementAlert() {
@@ -307,13 +297,13 @@ class MultiSearchViewController: StatesViewController {
         }
         
         UIViewHelper.showAlert(
-            [
+            buttonActions: [
                 (title: "OK", action: action)
             ],
-            "data_source_logo",
-            "Data Source",
-            "This product uses the TMDb API but is not endorsed or certified by TMDb.",
-            false
+            imageName: "data_source_logo",
+            title: "Data Source",
+            subTitle: "This product uses the TMDb API but is not endorsed or certified by TMDb.",
+            showCloseButton: false
         )
     }
     
@@ -351,10 +341,10 @@ class MultiSearchViewController: StatesViewController {
     }
     
     private func resetViewController() {
-        self.searchBarCancelButtonClicked(self.searchBar)
+        searchBarCancelButtonClicked(searchBar)
         
-        self.viewWillAppear(false)
-        self.viewDidLoad()
+        viewWillAppear(false)
+        viewDidLoad()
     }
     
 }

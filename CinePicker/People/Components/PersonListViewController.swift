@@ -80,7 +80,7 @@ class PersonListViewController: UIViewController {
         }
         
         UIViewHelper.showAlert(
-            [
+            buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
         )
