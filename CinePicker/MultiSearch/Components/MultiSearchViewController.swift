@@ -22,7 +22,7 @@ class MultiSearchViewController: StatesViewController {
     
     private let searchDebounceDelayMilliseconds: Int = 500
     
-    private var entities: [Popularity] = []
+    private var entities: [MultiSearchEntity] = []
     
     private var loadedImages: [String: UIImage] = [:]
     
@@ -88,7 +88,7 @@ class MultiSearchViewController: StatesViewController {
     override func updateTable<DataType>(withData data: [DataType]) {
         super.updateTable(withData: data)
         
-        entities = data as! [Popularity]
+        entities = data as! [MultiSearchEntity]
         entityTableView.reloadData()
     }
     
