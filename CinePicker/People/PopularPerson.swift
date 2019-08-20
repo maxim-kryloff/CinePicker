@@ -24,7 +24,19 @@ class PopularPerson: Person {
     
 }
 
-extension PopularPerson: Popularity {
+extension PopularPerson: MultiSearchEntity {
+    
+    var uniqueValue: String {
+        return "person#\(id)"
+    }
+    
+    var primaryValueToSort: String {
+        return name
+    }
+    
+    var secondaryValueToSort: String {
+        return name
+    }
     
     var popularityValue: Double {
         return popularity

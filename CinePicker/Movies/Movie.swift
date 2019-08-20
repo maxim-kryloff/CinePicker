@@ -94,7 +94,19 @@ class Movie {
 
 }
 
-extension Movie: Popularity {
+extension Movie: MultiSearchEntity {
+    
+    var uniqueValue: String {
+        return "movie#\(id)"
+    }
+    
+    var primaryValueToSort: String {
+        return title
+    }
+    
+    var secondaryValueToSort: String {
+        return originalTitle
+    }
     
     var popularityValue: Double {
         return popularity

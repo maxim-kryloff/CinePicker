@@ -13,7 +13,7 @@ class MultiSearchService {
     
     public func requestEntities(
         request: MultiSearchRequest,
-        callback: @escaping (_: MultiSearchRequest, _: [Popularity]?) -> Void
+        callback: @escaping (_: MultiSearchRequest, _: [MultiSearchEntity]?) -> Void
     ) {
         let concurrentSearchQueue = DispatchQueue(label: UUID().uuidString, qos: .utility, attributes: [.concurrent])
         
@@ -38,10 +38,11 @@ class MultiSearchService {
         }
         
         dispatchGroup.notify(queue: concurrentSearchQueue) {
-            var requestedSearchEntities: [Popularity]?
+            var requestedSearchEntities: [MultiSearchEntity]?
             
             if let popularPeople = popularPeople, let movies = movies {
                 requestedSearchEntities = popularPeople + movies
+                requestedSearchEntities = self.getSortedMultiSearchResult(request, requestedSearchEntities!)
             }
             
             callback(request, requestedSearchEntities)
@@ -107,6 +108,51 @@ class MultiSearchService {
                 fatalError("Unexpected async result...")
             }
         }
+    }
+    
+    private func getSortedMultiSearchResult(
+        _ request: MultiSearchRequest,
+        _ multiSearchEntities: [MultiSearchEntity]
+    ) -> [MultiSearchEntity] {
+        
+        // Some magic number...
+        let limitOfIterations = 10
+        
+        var rawResult: [MultiSearchEntity] = []
+        
+        let query = request.searchQuery
+        let numberOfIterations = query.count > limitOfIterations ? limitOfIterations : query.count
+        
+        for iteration in 0..<numberOfIterations {
+            let endIndex = query.index(query.endIndex, offsetBy: -1 * iteration)
+            let subQuery = query.prefix(upTo: endIndex)
+            
+            var currentIterationResult: [MultiSearchEntity] = []
+            
+            currentIterationResult += multiSearchEntities.filter {
+                $0.primaryValueToSort.lowercased().contains(subQuery.lowercased())
+            }
+            
+            currentIterationResult += multiSearchEntities.filter {
+                $0.secondaryValueToSort.lowercased().contains(subQuery.lowercased())
+            }
+            
+            rawResult += currentIterationResult.sorted { $0.popularityValue > $1.popularityValue }
+        }
+        
+        rawResult += multiSearchEntities
+        
+        var result: [MultiSearchEntity] = []
+        
+        for multiSearchEntity in rawResult {
+            if result.contains(where: { $0.uniqueValue == multiSearchEntity.uniqueValue }) {
+                continue
+            }
+            
+            result.append(multiSearchEntity)
+        }
+        
+        return result
     }
     
 }
