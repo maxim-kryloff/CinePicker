@@ -53,20 +53,20 @@ class MovieListViewController: StatesViewController {
             return
         }
         
-        if personTypeSegmentControl.selectedSegmentIndex == 0 {
-            updateTable(withData: castMovies)
-        } else {
-            updateTable(withData: crewMovies)
+        let moviesToDisplay = personTypeSegmentControl.selectedSegmentIndex == 0
+            ? castMovies
+            : crewMovies
+        
+        if moviesToDisplay.isEmpty {
+            self.setMessageState(withMessage: CinePickerCaptions.thereAreNoMoviesFound)
+            return
         }
         
-        if movies.isEmpty {
-            self.setMessageState(withMessage: CinePickerCaptions.thereAreNoMoviesFound)
-        } else {
-            unsetMessageState()
-            
-            let firstRowIndexPath = IndexPath(row: 0, section: 0)
-            movieListTableView.scrollToRow(at: firstRowIndexPath, at: .top, animated: true)
-        }
+        unsetMessageState()
+        updateTable(withData: moviesToDisplay)
+        
+        let firstRowIndexPath = IndexPath(row: 0, section: 0)
+        movieListTableView.scrollToRow(at: firstRowIndexPath, at: .top, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -186,9 +186,7 @@ class MovieListViewController: StatesViewController {
                 
                 guard let requestedMoviesResult = requestedMoviesResult else {
                     self.isRequestFailed = true
-                    
                     self.setFailedLoadingState()
-                    self.updateTable(withData: [])
                     
                     return
                 }
@@ -198,22 +196,22 @@ class MovieListViewController: StatesViewController {
                 
                 self.actionsBarButtonItem.isEnabled = true
                 
+                let moviesToDisplay: [Movie]
+                
                 if self.crewMovies.count > self.castMovies.count {
                     self.personTypeSegmentControl.selectedSegmentIndex = 1
+                    moviesToDisplay = self.crewMovies
                 } else {
                     self.personTypeSegmentControl.selectedSegmentIndex = 0
+                    moviesToDisplay = self.castMovies
                 }
                 
-                if self.personTypeSegmentControl.selectedSegmentIndex == 0 {
-                    self.updateTable(withData: self.castMovies)
-                } else {
-                    self.updateTable(withData: self.crewMovies)
-                }
-                
-                if self.movies.isEmpty {
+                if moviesToDisplay.isEmpty {
                     self.setMessageState(withMessage: CinePickerCaptions.thereAreNoMoviesFound)
                     return
                 }
+                
+                self.updateTable(withData: moviesToDisplay)
             }
         }
     }
