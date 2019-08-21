@@ -187,18 +187,16 @@ class MultiSearchViewController: StatesViewController {
                 self.unsetLoadingState()
                 
                 guard let requestedSearchEntities = requestedSearchEntities else {
-                    self.updateTable(withData: [])
                     self.setFailedLoadingState()
-                    
+                    return
+                }
+                
+                if requestedSearchEntities.isEmpty {
+                    self.setMessageState(withMessage: CinePickerCaptions.thereIsNoDataFound)
                     return
                 }
                 
                 self.updateTable(withData: requestedSearchEntities)
-                
-                if self.entities.isEmpty {
-                    self.setMessageState(withMessage: CinePickerCaptions.thereIsNoDataFound)
-                    return
-                }
                 
                 if shouldScrollToFirstRow {
                     let firstIndexPath = IndexPath(row: 0, section: 0);

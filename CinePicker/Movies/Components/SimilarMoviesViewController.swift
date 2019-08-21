@@ -149,22 +149,19 @@ class SimilarMoviesViewController: StatesViewController {
                 
                 guard let requestedMoviesResult = requestedMoviesResult else {
                     self.setFailedLoadingState()
-                    self.updateTable(withData: [])
-                    
                     return
                 }
-                
-                self.similarMovies = requestedMoviesResult
-                self.updateTable(withData: self.similarMovies)
                 
                 self.actionsBarButtonItem.isEnabled = true
                 
                 self.isLiveScrollingRelevant = !requestedMoviesResult.isEmpty
                 
-                if self.similarMovies.isEmpty {
+                if requestedMoviesResult.isEmpty {
                     self.setMessageState(withMessage: CinePickerCaptions.thereAreNoMoviesFound)
                     return
                 }
+                
+                self.updateTable(withData: requestedMoviesResult)
             }
         }
     }
