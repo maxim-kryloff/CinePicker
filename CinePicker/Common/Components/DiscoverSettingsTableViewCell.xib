@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DiscoverSettingsTableViewCell" customModule="CinePicker" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tzh-T2-cqX">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                    <subviews>
+                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6aH-dq-Q8i" customClass="LGButton" customModule="LGButton">
+                            <rect key="frame" x="16" y="15" width="25" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="25" id="iWe-TH-mwr"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                    <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightIconFontSize">
+                                    <real key="value" value="20"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="string" keyPath="rightIconFontName" value="fa"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingTop">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingBottom">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingLeading">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingTrailing">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RWh-W8-7sT">
+                            <rect key="frame" x="57" y="7" width="64" height="36"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <state key="normal" title="Header"/>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9p9-dK-FjD">
+                            <rect key="frame" x="58" y="49.5" width="317" height="0.5"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="9oX-uM-0Vp"/>
+                            </constraints>
+                        </view>
+                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Neg-OK-jqi" customClass="LGButton" customModule="LGButton">
+                            <rect key="frame" x="349" y="15" width="10" height="20"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                    <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="string" keyPath="rightIconString" value="angle-right"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="rightIconFontName" value="fa"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightIconFontSize">
+                                    <real key="value" value="20"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingTop">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingBottom">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingLeading">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingTrailing">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySd-EI-fGw">
+                            <rect key="frame" x="293" y="14.5" width="44" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="RWh-W8-7sT" firstAttribute="leading" secondItem="6aH-dq-Q8i" secondAttribute="trailing" constant="16" id="8gu-2X-RjZ"/>
+                        <constraint firstItem="RWh-W8-7sT" firstAttribute="centerY" secondItem="Tzh-T2-cqX" secondAttribute="centerY" id="G6x-hW-oOB"/>
+                        <constraint firstItem="ySd-EI-fGw" firstAttribute="centerY" secondItem="Tzh-T2-cqX" secondAttribute="centerY" id="HY1-U3-acf"/>
+                        <constraint firstItem="6aH-dq-Q8i" firstAttribute="leading" secondItem="Tzh-T2-cqX" secondAttribute="leading" constant="16" id="Mfs-Ej-vFr"/>
+                        <constraint firstAttribute="trailing" secondItem="9p9-dK-FjD" secondAttribute="trailing" id="PlJ-yB-wCe"/>
+                        <constraint firstItem="Neg-OK-jqi" firstAttribute="centerY" secondItem="Tzh-T2-cqX" secondAttribute="centerY" id="Vjh-0s-6wo"/>
+                        <constraint firstItem="Neg-OK-jqi" firstAttribute="leading" secondItem="ySd-EI-fGw" secondAttribute="trailing" constant="12" id="ecT-81-3QF"/>
+                        <constraint firstAttribute="bottom" secondItem="9p9-dK-FjD" secondAttribute="bottom" id="vft-9Q-4gv"/>
+                        <constraint firstAttribute="trailing" secondItem="Neg-OK-jqi" secondAttribute="trailing" constant="16" id="wTd-Nu-p8Z"/>
+                        <constraint firstItem="6aH-dq-Q8i" firstAttribute="centerY" secondItem="Tzh-T2-cqX" secondAttribute="centerY" id="x10-vr-ASW"/>
+                        <constraint firstItem="9p9-dK-FjD" firstAttribute="leading" secondItem="Tzh-T2-cqX" secondAttribute="leading" constant="58" id="zJq-Cc-CBd"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Tzh-T2-cqX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="1t1-R3-c6W"/>
+                <constraint firstItem="Tzh-T2-cqX" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="S7O-9P-8RP"/>
+                <constraint firstItem="Tzh-T2-cqX" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="V33-9s-mba"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Tzh-T2-cqX" secondAttribute="trailing" id="dku-d6-r8x"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="bottomBarView" destination="9p9-dK-FjD" id="aih-Ja-bub"/>
+                <outlet property="contentUIView" destination="Tzh-T2-cqX" id="eXQ-r3-S8J"/>
+                <outlet property="headerButton" destination="RWh-W8-7sT" id="RdJ-PV-b5D"/>
+                <outlet property="iconLGButton" destination="6aH-dq-Q8i" id="WUO-fA-Ynk"/>
+                <outlet property="infoLabel" destination="ySd-EI-fGw" id="hac-XQ-ghJ"/>
+                <outlet property="rightArrowLGButton" destination="Neg-OK-jqi" id="4dg-xe-4aR"/>
+            </connections>
+            <point key="canvasLocation" x="39.200000000000003" y="20.689655172413794"/>
+        </view>
+    </objects>
+</document>

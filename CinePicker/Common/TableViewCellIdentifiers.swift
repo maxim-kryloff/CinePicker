@@ -18,4 +18,8 @@ class TableViewCellIdentifiers {
     
     public static let movieCollection = "MovieCollectionTableViewCellIdentifier"
     
+    public static let discoverSettings = "DiscoverSettingsTableViewCellIdentifier"
+    
+    public static let discoverSettingsItemsToSelect = "DiscoverSettingsItemsToSelectTableViewCellIdentifier"
+    
 }

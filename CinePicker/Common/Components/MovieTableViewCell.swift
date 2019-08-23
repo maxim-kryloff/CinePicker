@@ -70,7 +70,10 @@ class MovieTableViewCell: UITableViewCell {
         didSet {
             if let voteCount = voteCount {
                 voteCountLabel.text = String(voteCount)
+                return
             }
+            
+            voteCountLabel.text = "--"
         }
     }
     
@@ -79,7 +82,12 @@ class MovieTableViewCell: UITableViewCell {
             if let rating = rating {
                 ratingLabel.textColor = UIViewHelper.getMovieRatingColor(rating: rating)
                 ratingLabel.text = String(rating)
+                
+                return
             }
+            
+            ratingLabel.textColor = CinePickerColors.subtitleColor
+            ratingLabel.text = "--"
         }
     }
     
@@ -113,21 +121,22 @@ class MovieTableViewCell: UITableViewCell {
         movieImageImageView.gestureRecognizers = nil
         movieImageImageView.addGestureRecognizer(imageViewTapGestureRecognizer)
         movieImageImageView.isUserInteractionEnabled = false
-        titleLabel.text = nil
-        originalTitleLabel.text = nil
-        releaseYearLabel.text = nil
         voteResultsStackView.isHidden = false
-        voteCountLabel.text = "--"
-        ratingLabel.text = "--"
         
-        movieImageImageView.alpha = 1.0
-        movieImageActivityIndicator.alpha = 0.0
-        
-        imagePath = ""
+        title = nil
+        originalTitle = nil
+        releaseYear = nil
         isWillCheckItOutHidden = true
         isILikeItHidden = true
+        voteCount = nil
+        rating = nil
         
         onTapImageViewHandler = nil
+        
+        imageViewAlpha = 1.0
+        activityIndicatorAlpha = 0.0
+        imageValue = nil
+        imagePath = ""
     }
     
     private func setDefaultColors() {

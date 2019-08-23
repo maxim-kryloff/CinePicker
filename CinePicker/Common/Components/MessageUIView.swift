@@ -16,7 +16,7 @@ class MessageUIView: UIView {
         super.awakeFromNib()
         setDefaultColors()
         
-        messageLabel.text = nil
+        message = nil
     }
     
     private func setDefaultColors() {

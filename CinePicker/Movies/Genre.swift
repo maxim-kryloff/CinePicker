@@ -24,3 +24,15 @@ class Genre {
     }
     
 }
+
+extension Genre: DiscoverSettingsItemToSelect {
+    
+    var identifier: Int {
+        return id
+    }
+    
+    var valueToDisplay: String {
+        return name.capitalized
+    }
+    
+}

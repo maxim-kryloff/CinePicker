@@ -22,14 +22,14 @@ class MovieDetailsOverviewTableViewCell: UITableViewCell {
         super.prepareForReuse()
         setDefaultColors()
         
-        overviewLabel.text = nil
+        overview = nil
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setDefaultColors()
         
-        overviewLabel.text = nil
+        overview = nil
     }
     
     private func setDefaultColors() {

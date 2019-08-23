@@ -14,7 +14,7 @@ class HeaderWithTagsUIView: UIView {
     @IBOutlet weak var bottomBarView: UIView!
     
     public static var standardHeight: CGFloat {
-        return 50
+        return 55
     }
     
     public var header: String? {
@@ -26,6 +26,7 @@ class HeaderWithTagsUIView: UIView {
     public var isWillCheckItOutSelected: Bool? {
         didSet {
             guard let isWillCheckItOutSelected = isWillCheckItOutSelected else {
+                deselectWillCheckItOut()
                 return
             }
             
@@ -36,6 +37,7 @@ class HeaderWithTagsUIView: UIView {
     public var isILikeItSelected: Bool? {
         didSet {
             guard let isILikeItSelected = isILikeItSelected else {
+                deselectILikeIt()
                 return
             }
             
@@ -58,8 +60,11 @@ class HeaderWithTagsUIView: UIView {
         
         header = nil
         
-        isWillCheckItOutSelected = false
-        isILikeItSelected = false
+        isWillCheckItOutSelected = nil
+        isILikeItSelected = nil
+        
+        onTapWillCheckItOut = nil
+        onTapILikeIt = nil
     }
     
     private func setDefaultColors() {

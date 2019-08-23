@@ -11,7 +11,7 @@ class PersonListViewController: UIViewController {
     public var people: [Person] = []
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return CinePickerColors.statusBarStyle
     }
     
     private var actionsBarButtonItem: UIBarButtonItem!

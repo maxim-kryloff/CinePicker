@@ -9,7 +9,7 @@ class MovieListViewController: StatesViewController {
     @IBOutlet weak var personTypeSegmentControl: UISegmentedControl!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return CinePickerColors.statusBarStyle
     }
     
     override var tableViewDefinition: UITableView! {

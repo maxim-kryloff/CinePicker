@@ -20,6 +20,8 @@ class FailedLoadingUIView: UIView {
         
         messageLabel.text = CinePickerCaptions.couldntReloadData
         actionButton.setTitle(CinePickerCaptions.reload, for: .normal)
+        
+        onTouchDownHandler = nil
     }
     
     private func setDefaultColors() {

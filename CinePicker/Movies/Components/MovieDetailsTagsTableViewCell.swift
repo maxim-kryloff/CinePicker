@@ -16,6 +16,7 @@ class MovieDetailsTagsTableViewCell: UITableViewCell {
     public var isWillCheckItOutSelected: Bool? {
         didSet {
             guard let isWillCheckItOutSelected = isWillCheckItOutSelected else {
+                deselectWillCheckItOut()
                 return
             }
             
@@ -26,6 +27,7 @@ class MovieDetailsTagsTableViewCell: UITableViewCell {
     public var isILikeItSelected: Bool? {
         didSet {
             guard let isILikeItSelected = isILikeItSelected else {
+                deselectILikeIt()
                 return
             }
             
@@ -70,8 +72,11 @@ class MovieDetailsTagsTableViewCell: UITableViewCell {
         willCheckItOutLGButton.titleString = willCheckItOutSystemTagName
         iLikeItLGButton.titleString = iLikeItSystemTagName
         
-        isWillCheckItOutSelected = false
-        isILikeItSelected = false
+        isWillCheckItOutSelected = nil
+        isILikeItSelected = nil
+        
+        onTapWillCheckItOut = nil
+        onTapILikeIt = nil
     }
     
     private func setDefaultColors() {
