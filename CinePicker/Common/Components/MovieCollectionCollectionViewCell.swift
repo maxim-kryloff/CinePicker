@@ -14,16 +14,25 @@ class MovieCollectionCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        setDefaultColors()
         
-        movieImageImageView.image = defaultImage
+        setDefaultState()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        setDefaultState()
+    }
+    
+    private func setDefaultState() {movieImageImageView.image = defaultImage
         setDefaultColors()
         
         movieImageImageView.image = defaultImage
+        
+        imageViewAlpha = 1.0
+        activityIndicatorAlpha = 0.0
+        imageValue = nil
+        imagePath = ""
     }
     
     private func setDefaultColors() {

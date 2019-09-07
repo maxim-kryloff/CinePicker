@@ -12,20 +12,20 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="EqA-6N-dTf" userLabel="Header With Tags UI View" customClass="HeaderWithTagsUIView" customModule="CinePicker" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHL-Jy-dPy" userLabel="Content View">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZt-KC-F9T">
-                            <rect key="frame" x="16" y="0.5" width="57.5" height="21"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                            <rect key="frame" x="16" y="10.5" width="83.5" height="30"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U22-VJ-wzl" userLabel="Will Check It Out LGButton" customClass="LGButton" customModule="LGButton">
-                            <rect key="frame" x="265" y="-4.5" width="42" height="30"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U22-VJ-wzl" userLabel="Will Check It Out LGButton" customClass="LGButton" customModule="LGButton">
+                            <rect key="frame" x="265" y="10.5" width="42" height="30"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -39,8 +39,8 @@
                                 <action selector="onWillCheckItOutLGButtonTouchUpInside:" destination="EqA-6N-dTf" eventType="touchUpInside" id="rUL-fr-2vd"/>
                             </connections>
                         </view>
-                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X6t-c1-F1S" userLabel="I like it LGButton" customClass="LGButton" customModule="LGButton">
-                            <rect key="frame" x="315" y="-4.5" width="44" height="30"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X6t-c1-F1S" userLabel="I like it LGButton" customClass="LGButton" customModule="LGButton">
+                            <rect key="frame" x="315" y="10.5" width="44" height="30"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -55,7 +55,7 @@
                             </connections>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxA-wR-KXF" userLabel="Bottom Bar View">
-                            <rect key="frame" x="0.0" y="39.5" width="375" height="0.5"/>
+                            <rect key="frame" x="0.0" y="54.5" width="375" height="0.5"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="GFh-Mh-5Zb"/>
                             </constraints>
@@ -67,7 +67,7 @@
                         <constraint firstItem="dZt-KC-F9T" firstAttribute="leading" secondItem="jHL-Jy-dPy" secondAttribute="leading" constant="16" id="6b3-Js-Ek8"/>
                         <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="X6t-c1-F1S" secondAttribute="bottom" constant="14" id="Jbp-6M-MxO"/>
                         <constraint firstAttribute="bottom" secondItem="jxA-wR-KXF" secondAttribute="bottom" id="j2D-Hc-S99"/>
-                        <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="dZt-KC-F9T" secondAttribute="bottom" constant="18" id="nz1-Xb-5bt"/>
+                        <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="dZt-KC-F9T" secondAttribute="bottom" constant="14" id="nz1-Xb-5bt"/>
                         <constraint firstItem="jxA-wR-KXF" firstAttribute="leading" secondItem="jHL-Jy-dPy" secondAttribute="leading" id="uGl-Bz-fvT"/>
                         <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="U22-VJ-wzl" secondAttribute="bottom" constant="14" id="waQ-mr-rry"/>
                         <constraint firstAttribute="trailing" secondItem="jxA-wR-KXF" secondAttribute="trailing" id="zsf-6Y-hVB"/>

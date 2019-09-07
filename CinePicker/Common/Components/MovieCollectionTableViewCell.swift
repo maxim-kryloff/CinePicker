@@ -11,14 +11,12 @@ class MovieCollectionTableViewCell: UITableViewCell {
     @IBOutlet weak var bottomBarView: UIView!
     
     public static var standardHeight: CGFloat {
-        return 160
+        return 158
     }
     
     public var header: String? {
         didSet {
-            if let header = header {
-                headerLabel.text = header
-            }
+            headerLabel.text = header
         }
     }
     
@@ -52,10 +50,11 @@ class MovieCollectionTableViewCell: UITableViewCell {
     private func setDefaultState() {
         setDefaultColors()
         
-        headerLabel.text = nil
-        
+        header = nil
         movieCollection = []
         loadedImages = [:]
+        
+        onTouchDownHandler = nil
     }
     
     private func setDefaultColors() {

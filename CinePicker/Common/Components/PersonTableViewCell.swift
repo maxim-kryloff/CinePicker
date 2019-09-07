@@ -32,11 +32,9 @@ class PersonTableViewCell: UITableViewCell {
     
     public var isPersonPositionValid: Bool? {
         didSet {
-            if let isPersonPositionValid = isPersonPositionValid {
-                personPositionLabel.textColor = isPersonPositionValid
-                    ? CinePickerColors.subtitleColor
-                    : CinePickerColors.textNegativeColor
-            }
+            personPositionLabel.textColor = (isPersonPositionValid ?? true)
+                ? CinePickerColors.subtitleColor
+                : CinePickerColors.textNegativeColor
         }
     }
     
@@ -70,15 +68,17 @@ class PersonTableViewCell: UITableViewCell {
         personImageImageView.gestureRecognizers = nil
         personImageImageView.addGestureRecognizer(imageViewTapGestureRecognizer)
         personImageImageView.isUserInteractionEnabled = false
-        personNameLabel.text = nil
-        personPositionLabel.text = nil
         
-        personImageImageView.alpha = 1.0
-        personImageActivityIndicator.alpha = 0.0
+        personName = nil
+        personPosition = nil
+        isPersonPositionValid = nil
         
-        imagePath = ""
-
         onTapImageViewHandler = nil
+        
+        imageViewAlpha = 1.0
+        activityIndicatorAlpha = 0.0
+        imageValue = nil
+        imagePath = ""
     }
     
     private func setDefaultColors() {

@@ -1,28 +1,28 @@
 import UIKit
 
-class SimilarMoviesViewController: StatesViewController {
+class RequestedMoviesViewController: StatesViewController {
 
     @IBOutlet var contentUIView: UIView!
     
     @IBOutlet weak var topBarView: UIView!
     
-    @IBOutlet weak var similarMoviesTableView: UITableView!
+    @IBOutlet weak var requestedMoviesTableView: UITableView!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return CinePickerColors.statusBarStyle
     }
     
     override var tableViewDefinition: UITableView! {
-        return similarMoviesTableView
+        return requestedMoviesTableView
     }
     
-    public var movie: Movie!
+    public var requestMovies: ((_ requestedPage: Int, _ callback: @escaping (_ requestedMovies: [Movie]?) -> Void) -> Void)!
     
     private var actionsBarButtonItem: UIBarButtonItem!
     
     private var requestedPage: Int = 1
     
-    private var similarMovies: [Movie] = []
+    private var requestedMovies: [Movie] = []
     
     private var savedMovies: [SavedMovie] = [] {
         didSet {
@@ -44,21 +44,17 @@ class SimilarMoviesViewController: StatesViewController {
     
     private var loadedImages: [String: UIImage] = [:]
     
-    private let similarMovieService = SimilarMovieService(movieService: MovieService())
-    
     private let imageService = ImageService()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         savedMovies = MovieRepository.shared.getAll()
-        similarMoviesTableView.reloadData()
+        requestedMoviesTableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = CinePickerCaptions.moviesSimilar(to: movie.title)
         
         defineNavigationController()
         defineMoreButton()
@@ -85,8 +81,8 @@ class SimilarMoviesViewController: StatesViewController {
     override func updateTable<DataType>(withData data: [DataType]) {
         super.updateTable(withData: data)
         
-        similarMovies = data as! [Movie]
-        similarMoviesTableView.reloadData()
+        requestedMovies = data as! [Movie]
+        requestedMoviesTableView.reloadData()
     }
     
     private func defineNavigationController() {
@@ -100,27 +96,29 @@ class SimilarMoviesViewController: StatesViewController {
             title: CinePickerCaptions.more,
             style: .plain,
             target: self,
-            action: #selector(SimilarMoviesViewController.onPressActionsButton)
+            action: #selector(RequestedMoviesViewController.onPressActionsButton)
         )
+        
+        actionsBarButtonItem.isEnabled = false
         
         navigationItem.rightBarButtonItem = actionsBarButtonItem
     }
     
     private func defineTableView() {
-        similarMoviesTableView.rowHeight = MovieTableViewCell.standardHeight
-        similarMoviesTableView.tableFooterView = UIView(frame: .zero)
+        requestedMoviesTableView.rowHeight = MovieTableViewCell.standardHeight
+        requestedMoviesTableView.tableFooterView = UIView(frame: .zero)
         
         let movieTableViewCellNib = UINib(nibName: "MovieTableViewCell", bundle: nil)
-        similarMoviesTableView.register(movieTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movie)
+        requestedMoviesTableView.register(movieTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movie)
         
         let loadingTableViewCellNib = UINib(nibName: "LoadingTableViewCell", bundle: nil)
-        similarMoviesTableView.register(loadingTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.loading)
+        requestedMoviesTableView.register(loadingTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.loading)
     }
     
     private func setDefaultColors() {
         contentUIView.backgroundColor = CinePickerColors.backgroundColor
         topBarView.backgroundColor = CinePickerColors.topBarColor
-        similarMoviesTableView.backgroundColor = CinePickerColors.backgroundColor
+        requestedMoviesTableView.backgroundColor = CinePickerColors.backgroundColor
     }
     
     @objc private func onPressActionsButton() {
@@ -128,8 +126,6 @@ class SimilarMoviesViewController: StatesViewController {
             self.navigationController?.popToRootViewController(animated: true)
             return
         }
-        
-        actionsBarButtonItem.isEnabled = false
         
         UIViewHelper.showAlert(
             buttonActions: [
@@ -141,9 +137,7 @@ class SimilarMoviesViewController: StatesViewController {
     private func performRequest() {
         setLoadingState()
         
-        let similarMovieRequest = SimilarMovieRequest(movieId: movie.id, page: requestedPage)
-        
-        similarMovieService.requestMovies(request: similarMovieRequest) { (_, requestedMoviesResult) in
+        requestMovies(requestedPage) { (requestedMoviesResult) in
             OperationQueue.main.addOperation {
                 self.unsetLoadingState()
                 
@@ -171,22 +165,21 @@ class SimilarMoviesViewController: StatesViewController {
         isBeingLiveScrolled = true
         
         let deadline = DispatchTime.now() + DispatchTimeInterval.milliseconds(liveScrollingDellayMilliseconds)
-        let similarMovieRequest = SimilarMovieRequest(movieId: movie.id, page: requestedPage)
         
         DispatchQueue.main.asyncAfter(deadline: deadline) {
-            self.similarMovieService.requestMovies(request: similarMovieRequest) { (_, requestedMoviesResult) in
+            self.requestMovies(self.requestedPage) { (requestedMoviesResult) in
                 OperationQueue.main.addOperation {
                     self.isBeingLiveScrolled = false
                     
                     guard let requestedMoviesResult = requestedMoviesResult else {
                         self.isLiveScrollingRelevant = false
-                        self.updateTable(withData: self.similarMovies)
+                        self.updateTable(withData: self.requestedMovies)
                         
                         return
                     }
                     
                     self.isLiveScrollingRelevant = !requestedMoviesResult.isEmpty
-                    self.updateTable(withData: self.similarMovies + requestedMoviesResult)
+                    self.updateTable(withData: self.requestedMovies + requestedMoviesResult)
                 }
             }
         }
@@ -194,14 +187,14 @@ class SimilarMoviesViewController: StatesViewController {
 
 }
 
-extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegate {
+extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return similarMovies.count
+        return requestedMovies.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == similarMovies.count - 1 && isLiveScrollingRelevant {
+        if indexPath.row == requestedMovies.count - 1 && isLiveScrollingRelevant {
             return LoadingTableViewCell.standardHeight
         }
         
@@ -215,7 +208,7 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
             return
         }
         
-        let imagePath = similarMovies[indexPath.row].imagePath
+        let imagePath = requestedMovies[indexPath.row].imagePath
         
         if imagePath.isEmpty {
             return
@@ -233,7 +226,7 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == similarMovies.count - 1 && isLiveScrollingRelevant {
+        if indexPath.row == requestedMovies.count - 1 && isLiveScrollingRelevant {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
             
             if !isBeingLiveScrolled {
@@ -245,7 +238,7 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
         
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
         
-        let movie = similarMovies[indexPath.row]
+        let movie = requestedMovies[indexPath.row]
         
         if let image = loadedImages[movie.imagePath] {
             cell.imageValue = image
@@ -296,7 +289,7 @@ extension SimilarMoviesViewController: UITableViewDataSource, UITableViewDelegat
     
 }
 
-extension SimilarMoviesViewController {
+extension RequestedMoviesViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
@@ -311,8 +304,8 @@ extension SimilarMoviesViewController {
             
             let indexPath = sender.indexPath
             
-            movieDetailsViewController.movieId = similarMovies[indexPath.row].id
-            movieDetailsViewController.movieTitle = similarMovies[indexPath.row].title
+            movieDetailsViewController.movieId = requestedMovies[indexPath.row].id
+            movieDetailsViewController.movieTitle = requestedMovies[indexPath.row].title
             
             return
         }

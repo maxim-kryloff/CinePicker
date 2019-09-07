@@ -104,6 +104,22 @@ class CinePickerCaptions {
         return "Choose Theme"
     }
     
+    public static var discover: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Поиск"
+        }
+        
+        return "Discover"
+    }
+    
+    public static var discoverResults: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Результаты поиска"
+        }
+        
+        return "Discover Results"
+    }
+    
     public static var typeMovieOrActor: String {
         if CinePickerConfig.getLanguage() == .ru {
             return "Название фильма, имя актера..."
@@ -198,6 +214,62 @@ class CinePickerCaptions {
         }
         
         return "Also in Series"
+    }
+    
+    public static var genres: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Жанры"
+        }
+        
+        return "Genres"
+    }
+    
+    public static var year: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Год"
+        }
+        
+        return "Year"
+    }
+    
+    public static var rating: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Рейтинг"
+        }
+        
+        return "Rating"
+    }
+    
+    public static var search: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Искать"
+        }
+        
+        return "Search"
+    }
+    
+    public static var high: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Высокий"
+        }
+        
+        return "High"
+    }
+    
+    public static var medium: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Средний"
+        }
+        
+        return "Medium"
+    }
+    
+    public static var lowNone: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Низкий / Отсутствует"
+        }
+        
+        return "Low / None"
     }
     
     public static func movies(ofPerson personName: String) -> String {

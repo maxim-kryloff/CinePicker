@@ -14,7 +14,7 @@ class MovieDetailsViewController: UIViewController {
     public var movieTitle: String?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return CinePickerColors.statusBarStyle
     }
     
     private var actionsBarButtonItem: UIBarButtonItem!
@@ -169,8 +169,8 @@ class MovieDetailsViewController: UIViewController {
     }
     
     @objc private func onPressActionsButton() {
-        let goToSimilarMoviesAction = {
-            self.performSegue(withIdentifier: SegueIdentifiers.showSimilarMovies, sender: self.movieDetails)
+        let goToRequestedMoviesAction = {
+            self.performSegue(withIdentifier: SegueIdentifiers.showRequestedMovies, sender: nil)
         }
         
         let backToSearchAction = {
@@ -180,7 +180,7 @@ class MovieDetailsViewController: UIViewController {
         
         UIViewHelper.showAlert(
             buttonActions: [
-                (title: CinePickerCaptions.goToSimilarMovies, action: goToSimilarMoviesAction),
+                (title: CinePickerCaptions.goToSimilarMovies, action: goToRequestedMoviesAction),
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
         )
@@ -801,11 +801,20 @@ extension MovieDetailsViewController {
             return
         }
         
-        if segueIdentifier == SegueIdentifiers.showSimilarMovies {
-            let similarMoviesController = segue.destination as! SimilarMoviesViewController
-            let movieDetails = sender as! MovieDetails
+        if segueIdentifier == SegueIdentifiers.showRequestedMovies {
+            let requestedMoviesController = segue.destination as! RequestedMoviesViewController
             
-            similarMoviesController.movie = movieDetails
+            requestedMoviesController.title = CinePickerCaptions.moviesSimilar(to: movieDetails.title)
+            
+            let similarMovieService = SimilarMovieService(movieService: MovieService())
+            
+            requestedMoviesController.requestMovies = { (requestedPage, callback) in
+                let similarMovieRequest = SimilarMovieRequest(movieId: self.movieDetails.id, page: requestedPage)
+                
+                similarMovieService.requestMovies(request: similarMovieRequest) { (_, requestedMoviesResult) in
+                    callback(requestedMoviesResult)
+                }
+            }
             
             return
         }

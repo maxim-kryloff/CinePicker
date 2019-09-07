@@ -73,6 +73,11 @@ class UIViewHelper {
         return view
     }
     
+    public static func getHeaderView(for tableView: UITableView) -> HeaderUIView {
+        let view = Bundle.main.loadNibNamed("HeaderUIView", owner: tableView, options: nil)!.first as! HeaderUIView
+        return view
+    }
+    
     public static func getHeaderWithTagsView(for tableView: UITableView) -> HeaderWithTagsUIView {
         let view = Bundle.main.loadNibNamed("HeaderWithTagsUIView", owner: tableView, options: nil)!.first as! HeaderWithTagsUIView
         return view
@@ -111,14 +116,18 @@ class UIViewHelper {
     public static func showAlert(
         buttonActions: [(title: String, action: () -> Void)],
         imageName: String = "menu_image",
-        title: String = "",
-        subTitle: String = "",
+        message: String = "",
         showCloseButton: Bool = true,
-        isAnimationRightToLeft: Bool = false
+        isAnimationRightToLeft: Bool = false,
+        hideWhenBackgroundViewIsTapped: Bool = true
     ) {
-
+        
         let appearance = SCLAlertView.SCLAppearance(
+            kTitleHeight: 12,
+            kTitleFont: UIFont.systemFont(ofSize: 0),
+            kTextFont: message.isEmpty ? UIFont.systemFont(ofSize: 0) : UIFont.systemFont(ofSize: 14),
             showCloseButton: showCloseButton,
+            hideWhenBackgroundViewIsTapped: hideWhenBackgroundViewIsTapped,
             contentViewColor: CinePickerColors.backgroundColor,
             contentViewBorderColor: CinePickerColors.alertBorderColor,
             titleColor: CinePickerColors.titleColor
@@ -134,9 +143,11 @@ class UIViewHelper {
         
         let animationStyle: SCLAnimationStyle = isAnimationRightToLeft ? .rightToLeft : .topToBottom
         
+        let fakeTitle = message.isEmpty ? "" : " "
+        
         alertView.showSuccess(
-            title,
-            subTitle: subTitle,
+            fakeTitle,
+            subTitle: message,
             closeButtonTitle: CinePickerCaptions.cancel,
             colorStyle: CinePickerColors.alertCircleBackgroundColor,
             circleIconImage: circleIconImage,

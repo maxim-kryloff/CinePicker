@@ -120,6 +120,35 @@ class MovieService {
         getMoviesByCollectionIdOperationQueue.addOperation(operation)
     }
     
+    private let getDiscoveredMoviesOperationQueue = OperationQueue()
+    
+    public func getDiscoveredMovies(
+        withGenres genreIds: [Int]?,
+        andYear year: String?,
+        gteRating rating: Double?,
+        andPage page: Int,
+        callback: @escaping (_: AsyncResult<[Movie]>) -> Void
+    ) {
+        
+        getDiscoveredMoviesOperationQueue.cancelAllOperations()
+        
+        let operation = GetDiscoveredMoviesOperation()
+        
+        operation.genreIds = genreIds
+        operation.year = year
+        operation.rating = rating
+        operation.page = page
+        operation.qualityOfService = .utility
+        
+        operation.completionBlock = {
+            if let result = operation.result {
+                callback(result)
+            }
+        }
+        
+        getDiscoveredMoviesOperationQueue.addOperation(operation)
+    }
+    
 }
 
 extension MovieService {
@@ -523,6 +552,112 @@ extension MovieService {
                 
                 for part in jsonResults {
                     let movie = try Movie.buildMovie(fromJson: part)
+                    movies.append(movie)
+                }
+                
+                return movies
+                
+            } catch {
+                return nil
+            }
+        }
+        
+    }
+    
+}
+
+extension MovieService {
+    
+    private class GetDiscoveredMoviesOperation: AsyncOperation {
+        
+        public var result: AsyncResult<[Movie]>?
+        
+        public var genreIds: [Int]?
+        
+        public var year: String?
+        
+        public var rating: Double?
+        
+        public var page: Int!
+        
+        override func main() {
+            if isCancelled {
+                return
+            }
+            
+            let session = URLSession.shared
+            let getDiscoveredMoviesRequest = buildGetDiscoveredMoviesRequest()
+            
+            let task = session.dataTask(with: getDiscoveredMoviesRequest) { (data, _, _) in
+                if self.isCancelled {
+                    return
+                }
+                
+                guard let data = data else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
+                
+                guard let movies = self.getDiscoveredMovies(from: data) else {
+                    self.result = AsyncResult.failure(ResponseError.dataIsNil)
+                    self.state = .isFinished
+                    
+                    return
+                }
+                
+                self.result = AsyncResult.success(movies)
+                self.state = .isFinished
+            }
+            
+            task.resume()
+        }
+        
+        private func buildGetDiscoveredMoviesRequest() -> URLRequest {
+            let urlBuilder = URLBuilder(string: CinePickerConfig.apiPath)
+                .append(pathComponent: "/discover/movie")
+                .append(queryItem: ("api_key", CinePickerConfig.apiToken))
+                .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
+                .append(queryItem: ("page", String(page)))
+            
+            if let genreIds = genreIds {
+                var withGernes = ""
+                
+                for genreId in genreIds {
+                    withGernes.append(contentsOf: "\(genreId),")
+                }
+                
+                if !withGernes.isEmpty {
+                    _ = urlBuilder.append(queryItem: ("with_genres", withGernes))
+                }
+            }
+            
+            if let year = year {
+                _ = urlBuilder.append(queryItem: ("primary_release_year", year))
+            }
+            
+            if let rating = rating {
+                _ = urlBuilder.append(queryItem: ("vote_average.gte", String(rating)))
+            }
+            
+            let url: URL! = urlBuilder.build()
+            
+            return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10.0)
+        }
+        
+        private func getDiscoveredMovies(from responseData: Data) -> [Movie]? {
+            do {
+                let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
+                
+                guard let jsonResults = json["results"] as? [[String: Any]] else {
+                    throw ResponseError.jsonDoesNotHaveProperty
+                }
+                
+                var movies: [Movie] = []
+                
+                for item in jsonResults {
+                    let movie = try Movie.buildMovie(fromJson: item)
                     movies.append(movie)
                 }
                 

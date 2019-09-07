@@ -61,6 +61,7 @@ class MultiSearchViewController: StatesViewController {
         super.viewDidLoad()
         
         defineNavigationController()
+        defineDiscoverButton()
         defineMoreButton()
         defineSearchBar()
         defineTableView()
@@ -96,8 +97,20 @@ class MultiSearchViewController: StatesViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
         )
+        navigationItem.leftBarButtonItems = []
         navigationItem.rightBarButtonItems = []
         navigationController?.navigationBar.shadowImage = UIImage()
+    }
+    
+    private func defineDiscoverButton() {
+        let item = UIBarButtonItem(
+            title: CinePickerCaptions.discover,
+            style: .plain,
+            target: self,
+            action: #selector(MultiSearchViewController.onPressDiscoverButton)
+        )
+        
+        navigationItem.leftBarButtonItems?.append(item)
     }
     
     private func defineMoreButton() {
@@ -206,6 +219,10 @@ class MultiSearchViewController: StatesViewController {
         }
     }
     
+    @objc private func onPressDiscoverButton() {
+        performSegue(withIdentifier: SegueIdentifiers.showDiscoverSettings, sender: nil)
+    }
+    
     @objc private func onPressActionsButton() {
         self.searchBarCancelButtonClicked(self.searchBar)
 
@@ -299,9 +316,9 @@ class MultiSearchViewController: StatesViewController {
                 (title: "OK", action: action)
             ],
             imageName: "data_source_logo",
-            title: "Data Source",
-            subTitle: "This product uses the TMDb API but is not endorsed or certified by TMDb.",
-            showCloseButton: false
+            message: "This product uses the TMDb API but is not endorsed or certified by TMDb.",
+            showCloseButton: false,
+            hideWhenBackgroundViewIsTapped: false
         )
     }
     
@@ -353,9 +370,21 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         return entities.count
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if !currentSearchQuery.isEmpty {
+            return 0
+        }
+        
+        if savedMovies.isEmpty {
+            return 0
+        }
+        
+        return HeaderWithTagsUIView.standardHeight
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if currentSearchQuery.isEmpty {
-            let view = UIViewHelper.getHeaderWithTagsView(for: entityTableView)
+            let view = UIViewHelper.getHeaderWithTagsView(for: tableView)
             
             view.header = CinePickerCaptions.savedMovies
             
@@ -369,18 +398,6 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         }
         
         return nil
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if !currentSearchQuery.isEmpty {
-            return 0
-        }
-        
-        if savedMovies.isEmpty {
-            return 0
-        }
-        
-        return HeaderWithTagsUIView.standardHeight
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -533,6 +550,10 @@ extension MultiSearchViewController {
         super.prepare(for: segue, sender: sender)
         
         guard let segueIdentifier = segue.identifier else {
+            return
+        }
+        
+        if segueIdentifier == SegueIdentifiers.showDiscoverSettings {
             return
         }
         
