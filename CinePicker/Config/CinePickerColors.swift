@@ -7,7 +7,7 @@ class CinePickerColors {
             return getUIColorFromRGB(255, 255, 255)
         }
         
-        return getUIColorFromRGB(20, 20, 20)
+        return getUIColorFromRGB(26, 26, 26)
     }
     
     public static var selectedBackgroundColor: UIColor {
