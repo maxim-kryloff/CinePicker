@@ -19,13 +19,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZt-KC-F9T">
-                            <rect key="frame" x="16" y="10.5" width="83.5" height="30"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
+                            <rect key="frame" x="16" y="10" width="92.5" height="32.5"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U22-VJ-wzl" userLabel="Will Check It Out LGButton" customClass="LGButton" customModule="LGButton">
-                            <rect key="frame" x="265" y="10.5" width="42" height="30"/>
+                            <rect key="frame" x="283" y="9.5" width="34" height="34"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -34,13 +34,25 @@
                                 <userDefinedRuntimeAttribute type="string" keyPath="rightIconFontName" value="fa"/>
                                 <userDefinedRuntimeAttribute type="string" keyPath="rightIconString" value="bookmark-o"/>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="NO"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingLeading">
+                                    <real key="value" value="12"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingTrailing">
+                                    <real key="value" value="12"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingBottom">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingTop">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onWillCheckItOutLGButtonTouchUpInside:" destination="EqA-6N-dTf" eventType="touchUpInside" id="rUL-fr-2vd"/>
                             </connections>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X6t-c1-F1S" userLabel="I like it LGButton" customClass="LGButton" customModule="LGButton">
-                            <rect key="frame" x="315" y="10.5" width="44" height="30"/>
+                            <rect key="frame" x="325" y="9.5" width="34" height="34"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -49,6 +61,18 @@
                                 <userDefinedRuntimeAttribute type="string" keyPath="rightIconFontName" value="fa"/>
                                 <userDefinedRuntimeAttribute type="string" keyPath="rightIconString" value="thumbs-o-up"/>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="NO"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingTop">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingBottom">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingLeading">
+                                    <real key="value" value="11"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingTrailing">
+                                    <real key="value" value="11"/>
+                                </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onILikeItLGButtonTouchUpInside:" destination="EqA-6N-dTf" eventType="touchUpInside" id="fFD-d3-WPl"/>
@@ -65,11 +89,11 @@
                         <constraint firstAttribute="trailing" secondItem="X6t-c1-F1S" secondAttribute="trailing" constant="16" id="3Hm-5J-fBb"/>
                         <constraint firstItem="X6t-c1-F1S" firstAttribute="leading" secondItem="U22-VJ-wzl" secondAttribute="trailing" constant="8" id="4jg-d0-6wM"/>
                         <constraint firstItem="dZt-KC-F9T" firstAttribute="leading" secondItem="jHL-Jy-dPy" secondAttribute="leading" constant="16" id="6b3-Js-Ek8"/>
-                        <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="X6t-c1-F1S" secondAttribute="bottom" constant="14" id="Jbp-6M-MxO"/>
+                        <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="X6t-c1-F1S" secondAttribute="bottom" constant="11" id="Jbp-6M-MxO"/>
                         <constraint firstAttribute="bottom" secondItem="jxA-wR-KXF" secondAttribute="bottom" id="j2D-Hc-S99"/>
-                        <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="dZt-KC-F9T" secondAttribute="bottom" constant="14" id="nz1-Xb-5bt"/>
+                        <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="dZt-KC-F9T" secondAttribute="bottom" constant="12" id="nz1-Xb-5bt"/>
                         <constraint firstItem="jxA-wR-KXF" firstAttribute="leading" secondItem="jHL-Jy-dPy" secondAttribute="leading" id="uGl-Bz-fvT"/>
-                        <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="U22-VJ-wzl" secondAttribute="bottom" constant="14" id="waQ-mr-rry"/>
+                        <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="U22-VJ-wzl" secondAttribute="bottom" constant="11" id="waQ-mr-rry"/>
                         <constraint firstAttribute="trailing" secondItem="jxA-wR-KXF" secondAttribute="trailing" id="zsf-6Y-hVB"/>
                     </constraints>
                 </view>
