@@ -16,6 +16,8 @@ class MovieDetailsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var releaseYearLabel: UILabel!
     
+    @IBOutlet weak var runtimeLabel: UILabel!
+    
     @IBOutlet weak var voteCountLabel: UILabel!
     
     @IBOutlet weak var voteSeparatorLabel: UILabel!
@@ -50,6 +52,17 @@ class MovieDetailsTableViewCell: UITableViewCell {
     public var releaseYear: String? {
         didSet {
             releaseYearLabel.text = releaseYear
+        }
+    }
+    
+    public var runtime: Int? {
+        didSet {
+            if let runtime = runtime {
+                runtimeLabel.text = "\(runtime) \(CinePickerCaptions.min)"
+                return
+            }
+            
+            runtimeLabel.text = nil
         }
     }
     
@@ -112,6 +125,7 @@ class MovieDetailsTableViewCell: UITableViewCell {
         title = nil
         originalTitle = nil
         genres = nil
+        runtime = nil
         releaseYear = nil
         voteCount = nil
         rating = nil
@@ -131,6 +145,7 @@ class MovieDetailsTableViewCell: UITableViewCell {
         originalTitleLabel.textColor = CinePickerColors.subtitleColor
         genresLabel.textColor = CinePickerColors.genresColor
         releaseYearLabel.textColor = CinePickerColors.releaseYearColor
+        runtimeLabel.textColor = CinePickerColors.runtimeColor
         voteCountLabel.textColor = CinePickerColors.voteCountColor
         voteSeparatorLabel.textColor = CinePickerColors.voteSeparatorColor
     }

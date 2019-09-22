@@ -106,6 +106,10 @@ class CinePickerColors {
         return subtitleColor
     }
     
+    public static var runtimeColor: UIColor {
+        return titleColor
+    }
+    
     public static var voteCountColor: UIColor {
         return subtitleColor
     }
