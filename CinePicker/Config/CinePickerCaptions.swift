@@ -272,6 +272,14 @@ class CinePickerCaptions {
         return "Low / None"
     }
     
+    public static var min: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "мин"
+        }
+        
+        return "min"
+    }
+    
     public static func movies(ofPerson personName: String) -> String {
         if CinePickerConfig.getLanguage() == .ru {
             return "Фильмы \(personName)"

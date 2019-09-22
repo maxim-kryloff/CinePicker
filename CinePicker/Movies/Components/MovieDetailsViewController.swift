@@ -561,6 +561,11 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         cell.originalTitle = movieDetails.originalTitle
         cell.genres = movieDetails.genres
         cell.releaseYear = movieDetails.releaseYear
+        
+        if movieDetails.runtime != 0 {
+            cell.runtime = movieDetails.runtime
+        }
+        
         cell.voteCount = movieDetails.voteCount
         cell.rating = movieDetails.rating
         

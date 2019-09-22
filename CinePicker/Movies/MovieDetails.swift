@@ -2,6 +2,8 @@ class MovieDetails: Movie {
     
     public let genres: [Genre]
     
+    public let runtime: Int
+    
     public let collectionId: Int?
     
     init(
@@ -15,9 +17,11 @@ class MovieDetails: Movie {
         overview: String,
         popularity: Double,
         genres: [Genre],
+        runtime: Int,
         collectionId: Int?
     ) {
         self.genres = genres
+        self.runtime = runtime
         self.collectionId = collectionId
         
         super.init(
@@ -45,6 +49,8 @@ class MovieDetails: Movie {
             genres.append(genre)
         }
         
+        let runtime = json["runtime"] as? Int ?? 0
+        
         let belongs_to_collection = json["belongs_to_collection"] as? [String: Any]
         
         var collectionId: Int?
@@ -64,6 +70,7 @@ class MovieDetails: Movie {
             overview: movie.overview,
             popularity: movie.popularity,
             genres: genres,
+            runtime: runtime,
             collectionId: collectionId
         )
         
