@@ -19,6 +19,7 @@ class Seeder {
             overview: "Overview",
             popularity: 10,
             genres: genres,
+            runtime: 100,
             collectionId: 0
         )
         
