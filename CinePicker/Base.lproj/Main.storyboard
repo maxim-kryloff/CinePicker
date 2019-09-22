@@ -83,7 +83,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="8"/>
+                                        <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="string" keyPath="titleString" value="Search"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="titleFontSize">
@@ -327,10 +327,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Gub-No-7VY">
-                                                    <rect key="frame" x="51.5" y="8.5" width="272" height="50"/>
+                                                    <rect key="frame" x="51.5" y="8.5" width="272" height="33"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BH4-gU-Lga" userLabel="Wil Check It Out LGButton" customClass="LGButton" customModule="LGButton">
-                                                            <rect key="frame" x="0.0" y="0.0" width="160.5" height="50"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="160.5" height="33"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -349,7 +349,7 @@
                                                             </connections>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5XM-VO-slN" userLabel="I like it LGButton" customClass="LGButton" customModule="LGButton">
-                                                            <rect key="frame" x="172.5" y="0.0" width="99.5" height="50"/>
+                                                            <rect key="frame" x="172.5" y="0.0" width="99.5" height="33"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="NO"/>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>

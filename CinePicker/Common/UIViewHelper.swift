@@ -127,6 +127,8 @@ class UIViewHelper {
             kTitleFont: UIFont.systemFont(ofSize: 0),
             kTextFont: message.isEmpty ? UIFont.systemFont(ofSize: 0) : UIFont.systemFont(ofSize: 14),
             showCloseButton: showCloseButton,
+            contentViewCornerRadius: 7,
+            buttonCornerRadius: 7,
             hideWhenBackgroundViewIsTapped: hideWhenBackgroundViewIsTapped,
             contentViewColor: CinePickerColors.backgroundColor,
             contentViewBorderColor: CinePickerColors.alertBorderColor,
