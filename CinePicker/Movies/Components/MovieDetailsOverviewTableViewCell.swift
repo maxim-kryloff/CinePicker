@@ -9,7 +9,7 @@ class MovieDetailsOverviewTableViewCell: UITableViewCell {
     @IBOutlet weak var bottomBarView: UIView!
     
     public static var standardHeight: CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     public var overview: String? {
