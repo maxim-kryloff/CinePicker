@@ -58,10 +58,12 @@ class MovieCollectionTableViewCell: UITableViewCell {
     }
     
     private func setDefaultColors() {
-        contentUIView.backgroundColor = CinePickerColors.backgroundColor
-        movieCollectionCollectionView.backgroundColor = CinePickerColors.backgroundColor
-        headerLabel.textColor = CinePickerColors.titleColor
-        bottomBarView.backgroundColor = CinePickerColors.bottomBarColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        movieCollectionCollectionView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        headerLabel.textColor = CinePickerColors.getTitleColor(userInterfaceStyle: userInterfaceStyle)
+        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
     }
     
 }

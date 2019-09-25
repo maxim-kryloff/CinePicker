@@ -80,35 +80,45 @@ class MovieDetailsTagsTableViewCell: UITableViewCell {
     }
     
     private func setDefaultColors() {
-        contentUIView.backgroundColor = CinePickerColors.backgroundColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
     }
     
     private func selectWillCheckItOut() {
-        willCheckItOutLGButton.bgColor = CinePickerColors.backgroundColor
-        willCheckItOutLGButton.borderColor = CinePickerColors.willCheckItOutTagColor
-        willCheckItOutLGButton.titleColor = CinePickerColors.willCheckItOutTagColor
-        willCheckItOutLGButton.rightIconColor = CinePickerColors.willCheckItOutTagColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        willCheckItOutLGButton.bgColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        willCheckItOutLGButton.borderColor = CinePickerColors.getWillCheckItOutTagColor(userInterfaceStyle: userInterfaceStyle)
+        willCheckItOutLGButton.titleColor = CinePickerColors.getWillCheckItOutTagColor(userInterfaceStyle: userInterfaceStyle)
+        willCheckItOutLGButton.rightIconColor = CinePickerColors.getWillCheckItOutTagColor(userInterfaceStyle: userInterfaceStyle)
     }
     
     private func deselectWillCheckItOut() {
-        willCheckItOutLGButton.bgColor = CinePickerColors.backgroundColor
-        willCheckItOutLGButton.borderColor = CinePickerColors.tagColor
-        willCheckItOutLGButton.titleColor = CinePickerColors.tagColor
-        willCheckItOutLGButton.rightIconColor = CinePickerColors.tagColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        willCheckItOutLGButton.bgColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        willCheckItOutLGButton.borderColor = CinePickerColors.getTagColor(userInterfaceStyle: userInterfaceStyle)
+        willCheckItOutLGButton.titleColor = CinePickerColors.getTagColor(userInterfaceStyle: userInterfaceStyle)
+        willCheckItOutLGButton.rightIconColor = CinePickerColors.getTagColor(userInterfaceStyle: userInterfaceStyle)
     }
     
     private func selectILikeIt() {
-        iLikeItLGButton.bgColor = CinePickerColors.backgroundColor
-        iLikeItLGButton.borderColor = CinePickerColors.iLikeItTagColor
-        iLikeItLGButton.titleColor = CinePickerColors.iLikeItTagColor
-        iLikeItLGButton.rightIconColor = CinePickerColors.iLikeItTagColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        iLikeItLGButton.bgColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        iLikeItLGButton.borderColor = CinePickerColors.getILikeItTagColor(userInterfaceStyle: userInterfaceStyle)
+        iLikeItLGButton.titleColor = CinePickerColors.getILikeItTagColor(userInterfaceStyle: userInterfaceStyle)
+        iLikeItLGButton.rightIconColor = CinePickerColors.getILikeItTagColor(userInterfaceStyle: userInterfaceStyle)
     }
     
     private func deselectILikeIt() {
-        iLikeItLGButton.bgColor = CinePickerColors.backgroundColor
-        iLikeItLGButton.borderColor = CinePickerColors.tagColor
-        iLikeItLGButton.titleColor = CinePickerColors.tagColor
-        iLikeItLGButton.rightIconColor = CinePickerColors.tagColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        iLikeItLGButton.bgColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        iLikeItLGButton.borderColor = CinePickerColors.getTagColor(userInterfaceStyle: userInterfaceStyle)
+        iLikeItLGButton.titleColor = CinePickerColors.getTagColor(userInterfaceStyle: userInterfaceStyle)
+        iLikeItLGButton.rightIconColor = CinePickerColors.getTagColor(userInterfaceStyle: userInterfaceStyle)
     }
 
     @IBAction func onWillCheckItOutLGButtonTouchUpInside(_ sender: LGButton) {

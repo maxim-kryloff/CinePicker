@@ -29,7 +29,8 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
     public var onViewWillDisappear: ((_ selectedItems: [DiscoverSettingsItemToSelect]) -> Void)?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return CinePickerColors.statusBarStyle
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        return CinePickerColors.getStatusBarStyle(userInterfaceStyle: userInterfaceStyle)
     }
     
     private var selectedItemMap: [Int: DiscoverSettingsItemToSelect] = [:] {
@@ -85,9 +86,11 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
     }
     
     private func setDefaultColors() {
-        contentUIView.backgroundColor = CinePickerColors.backgroundColor
-        topBarView.backgroundColor = CinePickerColors.topBarColor
-        discoverItemsToSelectTableView.backgroundColor = CinePickerColors.backgroundColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        topBarView.backgroundColor = CinePickerColors.getTopBarColor(userInterfaceStyle: userInterfaceStyle)
+        discoverItemsToSelectTableView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
     }
     
     private func enableCancelButton() {

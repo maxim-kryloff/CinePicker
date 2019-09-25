@@ -52,10 +52,12 @@ class DiscoverSettingsItemsToSelectTableViewCell: UITableViewCell {
     }
     
     private func setDefaultColors() {
-        contentUIView.backgroundColor = CinePickerColors.backgroundColor
-        headerLabel.textColor = CinePickerColors.titleColor
-        selectedLGButton.rightIconColor = CinePickerColors.actionColor
-        bottomBarView.backgroundColor = CinePickerColors.bottomBarColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        headerLabel.textColor = CinePickerColors.getTitleColor(userInterfaceStyle: userInterfaceStyle)
+        selectedLGButton.rightIconColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
+        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
     }
     
 }

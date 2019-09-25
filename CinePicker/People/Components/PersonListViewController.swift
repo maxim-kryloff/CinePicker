@@ -11,7 +11,8 @@ class PersonListViewController: UIViewController {
     public var people: [Person] = []
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return CinePickerColors.statusBarStyle
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        return CinePickerColors.getStatusBarStyle(userInterfaceStyle: userInterfaceStyle)
     }
     
     private var actionsBarButtonItem: UIBarButtonItem!
@@ -68,18 +69,23 @@ class PersonListViewController: UIViewController {
     }
     
     private func setDefaultColors() {
-        contentUIView.backgroundColor = CinePickerColors.backgroundColor
-        topBarView.backgroundColor = CinePickerColors.topBarColor
-        personListTableView.backgroundColor = CinePickerColors.backgroundColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        topBarView.backgroundColor = CinePickerColors.getTopBarColor(userInterfaceStyle: userInterfaceStyle)
+        personListTableView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
     }
     
     @objc private func onPressActionsButton() {
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
         let backToSearchAction = {
             self.navigationController?.popToRootViewController(animated: true)
             return
         }
         
         UIViewHelper.showAlert(
+            userInterfaceStyle: userInterfaceStyle,
             buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
@@ -95,7 +101,9 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView(userInterfaceStyle: userInterfaceStyle)
         
         let imagePath = people[indexPath.row].imagePath
         
@@ -127,8 +135,10 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
             cell.imagePath = person.imagePath
         }
         
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
         cell.onTapImageViewHandler = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService, userInterfaceStyle: userInterfaceStyle)
         }
         
         cell.personName = person.name

@@ -22,16 +22,4 @@ class CinePickerConfig {
         return UserDefaults.standard.string(forKey: CinePickerSettingKeys.language) ?? CinePickerLanguageCode.en.rawValue
     }
     
-    public static func setTheme(theme: CinePickerTheme) {
-        UserDefaults.standard.set(theme.rawValue, forKey: CinePickerSettingKeys.theme)
-    }
-    
-    public static func getTheme() -> CinePickerTheme {
-        guard let themeRawValue = UserDefaults.standard.string(forKey: CinePickerSettingKeys.theme) else {
-            return .dark
-        }
-        
-        return themeRawValue == CinePickerTheme.light.rawValue ? .light : .dark
-    }
-    
 }

@@ -32,9 +32,11 @@ class PersonTableViewCell: UITableViewCell {
     
     public var isPersonPositionValid: Bool? {
         didSet {
+            let userInterfaceStyle = traitCollection.userInterfaceStyle
+            
             personPositionLabel.textColor = (isPersonPositionValid ?? true)
-                ? CinePickerColors.subtitleColor
-                : CinePickerColors.textNegativeColor
+                ? CinePickerColors.getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+                : CinePickerColors.getTextNegativeColor(userInterfaceStyle: userInterfaceStyle)
         }
     }
     
@@ -82,11 +84,13 @@ class PersonTableViewCell: UITableViewCell {
     }
     
     private func setDefaultColors() {
-        contentUIView.backgroundColor = CinePickerColors.backgroundColor
-        personImageActivityIndicator.color = CinePickerColors.activityIndicatorColor
-        personNameLabel.textColor = CinePickerColors.titleColor
-        personPositionLabel.textColor = CinePickerColors.subtitleColor
-        bottomBarView.backgroundColor = CinePickerColors.bottomBarColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        personImageActivityIndicator.color = CinePickerColors.getActivityIndicatorColor(userInterfaceStyle: userInterfaceStyle)
+        personNameLabel.textColor = CinePickerColors.getTitleColor(userInterfaceStyle: userInterfaceStyle)
+        personPositionLabel.textColor = CinePickerColors.getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
     }
     
     @objc private func onImageViewTap(tapGestureRecognizer: UITapGestureRecognizer) {
