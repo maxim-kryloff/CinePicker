@@ -36,8 +36,10 @@ class MovieCollectionCollectionViewCell: UICollectionViewCell {
     }
     
     private func setDefaultColors() {
-        contentUIView.backgroundColor = CinePickerColors.backgroundColor
-        movieImageActivityIndicator.color = CinePickerColors.activityIndicatorColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        movieImageActivityIndicator.color = CinePickerColors.getActivityIndicatorColor(userInterfaceStyle: userInterfaceStyle)
     }
 
 }

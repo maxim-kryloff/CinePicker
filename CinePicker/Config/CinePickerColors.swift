@@ -2,180 +2,189 @@ import UIKit
 
 class CinePickerColors {
     
-    public static var backgroundColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return getUIColorFromRGB(255, 255, 255)
+    public static func getBackgroundColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getUIColorFromRGB(26, 26, 26)
+            
         }
         
-        return getUIColorFromRGB(26, 26, 26)
+        return getUIColorFromRGB(255, 255, 255)
     }
     
-    public static var selectedBackgroundColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return getUIColorFromRGB(220, 220, 220)
+    public static func getSelectedBackgroundColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getUIColorFromRGB(50, 50, 50)
         }
         
-        return getUIColorFromRGB(50, 50, 50)
+        return getUIColorFromRGB(220, 220, 220)
     }
     
-    public static var activityIndicatorColor: UIColor {
-        return titleColor
+    public static func getActivityIndicatorColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        return getTitleColor(userInterfaceStyle: userInterfaceStyle)
     }
     
-    public static var titleColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return getUIColorFromRGB(20, 20, 20)
+    public static func getTitleColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getUIColorFromRGB(247, 247, 247)
         }
         
-        return getUIColorFromRGB(247, 247, 247)
+        return getUIColorFromRGB(20, 20, 20)
     }
     
-    public static var subtitleColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return getUIColorFromRGB(66, 66, 66)
+    public static func getSubtitleColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getUIColorFromRGB(153, 153, 153)
         }
         
+        return getUIColorFromRGB(66, 66, 66)
+    }
+    
+    public static func getGenresColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+    }
+    
+    public static func getTopBarColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        return getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
+    }
+    
+    public static func getBottomBarColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getUIColorFromRGB(65, 65, 65)
+        }
+        
+        return getUIColorFromRGB(200, 200, 200)
+    }
+    
+    public static func getTextNegativeColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getUIColorFromRGB(252, 54, 53)
+        }
+        
+        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+    }
+    
+    public static func getTextNeutralColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getUIColorFromRGB(254, 173, 0)
+        }
+        
+        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+    }
+    
+    public static func getTextPositiveColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getUIColorFromRGB(32, 150, 0)
+        }
+        
+        return getActionColor(userInterfaceStyle: userInterfaceStyle)
+    }
+    
+    public static func getTagColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getTitleColor(userInterfaceStyle: userInterfaceStyle)
+        }
+        
+        return getUIColorFromRGB(66, 66, 66)
+    }
+    
+    public static func getWillCheckItOutTagColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getUIColorFromRGB(230, 144, 90)
+        }
+        
+        return getActionColor(userInterfaceStyle: userInterfaceStyle)
+    }
+    
+    public static func getILikeItTagColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getUIColorFromRGB(227, 102, 95)
+        }
+        
+        return getActionColor(userInterfaceStyle: userInterfaceStyle)
+    }
+    
+    public static func getReleaseYearColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+    }
+    
+    public static func getRuntimeColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        return getTitleColor(userInterfaceStyle: userInterfaceStyle)
+    }
+    
+    public static func getVoteCountColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+    }
+    
+    public static func getVoteSeparatorColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
         return getUIColorFromRGB(153, 153, 153)
     }
     
-    public static var genresColor: UIColor {
-        return subtitleColor
+    public static func getMessageColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
     }
     
-    public static var topBarColor: UIColor {
-        return bottomBarColor
+    public static func getOverviewColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        return getTitleColor(userInterfaceStyle: userInterfaceStyle)
     }
     
-    public static var bottomBarColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return getUIColorFromRGB(200, 200, 200)
+    public static func getActionColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        if userInterfaceStyle == .dark {
+            return getUIColorFromRGB(1, 122, 255)
         }
         
-        return getUIColorFromRGB(65, 65, 65)
+        return getUIColorFromRGB(225, 45, 85)
     }
     
-    public static var textNegativeColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return subtitleColor
+    public static func getAlertBorderColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+        return getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
+    }
+    
+    public static func getBarStyle(userInterfaceStyle: UIUserInterfaceStyle) -> UIBarStyle {
+        if userInterfaceStyle == .dark {
+            return .black
         }
         
-        return getUIColorFromRGB(252, 54, 53)
+        return .default
     }
     
-    public static var textNeutralColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return subtitleColor
+    public static func getStatusBarStyle(userInterfaceStyle: UIUserInterfaceStyle) -> UIStatusBarStyle {
+        if userInterfaceStyle == .dark {
+            return .lightContent
         }
         
-        return getUIColorFromRGB(254, 173, 0)
+        return .default
     }
     
-    public static var textPositiveColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return actionColor
+    public static func getSearchBarKeyboardAppearance(userInterfaceStyle: UIUserInterfaceStyle) -> UIKeyboardAppearance {
+        if userInterfaceStyle == .dark {
+            return .dark
         }
         
-        return getUIColorFromRGB(32, 150, 0)
+        return .light
     }
     
-    public static var tagColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return getUIColorFromRGB(66, 66, 66)
+    public static func getAgrumeStatusBarStyle(userInterfaceStyle: UIUserInterfaceStyle) -> UIStatusBarStyle {
+        if userInterfaceStyle == .dark {
+            return .lightContent
         }
         
-        return titleColor
+        return .default
     }
     
-    public static var willCheckItOutTagColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return actionColor
+    public static func getAlertCircleBackgroundColor(userInterfaceStyle: UIUserInterfaceStyle) -> UInt {
+        if userInterfaceStyle == .dark {
+            return 0x323232
         }
         
-        return getUIColorFromRGB(230, 144, 90)
+        return 0xB4B4B4
     }
     
-    public static var iLikeItTagColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return actionColor
+    public static func getDataSourceAgreementAlertCircleBackgroundColor(userInterfaceStyle: UIUserInterfaceStyle) -> UInt {
+        if userInterfaceStyle == .dark {
+            return 0x323232
         }
         
-        return getUIColorFromRGB(227, 102, 95)
-    }
-    
-    public static var releaseYearColor: UIColor {
-        return subtitleColor
-    }
-    
-    public static var runtimeColor: UIColor {
-        return titleColor
-    }
-    
-    public static var voteCountColor: UIColor {
-        return subtitleColor
-    }
-    
-    public static var voteSeparatorColor: UIColor {
-        return getUIColorFromRGB(153, 153, 153)
-    }
-    
-    public static var messageColor: UIColor {
-        return subtitleColor
-    }
-    
-    public static var overviewColor: UIColor {
-        return titleColor
-    }
-    
-    public static var actionColor: UIColor {
-        if CinePickerConfig.getTheme() == .light {
-            return getUIColorFromRGB(225, 45, 85)
-        }
-        
-        return getUIColorFromRGB(1, 122, 255)
-    }
-    
-    public static var alertBorderColor: UIColor {
-        return bottomBarColor
-    }
-    
-    public static var barStyle: UIBarStyle {
-        if CinePickerConfig.getTheme() == .light {
-            return .default
-        }
-        
-        return .black
-    }
-    
-    public static var statusBarStyle: UIStatusBarStyle {
-        if CinePickerConfig.getTheme() == .light {
-            return .default
-        }
-        
-        return .lightContent
-    }
-    
-    public static var searchBarKeyboardAppearance: UIKeyboardAppearance {
-        if CinePickerConfig.getTheme() == .light {
-            return .light
-        }
-        
-        return .dark
-    }
-    
-    public static var agrumeStatusBarStyle: UIStatusBarStyle {
-        if CinePickerConfig.getTheme() == .light {
-             return .default
-        }
-        
-        return .lightContent
-    }
-    
-    public static var alertCircleBackgroundColor: UInt {
-        if CinePickerConfig.getTheme() == .light {
-            return 0xB4B4B4
-        }
-        
-        return 0x323232
+        return 0xFFFFFFF
     }
     
     private static func getUIColorFromRGB(_ red: Int, _ green: Int, _ blue: Int) -> UIColor {

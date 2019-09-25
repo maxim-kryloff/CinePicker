@@ -80,13 +80,17 @@ class MovieDetailsTableViewCell: UITableViewCell {
     public var rating: Double? {
         didSet {
             if let rating = rating {
-                ratingLabel.textColor = UIViewHelper.getMovieRatingColor(rating: rating)
+                let userInterfaceStyle = traitCollection.userInterfaceStyle
+                
+                ratingLabel.textColor = UIViewHelper.getMovieRatingColor(userInterfaceStyle: userInterfaceStyle, rating: rating)
                 ratingLabel.text = String(rating)
                 
                 return
             }
             
-            ratingLabel.textColor = CinePickerColors.subtitleColor
+            let userInterfaceStyle = traitCollection.userInterfaceStyle
+            
+            ratingLabel.textColor = CinePickerColors.getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
             ratingLabel.text = "--"
         }
     }
@@ -139,15 +143,17 @@ class MovieDetailsTableViewCell: UITableViewCell {
     }
     
     private func setDefaultColors() {
-        contentUIView.backgroundColor = CinePickerColors.backgroundColor
-        movieImageActivityIndicator.color = CinePickerColors.activityIndicatorColor
-        titleLabel.textColor = CinePickerColors.titleColor
-        originalTitleLabel.textColor = CinePickerColors.subtitleColor
-        genresLabel.textColor = CinePickerColors.genresColor
-        releaseYearLabel.textColor = CinePickerColors.releaseYearColor
-        runtimeLabel.textColor = CinePickerColors.runtimeColor
-        voteCountLabel.textColor = CinePickerColors.voteCountColor
-        voteSeparatorLabel.textColor = CinePickerColors.voteSeparatorColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        movieImageActivityIndicator.color = CinePickerColors.getActivityIndicatorColor(userInterfaceStyle: userInterfaceStyle)
+        titleLabel.textColor = CinePickerColors.getTitleColor(userInterfaceStyle: userInterfaceStyle)
+        originalTitleLabel.textColor = CinePickerColors.getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+        genresLabel.textColor = CinePickerColors.getGenresColor(userInterfaceStyle: userInterfaceStyle)
+        releaseYearLabel.textColor = CinePickerColors.getReleaseYearColor(userInterfaceStyle: userInterfaceStyle)
+        runtimeLabel.textColor = CinePickerColors.getRuntimeColor(userInterfaceStyle: userInterfaceStyle)
+        voteCountLabel.textColor = CinePickerColors.getVoteCountColor(userInterfaceStyle: userInterfaceStyle)
+        voteSeparatorLabel.textColor = CinePickerColors.getVoteSeparatorColor(userInterfaceStyle: userInterfaceStyle)
     }
     
     @objc private func onImageViewTap(tapGestureRecognizer: UITapGestureRecognizer) {

@@ -10,7 +10,8 @@ class DiscoverSettingsViewController: UIViewController {
     @IBOutlet weak var searchLGButton: LGButton!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return CinePickerColors.statusBarStyle
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        return CinePickerColors.getStatusBarStyle(userInterfaceStyle: userInterfaceStyle)
     }
     
     private var loadingView: LoadingUIView!
@@ -104,10 +105,12 @@ class DiscoverSettingsViewController: UIViewController {
     }
     
     private func setDefaultColors() {
-        contentUIView.backgroundColor = CinePickerColors.backgroundColor
-        discoverSettingsTableView.backgroundColor = CinePickerColors.backgroundColor
-        searchLGButton.bgColor = CinePickerColors.actionColor
-        searchLGButton.titleColor = CinePickerColors.backgroundColor
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        discoverSettingsTableView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        searchLGButton.bgColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
+        searchLGButton.titleColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
     }
     
     private func performRequest() {
@@ -171,7 +174,8 @@ extension DiscoverSettingsViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView(userInterfaceStyle: userInterfaceStyle)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
