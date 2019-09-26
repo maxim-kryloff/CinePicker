@@ -3,8 +3,6 @@ import LGButton
 
 class HeaderWithTagsUIView: UIView {
     
-    @IBOutlet weak var contentUIView: UIView!
-    
     @IBOutlet weak var headerLabel: UILabel!
     
     @IBOutlet weak var willCheckItOutLGButton: LGButton!
@@ -70,7 +68,7 @@ class HeaderWithTagsUIView: UIView {
     private func setDefaultColors() {
         let userInterfaceStyle = traitCollection.userInterfaceStyle
         
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         headerLabel.textColor = CinePickerColors.getTitleColor(userInterfaceStyle: userInterfaceStyle)
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
     }

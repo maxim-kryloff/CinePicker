@@ -2,8 +2,6 @@ import UIKit
 
 class MovieCollectionTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var contentUIView: UIView!
-    
     @IBOutlet weak var movieCollectionCollectionView: UICollectionView!
     
     @IBOutlet weak var headerLabel: UILabel!
@@ -60,7 +58,7 @@ class MovieCollectionTableViewCell: UITableViewCell {
     private func setDefaultColors() {
         let userInterfaceStyle = traitCollection.userInterfaceStyle
         
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         movieCollectionCollectionView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         headerLabel.textColor = CinePickerColors.getTitleColor(userInterfaceStyle: userInterfaceStyle)
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)

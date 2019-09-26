@@ -8,11 +8,6 @@ class MultiSearchViewController: StatesViewController {
     
     @IBOutlet weak var entityTableView: UITableView!
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        return CinePickerColors.getStatusBarStyle(userInterfaceStyle: userInterfaceStyle)
-    }
-    
     override var tableViewDefinition: UITableView! {
         return entityTableView
     }
@@ -126,11 +121,7 @@ class MultiSearchViewController: StatesViewController {
     }
     
     private func defineSearchBar() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        searchBar.tintColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
         searchBar.placeholder = CinePickerCaptions.typeMovieOrActor
-        // TODO: Bug related to changing language
         searchBar.setValue(CinePickerCaptions.cancel, forKey: "cancelButtonText")
         
         OperationQueue.main.addOperation {
@@ -161,12 +152,8 @@ class MultiSearchViewController: StatesViewController {
         
         navigationController?.navigationBar.barTintColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         navigationController?.navigationBar.tintColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
-        navigationController?.navigationBar.barStyle = CinePickerColors.getBarStyle(userInterfaceStyle: userInterfaceStyle)
         
         searchBar.tintColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
-        searchBar.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        searchBar.barStyle = CinePickerColors.getBarStyle(userInterfaceStyle: userInterfaceStyle)
-        searchBar.keyboardAppearance = CinePickerColors.getSearchBarKeyboardAppearance(userInterfaceStyle: userInterfaceStyle)
         
         entityTableView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
     }

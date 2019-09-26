@@ -28,11 +28,6 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
     
     public var onViewWillDisappear: ((_ selectedItems: [DiscoverSettingsItemToSelect]) -> Void)?
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        return CinePickerColors.getStatusBarStyle(userInterfaceStyle: userInterfaceStyle)
-    }
-    
     private var selectedItemMap: [Int: DiscoverSettingsItemToSelect] = [:] {
         didSet {
             if selectedItemMap.isEmpty {

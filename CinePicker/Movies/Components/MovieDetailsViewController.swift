@@ -13,11 +13,6 @@ class MovieDetailsViewController: UIViewController {
     
     public var movieTitle: String?
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        return CinePickerColors.getStatusBarStyle(userInterfaceStyle: userInterfaceStyle)
-    }
-    
     private var actionsBarButtonItem: UIBarButtonItem!
     
     private var movieDetails: MovieDetails!

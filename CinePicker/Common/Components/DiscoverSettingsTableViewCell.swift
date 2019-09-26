@@ -2,8 +2,6 @@ import UIKit
 import LGButton
 
 class DiscoverSettingsTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var contentUIView: UIView!
     
     @IBOutlet weak var iconLGButton: LGButton!
     
@@ -60,7 +58,7 @@ class DiscoverSettingsTableViewCell: UITableViewCell {
     private func setDefaultColors() {
         let userInterfaceStyle = traitCollection.userInterfaceStyle
         
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         iconLGButton.rightIconColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
         headerButton.setTitleColor(CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle), for: .normal)
         infoLabel.textColor = CinePickerColors.getTitleColor(userInterfaceStyle: userInterfaceStyle)

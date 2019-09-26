@@ -2,8 +2,6 @@ import UIKit
 
 class LoadingTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var contentUIView: UIView!
-    
     @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var bottomBarView: UIView!
@@ -29,7 +27,7 @@ class LoadingTableViewCell: UITableViewCell {
     private func setDefaultColors() {
         let userInterfaceStyle = traitCollection.userInterfaceStyle
         
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         loadingActivityIndicator.color = CinePickerColors.getActivityIndicatorColor(userInterfaceStyle: userInterfaceStyle)
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
     }

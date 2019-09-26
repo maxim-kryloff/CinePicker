@@ -2,8 +2,6 @@ import UIKit
 
 class FailedLoadingTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var contentUIView: UIView!
-    
     @IBOutlet weak var messageLabel: UILabel!
     
     @IBOutlet weak var actionButton: UIButton!
@@ -25,7 +23,7 @@ class FailedLoadingTableViewCell: UITableViewCell {
     private func setDefaultColors() {
         let userInterfaceStyle = traitCollection.userInterfaceStyle
         
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         messageLabel.textColor = CinePickerColors.getMessageColor(userInterfaceStyle: userInterfaceStyle)
         actionButton.setTitleColor(CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle), for: .normal)
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)

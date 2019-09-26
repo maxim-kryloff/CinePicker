@@ -56,7 +56,6 @@ class UIViewHelper {
         }
         
         let agrume = Agrume(url: url!, background: .colored(CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)))
-        agrume.statusBarStyle = CinePickerColors.getAgrumeStatusBarStyle(userInterfaceStyle: userInterfaceStyle)
         
         agrume.download = { url, completion in
             imageService.download(by: url) { (image) in

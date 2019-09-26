@@ -7,12 +7,7 @@ class MovieListViewController: StatesViewController {
     @IBOutlet weak var movieListTableView: UITableView!
     
     @IBOutlet weak var personTypeSegmentControl: UISegmentedControl!
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        return CinePickerColors.getStatusBarStyle(userInterfaceStyle: userInterfaceStyle)
-    }
-    
+
     override var tableViewDefinition: UITableView! {
         return movieListTableView
     }

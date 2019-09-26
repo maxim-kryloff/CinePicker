@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,28 +17,28 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_movie_image" translatesAutoresizingMaskIntoConstraints="NO" id="sgF-xJ-6yN">
-                            <rect key="frame" x="0.0" y="0.0" width="60" height="80"/>
+                            <rect key="frame" x="0.0" y="0.0" width="57" height="80"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="sgF-xJ-6yN" secondAttribute="height" multiplier="3:4" id="61i-Tv-ifI"/>
+                                <constraint firstAttribute="width" secondItem="sgF-xJ-6yN" secondAttribute="height" multiplier="57:80" id="p5L-9C-CuO"/>
                             </constraints>
                         </imageView>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="aPd-bn-Sy8">
-                            <rect key="frame" x="20" y="30" width="20" height="20"/>
+                            <rect key="frame" x="19" y="30" width="20" height="20"/>
                         </activityIndicatorView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmn-Pm-LQQ">
-                            <rect key="frame" x="76" y="8" width="283" height="21.5"/>
+                            <rect key="frame" x="73" y="8" width="286" height="21.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Original Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QVe-AU-tJV">
-                            <rect key="frame" x="76" y="29.5" width="283" height="18"/>
+                            <rect key="frame" x="73" y="32.5" width="286" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="47C-hP-1Gr" userLabel="Year Stack View">
-                            <rect key="frame" x="76" y="54" width="30.5" height="18"/>
+                            <rect key="frame" x="73" y="54" width="30.5" height="18"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHQ-Wf-sEa">
                                     <rect key="frame" x="0.0" y="0.0" width="30.5" height="18"/>
@@ -51,7 +49,7 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="QWJ-qK-ydw" userLabel="Tags Stack View">
-                            <rect key="frame" x="114.5" y="54" width="30" height="18"/>
+                            <rect key="frame" x="111.5" y="54" width="30" height="18"/>
                             <subviews>
                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oJq-97-qzc" userLabel="Will Check It Out LGButton" customClass="LGButton" customModule="LGButton">
                                     <rect key="frame" x="0.0" y="0.0" width="10" height="18"/>
@@ -146,10 +144,10 @@
                         <constraint firstAttribute="trailing" secondItem="kou-Sp-Zcy" secondAttribute="trailing" id="GlC-Vq-oia"/>
                         <constraint firstItem="QVe-AU-tJV" firstAttribute="leading" secondItem="sgF-xJ-6yN" secondAttribute="trailing" constant="16" id="YS3-Zg-6Gs"/>
                         <constraint firstItem="bmn-Pm-LQQ" firstAttribute="top" secondItem="JCM-U3-HG5" secondAttribute="top" constant="8" id="Yef-4A-CzQ"/>
-                        <constraint firstItem="aPd-bn-Sy8" firstAttribute="leading" secondItem="JCM-U3-HG5" secondAttribute="leading" constant="20" id="bfw-gw-Ggu"/>
+                        <constraint firstItem="aPd-bn-Sy8" firstAttribute="leading" secondItem="JCM-U3-HG5" secondAttribute="leading" constant="19" id="bfw-gw-Ggu"/>
                         <constraint firstItem="sgF-xJ-6yN" firstAttribute="leading" secondItem="JCM-U3-HG5" secondAttribute="leading" id="cpL-Kd-2Nj"/>
                         <constraint firstItem="kou-Sp-Zcy" firstAttribute="leading" secondItem="JCM-U3-HG5" secondAttribute="leading" id="d18-To-REu"/>
-                        <constraint firstItem="QVe-AU-tJV" firstAttribute="top" secondItem="bmn-Pm-LQQ" secondAttribute="bottom" id="ea1-lA-GIW"/>
+                        <constraint firstItem="QVe-AU-tJV" firstAttribute="top" secondItem="bmn-Pm-LQQ" secondAttribute="bottom" constant="3" id="ea1-lA-GIW"/>
                         <constraint firstAttribute="bottom" secondItem="sgF-xJ-6yN" secondAttribute="bottom" id="fps-NK-1dv"/>
                         <constraint firstAttribute="bottom" secondItem="47C-hP-1Gr" secondAttribute="bottom" constant="8" id="oaM-A3-cn9"/>
                         <constraint firstItem="sgF-xJ-6yN" firstAttribute="top" secondItem="JCM-U3-HG5" secondAttribute="top" id="oiM-id-eMA"/>
@@ -171,7 +169,6 @@
             <viewLayoutGuide key="safeArea" id="iVN-9g-U4a"/>
             <connections>
                 <outlet property="bottomBarView" destination="kou-Sp-Zcy" id="jgM-mU-TJx"/>
-                <outlet property="contentUIView" destination="JCM-U3-HG5" id="fTh-A4-jqK"/>
                 <outlet property="iLikeItLGButton" destination="Bwm-Fj-WMT" id="nsl-NS-z8f"/>
                 <outlet property="movieImageActivityIndicator" destination="aPd-bn-Sy8" id="l8u-3y-oDX"/>
                 <outlet property="movieImageImageView" destination="sgF-xJ-6yN" id="N9S-hf-ZTH"/>

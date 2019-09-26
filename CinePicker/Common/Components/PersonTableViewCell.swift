@@ -1,8 +1,6 @@
 import UIKit
 
 class PersonTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var contentUIView: UIView!
     
     @IBOutlet weak var personImageImageView: UIImageView!
     
@@ -86,7 +84,7 @@ class PersonTableViewCell: UITableViewCell {
     private func setDefaultColors() {
         let userInterfaceStyle = traitCollection.userInterfaceStyle
         
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         personImageActivityIndicator.color = CinePickerColors.getActivityIndicatorColor(userInterfaceStyle: userInterfaceStyle)
         personNameLabel.textColor = CinePickerColors.getTitleColor(userInterfaceStyle: userInterfaceStyle)
         personPositionLabel.textColor = CinePickerColors.getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
