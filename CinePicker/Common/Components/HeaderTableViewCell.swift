@@ -3,8 +3,6 @@ import LGButton
 
 class HeaderTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var contentUIView: UIView!
-    
     @IBOutlet weak var headerButton: UIButton!
     
     @IBOutlet weak var rightArrowLGButton: LGButton!
@@ -38,7 +36,7 @@ class HeaderTableViewCell: UITableViewCell {
     private func setDefaultColors() {
         let userInterfaceStyle = traitCollection.userInterfaceStyle
         
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         headerButton.setTitleColor(CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle), for: .normal)
         rightArrowLGButton.rightIconColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)

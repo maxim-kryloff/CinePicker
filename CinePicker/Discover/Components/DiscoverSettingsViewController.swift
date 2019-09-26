@@ -9,11 +9,6 @@ class DiscoverSettingsViewController: UIViewController {
     
     @IBOutlet weak var searchLGButton: LGButton!
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        return CinePickerColors.getStatusBarStyle(userInterfaceStyle: userInterfaceStyle)
-    }
-    
     private var loadingView: LoadingUIView!
     
     private var failedLoadingView: FailedLoadingUIView!

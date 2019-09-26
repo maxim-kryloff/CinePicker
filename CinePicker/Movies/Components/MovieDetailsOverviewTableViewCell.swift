@@ -2,8 +2,6 @@ import UIKit
 
 class MovieDetailsOverviewTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var contentUIView: UIView!
-    
     @IBOutlet weak var overviewLabel: UILabel!
     
     @IBOutlet weak var bottomBarView: UIView!
@@ -35,7 +33,7 @@ class MovieDetailsOverviewTableViewCell: UITableViewCell {
     private func setDefaultColors() {
         let userInterfaceStyle = traitCollection.userInterfaceStyle
         
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         overviewLabel.textColor = CinePickerColors.getOverviewColor(userInterfaceStyle: userInterfaceStyle)
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
     }

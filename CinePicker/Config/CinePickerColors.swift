@@ -139,38 +139,6 @@ class CinePickerColors {
         return getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
     }
     
-    public static func getBarStyle(userInterfaceStyle: UIUserInterfaceStyle) -> UIBarStyle {
-        if userInterfaceStyle == .dark {
-            return .black
-        }
-        
-        return .default
-    }
-    
-    public static func getStatusBarStyle(userInterfaceStyle: UIUserInterfaceStyle) -> UIStatusBarStyle {
-        if userInterfaceStyle == .dark {
-            return .lightContent
-        }
-        
-        return .default
-    }
-    
-    public static func getSearchBarKeyboardAppearance(userInterfaceStyle: UIUserInterfaceStyle) -> UIKeyboardAppearance {
-        if userInterfaceStyle == .dark {
-            return .dark
-        }
-        
-        return .light
-    }
-    
-    public static func getAgrumeStatusBarStyle(userInterfaceStyle: UIUserInterfaceStyle) -> UIStatusBarStyle {
-        if userInterfaceStyle == .dark {
-            return .lightContent
-        }
-        
-        return .default
-    }
-    
     public static func getAlertCircleBackgroundColor(userInterfaceStyle: UIUserInterfaceStyle) -> UInt {
         if userInterfaceStyle == .dark {
             return 0x323232

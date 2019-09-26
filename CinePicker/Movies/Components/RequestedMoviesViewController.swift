@@ -8,11 +8,6 @@ class RequestedMoviesViewController: StatesViewController {
     
     @IBOutlet weak var requestedMoviesTableView: UITableView!
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        return CinePickerColors.getStatusBarStyle(userInterfaceStyle: userInterfaceStyle)
-    }
-    
     override var tableViewDefinition: UITableView! {
         return requestedMoviesTableView
     }

@@ -2,8 +2,6 @@ import UIKit
 
 class FailedLoadingUIView: UIView {
     
-    @IBOutlet weak var contentUIView: UIView!
-    
     @IBOutlet weak var messageLabel: UILabel!
     
     @IBOutlet weak var actionButton: UIButton!
@@ -27,7 +25,7 @@ class FailedLoadingUIView: UIView {
     private func setDefaultColors() {
         let userInterfaceStyle = traitCollection.userInterfaceStyle
         
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         messageLabel.textColor = CinePickerColors.getMessageColor(userInterfaceStyle: userInterfaceStyle)
         actionButton.setTitleColor(CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle), for: .normal)
     }

@@ -2,8 +2,6 @@ import UIKit
 
 class MovieCollectionCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var contentUIView: UIView!
-    
     @IBOutlet weak var movieImageImageView: UIImageView!
     
     @IBOutlet weak var movieImageActivityIndicator: UIActivityIndicatorView!
@@ -38,7 +36,7 @@ class MovieCollectionCollectionViewCell: UICollectionViewCell {
     private func setDefaultColors() {
         let userInterfaceStyle = traitCollection.userInterfaceStyle
         
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
         movieImageActivityIndicator.color = CinePickerColors.getActivityIndicatorColor(userInterfaceStyle: userInterfaceStyle)
     }
 
