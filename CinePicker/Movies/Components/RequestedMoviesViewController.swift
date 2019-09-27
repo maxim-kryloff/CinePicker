@@ -67,6 +67,12 @@ class RequestedMoviesViewController: StatesViewController {
         loadedImages = [:]
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
+            UIViewHelper.closeAlert()
+        }
+    }
+    
     override func onReloadData() {
         super.onReloadData()
         
@@ -112,23 +118,19 @@ class RequestedMoviesViewController: StatesViewController {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        topBarView.backgroundColor = CinePickerColors.getTopBarColor(userInterfaceStyle: userInterfaceStyle)
-        requestedMoviesTableView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
+        topBarView.backgroundColor = CinePickerColors.getTopBarColor()
+        requestedMoviesTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     
     @objc private func onPressActionsButton() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         let backToSearchAction = {
             self.navigationController?.popToRootViewController(animated: true)
             return
         }
         
         UIViewHelper.showAlert(
-            userInterfaceStyle: userInterfaceStyle,
+            traitCollection: traitCollection,
             buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
@@ -203,9 +205,7 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView(userInterfaceStyle: userInterfaceStyle)
+        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
         
         if !(cell is MovieTableViewCell) {
             return
@@ -251,10 +251,8 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
             cell.imagePath = movie.imagePath
         }
         
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         cell.onTapImageViewHandler = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService, userInterfaceStyle: userInterfaceStyle)
+            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.title = movie.title

@@ -75,6 +75,16 @@ class MultiSearchViewController: StatesViewController {
         loadedImages = [:]
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
+            if !UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource) {
+                return
+            }
+            
+            UIViewHelper.closeAlert()
+        }
+    }
+    
     override func onReloadData() {
         super.onReloadData()
         
@@ -146,16 +156,14 @@ class MultiSearchViewController: StatesViewController {
     }
 
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
         
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        navigationController?.navigationBar.barTintColor = CinePickerColors.getBackgroundColor()
+        navigationController?.navigationBar.tintColor = CinePickerColors.getActionColor()
         
-        navigationController?.navigationBar.barTintColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        navigationController?.navigationBar.tintColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
+        searchBar.tintColor = CinePickerColors.getActionColor()
         
-        searchBar.tintColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
-        
-        entityTableView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        entityTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     
     private func showSavedMovies() {
@@ -218,10 +226,8 @@ class MultiSearchViewController: StatesViewController {
     @objc private func onPressActionsButton() {
         self.searchBarCancelButtonClicked(self.searchBar)
         
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-
         UIViewHelper.showAlert(
-            userInterfaceStyle: userInterfaceStyle,
+            traitCollection: traitCollection,
             buttonActions: [
                 (
                     title: CinePickerCaptions.selectLanguage,
@@ -236,10 +242,8 @@ class MultiSearchViewController: StatesViewController {
     }
     
     private func onChangeLanguage() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         UIViewHelper.showAlert(
-            userInterfaceStyle: userInterfaceStyle,
+            traitCollection: traitCollection,
             buttonActions: [
                 (
                     title: CinePickerCaptions.english,
@@ -267,8 +271,6 @@ class MultiSearchViewController: StatesViewController {
     }
     
     private func showDataSourceAgreementAlert() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         let action = {
             let willCheckItOut = Tag(name: SystemTagName.willCheckItOut.rawValue, russianName: "Буду смотреть")
             TagRepository.shared.save(tag: willCheckItOut)
@@ -284,16 +286,9 @@ class MultiSearchViewController: StatesViewController {
             self.onChangeLanguage()
         }
         
-        UIViewHelper.showAlert(
-            userInterfaceStyle: userInterfaceStyle,
-            buttonActions: [
-                (title: "OK", action: action)
-            ],
-            imageName: "data_source_logo",
-            message: "This product uses the TMDb API but is not endorsed or certified by TMDb.",
-            showCloseButton: false,
-            hideWhenBackgroundViewIsTapped: false,
-            circleBackgroundColor: CinePickerColors.getDataSourceAgreementAlertCircleBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        UIViewHelper.showDatasourceAgreementAlert(
+            traitCollection: traitCollection,
+            buttonAction: action
         )
     }
     
@@ -386,8 +381,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView(userInterfaceStyle: userInterfaceStyle)
+        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
         
         var imagePath: String
         
@@ -470,10 +464,8 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
             cell.imagePath = movie.imagePath
         }
         
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         cell.onTapImageViewHandler = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService, userInterfaceStyle: userInterfaceStyle)
+            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.title = movie.title
@@ -511,10 +503,8 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
             cell.imagePath = person.imagePath
         }
         
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         cell.onTapImageViewHandler = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService, userInterfaceStyle: userInterfaceStyle)
+            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.personName = person.name

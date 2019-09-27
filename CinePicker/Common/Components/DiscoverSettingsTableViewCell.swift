@@ -56,14 +56,12 @@ class DiscoverSettingsTableViewCell: UITableViewCell {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        iconLGButton.rightIconColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
-        headerButton.setTitleColor(CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle), for: .normal)
-        infoLabel.textColor = CinePickerColors.getTitleColor(userInterfaceStyle: userInterfaceStyle)
-        rightArrowLGButton.rightIconColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor()
+        iconLGButton.rightIconColor = CinePickerColors.getActionColor()
+        headerButton.setTitleColor(CinePickerColors.getActionColor(), for: .normal)
+        infoLabel.textColor = CinePickerColors.getTitleColor()
+        rightArrowLGButton.rightIconColor = CinePickerColors.getActionColor()
+        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
 }

@@ -31,11 +31,9 @@ class MovieDetailsOverviewTableViewCell: UITableViewCell {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        overviewLabel.textColor = CinePickerColors.getOverviewColor(userInterfaceStyle: userInterfaceStyle)
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor()
+        overviewLabel.textColor = CinePickerColors.getOverviewColor()
+        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -38,6 +38,12 @@ class PersonListViewController: UIViewController {
         loadedImages = [:]
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
+            UIViewHelper.closeAlert()
+        }
+    }
+    
     private func defineNavigationController() {
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
@@ -64,23 +70,19 @@ class PersonListViewController: UIViewController {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        topBarView.backgroundColor = CinePickerColors.getTopBarColor(userInterfaceStyle: userInterfaceStyle)
-        personListTableView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
+        topBarView.backgroundColor = CinePickerColors.getTopBarColor()
+        personListTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     
     @objc private func onPressActionsButton() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         let backToSearchAction = {
             self.navigationController?.popToRootViewController(animated: true)
             return
         }
         
         UIViewHelper.showAlert(
-            userInterfaceStyle: userInterfaceStyle,
+            traitCollection: traitCollection,
             buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
@@ -96,9 +98,7 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView(userInterfaceStyle: userInterfaceStyle)
+        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
         
         let imagePath = people[indexPath.row].imagePath
         
@@ -130,10 +130,8 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
             cell.imagePath = person.imagePath
         }
         
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         cell.onTapImageViewHandler = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService, userInterfaceStyle: userInterfaceStyle)
+            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.personName = person.name

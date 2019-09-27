@@ -21,12 +21,10 @@ class FailedLoadingTableViewCell: UITableViewCell {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        messageLabel.textColor = CinePickerColors.getMessageColor(userInterfaceStyle: userInterfaceStyle)
-        actionButton.setTitleColor(CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle), for: .normal)
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor()
+        messageLabel.textColor = CinePickerColors.getMessageColor()
+        actionButton.setTitleColor(CinePickerColors.getActionColor(), for: .normal)
+        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
 
 }

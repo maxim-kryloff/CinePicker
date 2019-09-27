@@ -93,6 +93,12 @@ class MovieListViewController: StatesViewController {
         loadedImages = [:]
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
+            UIViewHelper.closeAlert()
+        }
+    }
+    
     override func onReloadData() {
         super.onReloadData()
 
@@ -150,27 +156,19 @@ class MovieListViewController: StatesViewController {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        
-        if (userInterfaceStyle == .dark) {
-            personTypeSegmentControl.selectedSegmentTintColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
-        }
-        
-        movieListTableView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
+        personTypeSegmentControl.selectedSegmentTintColor = CinePickerColors.getSelectedSegmentTintColor()
+        movieListTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     
     @objc private func onPressActionsButton() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         let backToSearchAction = {
             self.navigationController?.popToRootViewController(animated: true)
             return
         }
         
         UIViewHelper.showAlert(
-            userInterfaceStyle: userInterfaceStyle,
+            traitCollection: traitCollection,
             buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
             ]
@@ -230,9 +228,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView(userInterfaceStyle: userInterfaceStyle)
+        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
         
         let imagePath = movies[indexPath.row].imagePath
         
@@ -264,10 +260,8 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
             cell.imagePath = movie.imagePath
         }
         
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         cell.onTapImageViewHandler = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService, userInterfaceStyle: userInterfaceStyle)
+            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.title = movie.title

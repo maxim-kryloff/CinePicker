@@ -14,11 +14,9 @@ class LoadingUIView: UIView {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        loadingActivityIndicator.color = CinePickerColors.getActivityIndicatorColor(userInterfaceStyle: userInterfaceStyle)
-        messageLabel.textColor = CinePickerColors.getMessageColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor()
+        loadingActivityIndicator.color = CinePickerColors.getActivityIndicatorColor()
+        messageLabel.textColor = CinePickerColors.getMessageColor()
     }
     
 }

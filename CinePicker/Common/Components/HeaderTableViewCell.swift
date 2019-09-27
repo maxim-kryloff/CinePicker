@@ -34,12 +34,10 @@ class HeaderTableViewCell: UITableViewCell {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        headerButton.setTitleColor(CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle), for: .normal)
-        rightArrowLGButton.rightIconColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor()
+        headerButton.setTitleColor(CinePickerColors.getActionColor(), for: .normal)
+        rightArrowLGButton.rightIconColor = CinePickerColors.getActionColor()
+        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
 
 }

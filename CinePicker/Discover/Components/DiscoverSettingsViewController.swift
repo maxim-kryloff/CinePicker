@@ -100,12 +100,10 @@ class DiscoverSettingsViewController: UIViewController {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        discoverSettingsTableView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        searchLGButton.bgColor = CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle)
-        searchLGButton.titleColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
+        discoverSettingsTableView.backgroundColor = CinePickerColors.getBackgroundColor()
+        searchLGButton.bgColor = CinePickerColors.getActionColor()
+        searchLGButton.titleColor = CinePickerColors.getBackgroundColor()
     }
     
     private func performRequest() {
@@ -169,8 +167,7 @@ extension DiscoverSettingsViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView(userInterfaceStyle: userInterfaceStyle)
+        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
