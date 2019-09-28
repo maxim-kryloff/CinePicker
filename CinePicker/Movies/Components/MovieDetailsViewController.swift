@@ -98,6 +98,12 @@ class MovieDetailsViewController: UIViewController {
         loadedImages = [:]
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
+            UIViewHelper.closeAlert()
+        }
+    }
+    
     private func defineNavigationController() {
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
@@ -147,11 +153,9 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        topBarView.backgroundColor = CinePickerColors.getTopBarColor(userInterfaceStyle: userInterfaceStyle)
-        movieDetailsTableView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
+        topBarView.backgroundColor = CinePickerColors.getTopBarColor()
+        movieDetailsTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     
     private func onReloadGettingMovieDetails() {
@@ -167,8 +171,6 @@ class MovieDetailsViewController: UIViewController {
     }
     
     @objc private func onPressActionsButton() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         let goToRequestedMoviesAction = {
             self.performSegue(withIdentifier: SegueIdentifiers.showRequestedMovies, sender: nil)
         }
@@ -179,7 +181,7 @@ class MovieDetailsViewController: UIViewController {
         }
         
         UIViewHelper.showAlert(
-            userInterfaceStyle: userInterfaceStyle,
+            traitCollection: traitCollection,
             buttonActions: [
                 (title: CinePickerCaptions.goToSimilarMovies, action: goToRequestedMoviesAction),
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
@@ -461,9 +463,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView(userInterfaceStyle: userInterfaceStyle)
+        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
         
         switch cell {
         case is MovieDetailsTableViewCell: prepare(movieDetailsTableViewCell: (cell as! MovieDetailsTableViewCell))
@@ -556,10 +556,8 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             cell.imagePath = movieDetails.imagePath
         }
         
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
         cell.onTapImageViewHandler = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService, userInterfaceStyle: userInterfaceStyle)
+            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
 
         cell.title = movieDetails.title
@@ -659,10 +657,8 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
                 cell.imagePath = person.imagePath
             }
             
-            let userInterfaceStyle = traitCollection.userInterfaceStyle
-            
             cell.onTapImageViewHandler = { (imagePath) in
-                UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService, userInterfaceStyle: userInterfaceStyle)
+                UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
             }
             
             cell.personName = character.name
@@ -690,10 +686,8 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
                 cell.imagePath = person.imagePath
             }
             
-            let userInterfaceStyle = traitCollection.userInterfaceStyle
-            
             cell.onTapImageViewHandler = { (imagePath) in
-                UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService, userInterfaceStyle: userInterfaceStyle)
+                UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
             }
             
             cell.personName = crewPerson.name

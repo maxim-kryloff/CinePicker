@@ -4,12 +4,14 @@ import SCLAlertView
 
 class UIViewHelper {
     
-    public static func getMovieRatingColor(userInterfaceStyle: UIUserInterfaceStyle, rating: Double) -> UIColor {
+    private static var alertViewResponder: SCLAlertViewResponder?
+    
+    public static func getMovieRatingColor(rating: Double) -> UIColor {
         switch(rating) {
-        case 0.0..<5.0: return CinePickerColors.getTextNegativeColor(userInterfaceStyle: userInterfaceStyle)
-        case 5.0..<6.5: return CinePickerColors.getTextNeutralColor(userInterfaceStyle: userInterfaceStyle)
-        case 6.5...10: return CinePickerColors.getTextPositiveColor(userInterfaceStyle: userInterfaceStyle)
-        default: return CinePickerColors.getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+        case 0.0..<5.0: return CinePickerColors.getTextNegativeColor()
+        case 5.0..<6.5: return CinePickerColors.getTextNeutralColor()
+        case 6.5...10: return CinePickerColors.getTextPositiveColor()
+        default: return CinePickerColors.getSubtitleColor()
         }
     }
     
@@ -43,8 +45,7 @@ class UIViewHelper {
     public static func openImage(
         from viewController: UIViewController,
         by imagePath: String,
-        using imageService: ImageService,
-        userInterfaceStyle: UIUserInterfaceStyle
+        using imageService: ImageService
     ) {
         
         let url = URLBuilder(string: CinePickerConfig.originalImagePath)
@@ -55,7 +56,7 @@ class UIViewHelper {
             fatalError("Url to open image wasn't built...")
         }
         
-        let agrume = Agrume(url: url!, background: .colored(CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)))
+        let agrume = Agrume(url: url!, background: .colored(CinePickerColors.getBackgroundColor()))
         
         agrume.download = { url, completion in
             imageService.download(by: url) { (image) in
@@ -66,9 +67,9 @@ class UIViewHelper {
         agrume.show(from: viewController)
     }
     
-    public static func getUITableViewCellSelectedBackgroundView(userInterfaceStyle: UIUserInterfaceStyle) -> UIView {
+    public static func getUITableViewCellSelectedBackgroundView() -> UIView {
         let view = UIView()
-        view.backgroundColor = CinePickerColors.getSelectedBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        view.backgroundColor = CinePickerColors.getSelectedBackgroundColor()
         
         return view
     }
@@ -114,52 +115,104 @@ class UIViewHelper {
     }
     
     public static func showAlert(
-        userInterfaceStyle: UIUserInterfaceStyle,
+        traitCollection: UITraitCollection,
         buttonActions: [(title: String, action: () -> Void)],
         imageName: String = "menu_image",
-        message: String = "",
-        showCloseButton: Bool = true,
-        isAnimationRightToLeft: Bool = false,
-        hideWhenBackgroundViewIsTapped: Bool = true,
-        circleBackgroundColor: UInt? = nil
+        isAnimationRightToLeft: Bool = false
     ) {
         
         let appearance = SCLAlertView.SCLAppearance(
             kTitleHeight: 12,
             kTitleFont: UIFont.systemFont(ofSize: 0),
-            kTextFont: message.isEmpty ? UIFont.systemFont(ofSize: 0) : UIFont.systemFont(ofSize: 14),
-            showCloseButton: showCloseButton,
+            kTextFont: UIFont.systemFont(ofSize: 0),
             contentViewCornerRadius: 7,
             buttonCornerRadius: 7,
-            hideWhenBackgroundViewIsTapped: hideWhenBackgroundViewIsTapped,
-            contentViewColor: CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle),
-            contentViewBorderColor: CinePickerColors.getAlertBorderColor(userInterfaceStyle: userInterfaceStyle),
-            titleColor: CinePickerColors.getTitleColor(userInterfaceStyle: userInterfaceStyle)
+            hideWhenBackgroundViewIsTapped: true,
+            contentViewColor: CinePickerColors.getBackgroundColor(),
+            contentViewBorderColor: CinePickerColors.getAlertBorderColor(),
+            titleColor: CinePickerColors.getTitleColor()
         )
         
         let alertView = SCLAlertView(appearance: appearance)
         
+        var deferedButtonAction: (() -> Void)?
+        
         for buttonAction in buttonActions {
-            alertView.addButton(buttonAction.title, backgroundColor: CinePickerColors.getActionColor(userInterfaceStyle: userInterfaceStyle), action: buttonAction.action)
+            alertView.addButton(
+                buttonAction.title,
+                backgroundColor: CinePickerColors.getActionColor(),
+                action: { deferedButtonAction = buttonAction.action }
+            )
         }
+        
+        let circleBackgroundColor = CinePickerColors.getAlertCircleBackgroundColor(traitCollection: traitCollection)
         
         let circleIconImage = UIImage(named: imageName)
         
         let animationStyle: SCLAnimationStyle = isAnimationRightToLeft ? .rightToLeft : .topToBottom
         
-        let fakeTitle = message.isEmpty ? "" : " "
-        
-        let circleBackgroundColor = circleBackgroundColor
-            ?? CinePickerColors.getAlertCircleBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        
-        alertView.showSuccess(
-            fakeTitle,
-            subTitle: message,
+        alertViewResponder = alertView.showSuccess(
+            "",
+            subTitle: "",
             closeButtonTitle: CinePickerCaptions.cancel,
             colorStyle: circleBackgroundColor,
             circleIconImage: circleIconImage,
             animationStyle: animationStyle
         )
+            
+        alertViewResponder?.setDismissBlock {
+            alertViewResponder = nil
+            deferedButtonAction?()
+        }
+    }
+    
+    public static func closeAlert() {
+        alertViewResponder?.close()
+    }
+    
+    public static func showDatasourceAgreementAlert(
+        traitCollection: UITraitCollection,
+        buttonAction: @escaping () -> Void
+    ) {
+        
+        let appearance = SCLAlertView.SCLAppearance(
+            kTitleHeight: 12,
+            kTitleFont: UIFont.systemFont(ofSize: 0),
+            kTextFont: UIFont.systemFont(ofSize: 14),
+            showCloseButton: false,
+            contentViewCornerRadius: 7,
+            buttonCornerRadius: 7,
+            hideWhenBackgroundViewIsTapped: false,
+            contentViewColor: CinePickerColors.getDataSourceAgreementAlertBackgroundColor(traitCollection: traitCollection),
+            contentViewBorderColor: CinePickerColors.getDataSourceAgreementAlertBorderColor(traitCollection: traitCollection),
+            titleColor: CinePickerColors.getDataSourceAgreementAlertTextColor(traitCollection: traitCollection)
+        )
+        
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        var deferedButtonAction: (() -> Void)!
+        
+        alertView.addButton(
+            "OK",
+            backgroundColor: CinePickerColors.getDataSourceAgreementActionColor(traitCollection: traitCollection),
+            action: { deferedButtonAction = buttonAction }
+        )
+        
+        let circleIconImage = UIImage(named: "data_source_logo")
+
+        let circleBackgroundColor = CinePickerColors.getDataSourceAgreementAlertCircleBackgroundColor(traitCollection: traitCollection)
+        
+        let alertViewResponder = alertView.showSuccess(
+            " ",
+            subTitle: "This product uses the TMDb API but is not endorsed or certified by TMDb.",
+            closeButtonTitle: CinePickerCaptions.cancel,
+            colorStyle: circleBackgroundColor,
+            circleIconImage: circleIconImage
+        )
+            
+        alertViewResponder.setDismissBlock {
+            deferedButtonAction()
+        }
     }
     
     private static func update(imageViewWithActivityIndicator view: inout ImageFromInternet, whenIsWaitingForImage isWaiting: Bool) {

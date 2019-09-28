@@ -81,11 +81,9 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        topBarView.backgroundColor = CinePickerColors.getTopBarColor(userInterfaceStyle: userInterfaceStyle)
-        discoverItemsToSelectTableView.backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
+        contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
+        topBarView.backgroundColor = CinePickerColors.getTopBarColor()
+        discoverItemsToSelectTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     
     private func enableCancelButton() {

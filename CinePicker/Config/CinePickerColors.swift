@@ -2,153 +2,219 @@ import UIKit
 
 class CinePickerColors {
     
-    public static func getBackgroundColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getUIColorFromRGB(26, 26, 26)
+    public static func getBackgroundColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getUIColorFromRGB(26, 26, 26)
+            }
             
+            return getUIColorFromRGB(255, 255, 255)
         }
-        
-        return getUIColorFromRGB(255, 255, 255)
     }
     
-    public static func getSelectedBackgroundColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getUIColorFromRGB(50, 50, 50)
+    public static func getSelectedBackgroundColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getUIColorFromRGB(50, 50, 50)
+            }
+            
+            return getUIColorFromRGB(220, 220, 220)
         }
-        
-        return getUIColorFromRGB(220, 220, 220)
     }
     
-    public static func getActivityIndicatorColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        return getTitleColor(userInterfaceStyle: userInterfaceStyle)
+    public static func getActivityIndicatorColor() -> UIColor {
+        return getTitleColor()
     }
     
-    public static func getTitleColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getUIColorFromRGB(247, 247, 247)
+    public static func getTitleColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getUIColorFromRGB(247, 247, 247)
+            }
+            
+            return getUIColorFromRGB(20, 20, 20)
         }
-        
-        return getUIColorFromRGB(20, 20, 20)
     }
     
-    public static func getSubtitleColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getUIColorFromRGB(153, 153, 153)
+    public static func getSubtitleColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getUIColorFromRGB(153, 153, 153)
+            }
+            
+            return getUIColorFromRGB(66, 66, 66)
         }
-        
-        return getUIColorFromRGB(66, 66, 66)
     }
     
-    public static func getGenresColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+    public static func getGenresColor() -> UIColor {
+        return getSubtitleColor()
     }
     
-    public static func getTopBarColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        return getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
+    public static func getTopBarColor() -> UIColor {
+        return getBottomBarColor()
     }
     
-    public static func getBottomBarColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getUIColorFromRGB(65, 65, 65)
+    public static func getBottomBarColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getUIColorFromRGB(65, 65, 65)
+            }
+            
+            return getUIColorFromRGB(200, 200, 200)
         }
-        
-        return getUIColorFromRGB(200, 200, 200)
     }
     
-    public static func getTextNegativeColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getUIColorFromRGB(252, 54, 53)
+    public static func getTextNegativeColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getUIColorFromRGB(252, 54, 53)
+            }
+            
+            return getSubtitleColor()
         }
-        
-        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
     }
     
-    public static func getTextNeutralColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getUIColorFromRGB(254, 173, 0)
+    public static func getTextNeutralColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getUIColorFromRGB(254, 173, 0)
+            }
+            
+            return getSubtitleColor()
         }
-        
-        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
     }
     
-    public static func getTextPositiveColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getUIColorFromRGB(32, 150, 0)
+    public static func getTextPositiveColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getUIColorFromRGB(32, 150, 0)
+            }
+            
+            return getActionColor()
         }
-        
-        return getActionColor(userInterfaceStyle: userInterfaceStyle)
     }
     
-    public static func getTagColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getTitleColor(userInterfaceStyle: userInterfaceStyle)
+    public static func getTagColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getTitleColor()
+            }
+            
+            return getUIColorFromRGB(66, 66, 66)
         }
-        
-        return getUIColorFromRGB(66, 66, 66)
     }
     
-    public static func getWillCheckItOutTagColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getUIColorFromRGB(230, 144, 90)
+    public static func getWillCheckItOutTagColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getUIColorFromRGB(230, 144, 90)
+            }
+            
+            return getActionColor()
         }
-        
-        return getActionColor(userInterfaceStyle: userInterfaceStyle)
     }
     
-    public static func getILikeItTagColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getUIColorFromRGB(227, 102, 95)
+    public static func getILikeItTagColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getUIColorFromRGB(227, 102, 95)
+            }
+            
+            return getActionColor()
         }
-        
-        return getActionColor(userInterfaceStyle: userInterfaceStyle)
     }
     
-    public static func getReleaseYearColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+    public static func getReleaseYearColor() -> UIColor {
+        return getSubtitleColor()
     }
     
-    public static func getRuntimeColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        return getTitleColor(userInterfaceStyle: userInterfaceStyle)
+    public static func getRuntimeColor() -> UIColor {
+        return getTitleColor()
     }
     
-    public static func getVoteCountColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+    public static func getVoteCountColor() -> UIColor {
+        return getSubtitleColor()
     }
     
-    public static func getVoteSeparatorColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
+    public static func getVoteSeparatorColor() -> UIColor {
         return getUIColorFromRGB(153, 153, 153)
     }
     
-    public static func getMessageColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        return getSubtitleColor(userInterfaceStyle: userInterfaceStyle)
+    public static func getMessageColor() -> UIColor {
+        return getSubtitleColor()
     }
     
-    public static func getOverviewColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        return getTitleColor(userInterfaceStyle: userInterfaceStyle)
+    public static func getOverviewColor() -> UIColor {
+        return getTitleColor()
     }
     
-    public static func getActionColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        if userInterfaceStyle == .dark {
-            return getUIColorFromRGB(1, 122, 255)
+    public static func getActionColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getUIColorFromRGB(1, 122, 255)
+            }
+            
+            return getUIColorFromRGB(225, 45, 85)
         }
-        
-        return getUIColorFromRGB(225, 45, 85)
     }
     
-    public static func getAlertBorderColor(userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
-        return getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
+    public static func getSelectedSegmentTintColor() -> UIColor {
+        return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return getActionColor()
+            }
+            
+            return getBackgroundColor()
+        }
     }
     
-    public static func getAlertCircleBackgroundColor(userInterfaceStyle: UIUserInterfaceStyle) -> UInt {
-        if userInterfaceStyle == .dark {
+    public static func getAlertBorderColor() -> UIColor {
+        return getBottomBarColor()
+    }
+    
+    public static func getAlertCircleBackgroundColor(traitCollection: UITraitCollection) -> UInt {
+        if traitCollection.userInterfaceStyle == .dark {
             return 0x323232
         }
         
         return 0xB4B4B4
     }
     
-    public static func getDataSourceAgreementAlertCircleBackgroundColor(userInterfaceStyle: UIUserInterfaceStyle) -> UInt {
-        if userInterfaceStyle == .dark {
+    // Special Data Source Agreement Alert Colors (non-dynamic)
+    public static func getDataSourceAgreementAlertBackgroundColor(traitCollection: UITraitCollection) -> UIColor {
+        if traitCollection.userInterfaceStyle == .dark {
+            return getUIColorFromRGB(26, 26, 26)
+        }
+        
+        return getUIColorFromRGB(255, 255, 255)
+    }
+    
+    public static func getDataSourceAgreementAlertBorderColor(traitCollection: UITraitCollection) -> UIColor {
+        if traitCollection.userInterfaceStyle == .dark {
+            return getUIColorFromRGB(65, 65, 65)
+        }
+        
+        return getUIColorFromRGB(200, 200, 200)
+    }
+    
+    public static func getDataSourceAgreementAlertTextColor(traitCollection: UITraitCollection) -> UIColor {
+        if traitCollection.userInterfaceStyle == .dark {
+            return getUIColorFromRGB(247, 247, 247)
+        }
+        
+        return getUIColorFromRGB(20, 20, 20)
+    }
+    
+    public static func getDataSourceAgreementActionColor(traitCollection: UITraitCollection) -> UIColor {
+        if traitCollection.userInterfaceStyle == .dark {
+            return getUIColorFromRGB(1, 122, 255)
+        }
+        
+        return getUIColorFromRGB(225, 45, 85)
+    }
+    
+    public static func getDataSourceAgreementAlertCircleBackgroundColor(traitCollection: UITraitCollection) -> UInt {
+        if traitCollection.userInterfaceStyle == .dark {
             return 0x323232
         }
         

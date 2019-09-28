@@ -25,11 +25,9 @@ class LoadingTableViewCell: UITableViewCell {
     }
     
     private func setDefaultColors() {
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        
-        backgroundColor = CinePickerColors.getBackgroundColor(userInterfaceStyle: userInterfaceStyle)
-        loadingActivityIndicator.color = CinePickerColors.getActivityIndicatorColor(userInterfaceStyle: userInterfaceStyle)
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor(userInterfaceStyle: userInterfaceStyle)
+        backgroundColor = CinePickerColors.getBackgroundColor()
+        loadingActivityIndicator.color = CinePickerColors.getActivityIndicatorColor()
+        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
 
 }
