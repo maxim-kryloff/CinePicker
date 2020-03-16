@@ -1,6 +1,6 @@
 import UIKit
 
-// TODO: Try to inherit StatesViewController or remove this TODO
+// TODO: Try to inherit StateViewController or remove this TODO
 class MovieDetailsViewController: UIViewController {
     
     @IBOutlet var contentUIView: UIView!
@@ -63,7 +63,7 @@ class MovieDetailsViewController: UIViewController {
     
     private var crewPeopleLimit: Int = 4
     
-    private var loadedImages: [String: UIImage] = [:]
+    private var downloadedImages: [String: UIImage] = [:]
     
     private let imageService = ImageService()
     
@@ -95,7 +95,7 @@ class MovieDetailsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        loadedImages = [:]
+        downloadedImages = [:]
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -149,7 +149,7 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func defineFailedLoadingView() {
-        failedLoadingView = UIViewHelper.getFailedLoadingView(for: movieDetailsTableView, onTouchDownHandler: onReloadGettingMovieDetails)
+        failedLoadingView = UIViewHelper.getFailedLoadingView(for: movieDetailsTableView, onTouchDown: onReloadGettingMovieDetails)
     }
     
     private func setDefaultColors() {
@@ -442,23 +442,23 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         }
         
         switch section {
-        case movieDetailsSectionNumber: return 1
-        case movieDetailsTagsSectionNumber: return 1
-        case movieDetailsOverviewSectionNumber: return 1
-        case movieDetailsMovieCollectionSectionNumber: return getMovieCollectionSectionNumberOfRows()
-        case movieDetailsPeopleSectionNumber: return getMovieDetailsPeopleSectionNumberOfRows()
-        default: fatalError("Section number is out of range...")
+            case movieDetailsSectionNumber: return 1
+            case movieDetailsTagsSectionNumber: return 1
+            case movieDetailsOverviewSectionNumber: return 1
+            case movieDetailsMovieCollectionSectionNumber: return getMovieCollectionSectionNumberOfRows()
+            case movieDetailsPeopleSectionNumber: return getMovieDetailsPeopleSectionNumberOfRows()
+            default: fatalError("Section number is out of range...")
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch (indexPath.section, indexPath.row) {
-        case (movieDetailsSectionNumber, _): return MovieDetailsTableViewCell.standardHeight
-        case (movieDetailsTagsSectionNumber, _): return MovieDetailsTagsTableViewCell.standardHeight
-        case (movieDetailsOverviewSectionNumber, _): return MovieDetailsOverviewTableViewCell.standardHeight
-        case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionSectionRowHeight()
-        case (movieDetailsPeopleSectionNumber, _): return getMovieDetailsPeopleSectionRowHeight(at: indexPath)
-        default: fatalError("Section number is out of range...")
+            case (movieDetailsSectionNumber, _): return MovieDetailsTableViewCell.standardHeight
+            case (movieDetailsTagsSectionNumber, _): return MovieDetailsTagsTableViewCell.standardHeight
+            case (movieDetailsOverviewSectionNumber, _): return MovieDetailsOverviewTableViewCell.standardHeight
+            case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionSectionRowHeight()
+            case (movieDetailsPeopleSectionNumber, _): return getMovieDetailsPeopleSectionRowHeight(at: indexPath)
+            default: fatalError("Section number is out of range...")
         }
     }
     
@@ -466,20 +466,20 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
         
         switch cell {
-        case is MovieDetailsTableViewCell: prepare(movieDetailsTableViewCell: (cell as! MovieDetailsTableViewCell))
-        case is PersonTableViewCell: prepare(personTableViewCell: (cell as! PersonTableViewCell), forRowAt: indexPath)
-        default: break
+            case is MovieDetailsTableViewCell: prepare(movieDetailsTableViewCell: (cell as! MovieDetailsTableViewCell))
+            case is PersonTableViewCell: prepare(personTableViewCell: (cell as! PersonTableViewCell), forRowAt: indexPath)
+            default: break
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch (indexPath.section, indexPath.row) {
-        case (movieDetailsSectionNumber, _): return getMovieDetailsTableViewCell(tableView, cellForRowAt: indexPath)
-        case (movieDetailsTagsSectionNumber, _): return getMovieDetailsTagsTableViewCell(tableView, cellForRowAt: indexPath)
-        case (movieDetailsOverviewSectionNumber, _): return getMovieDetailsOverviewTableViewCell(tableView, cellForRowAt: indexPath)
-        case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionTableViewCell(tableView, cellForRowAt: indexPath)
-        case (movieDetailsPeopleSectionNumber, _): return getPersonTableViewCell(tableView, cellForRowAt: indexPath)
-        default: fatalError("Section number is out of range...")
+            case (movieDetailsSectionNumber, _): return getMovieDetailsTableViewCell(tableView, cellForRowAt: indexPath)
+            case (movieDetailsTagsSectionNumber, _): return getMovieDetailsTagsTableViewCell(tableView, cellForRowAt: indexPath)
+            case (movieDetailsOverviewSectionNumber, _): return getMovieDetailsOverviewTableViewCell(tableView, cellForRowAt: indexPath)
+            case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionTableViewCell(tableView, cellForRowAt: indexPath)
+            case (movieDetailsPeopleSectionNumber, _): return getPersonTableViewCell(tableView, cellForRowAt: indexPath)
+            default: fatalError("Section number is out of range...")
         }
     }
     
@@ -488,10 +488,10 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             return
         }
         
-        let cell = cell as! ImageFromInternet
+        let cell = ImageFromInternetViewCellAdapter(cell: cell as! ImageFromInternetViewCell)
         
         if let imageUrl = cell.imageUrl {
-            imageService.cancelDownloading(for: imageUrl)
+            imageService.cancelDownloading(by: imageUrl)
         }
     }
     
@@ -537,18 +537,18 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             
             return
         }
-
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person)!
         
         let sender = TableViewCellSender(cell: cell, indexPath: indexPath)
-
+        
         performSegue(withIdentifier: SegueIdentifiers.showPersonMovies, sender: sender)
     }
     
     private func getMovieDetailsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetails, for: indexPath) as! MovieDetailsTableViewCell
         
-        if let image = loadedImages[movieDetails.imagePath] {
+        if let image = downloadedImages[movieDetails.imagePath] {
             cell.imageValue = image
         }
         
@@ -556,10 +556,10 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             cell.imagePath = movieDetails.imagePath
         }
         
-        cell.onTapImageViewHandler = { (imagePath) in
+        cell.onTapImageView = { (imagePath) in
             UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
-
+        
         cell.title = movieDetails.title
         cell.originalTitle = movieDetails.originalTitle
         cell.genres = movieDetails.genres
@@ -591,7 +591,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     
     private func getMovieDetailsOverviewTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsOverview, for: indexPath) as! MovieDetailsOverviewTableViewCell
-
+        
         cell.overview = movieDetails.overview
         
         return cell
@@ -613,7 +613,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         cell.header = CinePickerCaptions.alsoInSeries
         cell.movieCollection = movieCollection
         
-        cell.onTouchDownHandler = { (movie) in
+        cell.onTouchDown = { (movie) in
             let storyboard = UIStoryboard(name: MainStoryboardIdentifiers.main, bundle: nil)
             let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: MainStoryboardIdentifiers.movieDetailsViewController) as! MovieDetailsViewController
             
@@ -649,7 +649,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
             
-            if let image = loadedImages[person.imagePath] {
+            if let image = downloadedImages[person.imagePath] {
                 cell.imageValue = image
             }
             
@@ -657,7 +657,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
                 cell.imagePath = person.imagePath
             }
             
-            cell.onTapImageViewHandler = { (imagePath) in
+            cell.onTapImageView = { (imagePath) in
                 UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
             }
             
@@ -678,7 +678,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
             
-            if let image = loadedImages[person.imagePath] {
+            if let image = downloadedImages[person.imagePath] {
                 cell.imageValue = image
             }
             
@@ -686,7 +686,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
                 cell.imagePath = person.imagePath
             }
             
-            cell.onTapImageViewHandler = { (imagePath) in
+            cell.onTapImageView = { (imagePath) in
                 UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
             }
             
@@ -701,38 +701,24 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     private func prepare(movieDetailsTableViewCell cell: MovieDetailsTableViewCell) {
-        let imagePath = movieDetails.imagePath
-        
-        if imagePath.isEmpty {
+        cell.imagePath = movieDetails.imagePath
+        if downloadedImages[cell.imagePath] != nil {
             return
         }
-        
-        if loadedImages[imagePath] != nil {
-            return
-        }
-        
-        var cell = cell as ImageFromInternet
-        
-        UIViewHelper.setImageFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
-            self.loadedImages[imagePath] = image
+        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
+        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+            self.downloadedImages[cell.imagePath] = image
         }
     }
     
     private func prepare(personTableViewCell cell: PersonTableViewCell, forRowAt indexPath: IndexPath) {
-        let imagePath = people[indexPath.row].imagePath
-
-        if imagePath.isEmpty {
+        cell.imagePath = people[indexPath.row].imagePath
+        if downloadedImages[cell.imagePath] != nil {
             return
         }
-        
-        if loadedImages[imagePath] != nil {
-            return
-        }
-        
-        var cell = cell as ImageFromInternet
-        
-        UIViewHelper.setImageFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
-            self.loadedImages[imagePath] = image
+        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
+        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+            self.downloadedImages[cell.imagePath] = image
         }
     }
     
@@ -843,7 +829,7 @@ extension MovieDetailsViewController {
         if segueIdentifier == SegueIdentifiers.showPersonList {
             let personListViewController = segue.destination as! PersonListViewController
             let sender = sender as! GoToPersonListTableViewCellSender
-
+            
             personListViewController.title = movieTitle
             personListViewController.people = sender.personListType == PersonListType.cast ? characters : crewPeople
             

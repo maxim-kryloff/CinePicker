@@ -1,13 +1,13 @@
 import UIKit
 
-class MovieListViewController: StatesViewController {
+class MovieListViewController: StateViewController {
     
     @IBOutlet var contentUIView: UIView!
     
     @IBOutlet weak var movieListTableView: UITableView!
     
     @IBOutlet weak var personTypeSegmentControl: UISegmentedControl!
-
+    
     override var tableViewDefinition: UITableView! {
         return movieListTableView
     }
@@ -38,7 +38,7 @@ class MovieListViewController: StatesViewController {
     
     private var isRequestFailed = false
     
-    private var loadedImages: [String: UIImage] = [:]
+    private var downloadedImages: [String: UIImage] = [:]
     
     private let movieListService = MovieListService(movieService: MovieService())
     
@@ -59,7 +59,7 @@ class MovieListViewController: StatesViewController {
         }
         
         unsetMessageState()
-        updateTable(withData: moviesToDisplay)
+        updateTable(providingData: moviesToDisplay)
         
         let firstRowIndexPath = IndexPath(row: 0, section: 0)
         movieListTableView.scrollToRow(at: firstRowIndexPath, at: .top, animated: true)
@@ -74,7 +74,7 @@ class MovieListViewController: StatesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         navigationItem.title = CinePickerCaptions.movies(ofPerson: person.name)
         
         defineNavigationController()
@@ -83,14 +83,14 @@ class MovieListViewController: StatesViewController {
         defineTableView()
         
         setDefaultColors()
-
+        
         performRequest()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        loadedImages = [:]
+        downloadedImages = [:]
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -101,13 +101,13 @@ class MovieListViewController: StatesViewController {
     
     override func onReloadData() {
         super.onReloadData()
-
+        
         unsetAllStates()
         performRequest()
     }
     
-    override func updateTable<DataType>(withData data: [DataType]) {
-        super.updateTable(withData: data)
+    override func updateTable<DataType>(providingData data: [DataType]) {
+        super.updateTable(providingData: data)
         
         movies = data as! [Movie]
         movieListTableView.reloadData()
@@ -135,7 +135,7 @@ class MovieListViewController: StatesViewController {
     private func defineSegmentControl() {
         personTypeSegmentControl.setTitle(CinePickerCaptions.cast, forSegmentAt: 0)
         personTypeSegmentControl.setTitle(CinePickerCaptions.crew, forSegmentAt: 1)
-            
+        
         personTypeSegmentControl.setTitleTextAttributes(
             [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)],
             for: .normal
@@ -174,7 +174,7 @@ class MovieListViewController: StatesViewController {
             ]
         )
     }
-
+    
     private func performRequest() {
         setLoadingState()
         
@@ -214,11 +214,11 @@ class MovieListViewController: StatesViewController {
                     return
                 }
                 
-                self.updateTable(withData: moviesToDisplay)
+                self.updateTable(providingData: moviesToDisplay)
             }
         }
     }
-
+    
 }
 
 extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
@@ -229,21 +229,14 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
-        
-        let imagePath = movies[indexPath.row].imagePath
-        
-        if imagePath.isEmpty {
+        var cell = cell as! ImageFromInternetViewCell
+        cell.imagePath = movies[indexPath.row].imagePath
+        if downloadedImages[cell.imagePath] != nil {
             return
         }
-        
-        if loadedImages[imagePath] != nil {
-            return
-        }
-        
-        var cell = cell as! ImageFromInternet
-        
-        UIViewHelper.setImageFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
-            self.loadedImages[imagePath] = image
+        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
+        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+            self.downloadedImages[cell.imagePath] = image
         }
     }
     
@@ -252,7 +245,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let movie = movies[indexPath.row]
         
-        if let image = loadedImages[movie.imagePath] {
+        if let image = downloadedImages[movie.imagePath] {
             cell.imageValue = image
         }
         
@@ -260,7 +253,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
             cell.imagePath = movie.imagePath
         }
         
-        cell.onTapImageViewHandler = { (imagePath) in
+        cell.onTapImageView = { (imagePath) in
             UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
@@ -282,8 +275,8 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let cell = cell as! MovieTableViewCell
         
-        if let imageUrl = cell.imageUrl {
-            imageService.cancelDownloading(for: imageUrl)
+        if let imageUrl = UIViewHelper.buildImageUrl(byImagePath: cell.imagePath) {
+            imageService.cancelDownloading(by: imageUrl)
         }
     }
     

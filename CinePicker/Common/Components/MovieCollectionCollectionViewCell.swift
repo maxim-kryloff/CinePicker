@@ -6,55 +6,10 @@ class MovieCollectionCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var movieImageActivityIndicator: UIActivityIndicatorView!
     
-    private var _imagePath: String!
-    
-    private let defaultImage = UIImage(named: "default_movie_image")
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        setDefaultState()
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        setDefaultState()
-    }
-    
-    private func setDefaultState() {movieImageImageView.image = defaultImage
-        setDefaultColors()
-        
-        movieImageImageView.image = defaultImage
-        
-        imageViewAlpha = 1.0
-        activityIndicatorAlpha = 0.0
-        imageValue = nil
-        imagePath = ""
-    }
-    
-    private func setDefaultColors() {
-        backgroundColor = CinePickerColors.getBackgroundColor()
-        movieImageActivityIndicator.color = CinePickerColors.getActivityIndicatorColor()
-    }
-
-}
-
-extension MovieCollectionCollectionViewCell: ImageFromInternet {
-    
-    var imageViewAlpha: CGFloat {
-        get { return movieImageImageView.alpha }
-        set { movieImageImageView.alpha = newValue }
-    }
-    
-    var activityIndicatorAlpha: CGFloat {
-        get { return movieImageActivityIndicator.alpha }
-        set { movieImageActivityIndicator.alpha = newValue }
-    }
-    
-    var imageValue: UIImage? {
-        get { return movieImageImageView.image }
-        set { movieImageImageView.image = newValue ?? defaultImage }
+    public var imageValue: UIImage? {
+        didSet {
+            movieImageImageView.image = imageValue
+        }
     }
     
     var imagePath: String {
@@ -62,24 +17,45 @@ extension MovieCollectionCollectionViewCell: ImageFromInternet {
         set { _imagePath = newValue }
     }
     
-    var imageUrl: URL? {
-        get {
-            if imagePath.isEmpty {
-                return nil
-            }
-            
-            return URLBuilder(string: CinePickerConfig.imagePath)
-                .append(pathComponent: imagePath)
-                .build()
-        }
+    private var _imagePath: String!
+    
+    public var defaultImage: UIImage {
+        return UIImage(named: "default_movie_image")!
     }
     
-    func activityIndicatorStartAnimating() {
-        movieImageActivityIndicator.startAnimating()
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setDefaultState()
     }
     
-    func activityIndicatorStopAnimating() {
-        movieImageActivityIndicator.stopAnimating()
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setDefaultState()
     }
+    
+    private func setDefaultState() {
+        setDefaultColors()
+        setDefaultPropertyValues()
+    }
+    
+    private func setDefaultColors() {
+        backgroundColor = CinePickerColors.getBackgroundColor()
+        movieImageActivityIndicator.color = CinePickerColors.getActivityIndicatorColor()
+    }
+    
+    private func setDefaultPropertyValues() {
+        imageValue = defaultImage
+        imagePath = ""
+    }
+}
 
+extension MovieCollectionCollectionViewCell: ImageFromInternetViewCell {
+    
+    var imageFromInternetImageView: UIImageView {
+        return movieImageImageView
+    }
+    
+    var activityIndicatorView: UIActivityIndicatorView {
+        return movieImageActivityIndicator
+    }
 }

@@ -6,9 +6,8 @@ enum AsyncResult<ResultType> {
     
     public func getValue() throws -> ResultType {
         switch self {
-        case AsyncResult.success(let value): return value
-        case AsyncResult.failure(let error): throw error
+            case AsyncResult.success(let value): return value
+            case AsyncResult.failure(let error): throw error
         }
     }
-    
 }

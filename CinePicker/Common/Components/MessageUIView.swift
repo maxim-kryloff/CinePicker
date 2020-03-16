@@ -13,8 +13,7 @@ class MessageUIView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         setDefaultColors()
-        
-        message = nil
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
@@ -22,4 +21,7 @@ class MessageUIView: UIView {
         messageLabel.textColor = CinePickerColors.getMessageColor()
     }
     
+    private func setDefaultPropertyValues() {
+        message = nil
+    }
 }

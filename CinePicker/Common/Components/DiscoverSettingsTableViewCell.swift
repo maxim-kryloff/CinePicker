@@ -37,22 +37,17 @@ class DiscoverSettingsTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         setDefaultState()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setDefaultState()
     }
     
     private func setDefaultState() {
         setDefaultColors()
-        
-        iconString = nil
-        header = nil
-        info = nil
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
@@ -64,4 +59,9 @@ class DiscoverSettingsTableViewCell: UITableViewCell {
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
+    private func setDefaultPropertyValues() {
+        iconString = nil
+        header = nil
+        info = nil
+    }
 }

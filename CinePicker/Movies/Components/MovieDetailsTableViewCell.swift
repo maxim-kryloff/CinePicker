@@ -26,6 +26,25 @@ class MovieDetailsTableViewCell: UITableViewCell {
         return 120
     }
     
+    public var imageValue: UIImage? {
+        didSet {
+            movieImageImageView.image = imageValue
+        }
+    }
+    
+    var imagePath: String {
+        get { return _imagePath }
+        set { _imagePath = newValue }
+    }
+    
+    private var _imagePath: String!
+    
+    var defaultImage: UIImage {
+        return UIImage(named: "default_movie_image")!
+    }
+    
+    public var onTapImageView: ((String) -> Void)?
+    
     public var title: String? {
         didSet {
             titleLabel.text = title
@@ -59,7 +78,6 @@ class MovieDetailsTableViewCell: UITableViewCell {
                 runtimeLabel.text = "\(runtime) \(CinePickerCaptions.min)"
                 return
             }
-            
             runtimeLabel.text = nil
         }
     }
@@ -70,7 +88,6 @@ class MovieDetailsTableViewCell: UITableViewCell {
                 voteCountLabel.text = String(voteCount)
                 return
             }
-            
             voteCountLabel.text = "--"
         }
     }
@@ -80,60 +97,27 @@ class MovieDetailsTableViewCell: UITableViewCell {
             if let rating = rating {
                 ratingLabel.textColor = UIViewHelper.getMovieRatingColor(rating: rating)
                 ratingLabel.text = String(rating)
-                
                 return
             }
-            
             ratingLabel.textColor = CinePickerColors.getSubtitleColor()
             ratingLabel.text = "--"
         }
     }
     
-    public var onTapImageViewHandler: ((String) -> Void)?
-    
-    private var _imagePath: String!
-    
-    private let defaultImage = UIImage(named: "default_movie_image")
-    
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         setDefaultState()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setDefaultState()
     }
     
     private func setDefaultState() {
         setDefaultColors()
-        
-        movieImageImageView.image = defaultImage
-        
-        let imageViewTapGestureRecognizer = UITapGestureRecognizer(
-            target: self, action: #selector(onImageViewTap(tapGestureRecognizer:))
-        )
-        
-        movieImageImageView.gestureRecognizers = nil
-        movieImageImageView.addGestureRecognizer(imageViewTapGestureRecognizer)
-        movieImageImageView.isUserInteractionEnabled = false
-        
-        title = nil
-        originalTitle = nil
-        genres = nil
-        runtime = nil
-        releaseYear = nil
-        voteCount = nil
-        rating = nil
-        
-        onTapImageViewHandler = nil
-        
-        imageViewAlpha = 1.0
-        activityIndicatorAlpha = 0.0
-        imageValue = nil
-        imagePath = ""
+        setImageViewGesture()
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
@@ -148,66 +132,46 @@ class MovieDetailsTableViewCell: UITableViewCell {
         voteSeparatorLabel.textColor = CinePickerColors.getVoteSeparatorColor()
     }
     
+    private func setImageViewGesture() {
+        let imageViewTapGestureRecognizer = UITapGestureRecognizer(
+            target: self, action: #selector(onImageViewTap(tapGestureRecognizer:))
+        )
+        movieImageImageView.gestureRecognizers = nil
+        movieImageImageView.addGestureRecognizer(imageViewTapGestureRecognizer)
+        movieImageImageView.isUserInteractionEnabled = false
+    }
+    
     @objc private func onImageViewTap(tapGestureRecognizer: UITapGestureRecognizer) {
         if !(tapGestureRecognizer.view is UIImageView) {
             return
         }
-        
         if imagePath.isEmpty {
             return
         }
-        
-        onTapImageViewHandler?(imagePath)
+        onTapImageView?(imagePath)
     }
-
+    
+    private func setDefaultPropertyValues() {
+        imageValue = defaultImage
+        imagePath = ""
+        onTapImageView = nil
+        title = nil
+        originalTitle = nil
+        genres = nil
+        releaseYear = nil
+        runtime = nil
+        voteCount = nil
+        rating = nil
+    }
 }
 
-extension MovieDetailsTableViewCell: ImageFromInternet {
+extension MovieDetailsTableViewCell: ImageFromInternetViewCell {
     
-    var imageViewAlpha: CGFloat {
-        get { return movieImageImageView.alpha }
-        set { movieImageImageView.alpha = newValue }
+    var imageFromInternetImageView: UIImageView {
+        return movieImageImageView
     }
     
-    var activityIndicatorAlpha: CGFloat {
-        get { return movieImageActivityIndicator.alpha }
-        set { movieImageActivityIndicator.alpha = newValue }
+    var activityIndicatorView: UIActivityIndicatorView {
+        return movieImageActivityIndicator
     }
-    
-    var imageValue: UIImage? {
-        get {
-            return movieImageImageView.image
-        }
-        
-        set {
-            movieImageImageView.isUserInteractionEnabled = newValue != nil
-            movieImageImageView.image = newValue ?? defaultImage
-        }
-    }
-    
-    var imagePath: String {
-        get { return _imagePath }
-        set { _imagePath = newValue }
-    }
-    
-    var imageUrl: URL? {
-        get {
-            if imagePath.isEmpty {
-                return nil
-            }
-            
-            return URLBuilder(string: CinePickerConfig.imagePath)
-                .append(pathComponent: imagePath)
-                .build()
-        }
-    }
-    
-    func activityIndicatorStartAnimating() {
-        movieImageActivityIndicator.startAnimating()
-    }
-    
-    func activityIndicatorStopAnimating() {
-        movieImageActivityIndicator.stopAnimating()
-    }
-    
 }

@@ -11,5 +11,4 @@ class SegueIdentifiers {
     public static let showDiscoverSettings = "ShowDiscoverSettings"
     
     public static let showDiscoverItemsToSelect = "ShowDiscoverItemsToSelect"
-    
 }

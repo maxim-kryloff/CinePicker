@@ -1,7 +1,7 @@
 import Foundation
 
 class CinePickerConfig {
-
+    
     public static let apiPath = "https://api.themoviedb.org/3"
     
     public static let imagePath = "https://image.tmdb.org/t/p/w185"
@@ -21,5 +21,4 @@ class CinePickerConfig {
     public static func getLanguageCode() -> String {
         return UserDefaults.standard.string(forKey: CinePickerSettingKeys.language) ?? CinePickerLanguageCode.en.rawValue
     }
-    
 }

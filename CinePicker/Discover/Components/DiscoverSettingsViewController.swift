@@ -84,7 +84,7 @@ class DiscoverSettingsViewController: UIViewController {
     }
     
     private func defineFailedLoadingView() {
-        failedLoadingView = UIViewHelper.getFailedLoadingView(for: discoverSettingsTableView, onTouchDownHandler: onReloadGettingGenres)
+        failedLoadingView = UIViewHelper.getFailedLoadingView(for: discoverSettingsTableView, onTouchDown: onReloadGettingGenres)
     }
     
     private func defineTableView() {

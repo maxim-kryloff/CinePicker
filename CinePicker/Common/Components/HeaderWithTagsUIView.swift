@@ -27,7 +27,6 @@ class HeaderWithTagsUIView: UIView {
                 deselectWillCheckItOut()
                 return
             }
-            
             isWillCheckItOutSelected ? selectWillCheckItOut() : deselectWillCheckItOut()
         }
     }
@@ -38,7 +37,6 @@ class HeaderWithTagsUIView: UIView {
                 deselectILikeIt()
                 return
             }
-            
             isILikeItSelected ? selectILikeIt() : deselectILikeIt()
         }
     }
@@ -49,26 +47,26 @@ class HeaderWithTagsUIView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setDefaultState()
     }
     
     private func setDefaultState() {
         setDefaultColors()
-        
-        header = nil
-        
-        isWillCheckItOutSelected = nil
-        isILikeItSelected = nil
-        
-        onTapWillCheckItOut = nil
-        onTapILikeIt = nil
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
         backgroundColor = CinePickerColors.getBackgroundColor()
         headerLabel.textColor = CinePickerColors.getTitleColor()
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
+    }
+    
+    private func setDefaultPropertyValues() {
+        header = nil
+        isWillCheckItOutSelected = nil
+        isILikeItSelected = nil
+        onTapWillCheckItOut = nil
+        onTapILikeIt = nil
     }
     
     private func selectWillCheckItOut() {
@@ -106,5 +104,4 @@ class HeaderWithTagsUIView: UIView {
     @IBAction func onILikeItLGButtonTouchUpInside(_ sender: LGButton) {
         onTapILikeIt?(self)
     }
-    
 }

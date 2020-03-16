@@ -21,5 +21,4 @@ class TableViewCellIdentifiers {
     public static let discoverSettings = "DiscoverSettingsTableViewCellIdentifier"
     
     public static let discoverSettingsItemsToSelect = "DiscoverSettingsItemsToSelectTableViewCellIdentifier"
-    
 }

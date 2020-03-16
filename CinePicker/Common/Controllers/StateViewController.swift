@@ -1,11 +1,11 @@
 import UIKit
 
-class StatesViewController: UIViewController {
-
+class StateViewController: UIViewController {
+    
     public var tableViewDefinition: UITableView! {
         fatalError("tableViewDefinition must be overriden...'")
     }
-
+    
     private var loadingView: LoadingUIView!
     
     private var failedLoadingView: FailedLoadingUIView!
@@ -14,7 +14,6 @@ class StatesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         defineLoadingView()
         defineFailedLoadingView()
         defineMessageView()
@@ -22,27 +21,26 @@ class StatesViewController: UIViewController {
     
     public func onReloadData() { }
     
-    public func updateTable<DataType>(withData data: [DataType]) { }
+    public func updateTable<DataType>(providingData data: [DataType]) { }
     
     private func defineLoadingView() {
         loadingView = UIViewHelper.getLoadingView(for: tableViewDefinition)
     }
     
     private func defineFailedLoadingView() {
-        failedLoadingView = UIViewHelper.getFailedLoadingView(for: tableViewDefinition, onTouchDownHandler: onReloadData)
+        failedLoadingView = UIViewHelper.getFailedLoadingView(for: tableViewDefinition, onTouchDown: onReloadData)
     }
     
     private func defineMessageView() {
         messageView = UIViewHelper.getMessageView(for: tableViewDefinition)
     }
-
 }
 
-extension StatesViewController {
+extension StateViewController {
     
     public func setLoadingState() {
         tableViewDefinition.backgroundView = loadingView
-        updateTable(withData: [])
+        updateTable(providingData: [])
     }
     
     public func unsetLoadingState() {
@@ -53,7 +51,7 @@ extension StatesViewController {
     
     public func setFailedLoadingState() {
         tableViewDefinition.backgroundView = failedLoadingView
-        updateTable(withData: [])
+        updateTable(providingData: [])
     }
     
     public func unsetFailedLoadingState() {
@@ -65,8 +63,7 @@ extension StatesViewController {
     public func setMessageState(withMessage message: String) {
         messageView.message = message
         tableViewDefinition.backgroundView = messageView
-        
-        updateTable(withData: [])
+        updateTable(providingData: [])
     }
     
     public func unsetMessageState() {
@@ -80,5 +77,4 @@ extension StatesViewController {
         unsetFailedLoadingState()
         unsetMessageState()
     }
-    
 }
