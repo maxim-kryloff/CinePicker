@@ -656,14 +656,12 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     
     private func prepare(movieDetailsTableViewCell cell: MovieDetailsTableViewCell) {
         cell.imagePath = movieDetails.imagePath
-        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cellAdapter)
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
     }
     
     private func prepare(personTableViewCell cell: PersonTableViewCell, forRowAt indexPath: IndexPath) {
         cell.imagePath = people[indexPath.row].imagePath
-        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cellAdapter)
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
     }
     
     private func getMovieCollectionSectionNumberOfRows() -> Int {

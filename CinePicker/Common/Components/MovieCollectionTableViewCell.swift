@@ -70,8 +70,7 @@ extension MovieCollectionTableViewCell: UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         var cell = cell as! ImageFromInternetViewCell
         cell.imagePath = movieCollection[indexPath.row].imagePath
-        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cellAdapter)
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

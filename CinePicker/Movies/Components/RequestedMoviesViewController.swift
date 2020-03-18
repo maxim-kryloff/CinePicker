@@ -201,8 +201,7 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
         }
         var cell = cell as! ImageFromInternetViewCell
         cell.imagePath = requestedMovies[indexPath.row].imagePath
-        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cellAdapter)
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -392,8 +392,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         
         var cell = cell as! ImageFromInternetViewCell
         cell.imagePath = imagePath
-        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cellAdapter)
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -18,42 +18,43 @@ class UIImageUtils {
     
     private var imageService = ImageService()
     
-    public func setImageFromInternet(at view: ImageFromInternetViewCellAdapter) {
-        if view.imagePath.isEmpty {
-            setImage(at: view, image: view.defaultImage)
+    public func setImageFromInternet(at cell: ImageFromInternetViewCell) {
+        let cell = ImageFromInternetViewCellAdapter(cell: cell)
+        if cell.imagePath.isEmpty {
+            setImage(at: cell, image: cell.defaultImage)
             return
         }
-        if let downloadedImage = downloadedImages[view.imagePath] {
-            setImage(at: view, image: downloadedImage)
+        if let downloadedImage = downloadedImages[cell.imagePath] {
+            setImage(at: cell, image: downloadedImage)
             return
         }
-        update(imageView: view, bySettingActivityIndicatorAnimatingTo: true)
-        imageService.download(by: getImageUrl(from: view)) { (image) in
+        update(cell: cell, bySettingActivityIndicatorAnimatingTo: true)
+        imageService.download(by: getImageUrl(from: cell)) { (image) in
             OperationQueue.main.addOperation {
-                self.setImage(at: view, image: image)
-                self.downloadedImages[view.imagePath] = image
+                self.setImage(at: cell, image: image)
+                self.downloadedImages[cell.imagePath] = image
             }
         }
     }
     
-    private func setImage(at view: ImageFromInternetViewCellAdapter, image: UIImage?) {
-        view.imageValue = image
-        self.update(imageView: view, bySettingActivityIndicatorAnimatingTo: false)
+    private func setImage(at cell: ImageFromInternetViewCellAdapter, image: UIImage?) {
+        cell.imageValue = image
+        self.update(cell: cell, bySettingActivityIndicatorAnimatingTo: false)
     }
     
     private func update(
-        imageView view: ImageFromInternetViewCellAdapter,
+        cell: ImageFromInternetViewCellAdapter,
         bySettingActivityIndicatorAnimatingTo activityIndicatorIsActive: Bool
     ) {
         if activityIndicatorIsActive {
-            view.activityIndicatorAlpha = 1.0
-            view.imageViewAlpha = 0.0
-            view.activityIndicatorStartAnimating()
+            cell.activityIndicatorAlpha = 1.0
+            cell.imageViewAlpha = 0.0
+            cell.activityIndicatorStartAnimating()
             return
         }
-        let escapingView = view
+        let escapingView = cell
         // 300 milliseconds user will see stopped activity indicator
-        view.activityIndicatorStopAnimating()
+        cell.activityIndicatorStopAnimating()
         let animations = {
             escapingView.activityIndicatorAlpha = 0.0
             escapingView.imageViewAlpha = 1.0
@@ -61,8 +62,8 @@ class UIImageUtils {
         UIView.animate(withDuration: 0.3, animations: animations, completion: nil)
     }
     
-    private func getImageUrl(from view: ImageFromInternetViewCellAdapter) -> URL {
-        guard let url = view.imageUrl else {
+    private func getImageUrl(from cell: ImageFromInternetViewCellAdapter) -> URL {
+        guard let url = cell.imageUrl else {
             fatalError("View image url wasn't built...")
         }
         return url
