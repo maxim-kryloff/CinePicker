@@ -13,15 +13,13 @@ class LoadingTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         setDefaultColors()
-        
         loadingActivityIndicator.startAnimating()
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setDefaultColors()
-        
-        isUserInteractionEnabled = false
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
@@ -29,5 +27,8 @@ class LoadingTableViewCell: UITableViewCell {
         loadingActivityIndicator.color = CinePickerColors.getActivityIndicatorColor()
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
-
+    
+    private func setDefaultPropertyValues() {
+        isUserInteractionEnabled = false
+    }
 }

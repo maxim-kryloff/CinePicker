@@ -9,8 +9,7 @@ class LoadingUIView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         setDefaultColors()
-        
-        messageLabel.text = CinePickerCaptions.loadingData
+        setCaptions()
     }
     
     private func setDefaultColors() {
@@ -19,4 +18,7 @@ class LoadingUIView: UIView {
         messageLabel.textColor = CinePickerColors.getMessageColor()
     }
     
+    private func setCaptions() {
+        messageLabel.text = CinePickerCaptions.loadingData
+    }
 }

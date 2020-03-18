@@ -1,6 +1,6 @@
 import UIKit
 
-class MultiSearchViewController: StatesViewController {
+class MultiSearchViewController: StateViewController {
     
     @IBOutlet var contentUIView: UIView!
     
@@ -20,7 +20,7 @@ class MultiSearchViewController: StatesViewController {
     
     private var entities: [MultiSearchEntity] = []
     
-    private var loadedImages: [String: UIImage] = [:]
+    private var downloadedImages: [String: UIImage] = [:]
     
     private var savedMovies: [SavedMovie] = [] {
         didSet {
@@ -72,7 +72,7 @@ class MultiSearchViewController: StatesViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        loadedImages = [:]
+        downloadedImages = [:]
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -92,8 +92,8 @@ class MultiSearchViewController: StatesViewController {
         performRequest(shouldScrollToFirstRow: false)
     }
     
-    override func updateTable<DataType>(withData data: [DataType]) {
-        super.updateTable(withData: data)
+    override func updateTable<DataType>(providingData data: [DataType]) {
+        super.updateTable(providingData: data)
         
         entities = data as! [MultiSearchEntity]
         entityTableView.reloadData()
@@ -147,14 +147,14 @@ class MultiSearchViewController: StatesViewController {
     private func defineTableView() {
         entityTableView.rowHeight = PersonTableViewCell.standardHeight
         entityTableView.tableFooterView = UIView(frame: .zero)
-
+        
         let movieTableViewCellNib = UINib(nibName: "MovieTableViewCell", bundle: nil)
         entityTableView.register(movieTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movie)
         
         let personTableViewCellNib = UINib(nibName: "PersonTableViewCell", bundle: nil)
         entityTableView.register(personTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.person)
     }
-
+    
     private func setDefaultColors() {
         contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
         
@@ -170,7 +170,7 @@ class MultiSearchViewController: StatesViewController {
         let reversedSavedMovies = Array(savedMovies.reversed())
         let filteredSavedMovies = filter(savedMovies: reversedSavedMovies)
         
-        updateTable(withData: filteredSavedMovies)
+        updateTable(providingData: filteredSavedMovies)
     }
     
     private func removeSavedMovie(at indexPath: IndexPath) {
@@ -213,7 +213,7 @@ class MultiSearchViewController: StatesViewController {
                     return
                 }
                 
-                self.updateTable(withData: requestedSearchEntities)
+                self.updateTable(providingData: requestedSearchEntities)
                 
                 if shouldScrollToFirstRow {
                     let firstIndexPath = IndexPath(row: 0, section: 0);
@@ -254,14 +254,14 @@ class MultiSearchViewController: StatesViewController {
                     action: {
                         CinePickerConfig.setLanguage(language: .en)
                         self.resetViewController()
-                    }
+                }
                 ),
                 (
                     title: CinePickerCaptions.russian,
                     action: {
                         CinePickerConfig.setLanguage(language: .ru)
                         self.resetViewController()
-                    }
+                }
                 )
             ],
             imageName: "lang_image",
@@ -286,7 +286,7 @@ class MultiSearchViewController: StatesViewController {
             
             UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.willCheckItOutFilter)
             UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.iLikeItFilter)
-
+            
             self.onChangeLanguage()
         }
         
@@ -390,28 +390,30 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         var imagePath: String
         
         switch cell {
-        case is MovieTableViewCell:
-            let movie = entities[indexPath.row] as! Movie
-            imagePath = movie.imagePath
-        case is PersonTableViewCell:
-            let popularPerson = entities[indexPath.row] as! PopularPerson
-            imagePath = popularPerson.imagePath
-        default:
-            fatalError("Unexpected type of table view cell...")
+            case is MovieTableViewCell:
+                let movie = entities[indexPath.row] as! Movie
+                imagePath = movie.imagePath
+            case is PersonTableViewCell:
+                let popularPerson = entities[indexPath.row] as! PopularPerson
+                imagePath = popularPerson.imagePath
+            default:
+                fatalError("Unexpected type of table view cell...")
         }
         
         if imagePath.isEmpty {
             return
         }
         
-        if loadedImages[imagePath] != nil {
+        if downloadedImages[imagePath] != nil {
             return
         }
         
-        var cell = cell as! ImageFromInternet
+        var cell = cell as! ImageFromInternetViewCell
+        cell.imagePath = imagePath
+        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
         
-        UIViewHelper.setImageFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
-            self.loadedImages[imagePath] = image
+        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+            self.downloadedImages[imagePath] = image
         }
     }
     
@@ -419,17 +421,17 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         let entity = entities[indexPath.row]
         
         switch (entity) {
-        case is Movie: return getMovieTableViewCell(tableView, cellForRowAt: indexPath, movie: entity as! Movie)
-        case is PopularPerson: return getPersonTableViewCell(tableView, cellForRowAt: indexPath, person: entity as! PopularPerson)
-        default: fatalError("Entity has unexpeted type...")
+            case is Movie: return getMovieTableViewCell(tableView, cellForRowAt: indexPath, movie: entity as! Movie)
+            case is PopularPerson: return getPersonTableViewCell(tableView, cellForRowAt: indexPath, person: entity as! PopularPerson)
+            default: fatalError("Entity has unexpeted type...")
         }
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = cell as! ImageFromInternet
+        let cell = ImageFromInternetViewCellAdapter(cell: cell as! ImageFromInternetViewCell)
         
         if let imageUrl = cell.imageUrl {
-            imageService.cancelDownloading(for: imageUrl)
+            imageService.cancelDownloading(by: imageUrl)
         }
     }
     
@@ -456,11 +458,11 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         
         fatalError("Unexpeted type of selected entity...")
     }
-
+    
     private func getMovieTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, movie: Movie) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
         
-        if let image = loadedImages[movie.imagePath] {
+        if let image = downloadedImages[movie.imagePath] {
             cell.imageValue = image
         }
         
@@ -468,7 +470,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
             cell.imagePath = movie.imagePath
         }
         
-        cell.onTapImageViewHandler = { (imagePath) in
+        cell.onTapImageView = { (imagePath) in
             UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
@@ -499,7 +501,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     private func getPersonTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, person: PopularPerson) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
         
-        if let image = loadedImages[person.imagePath] {
+        if let image = downloadedImages[person.imagePath] {
             cell.imageValue = image
         }
         
@@ -507,7 +509,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
             cell.imagePath = person.imagePath
         }
         
-        cell.onTapImageViewHandler = { (imagePath) in
+        cell.onTapImageView = { (imagePath) in
             UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
@@ -568,7 +570,7 @@ extension MultiSearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         currentSearchQuery = searchText
-        loadedImages = [:]
+        downloadedImages = [:]
         
         if currentSearchQuery.isEmpty {
             unsetAllStates()
@@ -606,5 +608,5 @@ extension MultiSearchViewController: UISearchBarDelegate {
         searchBar.text = nil
         self.searchBar(searchBar, textDidChange: "")
     }
-
+    
 }

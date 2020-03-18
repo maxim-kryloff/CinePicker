@@ -1,7 +1,7 @@
 import UIKit
 
-class RequestedMoviesViewController: StatesViewController {
-
+class RequestedMoviesViewController: StateViewController {
+    
     @IBOutlet var contentUIView: UIView!
     
     @IBOutlet weak var topBarView: UIView!
@@ -33,12 +33,12 @@ class RequestedMoviesViewController: StatesViewController {
     private var savedMovieMap: [Int: SavedMovie] = [:]
     
     private var isLiveScrollingRelevant = false
-
+    
     private var isBeingLiveScrolled = false
     
     private let liveScrollingDellayMilliseconds: Int = 1000
     
-    private var loadedImages: [String: UIImage] = [:]
+    private var downloadedImages: [String: UIImage] = [:]
     
     private let imageService = ImageService()
     
@@ -64,7 +64,7 @@ class RequestedMoviesViewController: StatesViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        loadedImages = [:]
+        downloadedImages = [:]
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -80,8 +80,8 @@ class RequestedMoviesViewController: StatesViewController {
         performRequest()
     }
     
-    override func updateTable<DataType>(withData data: [DataType]) {
-        super.updateTable(withData: data)
+    override func updateTable<DataType>(providingData data: [DataType]) {
+        super.updateTable(providingData: data)
         
         requestedMovies = data as! [Movie]
         requestedMoviesTableView.reloadData()
@@ -158,7 +158,7 @@ class RequestedMoviesViewController: StatesViewController {
                     return
                 }
                 
-                self.updateTable(withData: requestedMoviesResult)
+                self.updateTable(providingData: requestedMoviesResult)
             }
         }
     }
@@ -176,18 +176,18 @@ class RequestedMoviesViewController: StatesViewController {
                     
                     guard let requestedMoviesResult = requestedMoviesResult else {
                         self.isLiveScrollingRelevant = false
-                        self.updateTable(withData: self.requestedMovies)
+                        self.updateTable(providingData: self.requestedMovies)
                         
                         return
                     }
                     
                     self.isLiveScrollingRelevant = !requestedMoviesResult.isEmpty
-                    self.updateTable(withData: self.requestedMovies + requestedMoviesResult)
+                    self.updateTable(providingData: self.requestedMovies + requestedMoviesResult)
                 }
             }
         }
     }
-
+    
 }
 
 extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDelegate {
@@ -206,25 +206,17 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
-        
         if !(cell is MovieTableViewCell) {
             return
         }
-        
-        let imagePath = requestedMovies[indexPath.row].imagePath
-        
-        if imagePath.isEmpty {
+        var cell = cell as! ImageFromInternetViewCell
+        cell.imagePath = requestedMovies[indexPath.row].imagePath
+        if self.downloadedImages[cell.imagePath] != nil {
             return
         }
-        
-        if self.loadedImages[imagePath] != nil {
-            return
-        }
-        
-        var cell = cell as! ImageFromInternet
-        
-        UIViewHelper.setImageFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
-            self.loadedImages[imagePath] = image
+        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
+        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+            self.downloadedImages[cell.imagePath] = image
         }
     }
     
@@ -243,7 +235,7 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
         
         let movie = requestedMovies[indexPath.row]
         
-        if let image = loadedImages[movie.imagePath] {
+        if let image = downloadedImages[movie.imagePath] {
             cell.imageValue = image
         }
         
@@ -251,7 +243,7 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
             cell.imagePath = movie.imagePath
         }
         
-        cell.onTapImageViewHandler = { (imagePath) in
+        cell.onTapImageView = { (imagePath) in
             UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
@@ -275,11 +267,11 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
             return
         }
         
-        guard let imageUrl = cell.imageUrl else {
+        guard let imageUrl = UIViewHelper.buildImageUrl(byImagePath: cell.imagePath) else {
             return
         }
         
-        imageService.cancelDownloading(for: imageUrl)
+        imageService.cancelDownloading(by: imageUrl)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

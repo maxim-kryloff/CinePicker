@@ -19,7 +19,6 @@ class URLBuilder {
     public func append(queryItem: (String, String))  -> URLBuilder {
         let queryItem = URLQueryItem(name: queryItem.0, value: queryItem.1)
         queryItems.append(queryItem)
-        
         return self
     }
     
@@ -27,11 +26,13 @@ class URLBuilder {
         guard let url = url else {
             return nil
         }
-        
-        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        urlComponents?.queryItems = queryItems
-        
+        let urlComponents = createUrlComponents(url: url)
         return urlComponents?.url
     }
     
+    private func createUrlComponents(url: URL) -> URLComponents? {
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        urlComponents?.queryItems = queryItems
+        return urlComponents
+    }
 }

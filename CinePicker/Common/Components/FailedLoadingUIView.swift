@@ -6,20 +6,17 @@ class FailedLoadingUIView: UIView {
     
     @IBOutlet weak var actionButton: UIButton!
     
-    public var onTouchDownHandler: (() -> Void)?
+    public var onTouchDown: (() -> Void)?
     
     @IBAction func onTouchDown(_ sender: UIButton) {
-        onTouchDownHandler?()
+        onTouchDown?()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setDefaultColors()
-        
-        messageLabel.text = CinePickerCaptions.couldntReloadData
-        actionButton.setTitle(CinePickerCaptions.reload, for: .normal)
-        
-        onTouchDownHandler = nil
+        setCaptions()
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
@@ -28,4 +25,12 @@ class FailedLoadingUIView: UIView {
         actionButton.setTitleColor(CinePickerColors.getActionColor(), for: .normal)
     }
     
+    private func setCaptions() {
+        messageLabel.text = CinePickerCaptions.couldntReloadData
+        actionButton.setTitle(CinePickerCaptions.reload, for: .normal)
+    }
+    
+    private func setDefaultPropertyValues() {
+        onTouchDown = nil
+    }
 }

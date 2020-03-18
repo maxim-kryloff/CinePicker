@@ -24,35 +24,26 @@ class MovieCollectionTableViewCell: UITableViewCell {
         }
     }
     
-    public var onTouchDownHandler: ((_ movie: Movie) -> Void)?
+    public var onTouchDown: ((_ movie: Movie) -> Void)?
     
-    private var loadedImages: [String: UIImage] = [:]
+    private var downloadedImages: [String: UIImage] = [:]
     
     private let imageService = ImageService()
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         setDefaultState()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setDefaultState()
-        
-        let movieCollectionCollectionViewCellNib = UINib(nibName: "MovieCollectionCollectionViewCell", bundle: nil)
-        movieCollectionCollectionView.register(movieCollectionCollectionViewCellNib, forCellWithReuseIdentifier: CollectionViewCellIdentifiers.movieCollection)
+        registerMovieCollectionCollectionViewCell()
     }
     
     private func setDefaultState() {
         setDefaultColors()
-        
-        header = nil
-        movieCollection = []
-        loadedImages = [:]
-        
-        onTouchDownHandler = nil
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
@@ -62,6 +53,17 @@ class MovieCollectionTableViewCell: UITableViewCell {
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
+    private func setDefaultPropertyValues() {
+        header = nil
+        movieCollection = []
+        onTouchDown = nil
+        downloadedImages = [:]
+    }
+    
+    private func registerMovieCollectionCollectionViewCell() {
+        let movieCollectionCollectionViewCellNib = UINib(nibName: "MovieCollectionCollectionViewCell", bundle: nil)
+        movieCollectionCollectionView.register(movieCollectionCollectionViewCellNib, forCellWithReuseIdentifier: CollectionViewCellIdentifiers.movieCollection)
+    }
 }
 
 extension MovieCollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -71,51 +73,47 @@ extension MovieCollectionTableViewCell: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let imagePath = movieCollection[indexPath.row].imagePath
-        
-        if imagePath.isEmpty {
+        var cell = cell as! ImageFromInternetViewCell
+        cell.imagePath = movieCollection[indexPath.row].imagePath
+        if downloadedImages[cell.imagePath] != nil {
             return
         }
-        
-        if loadedImages[imagePath] != nil {
-            return
-        }
-        
-        var cell = cell as! ImageFromInternet
-        
-        UIViewHelper.setImageFromInternet(by: imagePath, at: &cell, using: imageService) { (image) in
-            self.loadedImages[imagePath] = image
+        setImageFromInternet(at: cell)
+    }
+    
+    func setImageFromInternet(at cell: ImageFromInternetViewCell) {
+        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
+        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+            self.downloadedImages[cell.imagePath] = image
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let identifier = CollectionViewCellIdentifiers.movieCollection
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! MovieCollectionCollectionViewCell
-        
+        let cell = dequeueMovieCollectionCollectionViewCell(from: collectionView, at: indexPath)
         let movie = movieCollection[indexPath.row]
-        
-        if let image = loadedImages[movie.imagePath] {
+        if let image = downloadedImages[movie.imagePath] {
             cell.imageValue = image
         }
-        
+        return cell
+    }
+    
+    func dequeueMovieCollectionCollectionViewCell(from collectionView: UICollectionView, at indexPath: IndexPath) -> MovieCollectionCollectionViewCell {
+        let identifier = CollectionViewCellIdentifiers.movieCollection
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! MovieCollectionCollectionViewCell
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let cell = cell as! MovieCollectionCollectionViewCell
-        
-        if let imageUrl = cell.imageUrl {
-            imageService.cancelDownloading(for: imageUrl)
+        if let imageUrl = UIViewHelper.buildImageUrl(byImagePath: cell.imagePath) {
+            imageService.cancelDownloading(by: imageUrl)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        loadedImages = [:]
-        
+        downloadedImages = [:]
         let movie = movieCollection[indexPath.row]
-        
-        onTouchDownHandler?(movie)
+        onTouchDown?(movie)
     }
-    
 }
 

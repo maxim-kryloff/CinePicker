@@ -18,14 +18,12 @@ class HeaderUIView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setDefaultState()
     }
     
     private func setDefaultState() {
         setDefaultColors()
-        
-        header = nil
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
@@ -34,4 +32,7 @@ class HeaderUIView: UIView {
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
+    private func setDefaultPropertyValues() {
+        header = nil
+    }
 }

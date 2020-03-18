@@ -11,7 +11,6 @@ class AsyncOperation: Operation {
             willChangeValue(forKey: newValue.rawValue)
             willChangeValue(forKey: state.rawValue)
         }
-        
         didSet {
             didChangeValue(forKey: oldValue.rawValue)
             didChangeValue(forKey: state.rawValue)
@@ -39,9 +38,7 @@ class AsyncOperation: Operation {
             state = .isFinished
             return
         }
-        
         main()
-        
         state = .isExecuting
     }
     
@@ -49,5 +46,4 @@ class AsyncOperation: Operation {
         super.cancel ()
         state = .isFinished
     }
-    
 }

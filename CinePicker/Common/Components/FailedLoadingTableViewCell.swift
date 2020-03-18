@@ -15,9 +15,7 @@ class FailedLoadingTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setDefaultColors()
-        
-        messageLabel.text = CinePickerCaptions.couldntReloadData
-        actionButton.setTitle(CinePickerCaptions.reload, for: .normal)
+        setCaptions()
     }
     
     private func setDefaultColors() {
@@ -26,5 +24,9 @@ class FailedLoadingTableViewCell: UITableViewCell {
         actionButton.setTitleColor(CinePickerColors.getActionColor(), for: .normal)
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
-
+    
+    private func setCaptions() {
+        messageLabel.text = CinePickerCaptions.couldntReloadData
+        actionButton.setTitle(CinePickerCaptions.reload, for: .normal)
+    }
 }

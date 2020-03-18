@@ -21,16 +21,17 @@ class HeaderTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        setDefaultColors()
-        
-        header = nil
+        setDefaultState()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setDefaultState()
+    }
+    
+    private func setDefaultState() {
         setDefaultColors()
-        
-        header = nil
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
@@ -39,5 +40,8 @@ class HeaderTableViewCell: UITableViewCell {
         rightArrowLGButton.rightIconColor = CinePickerColors.getActionColor()
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
-
+    
+    private func setDefaultPropertyValues() {
+        header = nil
+    }
 }

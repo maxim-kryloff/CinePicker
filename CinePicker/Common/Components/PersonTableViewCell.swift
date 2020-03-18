@@ -16,6 +16,25 @@ class PersonTableViewCell: UITableViewCell {
         return 80
     }
     
+    public var imageValue: UIImage? {
+        didSet {
+            personImageImageView.image = imageValue
+        }
+    }
+    
+    public var imagePath: String {
+        get { return _imagePath }
+        set { _imagePath = newValue }
+    }
+    
+    private var _imagePath: String!
+    
+    public var defaultImage: UIImage {
+        return UIImage(named: "default_person_image")!
+    }
+    
+    public var onTapImageView: ((String) -> Void)?
+    
     public var personName: String? {
         didSet {
             personNameLabel.text = personName
@@ -36,47 +55,20 @@ class PersonTableViewCell: UITableViewCell {
         }
     }
     
-    public var onTapImageViewHandler: ((String) -> Void)?
-    
-    private var _imagePath: String!
-    
-    private let defaultImage = UIImage(named: "default_person_image")
-    
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         setDefaultState()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setDefaultState()
     }
     
     private func setDefaultState() {
         setDefaultColors()
-        
-        personImageImageView.image = defaultImage
-        
-        let imageViewTapGestureRecognizer = UITapGestureRecognizer(
-            target: self, action: #selector(onImageViewTap(tapGestureRecognizer:))
-        )
-        
-        personImageImageView.gestureRecognizers = nil
-        personImageImageView.addGestureRecognizer(imageViewTapGestureRecognizer)
-        personImageImageView.isUserInteractionEnabled = false
-        
-        personName = nil
-        personPosition = nil
-        isPersonPositionValid = nil
-        
-        onTapImageViewHandler = nil
-        
-        imageViewAlpha = 1.0
-        activityIndicatorAlpha = 0.0
-        imageValue = nil
-        imagePath = ""
+        setImageViewGesture()
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
@@ -87,66 +79,42 @@ class PersonTableViewCell: UITableViewCell {
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
+    private func setImageViewGesture() {
+        let imageViewTapGestureRecognizer = UITapGestureRecognizer(
+            target: self, action: #selector(onImageViewTap(tapGestureRecognizer:))
+        )
+        personImageImageView.gestureRecognizers = nil
+        personImageImageView.addGestureRecognizer(imageViewTapGestureRecognizer)
+        personImageImageView.isUserInteractionEnabled = false
+    }
+    
     @objc private func onImageViewTap(tapGestureRecognizer: UITapGestureRecognizer) {
         if !(tapGestureRecognizer.view is UIImageView) {
             return
         }
-        
         if imagePath.isEmpty {
             return
         }
-        
-        onTapImageViewHandler?(imagePath)
+        onTapImageView?(imagePath)
     }
     
+    private func setDefaultPropertyValues() {
+        imageValue = defaultImage
+        imagePath = ""
+        onTapImageView = nil
+        personName = nil
+        personPosition = nil
+        isPersonPositionValid = nil
+    }
 }
 
-extension PersonTableViewCell: ImageFromInternet {
+extension PersonTableViewCell: ImageFromInternetViewCell {
     
-    var imageViewAlpha: CGFloat {
-        get { return personImageImageView.alpha }
-        set { personImageImageView.alpha = newValue }
+    var imageFromInternetImageView: UIImageView {
+        return personImageImageView
     }
     
-    var activityIndicatorAlpha: CGFloat {
-        get { return personImageActivityIndicator.alpha }
-        set { personImageActivityIndicator.alpha = newValue }
+    var activityIndicatorView: UIActivityIndicatorView {
+        return personImageActivityIndicator
     }
-    
-    var imageValue: UIImage? {
-        get {
-            return personImageImageView.image
-        }
-        
-        set {
-            personImageImageView.isUserInteractionEnabled = newValue != nil
-            personImageImageView.image = newValue ?? defaultImage
-        }
-    }
-    
-    var imagePath: String {
-        get { return _imagePath }
-        set { _imagePath = newValue }
-    }
-    
-    var imageUrl: URL? {
-        get {
-            if imagePath.isEmpty {
-                return nil
-            }
-            
-            return URLBuilder(string: CinePickerConfig.imagePath)
-                .append(pathComponent: imagePath)
-                .build()
-        }
-    }
-    
-    func activityIndicatorStartAnimating() {
-        personImageActivityIndicator.startAnimating()
-    }
-    
-    func activityIndicatorStopAnimating() {
-        personImageActivityIndicator.stopAnimating()
-    }
-    
 }
