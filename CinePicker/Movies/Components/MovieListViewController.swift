@@ -38,11 +38,7 @@ class MovieListViewController: StateViewController {
     
     private var isRequestFailed = false
     
-    private var downloadedImages: [String: UIImage] = [:]
-    
     private let movieListService = MovieListService(movieService: MovieService())
-    
-    private let imageService = ImageService()
     
     @IBAction func onPersonTypeSegmentControlAction(_ sender: Any) {
         if isBeingRequested || isRequestFailed {
@@ -85,12 +81,6 @@ class MovieListViewController: StateViewController {
         setDefaultColors()
         
         performRequest()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        downloadedImages = [:]
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -231,13 +221,8 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.selectedBackgroundView = UIViewUtils.getUITableViewCellSelectedBackgroundView()
         var cell = cell as! ImageFromInternetViewCell
         cell.imagePath = movies[indexPath.row].imagePath
-        if downloadedImages[cell.imagePath] != nil {
-            return
-        }
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
-            self.downloadedImages[cell.imagePath] = image
-        }
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cellAdapter)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -245,16 +230,12 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let movie = movies[indexPath.row]
         
-        if let image = downloadedImages[movie.imagePath] {
-            cell.imageValue = image
-        }
-        
         if cell.imagePath.isEmpty {
             cell.imagePath = movie.imagePath
         }
         
         cell.onTapImageView = { (imagePath) in
-            UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
         }
         
         cell.title = movie.title
@@ -270,14 +251,6 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.rating = movie.rating
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = cell as! MovieTableViewCell
-        
-        if let imageUrl = UIViewUtils.buildImageUrl(by: cell.imagePath) {
-            imageService.cancelDownloading(by: imageUrl)
-        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -38,10 +38,6 @@ class RequestedMoviesViewController: StateViewController {
     
     private let liveScrollingDellayMilliseconds: Int = 1000
     
-    private var downloadedImages: [String: UIImage] = [:]
-    
-    private let imageService = ImageService()
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -59,12 +55,6 @@ class RequestedMoviesViewController: StateViewController {
         setDefaultColors()
         
         performRequest()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        downloadedImages = [:]
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -211,13 +201,8 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
         }
         var cell = cell as! ImageFromInternetViewCell
         cell.imagePath = requestedMovies[indexPath.row].imagePath
-        if self.downloadedImages[cell.imagePath] != nil {
-            return
-        }
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
-            self.downloadedImages[cell.imagePath] = image
-        }
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cellAdapter)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -235,16 +220,8 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
         
         let movie = requestedMovies[indexPath.row]
         
-        if let image = downloadedImages[movie.imagePath] {
-            cell.imageValue = image
-        }
-        
-        if cell.imagePath.isEmpty {
-            cell.imagePath = movie.imagePath
-        }
-        
         cell.onTapImageView = { (imagePath) in
-            UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
         }
         
         cell.title = movie.title
@@ -260,18 +237,6 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
         cell.rating = movie.rating
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? MovieTableViewCell else {
-            return
-        }
-        
-        guard let imageUrl = UIViewUtils.buildImageUrl(by: cell.imagePath) else {
-            return
-        }
-        
-        imageService.cancelDownloading(by: imageUrl)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -12,10 +12,6 @@ class PersonListViewController: UIViewController {
     
     private var actionsBarButtonItem: UIBarButtonItem!
     
-    private var downloadedImages: [String: UIImage] = [:]
-    
-    private let imageService = ImageService()
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -30,12 +26,6 @@ class PersonListViewController: UIViewController {
         defineTableView()
         
         setDefaultColors()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        downloadedImages = [:]
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -101,13 +91,8 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.selectedBackgroundView = UIViewUtils.getUITableViewCellSelectedBackgroundView()
         var cell = cell as! ImageFromInternetViewCell
         cell.imagePath = people[indexPath.row].imagePath
-        if downloadedImages[cell.imagePath] != nil {
-            return
-        }
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
-            self.downloadedImages[cell.imagePath] = image
-        }
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cellAdapter)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -115,16 +100,8 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let person = people[indexPath.row]
         
-        if let image = downloadedImages[person.imagePath] {
-            cell.imageValue = image
-        }
-        
-        if cell.imagePath.isEmpty {
-            cell.imagePath = person.imagePath
-        }
-        
         cell.onTapImageView = { (imagePath) in
-            UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
         }
         
         cell.personName = person.name
@@ -138,14 +115,6 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = cell as! PersonTableViewCell
-        
-        if let imageUrl = UIViewUtils.buildImageUrl(by: cell.imagePath) {
-            imageService.cancelDownloading(by: imageUrl)
-        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -31,8 +31,12 @@ extension ImageFromInternetViewCellAdapter {
             if imagePath.isEmpty {
                 return nil
             }
-            return UIViewUtils.buildImageUrl(by: imagePath)
+            return UIViewUtilsFactory.shared.getImageUtils().buildImageUrl(by: imagePath)
         }
+    }
+    
+    var defaultImage: UIImage {
+        return cell.defaultImage
     }
     
     public var imageViewAlpha: CGFloat {

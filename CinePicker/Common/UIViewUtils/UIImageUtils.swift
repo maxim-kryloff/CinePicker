@@ -1,42 +1,44 @@
 import UIKit
 import Agrume
 
-class ImageUtils {
+class UIImageUtils {
     
-    private static var instance: ImageUtils?
+    private static var instance: UIImageUtils?
     
-    public static var shared: ImageUtils {
+    public static var shared: UIImageUtils {
         if instance == nil {
-            instance = ImageUtils()
+            instance = UIImageUtils()
         }
         return instance!
     }
     
-    public func setImageFromInternet(
-        at view: ImageFromInternetViewCellAdapter,
-        downloadedBy imageService: ImageService,
-        onComplete callback: @escaping (_: UIImage?) -> Void
-    ) {
+    private init() { }
+    
+    private var downloadedImages: [String: UIImage] = [:]
+    
+    private var imageService = ImageService()
+    
+    public func setImageFromInternet(at view: ImageFromInternetViewCellAdapter) {
         if view.imagePath.isEmpty {
-            setImage(at: view, image: nil, onComplete: callback)
+            setImage(at: view, image: view.defaultImage)
+            return
+        }
+        if let downloadedImage = downloadedImages[view.imagePath] {
+            setImage(at: view, image: downloadedImage)
             return
         }
         update(imageView: view, bySettingActivityIndicatorAnimatingTo: true)
         imageService.download(by: getImageUrl(from: view)) { (image) in
-            self.setImage(at: view, image: image, onComplete: callback)
+            OperationQueue.main.addOperation {
+                self.setImage(at: view, image: image)
+                self.downloadedImages[view.imagePath] = image
+            }
         }
     }
     
-    private func setImage(
-        at view: ImageFromInternetViewCellAdapter,
-        image: UIImage?,
-        onComplete callback: @escaping (_: UIImage?) -> Void
-    ) {
-        OperationQueue.main.addOperation {
-            view.imageValue = image
-            self.update(imageView: view, bySettingActivityIndicatorAnimatingTo: false)
-            callback(image)
-        }
+    private func setImage(at view: ImageFromInternetViewCellAdapter, image: UIImage?) {
+        view.imageValue = image
+        self.update(imageView: view, bySettingActivityIndicatorAnimatingTo: false)
     }
     
     private func update(
@@ -66,13 +68,9 @@ class ImageUtils {
         return url
     }
     
-    public func openImage(
-        from viewController: UIViewController,
-        by imagePath: String,
-        using imageService: ImageService
-    ) {
+    public func openImage(from viewController: UIViewController, by imagePath: String) {
         let url = buildOriginalImageUrl(by: imagePath)
-        openFullScreenImage(from: viewController, downloadedBy: url, using: imageService)
+        openFullScreenImage(from: viewController, downloadedBy: url)
     }
     
     private func buildOriginalImageUrl(by imagePath: String) -> URL {
@@ -85,14 +83,10 @@ class ImageUtils {
         return url
     }
     
-    private func openFullScreenImage(
-        from viewController: UIViewController,
-        downloadedBy url: URL,
-        using imageService: ImageService
-    ) {
+    private func openFullScreenImage(from viewController: UIViewController, downloadedBy url: URL) {
         let agrume = Agrume(url: url, background: .colored(CinePickerColors.getBackgroundColor()))
         agrume.download = { (url, completion) in
-            imageService.download(by: url) { (image) in
+            self.imageService.download(by: url) { (image) in
                 completion(image)
             }
         }

@@ -63,10 +63,6 @@ class MovieDetailsViewController: UIViewController {
     
     private var crewPeopleLimit: Int = 4
     
-    private var downloadedImages: [String: UIImage] = [:]
-    
-    private let imageService = ImageService()
-    
     private var movieDetailsService = MovieDetailsService(movieService: MovieService(), personService: PersonService())
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,12 +86,6 @@ class MovieDetailsViewController: UIViewController {
         setDefaultColors()
         
         performMovieDetailsRequest()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        downloadedImages = [:]
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -483,18 +473,6 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
     
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if !(cell is MovieDetailsTableViewCell) && !(cell is PersonTableViewCell) {
-            return
-        }
-        
-        let cell = ImageFromInternetViewCellAdapter(cell: cell as! ImageFromInternetViewCell)
-        
-        if let imageUrl = cell.imageUrl {
-            imageService.cancelDownloading(by: imageUrl)
-        }
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == movieDetailsSectionNumber || indexPath.section == movieDetailsTagsSectionNumber {
             tableView.deselectRow(at: indexPath, animated: true)
@@ -548,16 +526,8 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     private func getMovieDetailsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetails, for: indexPath) as! MovieDetailsTableViewCell
         
-        if let image = downloadedImages[movieDetails.imagePath] {
-            cell.imageValue = image
-        }
-        
-        if cell.imagePath.isEmpty {
-            cell.imagePath = movieDetails.imagePath
-        }
-        
         cell.onTapImageView = { (imagePath) in
-            UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
         }
         
         cell.title = movieDetails.title
@@ -649,16 +619,8 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
             
-            if let image = downloadedImages[person.imagePath] {
-                cell.imageValue = image
-            }
-            
-            if cell.imagePath.isEmpty {
-                cell.imagePath = person.imagePath
-            }
-            
             cell.onTapImageView = { (imagePath) in
-                UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
+                UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
             }
             
             cell.personName = character.name
@@ -677,17 +639,9 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             }
             
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
-            
-            if let image = downloadedImages[person.imagePath] {
-                cell.imageValue = image
-            }
-            
-            if cell.imagePath.isEmpty {
-                cell.imagePath = person.imagePath
-            }
-            
+
             cell.onTapImageView = { (imagePath) in
-                UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
+                UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
             }
             
             cell.personName = crewPerson.name
@@ -702,24 +656,14 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     
     private func prepare(movieDetailsTableViewCell cell: MovieDetailsTableViewCell) {
         cell.imagePath = movieDetails.imagePath
-        if downloadedImages[cell.imagePath] != nil {
-            return
-        }
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
-            self.downloadedImages[cell.imagePath] = image
-        }
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cellAdapter)
     }
     
     private func prepare(personTableViewCell cell: PersonTableViewCell, forRowAt indexPath: IndexPath) {
         cell.imagePath = people[indexPath.row].imagePath
-        if downloadedImages[cell.imagePath] != nil {
-            return
-        }
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
-            self.downloadedImages[cell.imagePath] = image
-        }
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cellAdapter)
     }
     
     private func getMovieCollectionSectionNumberOfRows() -> Int {

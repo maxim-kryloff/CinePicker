@@ -16,26 +16,6 @@ class UIViewUtils {
         }
     }
     
-    public static func setImageFromInternet(
-        at view: ImageFromInternetViewCellAdapter,
-        downloadedBy imageService: ImageService,
-        onComplete callback: @escaping (_: UIImage?) -> Void
-    ) {
-        ImageUtils.shared.setImageFromInternet(at: view, downloadedBy: imageService, onComplete: callback)
-    }
-    
-    public static func openImage(
-        from viewController: UIViewController,
-        by imagePath: String,
-        using imageService: ImageService
-    ) {
-        ImageUtils.shared.openImage(from: viewController, by: imagePath, using: imageService)
-    }
-    
-    public static func buildImageUrl(by imagePath: String) -> URL? {
-        return ImageUtils.shared.buildImageUrl(by: imagePath)
-    }
-    
     public static func getUITableViewCellSelectedBackgroundView() -> UIView {
         let view = UIView()
         view.backgroundColor = CinePickerColors.getSelectedBackgroundColor()
