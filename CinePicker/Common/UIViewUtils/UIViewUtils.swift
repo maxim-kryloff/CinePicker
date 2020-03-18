@@ -1,8 +1,7 @@
 import UIKit
-import Agrume
 import SCLAlertView
 
-class UIViewHelper {
+class UIViewUtils {
     
     private static var alertViewResponder: SCLAlertViewResponder?
     
@@ -22,61 +21,7 @@ class UIViewHelper {
         downloadedBy imageService: ImageService,
         onComplete callback: @escaping (_: UIImage?) -> Void
     ) {
-        if view.imagePath.isEmpty {
-            setImage(at: view, image: nil, onComplete: callback)
-            return
-        }
-        downloadAndSetImage(at: view, using: imageService, onComplete: callback)
-    }
-    
-    private static func setImage(
-        at view: ImageFromInternetViewCellAdapter,
-        image: UIImage?,
-        onComplete callback: @escaping (_: UIImage?) -> Void
-    ) {
-        OperationQueue.main.addOperation {
-            view.imageValue = image
-            update(imageView: view, bySettingActivityIndicatorAnimatingTo: false)
-            callback(image)
-        }
-    }
-    
-    private static func update(
-        imageView view: ImageFromInternetViewCellAdapter,
-        bySettingActivityIndicatorAnimatingTo activityIndicatorIsActive: Bool
-    ) {
-        if activityIndicatorIsActive {
-            view.activityIndicatorAlpha = 1.0
-            view.imageViewAlpha = 0.0
-            view.activityIndicatorStartAnimating()
-            return
-        }
-        let escapingView = view
-        // 300 milliseconds user will see stopped activity indicator
-        view.activityIndicatorStopAnimating()
-        let animations = {
-            escapingView.activityIndicatorAlpha = 0.0
-            escapingView.imageViewAlpha = 1.0
-        }
-        UIView.animate(withDuration: 0.3, animations: animations, completion: nil)
-    }
-    
-    private static func downloadAndSetImage(
-        at view: ImageFromInternetViewCellAdapter,
-        using imageService: ImageService,
-        onComplete callback: @escaping (_: UIImage?) -> Void
-    ) {
-        update(imageView: view, bySettingActivityIndicatorAnimatingTo: true)
-        imageService.download(by: getImageUrl(from: view)) { (image) in
-            setImage(at: view, image: image, onComplete: callback)
-        }
-    }
-    
-    private static func getImageUrl(from view: ImageFromInternetViewCellAdapter) -> URL {
-        guard let url = view.imageUrl else {
-            fatalError("View image url wasn't built...")
-        }
-        return url
+        ImageUtils.shared.setImageFromInternet(at: view, downloadedBy: imageService, onComplete: callback)
     }
     
     public static func openImage(
@@ -84,32 +29,11 @@ class UIViewHelper {
         by imagePath: String,
         using imageService: ImageService
     ) {
-        let url = buildImageUrl(by: imagePath)
-        openFullScreenImage(from: viewController, downloadedBy: url, using: imageService)
+        ImageUtils.shared.openImage(from: viewController, by: imagePath, using: imageService)
     }
     
-    private static func buildImageUrl(by imagePath: String) -> URL {
-        let optionalUrl = URLBuilder(string: CinePickerConfig.originalImagePath)
-            .append(pathComponent: imagePath)
-            .build()
-        guard let url = optionalUrl else {
-            fatalError("Url to open image wasn't built...")
-        }
-        return url
-    }
-    
-    private static func openFullScreenImage(
-        from viewController: UIViewController,
-        downloadedBy url: URL,
-        using imageService: ImageService
-    ) {
-        let agrume = Agrume(url: url, background: .colored(CinePickerColors.getBackgroundColor()))
-        agrume.download = { (url, completion) in
-            imageService.download(by: url) { (image) in
-                completion(image)
-            }
-        }
-        agrume.show(from: viewController)
+    public static func buildImageUrl(by imagePath: String) -> URL? {
+        return ImageUtils.shared.buildImageUrl(by: imagePath)
     }
     
     public static func getUITableViewCellSelectedBackgroundView() -> UIView {
@@ -278,11 +202,5 @@ class UIViewHelper {
             deferredAlertViewButtonAction?()
             deferredAlertViewButtonAction = nil
         }
-    }
-    
-    public static func buildImageUrl(byImagePath imagePath: String) -> URL? {
-        return URLBuilder(string: CinePickerConfig.imagePath)
-            .append(pathComponent: imagePath)
-            .build()
     }
 }

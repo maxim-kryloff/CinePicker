@@ -80,11 +80,11 @@ class DiscoverSettingsViewController: UIViewController {
     }
     
     private func defineLoadingView() {
-        loadingView = UIViewHelper.getLoadingView(for: discoverSettingsTableView)
+        loadingView = UIViewUtils.getLoadingView(for: discoverSettingsTableView)
     }
     
     private func defineFailedLoadingView() {
-        failedLoadingView = UIViewHelper.getFailedLoadingView(for: discoverSettingsTableView, onTouchDown: onReloadGettingGenres)
+        failedLoadingView = UIViewUtils.getFailedLoadingView(for: discoverSettingsTableView, onTouchDown: onReloadGettingGenres)
     }
     
     private func defineTableView() {
@@ -159,7 +159,7 @@ extension DiscoverSettingsViewController: UITableViewDataSource, UITableViewDele
             return nil
         }
         
-        let view = UIViewHelper.getHeaderView(for: tableView)
+        let view = UIViewUtils.getHeaderView(for: tableView)
         
         view.header = CinePickerCaptions.discover
         
@@ -167,7 +167,7 @@ extension DiscoverSettingsViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        cell.selectedBackgroundView = UIViewUtils.getUITableViewCellSelectedBackgroundView()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

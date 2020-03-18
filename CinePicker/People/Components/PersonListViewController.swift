@@ -40,7 +40,7 @@ class PersonListViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
-            UIViewHelper.closeAlert()
+            UIViewUtils.closeAlert()
         }
     }
     
@@ -81,7 +81,7 @@ class PersonListViewController: UIViewController {
             return
         }
         
-        UIViewHelper.showAlert(
+        UIViewUtils.showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
@@ -98,14 +98,14 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        cell.selectedBackgroundView = UIViewUtils.getUITableViewCellSelectedBackgroundView()
         var cell = cell as! ImageFromInternetViewCell
         cell.imagePath = people[indexPath.row].imagePath
         if downloadedImages[cell.imagePath] != nil {
             return
         }
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
             self.downloadedImages[cell.imagePath] = image
         }
     }
@@ -124,7 +124,7 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         cell.onTapImageView = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.personName = person.name
@@ -143,7 +143,7 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let cell = cell as! PersonTableViewCell
         
-        if let imageUrl = UIViewHelper.buildImageUrl(byImagePath: cell.imagePath) {
+        if let imageUrl = UIViewUtils.buildImageUrl(by: cell.imagePath) {
             imageService.cancelDownloading(by: imageUrl)
         }
     }

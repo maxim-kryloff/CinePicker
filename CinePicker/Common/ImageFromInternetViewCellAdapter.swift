@@ -31,7 +31,7 @@ extension ImageFromInternetViewCellAdapter {
             if imagePath.isEmpty {
                 return nil
             }
-            return UIViewHelper.buildImageUrl(byImagePath: imagePath)
+            return UIViewUtils.buildImageUrl(by: imagePath)
         }
     }
     

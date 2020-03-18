@@ -81,7 +81,7 @@ class MultiSearchViewController: StateViewController {
                 return
             }
             
-            UIViewHelper.closeAlert()
+            UIViewUtils.closeAlert()
         }
     }
     
@@ -230,7 +230,7 @@ class MultiSearchViewController: StateViewController {
     @objc private func onPressActionsButton() {
         self.searchBarCancelButtonClicked(self.searchBar)
         
-        UIViewHelper.showAlert(
+        UIViewUtils.showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (
@@ -246,7 +246,7 @@ class MultiSearchViewController: StateViewController {
     }
     
     private func onChangeLanguage() {
-        UIViewHelper.showAlert(
+        UIViewUtils.showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (
@@ -290,7 +290,7 @@ class MultiSearchViewController: StateViewController {
             self.onChangeLanguage()
         }
         
-        UIViewHelper.showDatasourceAgreementAlert(
+        UIViewUtils.showDatasourceAgreementAlert(
             traitCollection: traitCollection,
             buttonAction: action
         )
@@ -358,7 +358,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if currentSearchQuery.isEmpty {
-            let view = UIViewHelper.getHeaderWithTagsView(for: tableView)
+            let view = UIViewUtils.getHeaderWithTagsView(for: tableView)
             
             view.header = CinePickerCaptions.savedMovies
             
@@ -385,7 +385,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        cell.selectedBackgroundView = UIViewUtils.getUITableViewCellSelectedBackgroundView()
         
         var imagePath: String
         
@@ -412,7 +412,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         cell.imagePath = imagePath
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
         
-        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
             self.downloadedImages[imagePath] = image
         }
     }
@@ -471,7 +471,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         }
         
         cell.onTapImageView = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.title = movie.title
@@ -510,7 +510,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         }
         
         cell.onTapImageView = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.personName = person.name

@@ -95,7 +95,7 @@ class MovieListViewController: StateViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
-            UIViewHelper.closeAlert()
+            UIViewUtils.closeAlert()
         }
     }
     
@@ -167,7 +167,7 @@ class MovieListViewController: StateViewController {
             return
         }
         
-        UIViewHelper.showAlert(
+        UIViewUtils.showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
@@ -228,14 +228,14 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        cell.selectedBackgroundView = UIViewUtils.getUITableViewCellSelectedBackgroundView()
         var cell = cell as! ImageFromInternetViewCell
         cell.imagePath = movies[indexPath.row].imagePath
         if downloadedImages[cell.imagePath] != nil {
             return
         }
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
             self.downloadedImages[cell.imagePath] = image
         }
     }
@@ -254,7 +254,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         cell.onTapImageView = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.title = movie.title
@@ -275,7 +275,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let cell = cell as! MovieTableViewCell
         
-        if let imageUrl = UIViewHelper.buildImageUrl(byImagePath: cell.imagePath) {
+        if let imageUrl = UIViewUtils.buildImageUrl(by: cell.imagePath) {
             imageService.cancelDownloading(by: imageUrl)
         }
     }

@@ -69,7 +69,7 @@ class RequestedMoviesViewController: StateViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
-            UIViewHelper.closeAlert()
+            UIViewUtils.closeAlert()
         }
     }
     
@@ -129,7 +129,7 @@ class RequestedMoviesViewController: StateViewController {
             return
         }
         
-        UIViewHelper.showAlert(
+        UIViewUtils.showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
@@ -205,7 +205,7 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        cell.selectedBackgroundView = UIViewUtils.getUITableViewCellSelectedBackgroundView()
         if !(cell is MovieTableViewCell) {
             return
         }
@@ -215,7 +215,7 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
             return
         }
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
             self.downloadedImages[cell.imagePath] = image
         }
     }
@@ -244,7 +244,7 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
         }
         
         cell.onTapImageView = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.title = movie.title
@@ -267,7 +267,7 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
             return
         }
         
-        guard let imageUrl = UIViewHelper.buildImageUrl(byImagePath: cell.imagePath) else {
+        guard let imageUrl = UIViewUtils.buildImageUrl(by: cell.imagePath) else {
             return
         }
         

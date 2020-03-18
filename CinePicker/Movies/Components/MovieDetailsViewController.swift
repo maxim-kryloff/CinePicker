@@ -100,7 +100,7 @@ class MovieDetailsViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
-            UIViewHelper.closeAlert()
+            UIViewUtils.closeAlert()
         }
     }
     
@@ -145,11 +145,11 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func defineLoadingView() {
-        loadingView = UIViewHelper.getLoadingView(for: movieDetailsTableView)
+        loadingView = UIViewUtils.getLoadingView(for: movieDetailsTableView)
     }
     
     private func defineFailedLoadingView() {
-        failedLoadingView = UIViewHelper.getFailedLoadingView(for: movieDetailsTableView, onTouchDown: onReloadGettingMovieDetails)
+        failedLoadingView = UIViewUtils.getFailedLoadingView(for: movieDetailsTableView, onTouchDown: onReloadGettingMovieDetails)
     }
     
     private func setDefaultColors() {
@@ -180,7 +180,7 @@ class MovieDetailsViewController: UIViewController {
             return
         }
         
-        UIViewHelper.showAlert(
+        UIViewUtils.showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (title: CinePickerCaptions.goToSimilarMovies, action: goToRequestedMoviesAction),
@@ -463,7 +463,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        cell.selectedBackgroundView = UIViewUtils.getUITableViewCellSelectedBackgroundView()
         
         switch cell {
             case is MovieDetailsTableViewCell: prepare(movieDetailsTableViewCell: (cell as! MovieDetailsTableViewCell))
@@ -557,7 +557,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         }
         
         cell.onTapImageView = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
         }
         
         cell.title = movieDetails.title
@@ -658,7 +658,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             }
             
             cell.onTapImageView = { (imagePath) in
-                UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+                UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
             }
             
             cell.personName = character.name
@@ -687,7 +687,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             }
             
             cell.onTapImageView = { (imagePath) in
-                UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+                UIViewUtils.openImage(from: self, by: imagePath, using: self.imageService)
             }
             
             cell.personName = crewPerson.name
@@ -706,7 +706,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             return
         }
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
             self.downloadedImages[cell.imagePath] = image
         }
     }
@@ -717,7 +717,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             return
         }
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
             self.downloadedImages[cell.imagePath] = image
         }
     }

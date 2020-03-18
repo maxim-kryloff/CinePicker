@@ -83,7 +83,7 @@ extension MovieCollectionTableViewCell: UICollectionViewDelegate, UICollectionVi
     
     func setImageFromInternet(at cell: ImageFromInternetViewCell) {
         let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
+        UIViewUtils.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
             self.downloadedImages[cell.imagePath] = image
         }
     }
@@ -105,7 +105,7 @@ extension MovieCollectionTableViewCell: UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let cell = cell as! MovieCollectionCollectionViewCell
-        if let imageUrl = UIViewHelper.buildImageUrl(byImagePath: cell.imagePath) {
+        if let imageUrl = UIViewUtils.buildImageUrl(by: cell.imagePath) {
             imageService.cancelDownloading(by: imageUrl)
         }
     }

@@ -96,7 +96,7 @@ class MovieTableViewCell: UITableViewCell {
     public var rating: Double? {
         didSet {
             if let rating = rating {
-                ratingLabel.textColor = UIViewHelper.getMovieRatingColor(rating: rating)
+                ratingLabel.textColor = UIViewUtils.getMovieRatingColor(rating: rating)
                 ratingLabel.text = String(rating)
                 return
             }
