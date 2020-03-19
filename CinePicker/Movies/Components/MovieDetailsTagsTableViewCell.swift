@@ -17,7 +17,6 @@ class MovieDetailsTagsTableViewCell: UITableViewCell {
                 deselectWillCheckItOut()
                 return
             }
-            
             isWillCheckItOutSelected ? selectWillCheckItOut() : deselectWillCheckItOut()
         }
     }
@@ -28,7 +27,6 @@ class MovieDetailsTagsTableViewCell: UITableViewCell {
                 deselectILikeIt()
                 return
             }
-            
             isILikeItSelected ? selectILikeIt() : deselectILikeIt()
         }
     }
@@ -51,34 +49,40 @@ class MovieDetailsTagsTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         setDefaultState()
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        willCheckItOutSystemTag = TagRepository.shared.getSystemTag(byName: .willCheckItOut)
-        iLikeItSystemTag = TagRepository.shared.getSystemTag(byName: .iLikeIt)
-        
+        initTags()
         setDefaultState()
     }
-
+    
+    private func initTags() {
+        willCheckItOutSystemTag = TagRepository.shared.getSystemTag(byName: .willCheckItOut)
+        iLikeItSystemTag = TagRepository.shared.getSystemTag(byName: .iLikeIt)
+    }
+    
     private func setDefaultState() {
         setDefaultColors()
-        
-        willCheckItOutLGButton.titleString = willCheckItOutSystemTagName
-        iLikeItLGButton.titleString = iLikeItSystemTagName
-        
-        isWillCheckItOutSelected = nil
-        isILikeItSelected = nil
-        
-        onTapWillCheckItOut = nil
-        onTapILikeIt = nil
+        setDefaultTagState()
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
         backgroundColor = CinePickerColors.getBackgroundColor()
+    }
+    
+    private func setDefaultTagState() {
+        willCheckItOutLGButton.titleString = willCheckItOutSystemTagName
+        iLikeItLGButton.titleString = iLikeItSystemTagName
+    }
+    
+    private func setDefaultPropertyValues() {
+        isWillCheckItOutSelected = nil
+        isILikeItSelected = nil
+        onTapWillCheckItOut = nil
+        onTapILikeIt = nil
     }
     
     private func selectWillCheckItOut() {
@@ -108,7 +112,7 @@ class MovieDetailsTagsTableViewCell: UITableViewCell {
         iLikeItLGButton.titleColor = CinePickerColors.getTagColor()
         iLikeItLGButton.rightIconColor = CinePickerColors.getTagColor()
     }
-
+    
     @IBAction func onWillCheckItOutLGButtonTouchUpInside(_ sender: LGButton) {
         onTapWillCheckItOut?(self)
     }
