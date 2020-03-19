@@ -18,16 +18,17 @@ class MovieDetailsOverviewTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        setDefaultColors()
-        
-        overview = nil
+        setDefaultState()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setDefaultState()
+    }
+    
+    private func setDefaultState() {
         setDefaultColors()
-        
-        overview = nil
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
@@ -36,8 +37,7 @@ class MovieDetailsOverviewTableViewCell: UITableViewCell {
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    private func setDefaultPropertyValues() {
+        overview = nil
     }
-    
 }

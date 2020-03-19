@@ -26,6 +26,7 @@ class MultiSearchService {
                 movies = result
             }
         }
+        
         var popularPeople: [PopularPerson]?
         concurrentSearchQueue.async(group: dispatchGroup) {
             self.requestPopularPeople(by: searchQuery, andPage: page, dispatchGroup: dispatchGroup) { (result) in

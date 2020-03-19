@@ -25,28 +25,23 @@ class DiscoverSettingsItemsToSelectTableViewCell: UITableViewCell {
                 selectedLGButton.isHidden = !isItemSelected
                 return
             }
-            
             selectedLGButton.isHidden = true
         }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         setDefaultState()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setDefaultState()
     }
     
     private func setDefaultState() {
         setDefaultColors()
-        
-        header = nil
-        isItemSelected = nil
+        setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
@@ -56,4 +51,8 @@ class DiscoverSettingsItemsToSelectTableViewCell: UITableViewCell {
         bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
+    private func setDefaultPropertyValues() {
+        header = nil
+        isItemSelected = nil
+    }
 }
