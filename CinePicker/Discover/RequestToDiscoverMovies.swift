@@ -1,4 +1,4 @@
-struct DiscoveredMovieRequest {
+struct RequestToDiscoverMovies {
     
     public let genreIds: [Int]?
     
@@ -7,5 +7,4 @@ struct DiscoveredMovieRequest {
     public let rating: Double?
     
     public let page: Int
-    
 }

@@ -46,37 +46,25 @@ class Movie {
         guard let id = json["id"] as? Int else {
             throw ResponseError.jsonDoesNotHaveProperty
         }
-        
         guard let title = json["title"] as? String else {
             throw ResponseError.jsonDoesNotHaveProperty
         }
-        
         let originalTitle = json["original_title"] as? String ?? ""
-        
         let poster_path = json["poster_path"] as? String ?? ""
-        
         let vote_average = json["vote_average"] as? Double ?? 0.0
-        
         let vote_count = json["vote_count"] as? Int ?? 0
-        
         let release_date = json["release_date"] as? String
         var releaseDateSubstring: Substring?
-        
         if let release_date = release_date, release_date.count >= 4 {
             let index = release_date.index(release_date.startIndex, offsetBy: 3)
             releaseDateSubstring = release_date[...index]
         }
-        
         var releaseYear = ""
-        
         if let releaseDateSubstring = releaseDateSubstring {
             releaseYear = String(releaseDateSubstring)
         }
-        
         let overview = json["overview"] as? String ?? ""
-        
         let popularity = json["popularity"] as? Double ?? 0.0
-        
         let movie = Movie(
             id: id,
             title: title,
@@ -88,15 +76,13 @@ class Movie {
             overview: overview,
             popularity: popularity
         )
-        
         return movie
     }
-
 }
 
 extension Movie: MultiSearchEntity {
     
-    var uniqueValue: String {
+    var identity: String {
         return "movie#\(id)"
     }
     
@@ -111,5 +97,4 @@ extension Movie: MultiSearchEntity {
     var popularityValue: Double {
         return popularity
     }
-    
 }

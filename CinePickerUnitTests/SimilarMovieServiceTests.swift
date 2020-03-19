@@ -73,7 +73,7 @@ extension SimilarMovieServiceTests {
         
         private let seeder = Seeder()
         
-        override func getSimilarMovies(byMovieId movieId: Int, andPage page: Int, callback: @escaping (AsyncResult<[Movie]>) -> Void) {
+        override func getSimilarMovies(byMovieId movieId: Int, andPage page: Int, onComplete callback: @escaping (AsyncResult<[Movie]>) -> Void) {
             DispatchQueue.main.async {
                 let movies = self.seeder.getMovies(count: 10)
                 

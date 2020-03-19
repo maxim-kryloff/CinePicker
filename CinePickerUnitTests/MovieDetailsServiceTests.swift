@@ -175,7 +175,7 @@ extension MovieDetailsServiceTests {
         
         private let seeder = Seeder()
         
-        override func getCharacters(by movieId: Int, callback: @escaping (_: AsyncResult<[Character]>) -> Void) {
+        override func getCharacters(by movieId: Int, onComplete callback: @escaping (_: AsyncResult<[Character]>) -> Void) {
             let deadline = DispatchTime.now() + DispatchTimeInterval.milliseconds(getCharactersDelayMilliseconds)
             
             DispatchQueue.main.asyncAfter(deadline: deadline) {
@@ -189,7 +189,7 @@ extension MovieDetailsServiceTests {
             }
         }
         
-        override func getCrewPeople(by movieId: Int, callback: @escaping (AsyncResult<[CrewPerson]>) -> Void) {
+        override func getCrewPeople(by movieId: Int, onComplete callback: @escaping (AsyncResult<[CrewPerson]>) -> Void) {
             let deadline = DispatchTime.now() + DispatchTimeInterval.milliseconds(getCrewPeopleDelayMilliseconds)
             
             DispatchQueue.main.asyncAfter(deadline: deadline) {
@@ -217,7 +217,7 @@ extension MovieDetailsServiceTests {
         
         private let seeder = Seeder()
         
-        override func getMovieDetails(by movieId: Int, callback: @escaping (AsyncResult<MovieDetails>) -> Void) {
+        override func getMovieDetails(by movieId: Int, onComplete callback: @escaping (AsyncResult<MovieDetails>) -> Void) {
             DispatchQueue.main.async {
                 let movieDetails = self.seeder.getMovieDetails()
                 
@@ -229,7 +229,7 @@ extension MovieDetailsServiceTests {
             }
         }
         
-        override func getMovies(byCollectionId collectionId: Int, callback: @escaping (_: AsyncResult<[Movie]>) -> Void) {
+        override func getMovies(byCollectionId collectionId: Int, onComplete callback: @escaping (_: AsyncResult<[Movie]>) -> Void) {
             DispatchQueue.main.async {
                 let movies = self.seeder.getMovies(count: 10)
                 

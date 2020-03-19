@@ -52,13 +52,13 @@ class DiscoverSettingsServiceTests: XCTestCase {
     }
     
     func testShouldReturnDiscoveredMovies() {
-        let discoveredMovieRequest = DiscoveredMovieRequest(genreIds: [], year: nil, rating: nil, page: 1)
+        let requestToDiscoverMovies = RequestToDiscoverMovies(genreIds: [], year: nil, rating: nil, page: 1)
         
-        discoverSettingsService.requestDiscoveredMovies(request: discoveredMovieRequest) { (request, result) in
-            XCTAssertEqual(discoveredMovieRequest.genreIds, request.genreIds)
-            XCTAssertEqual(discoveredMovieRequest.page, request.page)
-            XCTAssertEqual(discoveredMovieRequest.rating, request.rating)
-            XCTAssertEqual(discoveredMovieRequest.year, request.year)
+        discoverSettingsService.requestDiscoveredMovies(request: requestToDiscoverMovies) { (request, result) in
+            XCTAssertEqual(requestToDiscoverMovies.genreIds, request.genreIds)
+            XCTAssertEqual(requestToDiscoverMovies.page, request.page)
+            XCTAssertEqual(requestToDiscoverMovies.rating, request.rating)
+            XCTAssertEqual(requestToDiscoverMovies.year, request.year)
             
             XCTAssertEqual(result!.count, 10)
             
@@ -71,13 +71,13 @@ class DiscoverSettingsServiceTests: XCTestCase {
     func testShouldReturnNilWhenRequestingDiscoveredMoviesIsFailed() {
         mockMovieService.isDiscoveredMoviesRequestFailed = true
         
-        let discoveredMovieRequest = DiscoveredMovieRequest(genreIds: [], year: nil, rating: nil, page: 1)
+        let requestToDiscoverMovies = RequestToDiscoverMovies(genreIds: [], year: nil, rating: nil, page: 1)
         
-        discoverSettingsService.requestDiscoveredMovies(request: discoveredMovieRequest) { (request, result) in
-            XCTAssertEqual(discoveredMovieRequest.genreIds, request.genreIds)
-            XCTAssertEqual(discoveredMovieRequest.page, request.page)
-            XCTAssertEqual(discoveredMovieRequest.rating, request.rating)
-            XCTAssertEqual(discoveredMovieRequest.year, request.year)
+        discoverSettingsService.requestDiscoveredMovies(request: requestToDiscoverMovies) { (request, result) in
+            XCTAssertEqual(requestToDiscoverMovies.genreIds, request.genreIds)
+            XCTAssertEqual(requestToDiscoverMovies.page, request.page)
+            XCTAssertEqual(requestToDiscoverMovies.rating, request.rating)
+            XCTAssertEqual(requestToDiscoverMovies.year, request.year)
             
             XCTAssertNil(result)
             
@@ -97,7 +97,7 @@ extension DiscoverSettingsServiceTests {
         
         private let seeder = Seeder()
         
-        override func getGenres(callback: @escaping (AsyncResult<[Genre]>) -> Void) {
+        override func getGenres(onComplete callback: @escaping (AsyncResult<[Genre]>) -> Void) {
             DispatchQueue.main.async {
                 let genres = self.seeder.getGenres(count: 10)
                 
@@ -126,7 +126,7 @@ extension DiscoverSettingsServiceTests {
             andYear year: String?,
             gteRating rating: Double?,
             andPage page: Int,
-            callback: @escaping (AsyncResult<[Movie]>) -> Void
+            onComplete callback: @escaping (AsyncResult<[Movie]>) -> Void
         ) {
             
             DispatchQueue.main.async {

@@ -8,5 +8,4 @@ class Tag {
         self.name = name
         self.russianName = russianName
     }
-    
 }

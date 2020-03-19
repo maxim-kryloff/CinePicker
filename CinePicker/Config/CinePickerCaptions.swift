@@ -4,7 +4,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Не буду смотреть"
         }
-        
         return "Won't check it out"
     }
     
@@ -12,7 +11,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Все актеры"
         }
-        
         return "Go to Full Cast"
     }
     
@@ -20,7 +18,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Съемочная группа"
         }
-        
         return "Go to Full Crew"
     }
     
@@ -28,7 +25,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Актер"
         }
-        
         return "Cast"
     }
     
@@ -36,7 +32,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Участник съемок"
         }
-        
         return "Crew"
     }
     
@@ -44,7 +39,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Загрузка данных..."
         }
-        
         return "Loading data..."
     }
     
@@ -52,7 +46,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Ошибка загрузки данных..."
         }
-        
         return "Couldn't load data..."
     }
     
@@ -60,7 +53,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Загрузить"
         }
-        
         return "Reload"
     }
     
@@ -68,7 +60,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Данные не найдены..."
         }
-        
         return "There is no data found..."
     }
     
@@ -76,7 +67,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Фильмы не найдены..."
         }
-        
         return "There are no movies found..."
     }
     
@@ -84,7 +74,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Еще"
         }
-        
         return "More"
     }
     
@@ -92,7 +81,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Выбрать язык"
         }
-        
         return "Select Language"
     }
     
@@ -100,7 +88,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Поиск"
         }
-        
         return "Discover"
     }
     
@@ -108,7 +95,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Результаты поиска"
         }
-        
         return "Discover Results"
     }
     
@@ -116,7 +102,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Название фильма, имя актера..."
         }
-        
         return "Type movie or actor..."
     }
     
@@ -124,7 +109,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Сохраненные"
         }
-        
         return "Saved Movies"
     }
     
@@ -132,7 +116,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Очистить список фильмов"
         }
-        
         return "Erase Saved Movies"
     }
     
@@ -140,7 +123,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Английский язык"
         }
-        
         return "English"
     }
     
@@ -148,7 +130,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Русский язык"
         }
-        
         return "Russian"
     }
     
@@ -156,7 +137,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Назад к поиску"
         }
-        
         return "Back to Search"
     }
     
@@ -164,7 +144,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Похожие фильмы"
         }
-        
         return "Go to Similar Movies"
     }
     
@@ -172,7 +151,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Назад"
         }
-        
         return "Back"
     }
     
@@ -180,7 +158,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Отмена"
         }
-        
         return "Cancel"
     }
     
@@ -188,7 +165,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Другие части"
         }
-        
         return "Also in Series"
     }
     
@@ -196,7 +172,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Жанры"
         }
-        
         return "Genres"
     }
     
@@ -204,7 +179,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Год"
         }
-        
         return "Year"
     }
     
@@ -212,7 +186,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Рейтинг"
         }
-        
         return "Rating"
     }
     
@@ -220,7 +193,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Искать"
         }
-        
         return "Search"
     }
     
@@ -228,7 +200,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Высокий"
         }
-        
         return "High"
     }
     
@@ -236,7 +207,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Средний"
         }
-        
         return "Medium"
     }
     
@@ -244,7 +214,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Низкий / Отсутствует"
         }
-        
         return "Low / None"
     }
     
@@ -252,7 +221,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "мин"
         }
-        
         return "min"
     }
     
@@ -260,7 +228,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "Фильмы \(personName)"
         }
-        
         return "\(personName)'s Movies"
     }
     
@@ -268,8 +235,6 @@ class CinePickerCaptions {
         if CinePickerConfig.getLanguage() == .ru {
             return "\(movieTitle). Похожие фильмы"
         }
-        
         return "Similar to \(movieTitle)"
     }
-    
 }

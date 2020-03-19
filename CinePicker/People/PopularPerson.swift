@@ -9,24 +9,20 @@ class PopularPerson: Person {
     
     public static func buildPopularPerson(fromJson json: [String: Any]) throws -> PopularPerson {
         let person = try buildPerson(fromJson: json)
-        
         let popularity = json["popularity"] as? Double ?? 0.0
-        
         let popularPerson = PopularPerson(
             id: person.id,
             name: person.name,
             imagePath: person.imagePath,
             popularity: popularity
         )
-        
         return popularPerson
     }
-    
 }
 
 extension PopularPerson: MultiSearchEntity {
     
-    var uniqueValue: String {
+    var identity: String {
         return "person#\(id)"
     }
     
@@ -41,5 +37,4 @@ extension PopularPerson: MultiSearchEntity {
     var popularityValue: Double {
         return popularity
     }
-    
 }

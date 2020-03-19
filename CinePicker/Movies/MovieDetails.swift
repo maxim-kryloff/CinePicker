@@ -23,7 +23,6 @@ class MovieDetails: Movie {
         self.genres = genres
         self.runtime = runtime
         self.collectionId = collectionId
-        
         super.init(
             id: id,
             title: title,
@@ -39,26 +38,18 @@ class MovieDetails: Movie {
     
     public static func buildMovieDetails(fromJson json: [String: Any]) throws -> MovieDetails {
         let movie = try buildMovie(fromJson: json)
-        
         var genres: [Genre] = []
-        
         let genresJson = json["genres"] as? [[String: Any]] ?? []
-        
         for item in genresJson {
             let genre = try Genre.buildGenre(fromJson: item)
             genres.append(genre)
         }
-        
         let runtime = json["runtime"] as? Int ?? 0
-        
         let belongs_to_collection = json["belongs_to_collection"] as? [String: Any]
-        
         var collectionId: Int?
-        
         if let belongs_to_collection = belongs_to_collection {
             collectionId = belongs_to_collection["id"] as? Int
         }
-        
         let movieDetails = MovieDetails(
             id: movie.id,
             title: movie.title,
@@ -73,8 +64,6 @@ class MovieDetails: Movie {
             runtime: runtime,
             collectionId: collectionId
         )
-        
         return movieDetails
     }
-    
 }

@@ -13,16 +13,12 @@ class Genre {
         guard let id = json["id"] as? Int else {
             throw ResponseError.jsonDoesNotHaveProperty
         }
-        
         guard let name = json["name"] as? String else {
             throw ResponseError.jsonDoesNotHaveProperty
         }
-        
         let genre = Genre(id: id, name: name)
-        
         return genre
     }
-    
 }
 
 extension Genre: DiscoverSettingsItemToSelect {
@@ -34,5 +30,4 @@ extension Genre: DiscoverSettingsItemToSelect {
     var valueToDisplay: String {
         return name.capitalized
     }
-    
 }
