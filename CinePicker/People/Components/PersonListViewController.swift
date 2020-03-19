@@ -12,10 +12,6 @@ class PersonListViewController: UIViewController {
     
     private var actionsBarButtonItem: UIBarButtonItem!
     
-    private var downloadedImages: [String: UIImage] = [:]
-    
-    private let imageService = ImageService()
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -32,15 +28,9 @@ class PersonListViewController: UIViewController {
         setDefaultColors()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        downloadedImages = [:]
-    }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
-            UIViewHelper.closeAlert()
+            UIViewUtilsFactory.shared.getAlertUtils().closeAlert()
         }
     }
     
@@ -80,8 +70,7 @@ class PersonListViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
             return
         }
-        
-        UIViewHelper.showAlert(
+        UIViewUtilsFactory.shared.getAlertUtils().showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)
@@ -98,16 +87,11 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils()
+            .getUITableViewCellSelectedBackgroundView()
         var cell = cell as! ImageFromInternetViewCell
         cell.imagePath = people[indexPath.row].imagePath
-        if downloadedImages[cell.imagePath] != nil {
-            return
-        }
-        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
-            self.downloadedImages[cell.imagePath] = image
-        }
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -115,16 +99,8 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let person = people[indexPath.row]
         
-        if let image = downloadedImages[person.imagePath] {
-            cell.imageValue = image
-        }
-        
-        if cell.imagePath.isEmpty {
-            cell.imagePath = person.imagePath
-        }
-        
         cell.onTapImageView = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
         }
         
         cell.personName = person.name
@@ -138,14 +114,6 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = cell as! PersonTableViewCell
-        
-        if let imageUrl = UIViewHelper.buildImageUrl(byImagePath: cell.imagePath) {
-            imageService.cancelDownloading(by: imageUrl)
-        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

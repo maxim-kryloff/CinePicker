@@ -20,8 +20,6 @@ class MultiSearchViewController: StateViewController {
     
     private var entities: [MultiSearchEntity] = []
     
-    private var downloadedImages: [String: UIImage] = [:]
-    
     private var savedMovies: [SavedMovie] = [] {
         didSet {
             savedMovieMap = [:]
@@ -35,8 +33,6 @@ class MultiSearchViewController: StateViewController {
     private var savedMovieMap: [Int: SavedMovie] = [:]
     
     private let multiSearchService = MultiSearchService(movieService: MovieService(), personService: PersonService())
-    
-    private let imageService = ImageService()
     
     private let debounceActionService = DebounceActionService()
     
@@ -69,19 +65,12 @@ class MultiSearchViewController: StateViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        downloadedImages = [:]
-    }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
             if !UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource) {
                 return
             }
-            
-            UIViewHelper.closeAlert()
+            UIViewUtilsFactory.shared.getAlertUtils().closeAlert()
         }
     }
     
@@ -229,8 +218,7 @@ class MultiSearchViewController: StateViewController {
     
     @objc private func onPressActionsButton() {
         self.searchBarCancelButtonClicked(self.searchBar)
-        
-        UIViewHelper.showAlert(
+        UIViewUtilsFactory.shared.getAlertUtils().showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (
@@ -246,7 +234,7 @@ class MultiSearchViewController: StateViewController {
     }
     
     private func onChangeLanguage() {
-        UIViewHelper.showAlert(
+        UIViewUtilsFactory.shared.getAlertUtils().showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (
@@ -254,14 +242,14 @@ class MultiSearchViewController: StateViewController {
                     action: {
                         CinePickerConfig.setLanguage(language: .en)
                         self.resetViewController()
-                }
+                    }
                 ),
                 (
                     title: CinePickerCaptions.russian,
                     action: {
                         CinePickerConfig.setLanguage(language: .ru)
                         self.resetViewController()
-                }
+                    }
                 )
             ],
             imageName: "lang_image",
@@ -289,8 +277,7 @@ class MultiSearchViewController: StateViewController {
             
             self.onChangeLanguage()
         }
-        
-        UIViewHelper.showDatasourceAgreementAlert(
+        UIViewUtilsFactory.shared.getAlertUtils().showDatasourceAgreementAlert(
             traitCollection: traitCollection,
             buttonAction: action
         )
@@ -358,7 +345,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if currentSearchQuery.isEmpty {
-            let view = UIViewHelper.getHeaderWithTagsView(for: tableView)
+            let view = UIViewUtilsFactory.shared.getViewUtils().getHeaderWithTagsView(for: tableView)
             
             view.header = CinePickerCaptions.savedMovies
             
@@ -385,7 +372,8 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewHelper.getUITableViewCellSelectedBackgroundView()
+        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils()
+            .getUITableViewCellSelectedBackgroundView()
         
         var imagePath: String
         
@@ -400,21 +388,9 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
                 fatalError("Unexpected type of table view cell...")
         }
         
-        if imagePath.isEmpty {
-            return
-        }
-        
-        if downloadedImages[imagePath] != nil {
-            return
-        }
-        
         var cell = cell as! ImageFromInternetViewCell
         cell.imagePath = imagePath
-        let cellAdapter = ImageFromInternetViewCellAdapter(cell: cell)
-        
-        UIViewHelper.setImageFromInternet(at: cellAdapter, downloadedBy: imageService) { (image) in
-            self.downloadedImages[imagePath] = image
-        }
+        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -424,14 +400,6 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
             case is Movie: return getMovieTableViewCell(tableView, cellForRowAt: indexPath, movie: entity as! Movie)
             case is PopularPerson: return getPersonTableViewCell(tableView, cellForRowAt: indexPath, person: entity as! PopularPerson)
             default: fatalError("Entity has unexpeted type...")
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = ImageFromInternetViewCellAdapter(cell: cell as! ImageFromInternetViewCell)
-        
-        if let imageUrl = cell.imageUrl {
-            imageService.cancelDownloading(by: imageUrl)
         }
     }
     
@@ -462,16 +430,8 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     private func getMovieTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, movie: Movie) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
         
-        if let image = downloadedImages[movie.imagePath] {
-            cell.imageValue = image
-        }
-        
-        if cell.imagePath.isEmpty {
-            cell.imagePath = movie.imagePath
-        }
-        
         cell.onTapImageView = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
         }
         
         cell.title = movie.title
@@ -501,16 +461,8 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     private func getPersonTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, person: PopularPerson) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
         
-        if let image = downloadedImages[person.imagePath] {
-            cell.imageValue = image
-        }
-        
-        if cell.imagePath.isEmpty {
-            cell.imagePath = person.imagePath
-        }
-        
         cell.onTapImageView = { (imagePath) in
-            UIViewHelper.openImage(from: self, by: imagePath, using: self.imageService)
+            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
         }
         
         cell.personName = person.name
@@ -570,7 +522,6 @@ extension MultiSearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         currentSearchQuery = searchText
-        downloadedImages = [:]
         
         if currentSearchQuery.isEmpty {
             unsetAllStates()
