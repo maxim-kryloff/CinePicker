@@ -8,7 +8,6 @@ class NumericDiscoverSettingsItemToSelect {
         self.value = value
         self.label = label
     }
-    
 }
 
 extension NumericDiscoverSettingsItemToSelect: DiscoverSettingsItemToSelect {
@@ -21,5 +20,4 @@ extension NumericDiscoverSettingsItemToSelect: DiscoverSettingsItemToSelect {
     var valueToDisplay: String {
         return label
     }
-    
 }

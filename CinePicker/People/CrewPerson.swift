@@ -9,17 +9,13 @@ class CrewPerson: Person {
     
     public static func buildCrewPerson(fromJson json: [String: Any]) throws -> CrewPerson {
         let person = try buildPerson(fromJson: json)
-        
         let job = json["job"] as? String ?? ""
-        
         let crewPerson = CrewPerson(
             id: person.id,
             name: person.name,
             imagePath: person.imagePath,
             job: job
         )
-        
         return crewPerson
     }
-    
 }

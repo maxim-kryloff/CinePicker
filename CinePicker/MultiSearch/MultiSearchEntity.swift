@@ -1,11 +1,10 @@
 protocol MultiSearchEntity {
     
-    var uniqueValue: String { get }
+    var identity: String { get }
+    
+    var popularityValue: Double { get }
     
     var primaryValueToSort: String { get }
     
     var secondaryValueToSort: String { get }
-    
-    var popularityValue: Double { get }
-    
 }

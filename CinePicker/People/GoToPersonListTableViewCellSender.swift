@@ -7,5 +7,4 @@ struct GoToPersonListTableViewCellSender {
     public let indexPath: IndexPath
     
     public let personListType: PersonListType
-    
 }

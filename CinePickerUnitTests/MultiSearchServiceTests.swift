@@ -367,7 +367,7 @@ extension MultiSearchServiceTests {
         
         private let seeder = Seeder()
         
-        override func searchPopularPeople(by searchQuery: String, andPage page: Int, callback: @escaping (AsyncResult<[PopularPerson]>) -> Void) {
+        override func searchPopularPeople(by searchQuery: String, andPage page: Int, onComplete callback: @escaping (AsyncResult<[PopularPerson]>) -> Void) {
             let deadline = DispatchTime.now() + DispatchTimeInterval.milliseconds(searchPopularPeopleDelayMilliseconds)
             
             DispatchQueue.main.asyncAfter(deadline: deadline) {
@@ -395,7 +395,7 @@ extension MultiSearchServiceTests {
         
         private let seeder = Seeder()
         
-        override func searchMovies(by searchQuery: String, andPage page: Int, callback: @escaping (AsyncResult<[Movie]>) -> Void) {
+        override func searchMovies(by searchQuery: String, andPage page: Int, onComplete callback: @escaping (AsyncResult<[Movie]>) -> Void) {
             let deadline = DispatchTime.now() + DispatchTimeInterval.milliseconds(searchMoviesDelayMilliseconds)
             
             DispatchQueue.main.asyncAfter(deadline: deadline) {

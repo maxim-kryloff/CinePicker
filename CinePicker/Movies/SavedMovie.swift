@@ -15,7 +15,6 @@ class SavedMovie: Movie {
         tags: [Tag]
     ) {
         self.tags = tags
-        
         super.init(
             id: id,
             title: title,
@@ -62,5 +61,4 @@ class SavedMovie: Movie {
     public func removeTag(byName tagName: SystemTagName) {
         tags.removeAll { $0.name == tagName.rawValue }
     }
-    
 }

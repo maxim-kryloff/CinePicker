@@ -224,14 +224,14 @@ extension DiscoverSettingsViewController {
             requestedMoviesController.title = CinePickerCaptions.discoverResults
             
             requestedMoviesController.requestMovies = { (requestedPage, callback) in
-                let discoveredMovieRequest = DiscoveredMovieRequest(
+                let requestToDiscoverMovies = RequestToDiscoverMovies(
                     genreIds: self.selectedGenres.map { $0.id },
                     year: self.selectedYear != nil ? String(self.selectedYear!.value) : nil,
                     rating: self.selectedRating?.value,
                     page: requestedPage
                 )
 
-                self.discoverSettingsService.requestDiscoveredMovies(request: discoveredMovieRequest) { (_, requestedMoviesResult) in
+                self.discoverSettingsService.requestDiscoveredMovies(request: requestToDiscoverMovies) { (_, requestedMoviesResult) in
                     callback(requestedMoviesResult)
                 }
             }

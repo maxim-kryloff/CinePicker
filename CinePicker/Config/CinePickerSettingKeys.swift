@@ -19,5 +19,4 @@ class CinePickerSettingKeys {
     public static var iLikeItFilter: String {
         return "iLikeItFilter"
     }
-    
 }

@@ -16,20 +16,15 @@ class Person {
         guard let id = json["id"] as? Int else {
             throw ResponseError.jsonDoesNotHaveProperty
         }
-        
         guard let name = json["name"] as? String else {
             throw ResponseError.jsonDoesNotHaveProperty
         }
-        
         let profilePath = json["profile_path"] as? String ?? ""
-        
         let person = Person(
             id: id,
             name: name,
             imagePath: profilePath
         )
-        
         return person
     }
-    
 }

@@ -7,7 +7,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getUIColorFromRGB(26, 26, 26)
             }
-            
             return getUIColorFromRGB(255, 255, 255)
         }
     }
@@ -17,7 +16,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getUIColorFromRGB(50, 50, 50)
             }
-            
             return getUIColorFromRGB(220, 220, 220)
         }
     }
@@ -31,7 +29,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getUIColorFromRGB(247, 247, 247)
             }
-            
             return getUIColorFromRGB(20, 20, 20)
         }
     }
@@ -41,7 +38,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getUIColorFromRGB(153, 153, 153)
             }
-            
             return getUIColorFromRGB(66, 66, 66)
         }
     }
@@ -59,7 +55,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getUIColorFromRGB(65, 65, 65)
             }
-            
             return getUIColorFromRGB(200, 200, 200)
         }
     }
@@ -69,7 +64,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getUIColorFromRGB(252, 54, 53)
             }
-            
             return getSubtitleColor()
         }
     }
@@ -79,7 +73,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getUIColorFromRGB(254, 173, 0)
             }
-            
             return getSubtitleColor()
         }
     }
@@ -89,7 +82,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getUIColorFromRGB(32, 150, 0)
             }
-            
             return getActionColor()
         }
     }
@@ -99,7 +91,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getTitleColor()
             }
-            
             return getUIColorFromRGB(66, 66, 66)
         }
     }
@@ -109,7 +100,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getUIColorFromRGB(230, 144, 90)
             }
-            
             return getActionColor()
         }
     }
@@ -119,7 +109,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getUIColorFromRGB(227, 102, 95)
             }
-            
             return getActionColor()
         }
     }
@@ -153,7 +142,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getUIColorFromRGB(1, 122, 255)
             }
-            
             return getUIColorFromRGB(225, 45, 85)
         }
     }
@@ -163,7 +151,6 @@ class CinePickerColors {
             if traitCollection.userInterfaceStyle == .dark {
                 return getActionColor()
             }
-            
             return getBackgroundColor()
         }
     }
@@ -176,7 +163,6 @@ class CinePickerColors {
         if traitCollection.userInterfaceStyle == .dark {
             return 0x323232
         }
-        
         return 0xB4B4B4
     }
     
@@ -185,7 +171,6 @@ class CinePickerColors {
         if traitCollection.userInterfaceStyle == .dark {
             return getUIColorFromRGB(26, 26, 26)
         }
-        
         return getUIColorFromRGB(255, 255, 255)
     }
     
@@ -193,7 +178,6 @@ class CinePickerColors {
         if traitCollection.userInterfaceStyle == .dark {
             return getUIColorFromRGB(65, 65, 65)
         }
-        
         return getUIColorFromRGB(200, 200, 200)
     }
     
@@ -201,7 +185,6 @@ class CinePickerColors {
         if traitCollection.userInterfaceStyle == .dark {
             return getUIColorFromRGB(247, 247, 247)
         }
-        
         return getUIColorFromRGB(20, 20, 20)
     }
     
@@ -209,7 +192,6 @@ class CinePickerColors {
         if traitCollection.userInterfaceStyle == .dark {
             return getUIColorFromRGB(1, 122, 255)
         }
-        
         return getUIColorFromRGB(225, 45, 85)
     }
     
@@ -217,7 +199,6 @@ class CinePickerColors {
         if traitCollection.userInterfaceStyle == .dark {
             return 0x323232
         }
-        
         return 0xFFFFFFF
     }
     
@@ -225,8 +206,6 @@ class CinePickerColors {
         let red = CGFloat(Double(red) / 255.0)
         let green = CGFloat(Double(green) / 255.0)
         let blue = CGFloat(Double(blue) / 255.0)
-        
         return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
     }
-    
 }
