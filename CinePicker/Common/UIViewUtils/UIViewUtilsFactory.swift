@@ -18,4 +18,8 @@ class UIViewUtilsFactory {
     public func getAlertUtils() -> UIAlertUtils {
         return UIAlertUtils.shared
     }
+    
+    public func getViewUtils() -> UIViewUtils {
+        return UIViewUtils.shared
+    }
 }

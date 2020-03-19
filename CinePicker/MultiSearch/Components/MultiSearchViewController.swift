@@ -345,7 +345,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if currentSearchQuery.isEmpty {
-            let view = UIViewUtils.getHeaderWithTagsView(for: tableView)
+            let view = UIViewUtilsFactory.shared.getViewUtils().getHeaderWithTagsView(for: tableView)
             
             view.header = CinePickerCaptions.savedMovies
             
@@ -372,7 +372,8 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewUtils.getUITableViewCellSelectedBackgroundView()
+        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils()
+            .getUITableViewCellSelectedBackgroundView()
         
         var imagePath: String
         

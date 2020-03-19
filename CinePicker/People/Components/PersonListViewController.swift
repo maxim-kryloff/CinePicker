@@ -87,7 +87,8 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewUtils.getUITableViewCellSelectedBackgroundView()
+        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils()
+            .getUITableViewCellSelectedBackgroundView()
         var cell = cell as! ImageFromInternetViewCell
         cell.imagePath = people[indexPath.row].imagePath
         UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)

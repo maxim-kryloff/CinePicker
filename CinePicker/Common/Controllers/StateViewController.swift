@@ -24,15 +24,18 @@ class StateViewController: UIViewController {
     public func updateTable<DataType>(providingData data: [DataType]) { }
     
     private func defineLoadingView() {
-        loadingView = UIViewUtils.getLoadingView(for: tableViewDefinition)
+        loadingView = UIViewUtilsFactory.shared.getViewUtils()
+            .getLoadingView(for: tableViewDefinition)
     }
     
     private func defineFailedLoadingView() {
-        failedLoadingView = UIViewUtils.getFailedLoadingView(for: tableViewDefinition, onTouchDown: onReloadData)
+        failedLoadingView = UIViewUtilsFactory.shared.getViewUtils()
+            .getFailedLoadingView(for: tableViewDefinition, onTouchDown: onReloadData)
     }
     
     private func defineMessageView() {
-        messageView = UIViewUtils.getMessageView(for: tableViewDefinition)
+        messageView = UIViewUtilsFactory.shared.getViewUtils()
+            .getMessageView(for: tableViewDefinition)
     }
 }
 

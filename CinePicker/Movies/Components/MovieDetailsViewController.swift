@@ -135,11 +135,11 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func defineLoadingView() {
-        loadingView = UIViewUtils.getLoadingView(for: movieDetailsTableView)
+        loadingView = UIViewUtilsFactory.shared.getViewUtils().getLoadingView(for: movieDetailsTableView)
     }
     
     private func defineFailedLoadingView() {
-        failedLoadingView = UIViewUtils.getFailedLoadingView(for: movieDetailsTableView, onTouchDown: onReloadGettingMovieDetails)
+        failedLoadingView = UIViewUtilsFactory.shared.getViewUtils().getFailedLoadingView(for: movieDetailsTableView, onTouchDown: onReloadGettingMovieDetails)
     }
     
     private func setDefaultColors() {
@@ -451,7 +451,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewUtils.getUITableViewCellSelectedBackgroundView()
+        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
         
         switch cell {
             case is MovieDetailsTableViewCell: prepare(movieDetailsTableViewCell: (cell as! MovieDetailsTableViewCell))

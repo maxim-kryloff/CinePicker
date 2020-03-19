@@ -3,7 +3,18 @@ import SCLAlertView
 
 class UIViewUtils {
     
-    public static func getMovieRatingColor(rating: Double) -> UIColor {
+    private static var instance: UIViewUtils?
+    
+    public static var shared: UIViewUtils {
+        if instance == nil {
+            instance = UIViewUtils()
+        }
+        return instance!
+    }
+    
+    private init() { }
+    
+    public func getMovieRatingColor(rating: Double) -> UIColor {
         switch(rating) {
             case 0.0..<5.0: return CinePickerColors.getTextNegativeColor()
             case 5.0..<6.5: return CinePickerColors.getTextNeutralColor()
@@ -12,29 +23,29 @@ class UIViewUtils {
         }
     }
     
-    public static func getUITableViewCellSelectedBackgroundView() -> UIView {
+    public func getUITableViewCellSelectedBackgroundView() -> UIView {
         let view = UIView()
         view.backgroundColor = CinePickerColors.getSelectedBackgroundColor()
         return view
     }
     
-    public static func getHeaderView(for tableView: UITableView) -> HeaderUIView {
+    public func getHeaderView(for tableView: UITableView) -> HeaderUIView {
         let view = Bundle.main.loadNibNamed("HeaderUIView", owner: tableView, options: nil)!.first as! HeaderUIView
         return view
     }
     
-    public static func getHeaderWithTagsView(for tableView: UITableView) -> HeaderWithTagsUIView {
+    public func getHeaderWithTagsView(for tableView: UITableView) -> HeaderWithTagsUIView {
         let view = Bundle.main.loadNibNamed("HeaderWithTagsUIView", owner: tableView, options: nil)!.first as! HeaderWithTagsUIView
         return view
     }
     
-    public static func getLoadingView(for tableView: UITableView) -> LoadingUIView {
+    public func getLoadingView(for tableView: UITableView) -> LoadingUIView {
         let view = Bundle.main.loadNibNamed("LoadingUIView", owner: tableView, options: nil)!.first as! LoadingUIView
         view.frame = getAdjustedFrame(from: tableView)
         return view
     }
     
-    private static func getAdjustedFrame(from tableView: UITableView) -> CGRect {
+    private func getAdjustedFrame(from tableView: UITableView) -> CGRect {
         return CGRect(
             x: tableView.center.x,
             y: tableView.center.y,
@@ -43,7 +54,7 @@ class UIViewUtils {
         )
     }
     
-    public static func getFailedLoadingView(
+    public func getFailedLoadingView(
         for tableView: UITableView,
         onTouchDown: @escaping () -> Void
     ) -> FailedLoadingUIView {
@@ -53,7 +64,7 @@ class UIViewUtils {
         return view
     }
     
-    public static func getMessageView(for tableView: UITableView) -> MessageUIView {
+    public func getMessageView(for tableView: UITableView) -> MessageUIView {
         let view = Bundle.main.loadNibNamed("MessageUIView", owner: tableView, options: nil)!.first as! MessageUIView
         view.frame = getAdjustedFrame(from: tableView)
         return view
