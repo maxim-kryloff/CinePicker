@@ -35,6 +35,7 @@
 		33349E70224390D700970A55 /* LoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33349E6F224390D700970A55 /* LoadingTableViewCell.xib */; };
 		3335AAFE222C754800ECB7B3 /* CinePickerColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3335AAFD222C754800ECB7B3 /* CinePickerColors.swift */; };
 		3344AEF1223156E700168A72 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344AEF0223156E700168A72 /* Character.swift */; };
+		3346F7D1242358850086A815 /* UIAlertUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3346F7D0242358850086A815 /* UIAlertUtils.swift */; };
 		33475F42223041C30076F2FC /* UIViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33475F41223041C30076F2FC /* UIViewUtils.swift */; };
 		334AA4AC22295F6D0078324F /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334AA4AB22295F6D0078324F /* MovieService.swift */; };
 		3353CE922225BC16003EAD2A /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3353CE912225BC16003EAD2A /* AsyncOperation.swift */; };
@@ -155,6 +156,7 @@
 		33349E6F224390D700970A55 /* LoadingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingTableViewCell.xib; sourceTree = "<group>"; };
 		3335AAFD222C754800ECB7B3 /* CinePickerColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinePickerColors.swift; sourceTree = "<group>"; };
 		3344AEF0223156E700168A72 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		3346F7D0242358850086A815 /* UIAlertUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertUtils.swift; sourceTree = "<group>"; };
 		33475F41223041C30076F2FC /* UIViewUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewUtils.swift; sourceTree = "<group>"; };
 		334AA4AB22295F6D0078324F /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
 		3353CE912225BC16003EAD2A /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 				33B895A4241FFDB0009CBC35 /* ImageFromInternetViewCell.swift */,
 				33B895A2241FFD6A009CBC35 /* ImageFromInternetViewCellAdapter.swift */,
 				3353CE992225DA6F003EAD2A /* ImageService.swift */,
+				3346F7D0242358850086A815 /* UIAlertUtils.swift */,
 				3395E5EA24227FB000C61891 /* UIImageUtils.swift */,
 				33475F41223041C30076F2FC /* UIViewUtils.swift */,
 				331D8FCB2422951200E598CD /* UIViewUtilsFactory.swift */,
@@ -753,6 +756,7 @@
 				3353CE942225BCD7003EAD2A /* PersonService.swift in Sources */,
 				3358103922297CEE009F965B /* URLBuilder.swift in Sources */,
 				3302A6F02234402500466EC2 /* MovieTableViewCell.swift in Sources */,
+				3346F7D1242358850086A815 /* UIAlertUtils.swift in Sources */,
 				33027F6722CFA914007626BD /* MovieCollectionTableViewCell.swift in Sources */,
 				33B5C7DF22FD96F200983774 /* CinePickerTheme.swift in Sources */,
 				33EB3A61222DA5A0002956B8 /* MovieDetailsViewController.swift in Sources */,

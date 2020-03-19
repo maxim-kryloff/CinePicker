@@ -85,7 +85,7 @@ class MovieListViewController: StateViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
-            UIViewUtils.closeAlert()
+            UIViewUtilsFactory.shared.getAlertUtils().closeAlert()
         }
     }
     
@@ -156,8 +156,7 @@ class MovieListViewController: StateViewController {
             self.navigationController?.popToRootViewController(animated: true)
             return
         }
-        
-        UIViewUtils.showAlert(
+        UIViewUtilsFactory.shared.getAlertUtils().showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (title: CinePickerCaptions.backToSearch, action: backToSearchAction)

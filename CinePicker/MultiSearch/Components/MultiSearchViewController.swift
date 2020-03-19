@@ -70,8 +70,7 @@ class MultiSearchViewController: StateViewController {
             if !UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource) {
                 return
             }
-            
-            UIViewUtils.closeAlert()
+            UIViewUtilsFactory.shared.getAlertUtils().closeAlert()
         }
     }
     
@@ -219,8 +218,7 @@ class MultiSearchViewController: StateViewController {
     
     @objc private func onPressActionsButton() {
         self.searchBarCancelButtonClicked(self.searchBar)
-        
-        UIViewUtils.showAlert(
+        UIViewUtilsFactory.shared.getAlertUtils().showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (
@@ -236,7 +234,7 @@ class MultiSearchViewController: StateViewController {
     }
     
     private func onChangeLanguage() {
-        UIViewUtils.showAlert(
+        UIViewUtilsFactory.shared.getAlertUtils().showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (
@@ -244,14 +242,14 @@ class MultiSearchViewController: StateViewController {
                     action: {
                         CinePickerConfig.setLanguage(language: .en)
                         self.resetViewController()
-                }
+                    }
                 ),
                 (
                     title: CinePickerCaptions.russian,
                     action: {
                         CinePickerConfig.setLanguage(language: .ru)
                         self.resetViewController()
-                }
+                    }
                 )
             ],
             imageName: "lang_image",
@@ -279,8 +277,7 @@ class MultiSearchViewController: StateViewController {
             
             self.onChangeLanguage()
         }
-        
-        UIViewUtils.showDatasourceAgreementAlert(
+        UIViewUtilsFactory.shared.getAlertUtils().showDatasourceAgreementAlert(
             traitCollection: traitCollection,
             buttonAction: action
         )

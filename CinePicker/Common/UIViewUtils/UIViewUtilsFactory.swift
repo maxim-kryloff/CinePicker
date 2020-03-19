@@ -14,4 +14,8 @@ class UIViewUtilsFactory {
     public func getImageUtils() -> UIImageUtils {
         return UIImageUtils.shared
     }
+    
+    public func getAlertUtils() -> UIAlertUtils {
+        return UIAlertUtils.shared
+    }
 }

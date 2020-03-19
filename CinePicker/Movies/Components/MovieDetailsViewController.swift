@@ -90,7 +90,7 @@ class MovieDetailsViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
-            UIViewUtils.closeAlert()
+            UIViewUtilsFactory.shared.getAlertUtils().closeAlert()
         }
     }
     
@@ -164,13 +164,11 @@ class MovieDetailsViewController: UIViewController {
         let goToRequestedMoviesAction = {
             self.performSegue(withIdentifier: SegueIdentifiers.showRequestedMovies, sender: nil)
         }
-        
         let backToSearchAction = {
             self.navigationController?.popToRootViewController(animated: true)
             return
         }
-        
-        UIViewUtils.showAlert(
+        UIViewUtilsFactory.shared.getAlertUtils().showAlert(
             traitCollection: traitCollection,
             buttonActions: [
                 (title: CinePickerCaptions.goToSimilarMovies, action: goToRequestedMoviesAction),
