@@ -28,13 +28,7 @@ class UIImageUtils {
             setImage(at: cell, image: downloadedImage)
             return
         }
-        update(cell: cell, bySettingActivityIndicatorAnimatingTo: true)
-        imageService.download(by: getImageUrl(from: cell)) { (image) in
-            OperationQueue.main.addOperation {
-                self.setImage(at: cell, image: image)
-                self.downloadedImages[cell.imagePath] = image
-            }
-        }
+        downloadAndSetImage(at: cell)
     }
     
     private func setImage(at cell: ImageFromInternetViewCellAdapter, image: UIImage?) {
@@ -62,9 +56,19 @@ class UIImageUtils {
         UIView.animate(withDuration: 0.3, animations: animations, completion: nil)
     }
     
+    private func downloadAndSetImage(at cell: ImageFromInternetViewCellAdapter) {
+        update(cell: cell, bySettingActivityIndicatorAnimatingTo: true)
+        imageService.download(by: getImageUrl(from: cell)) { (image) in
+            OperationQueue.main.addOperation {
+                self.setImage(at: cell, image: image)
+                self.downloadedImages[cell.imagePath] = image
+            }
+        }
+    }
+    
     private func getImageUrl(from cell: ImageFromInternetViewCellAdapter) -> URL {
         guard let url = cell.imageUrl else {
-            fatalError("View image url wasn't built...")
+            fatalError("Couldn't build image url.")
         }
         return url
     }
@@ -79,7 +83,7 @@ class UIImageUtils {
             .append(pathComponent: imagePath)
             .build()
         guard let url = optionalUrl else {
-            fatalError("Url to open image wasn't built...")
+            fatalError("Couldn't build original image url.")
         }
         return url
     }
