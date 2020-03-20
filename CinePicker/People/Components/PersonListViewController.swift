@@ -35,9 +35,7 @@ class PersonListViewController: UIViewController {
     }
     
     private func defineNavigationController() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(
-            title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
-        )
+        navigationItem.backBarButtonItem = UIViewUtilsFactory.shared.getViewUtils().getBackBarButtonItem()
     }
     
     private func defineMoreButton() {
@@ -107,10 +105,10 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         
         if let character = person as? Character {
             cell.personPosition = character.characterName
-            cell.isPersonPositionValid = !character.isUncredited
+            cell.personPositionIsValid = !character.isUncredited
         } else if let crewPerson  = person as? CrewPerson {
             cell.personPosition = crewPerson.jobs.joined(separator: ", ")
-            cell.isPersonPositionValid = true
+            cell.personPositionIsValid = true
         }
         
         return cell

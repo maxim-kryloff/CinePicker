@@ -47,9 +47,9 @@ class PersonTableViewCell: UITableViewCell {
         }
     }
     
-    public var isPersonPositionValid: Bool? {
+    public var personPositionIsValid: Bool? {
         didSet {
-            personPositionLabel.textColor = (isPersonPositionValid ?? true)
+            personPositionLabel.textColor = (personPositionIsValid ?? true)
                 ? CinePickerColors.getSubtitleColor()
                 : CinePickerColors.getTextNegativeColor()
         }
@@ -104,7 +104,7 @@ class PersonTableViewCell: UITableViewCell {
         onTapImageView = nil
         personName = nil
         personPosition = nil
-        isPersonPositionValid = nil
+        personPositionIsValid = nil
     }
 }
 

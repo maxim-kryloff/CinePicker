@@ -19,10 +19,10 @@ class DiscoverSettingsItemsToSelectTableViewCell: UITableViewCell {
         }
     }
     
-    public var isItemSelected: Bool? {
+    public var itemIsSelected: Bool? {
         didSet {
-            if let isItemSelected = isItemSelected {
-                selectedLGButton.isHidden = !isItemSelected
+            if let itemIsSelected = itemIsSelected {
+                selectedLGButton.isHidden = !itemIsSelected
                 return
             }
             selectedLGButton.isHidden = true
@@ -53,6 +53,6 @@ class DiscoverSettingsItemsToSelectTableViewCell: UITableViewCell {
     
     private func setDefaultPropertyValues() {
         header = nil
-        isItemSelected = nil
+        itemIsSelected = nil
     }
 }

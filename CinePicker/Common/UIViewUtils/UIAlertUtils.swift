@@ -22,11 +22,11 @@ class UIAlertUtils {
         traitCollection: UITraitCollection,
         buttonActions: [(title: String, action: () -> Void)],
         imageName: String = "menu_image",
-        isAnimationRightToLeft: Bool = false
+        animationIsRightToLeft: Bool = false
     ) {
         let alert = createAlert()
         addButtons(toAlert: alert, usingButtonActions: buttonActions)
-        initAlertViewResponder(traitCollection, imageName, isAnimationRightToLeft, alert)
+        initAlertViewResponder(traitCollection, imageName, animationIsRightToLeft, alert)
     }
     
     private func createAlert() -> SCLAlertView {
@@ -61,7 +61,7 @@ class UIAlertUtils {
     private func initAlertViewResponder(
         _ traitCollection: UITraitCollection,
         _ imageName: String,
-        _ isAnimationRightToLeft: Bool,
+        _ animationIsRightToLeft: Bool,
         _ alert: SCLAlertView
     ) {
         alertViewResponder = alert.showSuccess(
@@ -70,7 +70,7 @@ class UIAlertUtils {
             closeButtonTitle: CinePickerCaptions.cancel,
             colorStyle: CinePickerColors.getAlertCircleBackgroundColor(traitCollection: traitCollection),
             circleIconImage: UIImage(named: imageName),
-            animationStyle: isAnimationRightToLeft ? .rightToLeft : .topToBottom
+            animationStyle: animationIsRightToLeft ? .rightToLeft : .topToBottom
         )
         alertViewResponder?.setDismissBlock {
             self.alertViewResponder = nil

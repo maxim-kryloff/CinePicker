@@ -89,9 +89,7 @@ class MultiSearchViewController: StateViewController {
     }
     
     private func defineNavigationController() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(
-            title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
-        )
+        navigationItem.backBarButtonItem = UIViewUtilsFactory.shared.getViewUtils().getBackBarButtonItem()
         navigationItem.leftBarButtonItems = []
         navigationItem.rightBarButtonItems = []
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -253,7 +251,7 @@ class MultiSearchViewController: StateViewController {
                 )
             ],
             imageName: "lang_image",
-            isAnimationRightToLeft: true
+            animationIsRightToLeft: true
         )
     }
     
@@ -349,8 +347,8 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
             
             view.header = CinePickerCaptions.savedMovies
             
-            view.isWillCheckItOutSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.willCheckItOutFilter)
-            view.isILikeItSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.iLikeItFilter)
+            view.willCheckItOutIsSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.willCheckItOutFilter)
+            view.iLikeItIsSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.iLikeItFilter)
             
             view.onTapWillCheckItOut = onTapWillCheckItOutFilter
             view.onTapILikeIt = onTapILikeItFilter
@@ -439,17 +437,17 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         cell.releaseYear = movie.releaseYear
         
         if let savedMovie = movie as? SavedMovie {
-            cell.isWillCheckItOutHidden = !savedMovie.containsTag(byName: .willCheckItOut)
-            cell.isILikeItHidden = !savedMovie.containsTag(byName: .iLikeIt)
+            cell.willCheckItOutIsHidden = !savedMovie.containsTag(byName: .willCheckItOut)
+            cell.iLikeItIsHidden = !savedMovie.containsTag(byName: .iLikeIt)
             
-            cell.isVoteResultsHidden = true
+            cell.voteResultsAreHidden = true
             
             return cell
         }
         
         if let savedMovie = savedMovieMap[movie.id] {
-            cell.isWillCheckItOutHidden = !savedMovie.containsTag(byName: .willCheckItOut)
-            cell.isILikeItHidden = !savedMovie.containsTag(byName: .iLikeIt)
+            cell.willCheckItOutIsHidden = !savedMovie.containsTag(byName: .willCheckItOut)
+            cell.iLikeItIsHidden = !savedMovie.containsTag(byName: .iLikeIt)
         }
         
         cell.voteCount = movie.voteCount

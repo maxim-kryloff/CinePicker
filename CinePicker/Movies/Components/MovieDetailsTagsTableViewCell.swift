@@ -11,23 +11,23 @@ class MovieDetailsTagsTableViewCell: UITableViewCell {
         return 50
     }
     
-    public var isWillCheckItOutSelected: Bool? {
+    public var willCheckOutIsSelected: Bool? {
         didSet {
-            guard let isWillCheckItOutSelected = isWillCheckItOutSelected else {
+            guard let willCheckOutIsSelected = willCheckOutIsSelected else {
                 deselectWillCheckItOut()
                 return
             }
-            isWillCheckItOutSelected ? selectWillCheckItOut() : deselectWillCheckItOut()
+            willCheckOutIsSelected ? selectWillCheckItOut() : deselectWillCheckItOut()
         }
     }
     
-    public var isILikeItSelected: Bool? {
+    public var iLikeItIsSelected: Bool? {
         didSet {
-            guard let isILikeItSelected = isILikeItSelected else {
+            guard let iLikeItIsSelected = iLikeItIsSelected else {
                 deselectILikeIt()
                 return
             }
-            isILikeItSelected ? selectILikeIt() : deselectILikeIt()
+            iLikeItIsSelected ? selectILikeIt() : deselectILikeIt()
         }
     }
     
@@ -79,8 +79,8 @@ class MovieDetailsTagsTableViewCell: UITableViewCell {
     }
     
     private func setDefaultPropertyValues() {
-        isWillCheckItOutSelected = nil
-        isILikeItSelected = nil
+        willCheckOutIsSelected = nil
+        iLikeItIsSelected = nil
         onTapWillCheckItOut = nil
         onTapILikeIt = nil
     }

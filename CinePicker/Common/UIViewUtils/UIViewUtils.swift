@@ -69,4 +69,9 @@ class UIViewUtils {
         view.frame = getAdjustedFrame(from: tableView)
         return view
     }
+    
+    public func getBackBarButtonItem() -> UIBarButtonItem {
+        let item = UIBarButtonItem(title: CinePickerCaptions.back, style: .plain, target: nil, action: nil)
+        return item
+    }
 }
