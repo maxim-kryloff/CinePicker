@@ -104,9 +104,7 @@ class MovieListViewController: StateViewController {
     }
     
     private func defineNavigationController() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(
-            title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
-        )
+        navigationItem.backBarButtonItem = UIViewUtilsFactory.shared.getViewUtils().getBackBarButtonItem()
     }
     
     private func defineMoreButton() {

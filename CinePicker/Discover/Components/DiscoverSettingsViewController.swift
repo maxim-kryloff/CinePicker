@@ -68,9 +68,7 @@ class DiscoverSettingsViewController: UIViewController {
     }
     
     private func defineNavigationController() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(
-            title: CinePickerCaptions.back, style: .plain, target: nil, action: nil
-        )
+        navigationItem.backBarButtonItem = UIViewUtilsFactory.shared.getViewUtils().getBackBarButtonItem()
     }
     
     private func defineLoadingView() {
@@ -78,7 +76,8 @@ class DiscoverSettingsViewController: UIViewController {
     }
     
     private func defineFailedLoadingView() {
-        failedLoadingView = UIViewUtilsFactory.shared.getViewUtils().getFailedLoadingView(for: discoverSettingsTableView, onTouchDown: onReloadGettingGenres)
+        failedLoadingView = UIViewUtilsFactory.shared.getViewUtils()
+            .getFailedLoadingView(for: discoverSettingsTableView, onTouchDown: onReloadGettingGenres)
     }
     
     private func defineTableView() {
@@ -177,7 +176,7 @@ extension DiscoverSettingsViewController: UITableViewDataSource, UITableViewDele
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.discoverSettings, for: indexPath) as! DiscoverSettingsTableViewCell
-        getCellUtilsFactory(by: indexPath.row, controller: self).setDiscoverySettingsTableViewCell(cell: cell)
+        getCellUtilsFactory(by: indexPath.row, controller: self).setDiscoverySettingsTableViewCellProperties(cell: cell)
         return cell
     }
     
@@ -250,13 +249,13 @@ extension DiscoverSettingsViewController {
     
     private class CellUtilsAbstractFactory {
         
-        fileprivate let discoverSettingsViewController: DiscoverSettingsViewController
+        public let discoverSettingsViewController: DiscoverSettingsViewController
         
         init(discoverSettingsViewController: DiscoverSettingsViewController) {
             self.discoverSettingsViewController = discoverSettingsViewController
         }
         
-        public func setDiscoverySettingsTableViewCell(cell: DiscoverSettingsTableViewCell) { }
+        public func setDiscoverySettingsTableViewCellProperties(cell: DiscoverSettingsTableViewCell) { }
         
         public func setItemsToSelectViewControllerProperties(_ controller: DiscoverSettingsItemsToSelectViewController) { }
         
@@ -274,7 +273,7 @@ extension DiscoverSettingsViewController {
             return instance!
         }
         
-        override func setDiscoverySettingsTableViewCell(cell: DiscoverSettingsTableViewCell) {
+        override func setDiscoverySettingsTableViewCellProperties(cell: DiscoverSettingsTableViewCell) {
             cell.header = CinePickerCaptions.genres
             cell.iconString = "film"
             if !discoverSettingsViewController.selectedGenres.isEmpty {
@@ -305,7 +304,7 @@ extension DiscoverSettingsViewController {
             return instance!
         }
         
-        override func setDiscoverySettingsTableViewCell(cell: DiscoverSettingsTableViewCell) {
+        override func setDiscoverySettingsTableViewCellProperties(cell: DiscoverSettingsTableViewCell) {
             cell.header = CinePickerCaptions.year
             cell.iconString = "calendar-o"
             cell.info = discoverSettingsViewController.selectedYear?.label
@@ -336,7 +335,7 @@ extension DiscoverSettingsViewController {
             return instance!
         }
         
-        override func setDiscoverySettingsTableViewCell(cell: DiscoverSettingsTableViewCell) {
+        override func setDiscoverySettingsTableViewCellProperties(cell: DiscoverSettingsTableViewCell) {
             cell.header = CinePickerCaptions.rating
             cell.iconString = "star-half-o"
             if let selectedRating = discoverSettingsViewController.selectedRating {
