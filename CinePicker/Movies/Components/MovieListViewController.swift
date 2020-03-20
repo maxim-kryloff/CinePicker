@@ -25,7 +25,6 @@ class MovieListViewController: StateViewController {
     private var savedMovies: [SavedMovie] = [] {
         didSet {
             savedMovieMap = [:]
-            
             for movie in savedMovies {
                 savedMovieMap[movie.id] = movie
             }
@@ -44,42 +43,38 @@ class MovieListViewController: StateViewController {
         if isBeingRequested || isRequestFailed {
             return
         }
-        
         let moviesToDisplay = personTypeSegmentControl.selectedSegmentIndex == 0
             ? castMovies
             : crewMovies
-        
         if moviesToDisplay.isEmpty {
             self.setMessageState(withMessage: CinePickerCaptions.thereAreNoMoviesFound)
             return
         }
-        
         unsetMessageState()
-        updateTable(providingData: moviesToDisplay)
-        
+        showMoviesAfterSegmentSelection(movies: moviesToDisplay)
+    }
+    
+    private func showMoviesAfterSegmentSelection(movies: [Movie]) {
+        updateTable(providingData: movies)
         let firstRowIndexPath = IndexPath(row: 0, section: 0)
         movieListTableView.scrollToRow(at: firstRowIndexPath, at: .top, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         savedMovies = MovieRepository.shared.getAll()
         movieListTableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = CinePickerCaptions.movies(ofPerson: person.name)
-        
+        defineTitle()
         defineNavigationController()
         defineMoreButton()
         defineSegmentControl()
         defineTableView()
-        
+        registerMovieTableViewCell()
         setDefaultColors()
-        
         performRequest()
     }
     
@@ -91,16 +86,18 @@ class MovieListViewController: StateViewController {
     
     override func onReloadData() {
         super.onReloadData()
-        
         unsetAllStates()
         performRequest()
     }
     
     override func updateTable<DataType>(providingData data: [DataType]) {
         super.updateTable(providingData: data)
-        
         movies = data as! [Movie]
         movieListTableView.reloadData()
+    }
+    
+    private func defineTitle() {
+        navigationItem.title = CinePickerCaptions.movies(ofPerson: person.name)
     }
     
     private func defineNavigationController() {
@@ -114,21 +111,17 @@ class MovieListViewController: StateViewController {
             target: self,
             action: #selector(MovieListViewController.onPressActionsButton)
         )
-        
         actionsBarButtonItem.isEnabled = false
-        
         navigationItem.rightBarButtonItem = actionsBarButtonItem
     }
     
     private func defineSegmentControl() {
         personTypeSegmentControl.setTitle(CinePickerCaptions.cast, forSegmentAt: 0)
         personTypeSegmentControl.setTitle(CinePickerCaptions.crew, forSegmentAt: 1)
-        
         personTypeSegmentControl.setTitleTextAttributes(
             [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)],
             for: .normal
         )
-        
         personTypeSegmentControl.setTitleTextAttributes(
             [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)],
             for: .selected
@@ -138,7 +131,9 @@ class MovieListViewController: StateViewController {
     private func defineTableView() {
         movieListTableView.rowHeight = MovieTableViewCell.standardHeight
         movieListTableView.tableFooterView = UIView(frame: .zero)
-        
+    }
+    
+    private func registerMovieTableViewCell() {
         let movieTableViewCellNib = UINib(nibName: "MovieTableViewCell", bundle: nil)
         movieListTableView.register(movieTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movie)
     }
@@ -164,30 +159,21 @@ class MovieListViewController: StateViewController {
     
     private func performRequest() {
         setLoadingState()
-        
         isBeingRequested = true
         isRequestFailed = false
-        
         movieListService.requestMovies(by: person.id) { (requestedMoviesResult) in
             OperationQueue.main.addOperation {
                 self.unsetLoadingState()
-                
                 self.isBeingRequested = false
-                
                 guard let requestedMoviesResult = requestedMoviesResult else {
                     self.isRequestFailed = true
                     self.setFailedLoadingState()
-                    
                     return
                 }
-                
                 self.castMovies = requestedMoviesResult.cast
                 self.crewMovies = requestedMoviesResult.crew
-                
                 self.actionsBarButtonItem.isEnabled = true
-                
                 let moviesToDisplay: [Movie]
-                
                 if self.crewMovies.count > self.castMovies.count {
                     self.personTypeSegmentControl.selectedSegmentIndex = 1
                     moviesToDisplay = self.crewMovies
@@ -195,17 +181,14 @@ class MovieListViewController: StateViewController {
                     self.personTypeSegmentControl.selectedSegmentIndex = 0
                     moviesToDisplay = self.castMovies
                 }
-                
                 if moviesToDisplay.isEmpty {
                     self.setMessageState(withMessage: CinePickerCaptions.thereAreNoMoviesFound)
                     return
                 }
-                
                 self.updateTable(providingData: moviesToDisplay)
             }
         }
     }
-    
 }
 
 extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
@@ -216,71 +199,63 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
-        var cell = cell as! ImageFromInternetViewCell
+        let cell = cell as! MovieTableViewCell
+        setMovieTableViewCellImageProperties(cell: cell, indexPath: indexPath)
+    }
+    
+    private func setMovieTableViewCellImageProperties(cell: MovieTableViewCell, indexPath: IndexPath) {
         cell.imagePath = movies[indexPath.row].imagePath
+        cell.onTapImageView = { (imagePath) in
+            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
+        }
         UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
-        
+        setMovieTableViewCellProperties(cell: cell, indexPath: indexPath)
+        return cell
+    }
+    
+    private func setMovieTableViewCellProperties(cell: MovieTableViewCell, indexPath: IndexPath) {
         let movie = movies[indexPath.row]
-        
-        if cell.imagePath.isEmpty {
-            cell.imagePath = movie.imagePath
-        }
-        
-        cell.onTapImageView = { (imagePath) in
-            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
-        }
-        
         cell.title = movie.title
         cell.originalTitle = movie.originalTitle
         cell.releaseYear = movie.releaseYear
-        
         if let savedMovie = savedMovieMap[movie.id] {
             cell.willCheckItOutIsHidden = !savedMovie.containsTag(byName: .willCheckItOut)
             cell.iLikeItIsHidden = !savedMovie.containsTag(byName: .iLikeIt)
         }
-        
         cell.voteCount = movie.voteCount
         cell.rating = movie.rating
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath)
-        
         let sender = TableViewCellSender(cell: cell, indexPath: indexPath)
-        
         performSegue(withIdentifier: SegueIdentifiers.showMovieDetails, sender: sender)
     }
-    
 }
 
 extension MovieListViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        
         guard let segueIdentifier = segue.identifier else {
             return
         }
-        
         if segueIdentifier == SegueIdentifiers.showMovieDetails {
-            let movieDetailsViewController = segue.destination as! MovieDetailsViewController
-            let sender = sender as! TableViewCellSender
-            
-            let indexPath = sender.indexPath
-            
-            movieDetailsViewController.movieId = movies[indexPath.row].id
-            movieDetailsViewController.movieTitle = movies[indexPath.row].title
-            
+            setMovieDetailsViewControllerProperties(for: segue, sender: sender)
             return
         }
-        
         fatalError("Unexpected Segue Identifier: \(segueIdentifier)")
     }
     
+    private func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, sender: Any?) {
+        let movieDetailsViewController = segue.destination as! MovieDetailsViewController
+        let sender = sender as! TableViewCellSender
+        let indexPath = sender.indexPath
+        movieDetailsViewController.movieId = movies[indexPath.row].id
+        movieDetailsViewController.movieTitle = movies[indexPath.row].title
+    }
 }
