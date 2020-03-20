@@ -105,10 +105,10 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         
         if let character = person as? Character {
             cell.personPosition = character.characterName
-            cell.isPersonPositionValid = !character.isUncredited
+            cell.personPositionIsValid = !character.isUncredited
         } else if let crewPerson  = person as? CrewPerson {
             cell.personPosition = crewPerson.jobs.joined(separator: ", ")
-            cell.isPersonPositionValid = true
+            cell.personPositionIsValid = true
         }
         
         return cell

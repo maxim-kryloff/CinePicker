@@ -68,17 +68,17 @@ class MovieTableViewCell: UITableViewCell {
         }
     }
     
-    public var isWillCheckItOutHidden: Bool {
+    public var willCheckItOutIsHidden: Bool {
         set { willCheckItOutLGButton.isHidden = newValue }
         get { return willCheckItOutLGButton.isHidden }
     }
     
-    public var isILikeItHidden: Bool {
+    public var iLikeItIsHidden: Bool {
         set { iLikeItLGButton.isHidden = newValue }
         get { return iLikeItLGButton.isHidden }
     }
     
-    public var isVoteResultsHidden: Bool {
+    public var voteResultsAreHidden: Bool {
         set { voteResultsStackView.isHidden = newValue }
         get { return voteResultsStackView.isHidden }
     }
@@ -166,8 +166,8 @@ class MovieTableViewCell: UITableViewCell {
         title = nil
         originalTitle = nil
         releaseYear = nil
-        isWillCheckItOutHidden = true
-        isILikeItHidden = true
+        willCheckItOutIsHidden = true
+        iLikeItIsHidden = true
         voteCount = nil
         rating = nil
     }

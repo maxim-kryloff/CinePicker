@@ -239,8 +239,8 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.releaseYear = movie.releaseYear
         
         if let savedMovie = savedMovieMap[movie.id] {
-            cell.isWillCheckItOutHidden = !savedMovie.containsTag(byName: .willCheckItOut)
-            cell.isILikeItHidden = !savedMovie.containsTag(byName: .iLikeIt)
+            cell.willCheckItOutIsHidden = !savedMovie.containsTag(byName: .willCheckItOut)
+            cell.iLikeItIsHidden = !savedMovie.containsTag(byName: .iLikeIt)
         }
         
         cell.voteCount = movie.voteCount

@@ -178,19 +178,19 @@ class MovieDetailsViewController: UIViewController {
     private func onTapWillCheckItOutSystemTag(cell: MovieDetailsTagsTableViewCell) {
         guard let savedMovie = savedMovie else {
             saveMovie(withTag: .willCheckItOut)
-            cell.isWillCheckItOutSelected = true
+            cell.willCheckOutIsSelected = true
             
             return
         }
         
         if !savedMovie.containsTag(byName: .willCheckItOut) {
             updateSavedMovie(withTag: .willCheckItOut)
-            cell.isWillCheckItOutSelected = true
+            cell.willCheckOutIsSelected = true
             
             return
         }
         
-        cell.isWillCheckItOutSelected = false
+        cell.willCheckOutIsSelected = false
         
         if savedMovie.tags.count > 1 {
             updateSavedMovie(withoutTag: .willCheckItOut)
@@ -203,19 +203,19 @@ class MovieDetailsViewController: UIViewController {
     private func onTapILikeItSystemTag(cell: MovieDetailsTagsTableViewCell) {
         guard let savedMovie = savedMovie else {
             saveMovie(withTag: .iLikeIt)
-            cell.isILikeItSelected = true
+            cell.iLikeItIsSelected = true
             
             return
         }
         
         if !savedMovie.containsTag(byName: .iLikeIt) {
             updateSavedMovie(withTag: .iLikeIt)
-            cell.isILikeItSelected = true
+            cell.iLikeItIsSelected = true
             
             return
         }
         
-        cell.isILikeItSelected = false
+        cell.iLikeItIsSelected = false
         
         if savedMovie.tags.count > 1 {
             updateSavedMovie(withoutTag: .iLikeIt)
@@ -545,8 +545,8 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsTags, for: indexPath) as! MovieDetailsTagsTableViewCell
         
         if let savedMovie = savedMovie {
-            cell.isWillCheckItOutSelected = savedMovie.containsTag(byName: .willCheckItOut)
-            cell.isILikeItSelected = savedMovie.containsTag(byName: .iLikeIt)
+            cell.willCheckOutIsSelected = savedMovie.containsTag(byName: .willCheckItOut)
+            cell.iLikeItIsSelected = savedMovie.containsTag(byName: .iLikeIt)
         }
         
         cell.onTapWillCheckItOut = onTapWillCheckItOutSystemTag
@@ -621,7 +621,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             
             cell.personName = character.name
             cell.personPosition = character.characterName
-            cell.isPersonPositionValid = !character.isUncredited
+            cell.personPositionIsValid = !character.isUncredited
             
             return cell
         }
@@ -642,7 +642,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             
             cell.personName = crewPerson.name
             cell.personPosition = crewPerson.jobs.joined(separator: ", ")
-            cell.isPersonPositionValid = true
+            cell.personPositionIsValid = true
             
             return cell
         }

@@ -21,23 +21,23 @@ class HeaderWithTagsUIView: UIView {
         }
     }
     
-    public var isWillCheckItOutSelected: Bool? {
+    public var willCheckItOutIsSelected: Bool? {
         didSet {
-            guard let isWillCheckItOutSelected = isWillCheckItOutSelected else {
+            guard let willCheckItOutIsSelected = willCheckItOutIsSelected else {
                 deselectWillCheckItOut()
                 return
             }
-            isWillCheckItOutSelected ? selectWillCheckItOut() : deselectWillCheckItOut()
+            willCheckItOutIsSelected ? selectWillCheckItOut() : deselectWillCheckItOut()
         }
     }
     
-    public var isILikeItSelected: Bool? {
+    public var iLikeItIsSelected: Bool? {
         didSet {
-            guard let isILikeItSelected = isILikeItSelected else {
+            guard let iLikeItIsSelected = iLikeItIsSelected else {
                 deselectILikeIt()
                 return
             }
-            isILikeItSelected ? selectILikeIt() : deselectILikeIt()
+            iLikeItIsSelected ? selectILikeIt() : deselectILikeIt()
         }
     }
     
@@ -63,8 +63,8 @@ class HeaderWithTagsUIView: UIView {
     
     private func setDefaultPropertyValues() {
         header = nil
-        isWillCheckItOutSelected = nil
-        isILikeItSelected = nil
+        willCheckItOutIsSelected = nil
+        iLikeItIsSelected = nil
         onTapWillCheckItOut = nil
         onTapILikeIt = nil
     }
