@@ -50,6 +50,12 @@ class DiscoverSettingsViewController: UIViewController {
     
     private let discoverSettingsService = DiscoverSettingsService(genreService: GenreService(), movieService: MovieService())
     
+    private var genresCellUtilsFactory: GenresCellUtilsFactory!
+    
+    private var yearCellUtilsFactory: YearCellUtilsFactory!
+    
+    private var ratingCellUtilsFactory: RatingCellUtilsFactory!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         discoverSettingsTableView.reloadData()
@@ -64,6 +70,7 @@ class DiscoverSettingsViewController: UIViewController {
         registerDiscoverSettingsTableViewCell()
         defineSearchLGButton()
         setDefaultColors()
+        defineCellFactories()
         performRequest()
     }
     
@@ -99,6 +106,12 @@ class DiscoverSettingsViewController: UIViewController {
         discoverSettingsTableView.backgroundColor = CinePickerColors.getBackgroundColor()
         searchLGButton.bgColor = CinePickerColors.getActionColor()
         searchLGButton.titleColor = CinePickerColors.getBackgroundColor()
+    }
+    
+    private func defineCellFactories() {
+        genresCellUtilsFactory = GenresCellUtilsFactory(discoverSettingsViewController: self)
+        yearCellUtilsFactory = YearCellUtilsFactory(discoverSettingsViewController: self)
+        ratingCellUtilsFactory = RatingCellUtilsFactory(discoverSettingsViewController: self)
     }
     
     private func performRequest() {
@@ -237,11 +250,11 @@ extension DiscoverSettingsViewController {
     private func getCellUtilsFactory(by rowNumber: Int, controller: DiscoverSettingsViewController) -> CellUtilsAbstractFactory {
         switch rowNumber {
             case discoverSettingsGenresRowNumber:
-                return GenresCellUtilsFactory.getShared(controller: self)
+                return genresCellUtilsFactory
             case discoverSettingsYearRowNumber:
-                return YearCellUtilsFactory.getShared(controller: self)
+                return yearCellUtilsFactory
             case discoverSettingsRatingRowNumber:
-                return RatingCellUtilsFactory.getShared(controller: self)
+                return ratingCellUtilsFactory
             default:
                 fatalError("Discover settings cell is out of range...")
         }
@@ -263,15 +276,6 @@ extension DiscoverSettingsViewController {
     }
     
     private class GenresCellUtilsFactory: CellUtilsAbstractFactory {
-        
-        private static var instance: CellUtilsAbstractFactory?
-        
-        public static func getShared(controller: DiscoverSettingsViewController) -> CellUtilsAbstractFactory {
-            if (instance == nil) {
-                instance = GenresCellUtilsFactory(discoverSettingsViewController: controller)
-            }
-            return instance!
-        }
         
         override func setDiscoverySettingsTableViewCellProperties(cell: DiscoverSettingsTableViewCell) {
             cell.header = CinePickerCaptions.genres
@@ -295,15 +299,6 @@ extension DiscoverSettingsViewController {
     
     private class YearCellUtilsFactory: CellUtilsAbstractFactory {
         
-        private static var instance: CellUtilsAbstractFactory?
-        
-        public static func getShared(controller: DiscoverSettingsViewController) -> CellUtilsAbstractFactory {
-            if (instance == nil) {
-                instance = YearCellUtilsFactory(discoverSettingsViewController: controller)
-            }
-            return instance!
-        }
-        
         override func setDiscoverySettingsTableViewCellProperties(cell: DiscoverSettingsTableViewCell) {
             cell.header = CinePickerCaptions.year
             cell.iconString = "calendar-o"
@@ -325,15 +320,6 @@ extension DiscoverSettingsViewController {
     }
     
     private class RatingCellUtilsFactory: CellUtilsAbstractFactory {
-        
-        private static var instance: CellUtilsAbstractFactory?
-        
-        public static func getShared(controller: DiscoverSettingsViewController) -> CellUtilsAbstractFactory {
-            if (instance == nil) {
-                instance = RatingCellUtilsFactory(discoverSettingsViewController: controller)
-            }
-            return instance!
-        }
         
         override func setDiscoverySettingsTableViewCellProperties(cell: DiscoverSettingsTableViewCell) {
             cell.header = CinePickerCaptions.rating
