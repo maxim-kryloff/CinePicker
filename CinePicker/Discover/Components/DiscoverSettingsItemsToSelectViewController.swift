@@ -14,17 +14,15 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
         get {
             return Array(selectedItemMap.values)
         }
-        
         set {
             selectedItemMap = [:]
-            
             for selectedItem in newValue {
                 selectedItemMap[selectedItem.identifier] = selectedItem
             }
         }
     }
     
-    public var allowsMultipleSelection: Bool = false
+    public var multipleSelectionIsAllowed: Bool = false
     
     public var onViewWillDisappear: ((_ selectedItems: [DiscoverSettingsItemToSelect]) -> Void)?
     
@@ -32,7 +30,7 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
         didSet {
             if selectedItemMap.isEmpty {
                 disableCancelButton()
-            } else if !isCancelButtonEnabled() {
+            } else if !cancelButtonIsEnabled() {
                 enableCancelButton()
             }
         }
@@ -40,17 +38,14 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         defineNavigationController()
         defineCancelButton()
         defineTableView()
-        
         setDefaultColors()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         onViewWillDisappear?(selectedItems)
     }
     
@@ -66,9 +61,7 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
             target: self,
             action: #selector(DiscoverSettingsItemsToSelectViewController.onPressCancel)
         )
-        
         item.isEnabled = !selectedItemMap.isEmpty
-        
         navigationItem.rightBarButtonItems?.append(item)
     }
     
@@ -91,7 +84,7 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
         navigationItem.rightBarButtonItems?.first?.isEnabled = false
     }
     
-    private func isCancelButtonEnabled() -> Bool {
+    private func cancelButtonIsEnabled() -> Bool {
         return navigationItem.rightBarButtonItems?.first?.isEnabled ?? false
     }
     
@@ -99,7 +92,6 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
         selectedItems = []
         discoverItemsToSelectTableView.reloadData()
     }
-    
 }
 
 extension DiscoverSettingsItemsToSelectViewController: UITableViewDataSource, UITableViewDelegate {
@@ -110,36 +102,32 @@ extension DiscoverSettingsItemsToSelectViewController: UITableViewDataSource, UI
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.discoverSettingsItemsToSelect, for: indexPath) as! DiscoverSettingsItemsToSelectTableViewCell
-        
-        let itemToSelect = itemsToSelect[indexPath.row]
-        
-        cell.header = itemToSelect.valueToDisplay
-        cell.isItemSelected = selectedItemMap[itemToSelect.identifier] != nil
-        
+        setCellProperties(cell: cell, indexPath: indexPath)
         return cell
+    }
+    
+    private func setCellProperties(cell: DiscoverSettingsItemsToSelectTableViewCell, indexPath: IndexPath) {
+        let itemToSelect = itemsToSelect[indexPath.row]
+        cell.header = itemToSelect.valueToDisplay
+        cell.itemIsSelected = selectedItemMap[itemToSelect.identifier] != nil
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         defer {
-            if !allowsMultipleSelection {
-                discoverItemsToSelectTableView.reloadData()
-            } else {
+            if multipleSelectionIsAllowed {
                 discoverItemsToSelectTableView.reloadRows(at: [indexPath], with: .none)
+            } else {
+                discoverItemsToSelectTableView.reloadData()
             }
         }
-        
         let itemToSelect = itemsToSelect[indexPath.row]
-        
         if selectedItemMap[itemToSelect.identifier] != nil {
             selectedItemMap[itemToSelect.identifier] = nil
             return
         }
-        
-        if !allowsMultipleSelection {
+        if !multipleSelectionIsAllowed {
             selectedItemMap = [:]
         }
-        
         selectedItemMap[itemToSelect.identifier] = itemToSelect
     }
-    
 }

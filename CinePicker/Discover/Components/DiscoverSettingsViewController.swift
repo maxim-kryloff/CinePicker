@@ -285,7 +285,7 @@ extension DiscoverSettingsViewController {
             controller.title = CinePickerCaptions.genres
             controller.itemsToSelect = discoverSettingsViewController.genres
             controller.selectedItems = discoverSettingsViewController.selectedGenres
-            controller.allowsMultipleSelection = true
+            controller.multipleSelectionIsAllowed = true
         }
         
         override func setDiscoverSettingsViewControllerSelectedItems(selectedItems: [DiscoverSettingsItemToSelect]) {
