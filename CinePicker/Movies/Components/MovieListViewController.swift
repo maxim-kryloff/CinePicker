@@ -204,22 +204,19 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     
     private func setMovieTableViewCellImageProperties(cell: MovieTableViewCell, indexPath: IndexPath) {
         cell.imagePath = movies[indexPath.row].imagePath
-        cell.onTapImageView = { (imagePath) in
-            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
-        }
         UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
         setMovieTableViewCellProperties(cell: cell, indexPath: indexPath)
-        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
         return cell
     }
     
     private func setMovieTableViewCellProperties(cell: MovieTableViewCell, indexPath: IndexPath) {
         let movie = movies[indexPath.row]
         cell.movie = movie
+        cell.originController = self
         if let savedMovie = savedMovieMap[movie.id] {
             cell.savedMovie = savedMovie
         }

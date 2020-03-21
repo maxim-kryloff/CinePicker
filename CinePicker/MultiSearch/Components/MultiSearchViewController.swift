@@ -35,6 +35,10 @@ class MultiSearchViewController: StateViewController {
     
     private let debounceActionService = DebounceActionService()
     
+    private var movieUtilsFactory: EntityUtilsAbstractFactory!
+    
+    private var personUtilsFactory: EntityUtilsAbstractFactory!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         savedMovies = MovieRepository.shared.getAll()
@@ -55,6 +59,7 @@ class MultiSearchViewController: StateViewController {
         registerMovieTableViewCell()
         registerPersonTableViewCell()
         setDefaultColors()
+        defineEntityFactories()
         if !UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource) {
             createAndSaveTags()
             showDataSourceAgreementAlert()
@@ -144,10 +149,30 @@ class MultiSearchViewController: StateViewController {
         entityTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     
+    private func defineEntityFactories() {
+        movieUtilsFactory = MovieUtilsFactory(multiSearchViewController: self)
+        personUtilsFactory = PersonUtilsFactory(multiSearchViewController: self)
+    }
+    
     private func showSavedMovies() {
         let reversedSavedMovies = Array(savedMovies.reversed())
         let filteredSavedMovies = filter(savedMovies: reversedSavedMovies)
         updateTable(providingData: filteredSavedMovies)
+    }
+    
+    private func filter(savedMovies: [SavedMovie]) -> [SavedMovie] {
+        let isWillCheckItOutFilterSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.willCheckItOutFilter)
+        let isILikeItFilterSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.iLikeItFilter)
+        let filteredSavedMovies = savedMovies.filter {
+            if isWillCheckItOutFilterSelected && $0.containsTag(byName: .willCheckItOut) {
+                return true
+            }
+            if isILikeItFilterSelected && $0.containsTag(byName: .iLikeIt){
+                return true
+            }
+            return false
+        }
+        return filteredSavedMovies
     }
     
     private func removeSavedMovie(at indexPath: IndexPath) {
@@ -275,21 +300,6 @@ class MultiSearchViewController: StateViewController {
         showSavedMovies()
     }
     
-    private func filter(savedMovies: [SavedMovie]) -> [SavedMovie] {
-        let isWillCheckItOutFilterSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.willCheckItOutFilter)
-        let isILikeItFilterSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.iLikeItFilter)
-        let filteredSavedMovies = savedMovies.filter {
-            if isWillCheckItOutFilterSelected && $0.containsTag(byName: .willCheckItOut) {
-                return true
-            }
-            if isILikeItFilterSelected && $0.containsTag(byName: .iLikeIt){
-                return true
-            }
-            return false
-        }
-        return filteredSavedMovies
-    }
-    
     private func resetViewController() {
         searchBarCancelButtonClicked(searchBar)
         viewWillAppear(false)
@@ -341,89 +351,19 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
-        
-        var imagePath: String
-        
-        switch cell {
-            case is MovieTableViewCell:
-                let movie = entities[indexPath.row] as! Movie
-                imagePath = movie.imagePath
-            case is PersonTableViewCell:
-                let popularPerson = entities[indexPath.row] as! PopularPerson
-                imagePath = popularPerson.imagePath
-            default:
-                fatalError("Unexpected type of table view cell...")
-        }
-        
-        var cell = cell as! ImageFromInternetViewCell
-        cell.imagePath = imagePath
-        UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
+        let entity = entities[indexPath.row]
+        getEntityUtilsFactory(by: entity).setMultiSearchTableViewCellImageProperties(cell: cell, by: indexPath)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let entity = entities[indexPath.row]
-        
-        switch (entity) {
-            case is Movie: return getMovieTableViewCell(tableView, cellForRowAt: indexPath, movie: entity as! Movie)
-            case is PopularPerson: return getPersonTableViewCell(tableView, cellForRowAt: indexPath, person: entity as! PopularPerson)
-            default: fatalError("Entity has unexpeted type...")
-        }
+        return getEntityUtilsFactory(by: entity).getMultiSearchTableViewCell(from: tableView, by: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let entity = entities[indexPath.row]
-        
-        if entity is Movie {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath)
-            let sender = TableViewCellSender(cell: cell, indexPath: indexPath)
-            
-            performSegue(withIdentifier: SegueIdentifiers.showMovieDetails, sender: sender)
-            
-            return
-        }
-        
-        if entity is PopularPerson {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath)
-            let sender = TableViewCellSender(cell: cell, indexPath: indexPath)
-            
-            performSegue(withIdentifier: SegueIdentifiers.showPersonMovies, sender: sender)
-            
-            return
-        }
-        
-        fatalError("Unexpeted type of selected entity...")
+        getEntityUtilsFactory(by: entity).performSegueForMultiSearchTableViewCell(from: tableView, at: indexPath)
     }
-    
-    private func getMovieTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, movie: Movie) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
-        cell.onTapImageView = { (imagePath) in
-            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
-        }
-        cell.movie = movie
-        if let savedMovie = movie as? SavedMovie {
-            cell.savedMovie = savedMovie
-            cell.voteResultsAreHidden = true
-            return cell
-        }
-        if let savedMovie = savedMovieMap[movie.id] {
-            cell.savedMovie = savedMovie
-        }
-        return cell
-    }
-    
-    private func getPersonTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, person: PopularPerson) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
-        
-        cell.onTapImageView = { (imagePath) in
-            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
-        }
-        
-        cell.personName = person.name
-        
-        return cell
-    }
-    
 }
 
 extension MultiSearchViewController {
@@ -446,7 +386,7 @@ extension MultiSearchViewController {
             setMovieListViewControllerProperties(for: segue, entity: entity)
             return
         }
-        fatalError("Unexpected Segue Identifier: \(segueIdentifier)")
+        fatalError("Unexpected segue identifier: \(segueIdentifier)")
     }
     
     private func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, entity: MultiSearchEntity) {
@@ -496,5 +436,87 @@ extension MultiSearchViewController: UISearchBarDelegate {
         }
         searchBar.text = nil
         self.searchBar(searchBar, textDidChange: "")
+    }
+}
+
+extension MultiSearchViewController {
+    
+    private func getEntityUtilsFactory(by entity: MultiSearchEntity) -> EntityUtilsAbstractFactory {
+        switch entity {
+            case is Movie: return movieUtilsFactory
+            case is PopularPerson: return personUtilsFactory
+            default: fatalError("Entity has unexpected type.")
+        }
+    }
+    
+    private class EntityUtilsAbstractFactory {
+        
+        public let multiSearchViewController: MultiSearchViewController
+        
+        init(multiSearchViewController: MultiSearchViewController) {
+            self.multiSearchViewController = multiSearchViewController
+        }
+        
+        public func setMultiSearchTableViewCellImageProperties(cell: UITableViewCell, by indexPath: IndexPath) { }
+        
+        public func getMultiSearchTableViewCell(from tableView: UITableView, by indexPath: IndexPath) -> UITableViewCell {
+            fatalError("getTableViewCell(..) must be overriden.")
+        }
+        
+        public func performSegueForMultiSearchTableViewCell(from tableView: UITableView, at indexPath: IndexPath) { }
+    }
+    
+    private class MovieUtilsFactory: EntityUtilsAbstractFactory {
+        
+        override func setMultiSearchTableViewCellImageProperties(cell: UITableViewCell, by indexPath: IndexPath) {
+            let movie = multiSearchViewController.entities[indexPath.row] as! Movie
+            (cell as! MovieTableViewCell).imagePath = movie.imagePath
+            UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell as! ImageFromInternetViewCell)
+        }
+        
+        override func getMultiSearchTableViewCell(from tableView: UITableView, by indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
+            let movie = multiSearchViewController.entities[indexPath.row] as! Movie
+            cell.movie = movie
+            cell.originController = multiSearchViewController
+            if let savedMovie = movie as? SavedMovie {
+                cell.savedMovie = savedMovie
+                cell.voteResultsAreHidden = true
+                return cell
+            }
+            if let savedMovie = multiSearchViewController.savedMovieMap[movie.id] {
+                cell.savedMovie = savedMovie
+            }
+            return cell
+        }
+        
+        override func performSegueForMultiSearchTableViewCell(from tableView: UITableView, at indexPath: IndexPath) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath)
+            let sender = TableViewCellSender(cell: cell, indexPath: indexPath)
+            multiSearchViewController.performSegue(withIdentifier: SegueIdentifiers.showMovieDetails, sender: sender)
+        }
+    }
+    
+    private class PersonUtilsFactory: EntityUtilsAbstractFactory {
+        
+        override func setMultiSearchTableViewCellImageProperties(cell: UITableViewCell, by indexPath: IndexPath) {
+            let popularPerson = multiSearchViewController.entities[indexPath.row] as! PopularPerson
+            (cell as! PersonTableViewCell).imagePath = popularPerson.imagePath
+            UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell as! ImageFromInternetViewCell)
+        }
+        
+        override func getMultiSearchTableViewCell(from tableView: UITableView, by indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
+            let person = multiSearchViewController.entities[indexPath.row] as! Person
+            cell.originController = multiSearchViewController
+            cell.personName = person.name
+            return cell
+        }
+        
+        override func performSegueForMultiSearchTableViewCell(from tableView: UITableView, at indexPath: IndexPath) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath)
+            let sender = TableViewCellSender(cell: cell, indexPath: indexPath)
+            multiSearchViewController.performSegue(withIdentifier: SegueIdentifiers.showPersonMovies, sender: sender)
+        }
     }
 }

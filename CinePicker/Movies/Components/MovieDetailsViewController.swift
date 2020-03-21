@@ -449,8 +449,6 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
-        
         switch cell {
             case is MovieDetailsTableViewCell: prepare(movieDetailsTableViewCell: (cell as! MovieDetailsTableViewCell))
             case is PersonTableViewCell: prepare(personTableViewCell: (cell as! PersonTableViewCell), forRowAt: indexPath)
@@ -521,11 +519,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     
     private func getMovieDetailsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetails, for: indexPath) as! MovieDetailsTableViewCell
-        
-        cell.onTapImageView = { (imagePath) in
-            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
-        }
-        
+        cell.originController = self
         cell.title = movieDetails.title
         cell.originalTitle = movieDetails.originalTitle
         cell.genres = movieDetails.genres
@@ -614,11 +608,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             }
             
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
-            
-            cell.onTapImageView = { (imagePath) in
-                UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
-            }
-            
+            cell.originController = self
             cell.personName = character.name
             cell.personPosition = character.characterName
             cell.personPositionIsValid = !character.isUncredited
@@ -635,11 +625,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             }
             
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
-            
-            cell.onTapImageView = { (imagePath) in
-                UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
-            }
-            
+            cell.originController = self
             cell.personName = crewPerson.name
             cell.personPosition = crewPerson.jobs.joined(separator: ", ")
             cell.personPositionIsValid = true

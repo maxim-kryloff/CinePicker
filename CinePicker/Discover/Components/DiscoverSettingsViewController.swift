@@ -50,11 +50,11 @@ class DiscoverSettingsViewController: UIViewController {
     
     private let discoverSettingsService = DiscoverSettingsService(genreService: GenreService(), movieService: MovieService())
     
-    private var genresCellUtilsFactory: GenresCellUtilsFactory!
+    private var genresCellUtilsFactory: CellUtilsAbstractFactory!
     
-    private var yearCellUtilsFactory: YearCellUtilsFactory!
+    private var yearCellUtilsFactory: CellUtilsAbstractFactory!
     
-    private var ratingCellUtilsFactory: RatingCellUtilsFactory!
+    private var ratingCellUtilsFactory: CellUtilsAbstractFactory!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -185,7 +185,6 @@ extension DiscoverSettingsViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.discoverSettings, for: indexPath) as! DiscoverSettingsTableViewCell
         getCellUtilsFactory(by: indexPath.row, controller: self).setDiscoverySettingsTableViewCellProperties(cell: cell)
-        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
         return cell
     }
     
@@ -252,7 +251,7 @@ extension DiscoverSettingsViewController {
             case discoverSettingsRatingRowNumber:
                 return ratingCellUtilsFactory
             default:
-                fatalError("Discover settings cell is out of range...")
+                fatalError("Discover settings cell is out of range.")
         }
     }
     
