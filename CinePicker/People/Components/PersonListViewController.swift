@@ -138,7 +138,6 @@ extension PersonListViewController {
     private func setMovieListControllerProperties(for segue: UIStoryboardSegue, sender: Any?) {
         let movieListViewController = segue.destination as! MovieListViewController
         let sender = sender as! TableViewCellSender
-        let indexPath = sender.indexPath
-        movieListViewController.person = people[indexPath.row]
+        movieListViewController.person = people[sender.indexPath.row]
     }
 }

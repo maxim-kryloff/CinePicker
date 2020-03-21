@@ -459,38 +459,33 @@ extension MultiSearchViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        
         guard let segueIdentifier = segue.identifier else {
             return
         }
-        
         if segueIdentifier == SegueIdentifiers.showDiscoverSettings {
             return
         }
-        
         let sender = sender as! TableViewCellSender
-        let indexPath = sender.indexPath
-        
-        let entity = entities[indexPath.row]
-        
+        let entity = entities[sender.indexPath.row]
         if segueIdentifier == SegueIdentifiers.showMovieDetails {
-            let movie = entity as! Movie
-            MovieTableViewCell.setMovieDetailsViewControllerProperties(for: segue, movie: movie)
+            setMovieDetailsViewControllerProperties(for: segue, entity: entity)
             return
         }
-        
         if segueIdentifier == SegueIdentifiers.showPersonMovies {
-            let movieListViewController = segue.destination as! MovieListViewController
-            let popularPerson = entity as! PopularPerson
-            
-            movieListViewController.person = popularPerson
-            
+            setMovieListViewControllerProperties(for: segue, entity: entity)
             return
         }
-        
         fatalError("Unexpected Segue Identifier: \(segueIdentifier)")
     }
     
+    private func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, entity: MultiSearchEntity) {
+        MovieTableViewCell.setMovieDetailsViewControllerProperties(for: segue, movie: entity as! Movie)
+    }
+    
+    private func setMovieListViewControllerProperties(for segue: UIStoryboardSegue, entity: MultiSearchEntity) {
+        let movieListViewController = segue.destination as! MovieListViewController
+        movieListViewController.person = entity as! PopularPerson
+    }
 }
 
 extension MultiSearchViewController: UISearchBarDelegate {
@@ -501,19 +496,15 @@ extension MultiSearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         currentSearchQuery = searchText
-        
         if currentSearchQuery.isEmpty {
             unsetAllStates()
             showSavedMovies()
-            
             return
         }
-        
         debounceActionService.async(delay: DispatchTimeInterval.milliseconds(searchDebounceDelayMilliseconds)) {
             if self.currentSearchQuery.isEmpty {
                 return
             }
-            
             OperationQueue.main.addOperation {
                 self.unsetAllStates()
                 self.performRequest(shouldScrollToFirstRow: true)
@@ -526,17 +517,13 @@ extension MultiSearchViewController: UISearchBarDelegate {
             searchBar.setShowsCancelButton(false, animated: true)
             searchBar.endEditing(true)
         }
-        
         guard let searchBarText = searchBar.text else {
             return
         }
-        
         if searchBarText.isEmpty {
             return
         }
-        
         searchBar.text = nil
         self.searchBar(searchBar, textDidChange: "")
     }
-    
 }
