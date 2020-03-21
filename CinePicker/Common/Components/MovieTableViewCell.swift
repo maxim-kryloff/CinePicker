@@ -31,6 +31,12 @@ class MovieTableViewCell: UITableViewCell {
         return 80
     }
     
+    public static func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, movie: Movie) {
+        let movieDetailsViewController = segue.destination as! MovieDetailsViewController
+        movieDetailsViewController.movieId = movie.id
+        movieDetailsViewController.movieTitle = movie.title
+    }
+    
     public var movie: Movie? {
         didSet {
             title = movie?.title

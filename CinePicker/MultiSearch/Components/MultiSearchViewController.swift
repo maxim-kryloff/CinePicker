@@ -474,12 +474,8 @@ extension MultiSearchViewController {
         let entity = entities[indexPath.row]
         
         if segueIdentifier == SegueIdentifiers.showMovieDetails {
-            let movieDetailsViewController = segue.destination as! MovieDetailsViewController
             let movie = entity as! Movie
-            
-            movieDetailsViewController.movieId = movie.id
-            movieDetailsViewController.movieTitle = movie.title
-            
+            MovieTableViewCell.setMovieDetailsViewControllerProperties(for: segue, movie: movie)
             return
         }
         

@@ -247,10 +247,7 @@ extension MovieListViewController {
     }
     
     private func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, sender: Any?) {
-        let movieDetailsViewController = segue.destination as! MovieDetailsViewController
         let sender = sender as! TableViewCellSender
-        let indexPath = sender.indexPath
-        movieDetailsViewController.movieId = movies[indexPath.row].id
-        movieDetailsViewController.movieTitle = movies[indexPath.row].title
+        MovieTableViewCell.setMovieDetailsViewControllerProperties(for: segue, movie: movies[sender.indexPath.row])
     }
 }
