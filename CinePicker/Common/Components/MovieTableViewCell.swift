@@ -31,6 +31,29 @@ class MovieTableViewCell: UITableViewCell {
         return 80
     }
     
+    public static func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, movie: Movie) {
+        let movieDetailsViewController = segue.destination as! MovieDetailsViewController
+        movieDetailsViewController.movieId = movie.id
+        movieDetailsViewController.movieTitle = movie.title
+    }
+    
+    public var movie: Movie? {
+        didSet {
+            title = movie?.title
+            originalTitle = movie?.originalTitle
+            releaseYear = movie?.releaseYear
+            voteCount = movie?.voteCount
+            rating = movie?.rating
+        }
+    }
+    
+    public var savedMovie: SavedMovie? {
+        didSet {
+            willCheckItOutIsVisible = savedMovie?.containsTag(byName: .willCheckItOut) ?? false
+            iLikeItIsVisible = savedMovie?.containsTag(byName: .iLikeIt) ?? false
+        }
+    }
+    
     public var imageValue: UIImage? {
         didSet {
             movieImageImageView.image = imageValue
@@ -50,40 +73,40 @@ class MovieTableViewCell: UITableViewCell {
     
     public var onTapImageView: ((String) -> Void)?
     
-    public var title: String? {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-    
-    public var originalTitle: String? {
-        didSet {
-            originalTitleLabel.text = originalTitle
-        }
-    }
-    
-    public var releaseYear: String? {
-        didSet {
-            releaseYearLabel.text = releaseYear
-        }
-    }
-    
-    public var willCheckItOutIsHidden: Bool {
-        set { willCheckItOutLGButton.isHidden = newValue }
-        get { return willCheckItOutLGButton.isHidden }
-    }
-    
-    public var iLikeItIsHidden: Bool {
-        set { iLikeItLGButton.isHidden = newValue }
-        get { return iLikeItLGButton.isHidden }
-    }
-    
     public var voteResultsAreHidden: Bool {
         set { voteResultsStackView.isHidden = newValue }
         get { return voteResultsStackView.isHidden }
     }
     
-    public var voteCount: Int? {
+    private var title: String? {
+        didSet {
+            titleLabel.text = title
+        }
+    }
+    
+    private var originalTitle: String? {
+        didSet {
+            originalTitleLabel.text = originalTitle
+        }
+    }
+    
+    private var releaseYear: String? {
+        didSet {
+            releaseYearLabel.text = releaseYear
+        }
+    }
+    
+    private var willCheckItOutIsVisible: Bool {
+        set { willCheckItOutLGButton.isHidden = !newValue }
+        get { return willCheckItOutLGButton.isHidden }
+    }
+    
+    private var iLikeItIsVisible: Bool {
+        set { iLikeItLGButton.isHidden = !newValue }
+        get { return iLikeItLGButton.isHidden }
+    }
+    
+    private var voteCount: Int? {
         didSet {
             if let voteCount = voteCount {
                 voteCountLabel.text = String(voteCount)
@@ -93,7 +116,7 @@ class MovieTableViewCell: UITableViewCell {
         }
     }
     
-    public var rating: Double? {
+    private var rating: Double? {
         didSet {
             if let rating = rating {
                 ratingLabel.textColor = UIViewUtilsFactory.shared.getViewUtils()
@@ -166,8 +189,8 @@ class MovieTableViewCell: UITableViewCell {
         title = nil
         originalTitle = nil
         releaseYear = nil
-        willCheckItOutIsHidden = true
-        iLikeItIsHidden = true
+        willCheckItOutIsVisible = false
+        iLikeItIsVisible = false
         voteCount = nil
         rating = nil
     }

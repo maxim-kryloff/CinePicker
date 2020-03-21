@@ -198,7 +198,6 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
         let cell = cell as! MovieTableViewCell
         setMovieTableViewCellImageProperties(cell: cell, indexPath: indexPath)
     }
@@ -214,20 +213,16 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
         setMovieTableViewCellProperties(cell: cell, indexPath: indexPath)
+        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
         return cell
     }
     
     private func setMovieTableViewCellProperties(cell: MovieTableViewCell, indexPath: IndexPath) {
         let movie = movies[indexPath.row]
-        cell.title = movie.title
-        cell.originalTitle = movie.originalTitle
-        cell.releaseYear = movie.releaseYear
+        cell.movie = movie
         if let savedMovie = savedMovieMap[movie.id] {
-            cell.willCheckItOutIsHidden = !savedMovie.containsTag(byName: .willCheckItOut)
-            cell.iLikeItIsHidden = !savedMovie.containsTag(byName: .iLikeIt)
+            cell.savedMovie = savedMovie
         }
-        cell.voteCount = movie.voteCount
-        cell.rating = movie.rating
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -252,10 +247,7 @@ extension MovieListViewController {
     }
     
     private func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, sender: Any?) {
-        let movieDetailsViewController = segue.destination as! MovieDetailsViewController
         let sender = sender as! TableViewCellSender
-        let indexPath = sender.indexPath
-        movieDetailsViewController.movieId = movies[indexPath.row].id
-        movieDetailsViewController.movieTitle = movies[indexPath.row].title
+        MovieTableViewCell.setMovieDetailsViewControllerProperties(for: segue, movie: movies[sender.indexPath.row])
     }
 }

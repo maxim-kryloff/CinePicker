@@ -635,7 +635,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             }
             
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
-
+            
             cell.onTapImageView = { (imagePath) in
                 UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
             }
@@ -728,53 +728,46 @@ extension MovieDetailsViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        
         guard let segueIdentifier = segue.identifier else {
             return
         }
-        
         if segueIdentifier == SegueIdentifiers.showRequestedMovies {
-            let requestedMoviesController = segue.destination as! RequestedMoviesViewController
-            
-            requestedMoviesController.title = CinePickerCaptions.moviesSimilar(to: movieDetails.title)
-            
-            let similarMovieService = SimilarMovieService(movieService: MovieService())
-            
-            requestedMoviesController.requestMovies = { (requestedPage, callback) in
-                let similarMovieRequest = SimilarMovieRequest(movieId: self.movieDetails.id, page: requestedPage)
-                
-                similarMovieService.requestMovies(request: similarMovieRequest) { (_, requestedMoviesResult) in
-                    callback(requestedMoviesResult)
-                }
-            }
-            
+            setRequestedMoviesViewControllerProperties(for: segue)
             return
         }
-        
         if segueIdentifier == SegueIdentifiers.showPersonMovies {
-            let movieListViewController = segue.destination as! MovieListViewController
-            let sender = sender as! TableViewCellSender
-            
-            let indexPath = sender.indexPath
-            
-            let person = people[indexPath.row]
-            
-            movieListViewController.person = person
-            
+            setMovieListViewControllerProperties(for: segue, sender: sender)
             return
         }
-        
         if segueIdentifier == SegueIdentifiers.showPersonList {
-            let personListViewController = segue.destination as! PersonListViewController
-            let sender = sender as! GoToPersonListTableViewCellSender
-            
-            personListViewController.title = movieTitle
-            personListViewController.people = sender.personListType == PersonListType.cast ? characters : crewPeople
-            
+            setPersonListViewControllerProperties(for: segue, sender: sender)
             return
         }
-        
         fatalError("Unexpected Segue Identifier: \(segueIdentifier)")
     }
     
+    private func setRequestedMoviesViewControllerProperties(for segue: UIStoryboardSegue) {
+        let requestedMoviesController = segue.destination as! RequestedMoviesViewController
+        requestedMoviesController.title = CinePickerCaptions.moviesSimilar(to: movieDetails.title)
+        let similarMovieService = SimilarMovieService(movieService: MovieService())
+        requestedMoviesController.requestMovies = { (requestedPage, callback) in
+            let similarMovieRequest = SimilarMovieRequest(movieId: self.movieDetails.id, page: requestedPage)
+            similarMovieService.requestMovies(request: similarMovieRequest) { (_, requestedMoviesResult) in
+                callback(requestedMoviesResult)
+            }
+        }
+    }
+    
+    private func setMovieListViewControllerProperties(for segue: UIStoryboardSegue, sender: Any?) {
+        let movieListViewController = segue.destination as! MovieListViewController
+        let sender = sender as! TableViewCellSender
+        movieListViewController.person = people[sender.indexPath.row]
+    }
+    
+    private func setPersonListViewControllerProperties(for segue: UIStoryboardSegue, sender: Any?) {
+        let personListViewController = segue.destination as! PersonListViewController
+        personListViewController.title = movieTitle
+        let sender = sender as! GoToPersonListTableViewCellSender
+        personListViewController.people = sender.personListType == PersonListType.cast ? characters : crewPeople
+    }
 }

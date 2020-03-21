@@ -83,7 +83,6 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
         let cell = cell as! PersonTableViewCell
         setPersonTableViewCellImageProperties(cell: cell, indexPath: indexPath)
     }
@@ -99,6 +98,7 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
         setPersonTableViewCellProperties(cell: cell, indexPath: indexPath)
+        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
         return cell
     }
     
@@ -138,7 +138,6 @@ extension PersonListViewController {
     private func setMovieListControllerProperties(for segue: UIStoryboardSegue, sender: Any?) {
         let movieListViewController = segue.destination as! MovieListViewController
         let sender = sender as! TableViewCellSender
-        let indexPath = sender.indexPath
-        movieListViewController.person = people[indexPath.row]
+        movieListViewController.person = people[sender.indexPath.row]
     }
 }
