@@ -50,11 +50,11 @@ class DiscoverSettingsViewController: UIViewController {
     
     private let discoverSettingsService = DiscoverSettingsService(genreService: GenreService(), movieService: MovieService())
     
-    private var genresCellUtilsFactory: GenresCellUtilsFactory!
+    private var genresCellUtilsFactory: CellUtilsAbstractFactory!
     
-    private var yearCellUtilsFactory: YearCellUtilsFactory!
+    private var yearCellUtilsFactory: CellUtilsAbstractFactory!
     
-    private var ratingCellUtilsFactory: RatingCellUtilsFactory!
+    private var ratingCellUtilsFactory: CellUtilsAbstractFactory!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -251,7 +251,7 @@ extension DiscoverSettingsViewController {
             case discoverSettingsRatingRowNumber:
                 return ratingCellUtilsFactory
             default:
-                fatalError("Discover settings cell is out of range...")
+                fatalError("Discover settings cell is out of range.")
         }
     }
     
