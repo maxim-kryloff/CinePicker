@@ -23,7 +23,6 @@ class MultiSearchViewController: StateViewController {
     private var savedMovies: [SavedMovie] = [] {
         didSet {
             savedMovieMap = [:]
-            
             for movie in savedMovies {
                 savedMovieMap[movie.id] = movie
             }
@@ -38,29 +37,26 @@ class MultiSearchViewController: StateViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         savedMovies = MovieRepository.shared.getAll()
-        
         if currentSearchQuery.isEmpty {
             showSavedMovies()
             return
         }
-        
         tableViewDefinition.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         defineNavigationController()
         defineDiscoverButton()
         defineMoreButton()
         defineSearchBar()
         defineTableView()
-        
+        registerMovieTableViewCell()
+        registerPersonTableViewCell()
         setDefaultColors()
-        
         if !UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource) {
+            createAndSaveTags()
             showDataSourceAgreementAlert()
         }
     }
@@ -76,14 +72,12 @@ class MultiSearchViewController: StateViewController {
     
     override func onReloadData() {
         super.onReloadData()
-        
         unsetAllStates()
         performRequest(shouldScrollToFirstRow: false)
     }
     
     override func updateTable<DataType>(providingData data: [DataType]) {
         super.updateTable(providingData: data)
-        
         entities = data as! [MultiSearchEntity]
         entityTableView.reloadData()
     }
@@ -102,7 +96,6 @@ class MultiSearchViewController: StateViewController {
             target: self,
             action: #selector(MultiSearchViewController.onPressDiscoverButton)
         )
-        
         navigationItem.leftBarButtonItems?.append(item)
     }
     
@@ -113,18 +106,15 @@ class MultiSearchViewController: StateViewController {
             target: self,
             action: #selector(MultiSearchViewController.onPressActionsButton)
         )
-        
         navigationItem.rightBarButtonItems?.append(item)
     }
     
     private func defineSearchBar() {
         searchBar.placeholder = CinePickerCaptions.typeMovieOrActor
         searchBar.setValue(CinePickerCaptions.cancel, forKey: "cancelButtonText")
-        
         OperationQueue.main.addOperation {
             let isSavedMoviesEmpty = self.savedMovies.isEmpty
             let didAgreeToUseDataSource = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource)
-            
             if isSavedMoviesEmpty && didAgreeToUseDataSource {
                 self.searchBar.becomeFirstResponder()
             }
@@ -134,74 +124,67 @@ class MultiSearchViewController: StateViewController {
     private func defineTableView() {
         entityTableView.rowHeight = PersonTableViewCell.standardHeight
         entityTableView.tableFooterView = UIView(frame: .zero)
-        
+    }
+    
+    private func registerMovieTableViewCell() {
         let movieTableViewCellNib = UINib(nibName: "MovieTableViewCell", bundle: nil)
         entityTableView.register(movieTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movie)
-        
+    }
+    
+    private func registerPersonTableViewCell() {
         let personTableViewCellNib = UINib(nibName: "PersonTableViewCell", bundle: nil)
         entityTableView.register(personTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.person)
     }
     
     private func setDefaultColors() {
         contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
-        
         navigationController?.navigationBar.barTintColor = CinePickerColors.getBackgroundColor()
         navigationController?.navigationBar.tintColor = CinePickerColors.getActionColor()
-        
         searchBar.tintColor = CinePickerColors.getActionColor()
-        
         entityTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     
     private func showSavedMovies() {
         let reversedSavedMovies = Array(savedMovies.reversed())
         let filteredSavedMovies = filter(savedMovies: reversedSavedMovies)
-        
         updateTable(providingData: filteredSavedMovies)
     }
     
     private func removeSavedMovie(at indexPath: IndexPath) {
         let movie = entities[indexPath.row] as! SavedMovie
         MovieRepository.shared.remove(movie: movie)
-        
         savedMovies = MovieRepository.shared.getAll()
-        
-        let reversedSavedMovies = Array(savedMovies.reversed())
-        let filteredSavedMovies = filter(savedMovies: reversedSavedMovies)
-        
-        entities = filteredSavedMovies
+        entities = getEntities(from: savedMovies)
         entityTableView.deleteRows(at: [indexPath], with: .automatic)
-        
         if entities.isEmpty {
             resetViewController()
         }
     }
     
+    private func getEntities(from savedMovies: [SavedMovie]) -> [MultiSearchEntity] {
+        let reversedSavedMovies = Array(savedMovies.reversed())
+        let filteredSavedMovies = filter(savedMovies: reversedSavedMovies)
+        return filteredSavedMovies
+    }
+    
     private func performRequest(shouldScrollToFirstRow: Bool) {
         setLoadingState()
-        
         let multiSearchRequest = MultiSearchRequest(searchQuery: currentSearchQuery, page: requestedPage)
-        
         multiSearchService.requestEntities(request: multiSearchRequest) { (request, requestedSearchEntities) in
             OperationQueue.main.addOperation {
                 if self.currentSearchQuery != request.searchQuery {
                     return
                 }
-                
                 self.unsetLoadingState()
-                
                 guard let requestedSearchEntities = requestedSearchEntities else {
                     self.setFailedLoadingState()
                     return
                 }
-                
                 if requestedSearchEntities.isEmpty {
                     self.setMessageState(withMessage: CinePickerCaptions.thereIsNoDataFound)
                     return
                 }
-                
                 self.updateTable(providingData: requestedSearchEntities)
-                
                 if shouldScrollToFirstRow {
                     let firstIndexPath = IndexPath(row: 0, section: 0);
                     self.entityTableView.scrollToRow(at: firstIndexPath, at: .top, animated: true)
@@ -260,19 +243,18 @@ class MultiSearchViewController: StateViewController {
         resetViewController()
     }
     
+    private func createAndSaveTags() {
+        let willCheckItOut = Tag(name: SystemTagName.willCheckItOut.rawValue, russianName: "Буду смотреть")
+        TagRepository.shared.save(tag: willCheckItOut)
+        let iLikeIt = Tag(name: SystemTagName.iLikeIt.rawValue, russianName: "Нравится!")
+        TagRepository.shared.save(tag: iLikeIt)
+    }
+    
     private func showDataSourceAgreementAlert() {
         let action = {
-            let willCheckItOut = Tag(name: SystemTagName.willCheckItOut.rawValue, russianName: "Буду смотреть")
-            TagRepository.shared.save(tag: willCheckItOut)
-            
-            let iLikeIt = Tag(name: SystemTagName.iLikeIt.rawValue, russianName: "Нравится!")
-            TagRepository.shared.save(tag: iLikeIt)
-            
             UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.didAgreeToUseDataSource)
-            
             UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.willCheckItOutFilter)
             UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.iLikeItFilter)
-            
             self.onChangeLanguage()
         }
         UIViewUtilsFactory.shared.getAlertUtils().showDatasourceAgreementAlert(
@@ -284,43 +266,35 @@ class MultiSearchViewController: StateViewController {
     private func onTapWillCheckItOutFilter(cell: HeaderWithTagsUIView) {
         let isFilterSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.willCheckItOutFilter)
         UserDefaults.standard.set(!isFilterSelected, forKey: CinePickerSettingKeys.willCheckItOutFilter)
-        
         showSavedMovies()
     }
     
     private func onTapILikeItFilter(cell: HeaderWithTagsUIView) {
         let isFilterSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.iLikeItFilter)
         UserDefaults.standard.set(!isFilterSelected, forKey: CinePickerSettingKeys.iLikeItFilter)
-        
         showSavedMovies()
     }
     
     private func filter(savedMovies: [SavedMovie]) -> [SavedMovie] {
         let isWillCheckItOutFilterSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.willCheckItOutFilter)
         let isILikeItFilterSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.iLikeItFilter)
-        
         let filteredSavedMovies = savedMovies.filter {
             if isWillCheckItOutFilterSelected && $0.containsTag(byName: .willCheckItOut) {
                 return true
             }
-            
             if isILikeItFilterSelected && $0.containsTag(byName: .iLikeIt){
                 return true
             }
-            
             return false
         }
-        
         return filteredSavedMovies
     }
     
     private func resetViewController() {
         searchBarCancelButtonClicked(searchBar)
-        
         viewWillAppear(false)
         viewDidLoad()
     }
-    
 }
 
 extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate {
@@ -333,30 +307,27 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         if !currentSearchQuery.isEmpty {
             return 0
         }
-        
         if savedMovies.isEmpty {
             return 0
         }
-        
         return HeaderWithTagsUIView.standardHeight
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if currentSearchQuery.isEmpty {
             let view = UIViewUtilsFactory.shared.getViewUtils().getHeaderWithTagsView(for: tableView)
-            
-            view.header = CinePickerCaptions.savedMovies
-            
-            view.willCheckItOutIsSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.willCheckItOutFilter)
-            view.iLikeItIsSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.iLikeItFilter)
-            
-            view.onTapWillCheckItOut = onTapWillCheckItOutFilter
-            view.onTapILikeIt = onTapILikeItFilter
-            
+            setHeaderViewProperties(view: view)
             return view
         }
-        
         return nil
+    }
+    
+    func setHeaderViewProperties(view: HeaderWithTagsUIView) {
+        view.header = CinePickerCaptions.savedMovies
+        view.willCheckItOutIsSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.willCheckItOutFilter)
+        view.iLikeItIsSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.iLikeItFilter)
+        view.onTapWillCheckItOut = onTapWillCheckItOutFilter
+        view.onTapILikeIt = onTapILikeItFilter
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
