@@ -24,7 +24,7 @@ class UIImageUtils {
             setImage(at: cell, image: cell.defaultImage)
             return
         }
-        if let downloadedImage = downloadedImages[cell.imagePath] {
+        if let downloadedImage = downloadedImages[getImageUrl(from: cell).path] {
             setImage(at: cell, image: downloadedImage)
             return
         }
@@ -58,10 +58,10 @@ class UIImageUtils {
     
     private func downloadAndSetImage(at cell: ImageFromInternetViewCellAdapter) {
         update(cell: cell, bySettingActivityIndicatorAnimatingTo: true)
-        imageService.download(by: getImageUrl(from: cell)) { (image) in
+        imageService.download(by: getImageUrl(from: cell)) { (image, url) in
             OperationQueue.main.addOperation {
                 self.setImage(at: cell, image: image)
-                self.downloadedImages[cell.imagePath] = image
+                self.downloadedImages[url.path] = image
             }
         }
     }
@@ -91,7 +91,7 @@ class UIImageUtils {
     private func openFullScreenImage(from viewController: UIViewController, downloadedBy url: URL) {
         let agrume = Agrume(url: url, background: .colored(CinePickerColors.getBackgroundColor()))
         agrume.download = { (url, completion) in
-            self.imageService.download(by: url) { (image) in
+            self.imageService.download(by: url) { (image, _) in
                 completion(image)
             }
         }
