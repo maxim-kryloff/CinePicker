@@ -436,54 +436,6 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == movieDetailsSectionNumber || indexPath.section == movieDetailsTagsSectionNumber {
-            tableView.deselectRow(at: indexPath, animated: true)
-            return
-        }
-        if indexPath.section == movieDetailsMovieCollectionSectionNumber {
-            if isMovieCollectionRequestFailed {
-                onReloadGettingMovieCollection()
-                return
-            }
-            tableView.deselectRow(at: indexPath, animated: true)
-            return
-        }
-        
-        if isPeopleRequestFailed {
-            onReloadGettingPeople()
-            return
-        }
-        
-        let person = people[indexPath.row]
-        
-        if person is Character && indexPath.row == getGoToFullCastIndex() {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header)!
-            let sender = GoToPersonListTableViewCellSender(cell: cell, indexPath: indexPath, personListType: .cast)
-            
-            movieDetailsTableView.reloadRows(at: [indexPath], with: .automatic)
-            performSegue(withIdentifier: SegueIdentifiers.showPersonList, sender: sender)
-            
-            return
-        }
-        
-        if person is CrewPerson && indexPath.row == getGoToFullCrewIndex() {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header)!
-            let sender = GoToPersonListTableViewCellSender(cell: cell, indexPath: indexPath, personListType: .crew)
-            
-            movieDetailsTableView.reloadRows(at: [indexPath], with: .automatic)
-            performSegue(withIdentifier: SegueIdentifiers.showPersonList, sender: sender)
-            
-            return
-        }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person)!
-        
-        let sender = TableViewCellSender(cell: cell, indexPath: indexPath)
-        
-        performSegue(withIdentifier: SegueIdentifiers.showPersonMovies, sender: sender)
-    }
-    
     private func getMovieDetailsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetails, for: indexPath) as! MovieDetailsTableViewCell
         cell.movieDetails = movieDetails
@@ -513,28 +465,25 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
             return cell
         }
-        
         if isMovieCollectionRequestFailed {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.failedLoading) as! FailedLoadingTableViewCell
             return cell
         }
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieCollection, for: indexPath) as! MovieCollectionTableViewCell
-        
+        setMovieCollectionTableViewCellProperties(cell: cell)
+        return cell
+    }
+    
+    private func setMovieCollectionTableViewCellProperties(cell: MovieCollectionTableViewCell) {
         cell.header = CinePickerCaptions.alsoInSeries
         cell.movieCollection = movieCollection
-        
         cell.onTouchDown = { (movie) in
             let storyboard = UIStoryboard(name: MainStoryboardIdentifiers.main, bundle: nil)
             let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: MainStoryboardIdentifiers.movieDetailsViewController) as! MovieDetailsViewController
-            
             movieDetailsViewController.movieId = movie.id
             movieDetailsViewController.movieTitle = movie.title
-            
             self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
         }
-        
-        return cell
     }
     
     private func getPersonTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -546,44 +495,93 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.failedLoading) as! FailedLoadingTableViewCell
             return cell
         }
-    
         let person = people[indexPath.row]
-        
-        if let character = person as? Character {
-            if indexPath.row == getGoToFullCastIndex() {
-                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
-                cell.header = CinePickerCaptions.goToFullCast
-                
-                return cell
-            }
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
-            cell.originController = self
-            cell.personName = character.name
-            cell.personPosition = character.characterName
-            cell.personPositionIsValid = !character.isUncredited
-            
-            return cell
+        if person is Character {
+            return getCharacterTableViewCell(from: tableView, at: indexPath)
         }
-        
-        if let crewPerson = person as? CrewPerson {
-            if indexPath.row == getGoToFullCrewIndex() {
-                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
-                cell.header = CinePickerCaptions.goToFullCrew
-                
-                return cell
-            }
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
-            cell.originController = self
-            cell.personName = crewPerson.name
-            cell.personPosition = crewPerson.jobs.joined(separator: ", ")
-            cell.personPositionIsValid = true
-            
-            return cell
+        if person is CrewPerson {
+            return getCrewPersonTableViewCell(from: tableView, at: indexPath)
         }
-        
         fatalError("Person has wrong type.")
+    }
+    
+    private func getCharacterTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == getGoToFullCastIndex() {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
+            cell.header = CinePickerCaptions.goToFullCast
+            return cell
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
+        cell.originController = self
+        let character = people[indexPath.row] as! Character
+        cell.personName = character.name
+        cell.personPosition = character.characterName
+        cell.personPositionIsValid = !character.isUncredited
+        return cell
+    }
+    
+    private func getCrewPersonTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == getGoToFullCrewIndex() {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
+            cell.header = CinePickerCaptions.goToFullCrew
+            return cell
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
+        cell.originController = self
+        let crewPerson = people[indexPath.row] as! CrewPerson
+        cell.personName = crewPerson.name
+        cell.personPosition = crewPerson.jobs.joined(separator: ", ")
+        cell.personPositionIsValid = true
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == movieDetailsSectionNumber || indexPath.section == movieDetailsTagsSectionNumber {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        if indexPath.section == movieDetailsMovieCollectionSectionNumber {
+            if isMovieCollectionRequestFailed {
+                onReloadGettingMovieCollection()
+                return
+            }
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        if isPeopleRequestFailed {
+            onReloadGettingPeople()
+            return
+        }
+        let person = people[indexPath.row]
+        if person is Character && indexPath.row == getGoToFullCastIndex() {
+            performSegueForCharacterListTableViewCell(from: tableView, at: indexPath)
+            return
+        }
+        if person is CrewPerson && indexPath.row == getGoToFullCrewIndex() {
+            performSegueForCrewListTableViewCell(from: tableView, at: indexPath)
+            return
+        }
+        performSegueForPersonTableViewCell(from: tableView, at: indexPath)
+    }
+    
+    private func performSegueForCharacterListTableViewCell(from tableView: UITableView, at indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header)!
+        let sender = GoToPersonListTableViewCellSender(cell: cell, indexPath: indexPath, personListType: .cast)
+        movieDetailsTableView.reloadRows(at: [indexPath], with: .automatic)
+        performSegue(withIdentifier: SegueIdentifiers.showPersonList, sender: sender)
+    }
+    
+    private func performSegueForCrewListTableViewCell(from tableView: UITableView, at indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header)!
+        let sender = GoToPersonListTableViewCellSender(cell: cell, indexPath: indexPath, personListType: .crew)
+        movieDetailsTableView.reloadRows(at: [indexPath], with: .automatic)
+        performSegue(withIdentifier: SegueIdentifiers.showPersonList, sender: sender)
+    }
+    
+    private func performSegueForPersonTableViewCell(from tableView: UITableView, at indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person)!
+        let sender = TableViewCellSender(cell: cell, indexPath: indexPath)
+        performSegue(withIdentifier: SegueIdentifiers.showPersonMovies, sender: sender)
     }
     
     private func prepare(movieDetailsTableViewCell cell: MovieDetailsTableViewCell) {
