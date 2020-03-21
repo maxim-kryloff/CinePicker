@@ -20,7 +20,7 @@ class DatabaseManager {
         
         persistentContainer.loadPersistentStores { (_, error) in
             if let err = error as NSError? {
-                fatalError("Unresolved DB error \(err), \(err.userInfo)")
+                fatalError("Unresolved DB error \(err), \(err.userInfo).")
             }
         }
     }
@@ -35,7 +35,7 @@ class DatabaseManager {
     
     public func getEntityDescription(forEntity coreDataEntity: DatabaseEntity) -> NSEntityDescription {
         guard let description = NSEntityDescription.entity(forEntityName: coreDataEntity.rawValue, in: self.viewContext) else {
-            fatalError("Couldn't get entity description for '\(coreDataEntity.rawValue)' entity name")
+            fatalError("Couldn't get entity description for '\(coreDataEntity.rawValue)' entity name.")
         }
         
         return description
@@ -49,7 +49,7 @@ class DatabaseManager {
         do {
             try viewContext.save()
         } catch let error as NSError {
-            fatalError("Can't write. \(error), \(error.userInfo)")
+            fatalError("Can't write. \(error), \(error.userInfo).")
         }
     }
     

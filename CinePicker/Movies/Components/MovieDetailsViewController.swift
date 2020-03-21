@@ -262,7 +262,7 @@ class MovieDetailsViewController: UIViewController {
     
     private func performMovieCollectionRequest(fromReloading: Bool) {
         guard let collectionId = movieDetails.collectionId else {
-            fatalError("Collection ID must not be nil...")
+            fatalError("Collection ID must not be nil.")
         }
         isMovieCollectionGoingToBeRequested = false
         isMovieCollectionBeingRequested = true
@@ -367,7 +367,7 @@ class MovieDetailsViewController: UIViewController {
     
     private func updateSavedMovie(withoutTag tagName: SystemTagName) {
         guard let savedMovie = savedMovie else {
-            fatalError("Movie that's going to be updated doesn't exist...")
+            fatalError("Movie that's going to be updated doesn't exist.")
         }
         savedMovie.removeTag(byName: tagName)
         MovieRepository.shared.update(movie: savedMovie)
@@ -376,7 +376,7 @@ class MovieDetailsViewController: UIViewController {
     
     private func removeSavedMovie() {
         guard let savedMovie = savedMovie else {
-            fatalError("Movie that's going to be removed doesn't exist...")
+            fatalError("Movie that's going to be removed doesn't exist.")
         }
         MovieRepository.shared.remove(movie: savedMovie)
         self.savedMovie = nil
@@ -389,7 +389,6 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         if movieDetails == nil {
             return 0
         }
-        
         return numberOfSections
     }
     
@@ -397,14 +396,13 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         if movieDetails == nil {
             return 0
         }
-        
         switch section {
             case movieDetailsSectionNumber: return 1
             case movieDetailsTagsSectionNumber: return 1
             case movieDetailsOverviewSectionNumber: return 1
             case movieDetailsMovieCollectionSectionNumber: return getMovieCollectionSectionNumberOfRows()
             case movieDetailsPeopleSectionNumber: return getMovieDetailsPeopleSectionNumberOfRows()
-            default: fatalError("Section number is out of range...")
+            default: fatalError("Section number is out of range.")
         }
     }
     
@@ -415,7 +413,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             case (movieDetailsOverviewSectionNumber, _): return MovieDetailsOverviewTableViewCell.standardHeight
             case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionSectionRowHeight()
             case (movieDetailsPeopleSectionNumber, _): return getMovieDetailsPeopleSectionRowHeight(at: indexPath)
-            default: fatalError("Section number is out of range...")
+            default: fatalError("Section number is out of range.")
         }
     }
     
@@ -434,7 +432,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             case (movieDetailsOverviewSectionNumber, _): return getMovieDetailsOverviewTableViewCell(tableView, cellForRowAt: indexPath)
             case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionTableViewCell(tableView, cellForRowAt: indexPath)
             case (movieDetailsPeopleSectionNumber, _): return getPersonTableViewCell(tableView, cellForRowAt: indexPath)
-            default: fatalError("Section number is out of range...")
+            default: fatalError("Section number is out of range.")
         }
     }
     
@@ -443,13 +441,11 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        
         if indexPath.section == movieDetailsMovieCollectionSectionNumber {
             if isMovieCollectionRequestFailed {
                 onReloadGettingMovieCollection()
                 return
             }
-            
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
@@ -546,12 +542,11 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
             return cell
         }
-        
         if isPeopleRequestFailed {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.failedLoading) as! FailedLoadingTableViewCell
             return cell
         }
-        
+    
         let person = people[indexPath.row]
         
         if let character = person as? Character {
@@ -588,7 +583,7 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             return cell
         }
         
-        fatalError("Person has wrong type...")
+        fatalError("Person has wrong type.")
     }
     
     private func prepare(movieDetailsTableViewCell cell: MovieDetailsTableViewCell) {
@@ -605,15 +600,12 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         if movieDetails.collectionId == nil {
             return 0
         }
-        
         if isMovieCollectionGoingToBeRequested || isMovieCollectionBeingRequested || isMovieCollectionRequestFailed {
             return 1
         }
-        
         if movieCollection.isEmpty {
             return 0
         }
-        
         return 1
     }
     
@@ -621,7 +613,6 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         if isPeopleGoingToBeRequested || isPeopleBeingRequested || isPeopleRequestFailed {
             return 1
         }
-        
         return people.count
     }
     
@@ -629,11 +620,9 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         if isMovieCollectionGoingToBeRequested || isMovieCollectionBeingRequested {
             return LoadingTableViewCell.standardHeight
         }
-        
         if isMovieCollectionRequestFailed {
             return FailedLoadingTableViewCell.standardHeight
         }
-        
         return MovieCollectionTableViewCell.standardHeight
     }
     
@@ -641,28 +630,22 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         if isPeopleGoingToBeRequested || isPeopleBeingRequested {
             return LoadingTableViewCell.standardHeight
         }
-        
         if isPeopleRequestFailed {
             return FailedLoadingTableViewCell.standardHeight
         }
-        
         let person = people[indexPath.row]
-        
         if person is Character {
             return indexPath.row == getGoToFullCastIndex()
                 ? HeaderTableViewCell.standardHeight
                 : PersonTableViewCell.standardHeight
         }
-        
         if person is CrewPerson {
             return indexPath.row == getGoToFullCrewIndex()
                 ? HeaderTableViewCell.standardHeight
                 : PersonTableViewCell.standardHeight
         }
-        
-        fatalError("Person has wrong type...")
+        fatalError("Person has wrong type.")
     }
-    
 }
 
 extension MovieDetailsViewController {
@@ -684,7 +667,7 @@ extension MovieDetailsViewController {
             setPersonListViewControllerProperties(for: segue, sender: sender)
             return
         }
-        fatalError("Unexpected Segue Identifier: \(segueIdentifier)")
+        fatalError("Unexpected segue identifier: \(segueIdentifier)")
     }
     
     private func setRequestedMoviesViewControllerProperties(for segue: UIStoryboardSegue) {

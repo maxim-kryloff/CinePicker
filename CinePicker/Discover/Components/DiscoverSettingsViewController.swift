@@ -210,7 +210,7 @@ extension DiscoverSettingsViewController {
             prepareItemsToSelectViewController(for: segue, sender: sender)
             return
         }
-        fatalError("Unexpected Segue Identifier: \(segueIdentifier)")
+        fatalError("Unexpected segue identifier: \(segueIdentifier)")
     }
     
     private func prepareRequestedMoviesViewController(for segue: UIStoryboardSegue) {

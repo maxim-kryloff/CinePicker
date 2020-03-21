@@ -228,7 +228,7 @@ extension RequestedMoviesViewController {
             setMovieDetailsViewControllerProperties(for: segue, sender: sender)
             return
         }
-        fatalError("Unexpected Segue Identifier: \(segueIdentifier)")
+        fatalError("Unexpected segue identifier: \(segueIdentifier)")
     }
     
     private func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, sender: Any?) {

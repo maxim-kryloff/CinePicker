@@ -65,7 +65,7 @@ class MultiSearchService {
             } catch ResponseError.dataIsNil {
                 return
             } catch {
-                fatalError("Unexpected async result...")
+                fatalError("Unexpected async result.")
             }
         }
     }
@@ -90,7 +90,7 @@ class MultiSearchService {
             } catch ResponseError.dataIsNil {
                 return
             } catch {
-                fatalError("Unexpected async result...")
+                fatalError("Unexpected async result.")
             }
         }
     }
