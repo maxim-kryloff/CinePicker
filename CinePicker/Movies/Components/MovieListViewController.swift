@@ -219,15 +219,10 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     
     private func setMovieTableViewCellProperties(cell: MovieTableViewCell, indexPath: IndexPath) {
         let movie = movies[indexPath.row]
-        cell.title = movie.title
-        cell.originalTitle = movie.originalTitle
-        cell.releaseYear = movie.releaseYear
+        cell.movie = movie
         if let savedMovie = savedMovieMap[movie.id] {
-            cell.willCheckItOutIsHidden = !savedMovie.containsTag(byName: .willCheckItOut)
-            cell.iLikeItIsHidden = !savedMovie.containsTag(byName: .iLikeIt)
+            cell.savedMovie = savedMovie
         }
-        cell.voteCount = movie.voteCount
-        cell.rating = movie.rating
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

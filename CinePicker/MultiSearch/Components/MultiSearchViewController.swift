@@ -426,32 +426,18 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     
     private func getMovieTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, movie: Movie) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
-        
         cell.onTapImageView = { (imagePath) in
             UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
         }
-        
-        cell.title = movie.title
-        cell.originalTitle = movie.originalTitle
-        cell.releaseYear = movie.releaseYear
-        
+        cell.movie = movie
         if let savedMovie = movie as? SavedMovie {
-            cell.willCheckItOutIsHidden = !savedMovie.containsTag(byName: .willCheckItOut)
-            cell.iLikeItIsHidden = !savedMovie.containsTag(byName: .iLikeIt)
-            
+            cell.savedMovie = savedMovie
             cell.voteResultsAreHidden = true
-            
             return cell
         }
-        
         if let savedMovie = savedMovieMap[movie.id] {
-            cell.willCheckItOutIsHidden = !savedMovie.containsTag(byName: .willCheckItOut)
-            cell.iLikeItIsHidden = !savedMovie.containsTag(byName: .iLikeIt)
+            cell.savedMovie = savedMovie
         }
-        
-        cell.voteCount = movie.voteCount
-        cell.rating = movie.rating
-        
         return cell
     }
     
