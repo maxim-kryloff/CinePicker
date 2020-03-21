@@ -182,14 +182,10 @@ extension DiscoverSettingsViewController: UITableViewDataSource, UITableViewDele
         return view
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils()
-            .getUITableViewCellSelectedBackgroundView()
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.discoverSettings, for: indexPath) as! DiscoverSettingsTableViewCell
         getCellUtilsFactory(by: indexPath.row, controller: self).setDiscoverySettingsTableViewCellProperties(cell: cell)
+        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
         return cell
     }
     
