@@ -1,6 +1,5 @@
 import UIKit
 
-// TODO: Try to inherit StateViewController or remove this TODO
 class MovieDetailsViewController: UIViewController {
     
     @IBOutlet var contentUIView: UIView!
@@ -67,24 +66,24 @@ class MovieDetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         savedMovie = MovieRepository.shared.get(byId: self.movieId)
         movieDetailsTableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = movieTitle
-        
+        defineTitle()
         defineNavigationController()
         defineMoreButton()
         defineLoadingView()
         defineFailedLoadingView()
         defineTableView()
-        
+        registerPersonTableViewCell()
+        registerLoadingTableViewCell()
+        registerFailedLoadingTableViewCell()
+        registerHeaderTableViewCell()
+        registerMovieCollectionTableViewCell()
         setDefaultColors()
-        
         performMovieDetailsRequest()
     }
     
@@ -92,6 +91,10 @@ class MovieDetailsViewController: UIViewController {
         if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
             UIViewUtilsFactory.shared.getAlertUtils().closeAlert()
         }
+    }
+    
+    private func defineTitle() {
+        navigationItem.title = movieTitle
     }
     
     private func defineNavigationController() {
@@ -105,9 +108,7 @@ class MovieDetailsViewController: UIViewController {
             target: self,
             action: #selector(MovieDetailsViewController.onPressActionsButton)
         )
-        
         actionsBarButtonItem.isEnabled = false
-        
         navigationItem.rightBarButtonItem = actionsBarButtonItem
     }
     
@@ -115,19 +116,29 @@ class MovieDetailsViewController: UIViewController {
         movieDetailsTableView.rowHeight = UITableView.automaticDimension
         movieDetailsTableView.estimatedRowHeight = 80
         movieDetailsTableView.tableFooterView = UIView(frame: .zero)
-        
+    }
+    
+    private func registerPersonTableViewCell() {
         let personTableViewCellNib = UINib(nibName: "PersonTableViewCell", bundle: nil)
         movieDetailsTableView.register(personTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.person)
-        
+    }
+    
+    private func registerLoadingTableViewCell() {
         let loadingTableViewCellNib = UINib(nibName: "LoadingTableViewCell", bundle: nil)
         movieDetailsTableView.register(loadingTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.loading)
-        
+    }
+    
+    private func registerFailedLoadingTableViewCell() {
         let failedLoadingTableViewCellNib = UINib(nibName: "FailedLoadingTableViewCell", bundle: nil)
         movieDetailsTableView.register(failedLoadingTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.failedLoading)
-        
+    }
+    
+    private func registerHeaderTableViewCell() {
         let headerTableViewCellNib = UINib(nibName: "HeaderTableViewCell", bundle: nil)
         movieDetailsTableView.register(headerTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.header)
-        
+    }
+    
+    private func registerMovieCollectionTableViewCell() {
         let movieCollectionTableViewCellNib = UINib(nibName: "MovieCollectionTableViewCell", bundle: nil)
         movieDetailsTableView.register(movieCollectionTableViewCellNib, forCellReuseIdentifier: TableViewCellIdentifiers.movieCollection)
     }
@@ -179,24 +190,18 @@ class MovieDetailsViewController: UIViewController {
         guard let savedMovie = savedMovie else {
             saveMovie(withTag: .willCheckItOut)
             cell.willCheckOutIsSelected = true
-            
             return
         }
-        
         if !savedMovie.containsTag(byName: .willCheckItOut) {
             updateSavedMovie(withTag: .willCheckItOut)
             cell.willCheckOutIsSelected = true
-            
             return
         }
-        
         cell.willCheckOutIsSelected = false
-        
         if savedMovie.tags.count > 1 {
             updateSavedMovie(withoutTag: .willCheckItOut)
             return
         }
-        
         removeSavedMovie()
     }
     
@@ -204,99 +209,87 @@ class MovieDetailsViewController: UIViewController {
         guard let savedMovie = savedMovie else {
             saveMovie(withTag: .iLikeIt)
             cell.iLikeItIsSelected = true
-            
             return
         }
-        
         if !savedMovie.containsTag(byName: .iLikeIt) {
             updateSavedMovie(withTag: .iLikeIt)
             cell.iLikeItIsSelected = true
-            
             return
         }
-        
         cell.iLikeItIsSelected = false
-        
         if savedMovie.tags.count > 1 {
             updateSavedMovie(withoutTag: .iLikeIt)
             return
         }
-        
         removeSavedMovie()
     }
     
     private func performMovieDetailsRequest() {
-        movieDetailsTableView.backgroundView = loadingView
-        
+        setLoadingState()
         movieDetailsService.requestMovieDetails(by: movieId) { (requestedMovieDetails) in
             OperationQueue.main.addOperation {
                 guard let requestedMovieDetails = requestedMovieDetails else {
-                    self.movieDetailsTableView.backgroundView = self.failedLoadingView
+                    self.setFailedLoadingState()
                     self.isMovieCollectionGoingToBeRequested = false
                     self.isPeopleGoingToBeRequested = false
-                    
                     return
                 }
-                
-                self.movieDetailsTableView.backgroundView = nil
-                
+                self.unsetAnyState()
                 self.movieDetails = requestedMovieDetails
-                
                 self.actionsBarButtonItem.isEnabled = true
-                
                 self.isMovieCollectionGoingToBeRequested = true
                 self.isPeopleGoingToBeRequested = true
                 self.movieDetailsTableView.reloadData()
-                
                 if self.movieDetails.collectionId != nil {
                     self.performMovieCollectionRequest(fromReloading: false)
                 }
-                
                 self.performPeopleRequest(fromReloading: false)
             }
         }
+    }
+    
+    private func setLoadingState() {
+        movieDetailsTableView.backgroundView = loadingView
+    }
+    
+    private func setFailedLoadingState() {
+        self.movieDetailsTableView.backgroundView = self.failedLoadingView
+    }
+    
+    private func unsetAnyState() {
+        self.movieDetailsTableView.backgroundView = nil
     }
     
     private func performMovieCollectionRequest(fromReloading: Bool) {
         guard let collectionId = movieDetails.collectionId else {
             fatalError("Collection ID must not be nil...")
         }
-        
         isMovieCollectionGoingToBeRequested = false
         isMovieCollectionBeingRequested = true
         isMovieCollectionRequestFailed = false
-        
         if fromReloading {
             let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsMovieCollectionSectionNumber)
             self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
         }
-        
         movieDetailsService.requestMovies(byCollectionId: collectionId) { (requestedMovies) in
             OperationQueue.main.addOperation {
                 self.isMovieCollectionBeingRequested = false
-                
                 let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsMovieCollectionSectionNumber)
-                
                 guard let requestedMovies = requestedMovies else {
                     self.isMovieCollectionRequestFailed = true
                     self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
-                    
                     return
                 }
-                
                 if requestedMovies.isEmpty {
                     self.movieDetailsTableView.deleteRows(at: [firstIndexPath], with: .automatic)
                     return
                 }
-                
                 self.movieCollection = requestedMovies
                     .filter { $0.id != self.movieId }
-                
                 if self.movieCollection.isEmpty {
                     self.movieDetailsTableView.deleteRows(at: [firstIndexPath], with: .automatic)
                     return
                 }
-                
                 self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
             }
         }
@@ -306,42 +299,30 @@ class MovieDetailsViewController: UIViewController {
         isPeopleGoingToBeRequested = false
         isPeopleBeingRequested = true
         isPeopleRequestFailed = false
-        
         if fromReloading {
             let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
             self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
         }
-        
         movieDetailsService.requestPeople(by: movieDetails.id) { (requestedMoviePeople) in
             OperationQueue.main.addOperation {
                 self.isPeopleBeingRequested = false
-                
                 let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
-                
                 guard let requestedMoviePeople = requestedMoviePeople else {
                     self.isPeopleRequestFailed = true
                     self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
-                    
                     return
                 }
-                
                 self.movieDetailsTableView.deleteRows(at: [firstIndexPath], with: .automatic)
-                
                 self.characters = requestedMoviePeople.cast
                 self.crewPeople = requestedMoviePeople.crew
-                
                 self.limitedCharacters = self.getLimitedPeople(from: self.characters, limit: self.charactersLimit)
                 self.limitedCrewPeople = self.getLimitedPeople(from: self.crewPeople, limit: self.crewPeopleLimit)
-                
                 self.people = self.limitedCharacters + self.limitedCrewPeople
-                
                 var indexPaths: [IndexPath] = []
-                
                 for index in 0..<self.people.count {
                     let indexPath = IndexPath(row: index, section: self.movieDetailsPeopleSectionNumber)
                     indexPaths.append(indexPath)
                 }
-                
                 self.movieDetailsTableView.insertRows(at: indexPaths, with: .automatic)
             }
         }
@@ -359,34 +340,27 @@ class MovieDetailsViewController: UIViewController {
         if people.count <= limit {
             return people
         }
-        
         return Array(people[0..<limit])
     }
     
     private func saveMovie(withTag tagName: SystemTagName) {
-        let tag = TagRepository.shared.getSystemTag(byName: tagName)
-        
         let savedMovie = SavedMovie(
             id: movieDetails.id,
             title: movieDetails.title,
             originalTitle: movieDetails.originalTitle,
             imagePath: movieDetails.imagePath,
             releaseYear: movieDetails.releaseYear,
-            tags: [tag]
+            tags: [TagRepository.shared.getSystemTag(byName: tagName)]
         )
-        
         MovieRepository.shared.save(movie: savedMovie)
         self.savedMovie = MovieRepository.shared.get(byId: movieId)
     }
     
     private func updateSavedMovie(withTag tagName: SystemTagName) {
         guard let savedMovie = savedMovie else {
-            fatalError("Movie that's going to be updated doesn't exist...")
+            fatalError("Movie that's going to be updated doesn't exist.")
         }
-        
-        let tag = TagRepository.shared.getSystemTag(byName: tagName)
-        savedMovie.addTag(tag: tag)
-        
+        savedMovie.addTag(tag: TagRepository.shared.getSystemTag(byName: tagName))
         MovieRepository.shared.update(movie: savedMovie)
         self.savedMovie = MovieRepository.shared.get(byId: movieId)
     }
@@ -395,9 +369,7 @@ class MovieDetailsViewController: UIViewController {
         guard let savedMovie = savedMovie else {
             fatalError("Movie that's going to be updated doesn't exist...")
         }
-        
         savedMovie.removeTag(byName: tagName)
-        
         MovieRepository.shared.update(movie: savedMovie)
         self.savedMovie = MovieRepository.shared.get(byId: movieId)
     }
@@ -406,7 +378,6 @@ class MovieDetailsViewController: UIViewController {
         guard let savedMovie = savedMovie else {
             fatalError("Movie that's going to be removed doesn't exist...")
         }
-        
         MovieRepository.shared.remove(movie: savedMovie)
         self.savedMovie = nil
     }
@@ -519,41 +490,25 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     
     private func getMovieDetailsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetails, for: indexPath) as! MovieDetailsTableViewCell
+        cell.movieDetails = movieDetails
         cell.originController = self
-        cell.title = movieDetails.title
-        cell.originalTitle = movieDetails.originalTitle
-        cell.genres = movieDetails.genres
-        cell.releaseYear = movieDetails.releaseYear
-        
-        if movieDetails.runtime != 0 {
-            cell.runtime = movieDetails.runtime
-        }
-        
-        cell.voteCount = movieDetails.voteCount
-        cell.rating = movieDetails.rating
-        
         return cell
     }
     
     private func getMovieDetailsTagsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsTags, for: indexPath) as! MovieDetailsTagsTableViewCell
-        
         if let savedMovie = savedMovie {
             cell.willCheckOutIsSelected = savedMovie.containsTag(byName: .willCheckItOut)
             cell.iLikeItIsSelected = savedMovie.containsTag(byName: .iLikeIt)
         }
-        
         cell.onTapWillCheckItOut = onTapWillCheckItOutSystemTag
         cell.onTapILikeIt = onTapILikeItSystemTag
-        
         return cell
     }
     
     private func getMovieDetailsOverviewTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsOverview, for: indexPath) as! MovieDetailsOverviewTableViewCell
-        
         cell.overview = movieDetails.overview
-        
         return cell
     }
     
