@@ -33,7 +33,13 @@ class PersonTableViewCell: UITableViewCell {
         return UIImage(named: "default_person_image")!
     }
     
-    public var onTapImageView: ((String) -> Void)?
+    public var originController: UIViewController?
+    
+    private func onTapImageView() {
+        if let originController = originController {
+            UIViewUtilsFactory.shared.getImageUtils().openImage(from: originController, by: imagePath)
+        }
+    }
     
     public var personName: String? {
         didSet {
@@ -63,6 +69,7 @@ class PersonTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setDefaultState()
+        setSelectedBackgroundView()
     }
     
     private func setDefaultState() {
@@ -95,16 +102,20 @@ class PersonTableViewCell: UITableViewCell {
         if imagePath.isEmpty {
             return
         }
-        onTapImageView?(imagePath)
+        onTapImageView()
     }
     
     private func setDefaultPropertyValues() {
         imageValue = defaultImage
         imagePath = ""
-        onTapImageView = nil
+        originController = nil
         personName = nil
         personPosition = nil
         personPositionIsValid = nil
+    }
+    
+    private func setSelectedBackgroundView() {
+        selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
     }
 }
 

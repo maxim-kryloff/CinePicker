@@ -43,6 +43,7 @@ class DiscoverSettingsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setDefaultState()
+        setSelectedBackgroundView()
     }
     
     private func setDefaultState() {
@@ -63,5 +64,9 @@ class DiscoverSettingsTableViewCell: UITableViewCell {
         iconString = nil
         header = nil
         info = nil
+    }
+    
+    private func setSelectedBackgroundView() {
+        selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
     }
 }

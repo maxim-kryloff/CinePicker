@@ -341,8 +341,6 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
-        
         var imagePath: String
         
         switch cell {
@@ -397,10 +395,8 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     
     private func getMovieTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, movie: Movie) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
-        cell.onTapImageView = { (imagePath) in
-            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
-        }
         cell.movie = movie
+        cell.originController = self
         if let savedMovie = movie as? SavedMovie {
             cell.savedMovie = savedMovie
             cell.voteResultsAreHidden = true
@@ -414,16 +410,10 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     
     private func getPersonTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, person: PopularPerson) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
-        
-        cell.onTapImageView = { (imagePath) in
-            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
-        }
-        
+        cell.originController = self
         cell.personName = person.name
-        
         return cell
     }
-    
 }
 
 extension MultiSearchViewController {

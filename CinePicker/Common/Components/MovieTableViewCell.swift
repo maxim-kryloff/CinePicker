@@ -71,7 +71,13 @@ class MovieTableViewCell: UITableViewCell {
         return UIImage(named: "default_movie_image")!
     }
     
-    public var onTapImageView: ((String) -> Void)?
+    public var originController: UIViewController?
+    
+    private func onTapImageView() {
+        if let originController = originController {
+            UIViewUtilsFactory.shared.getImageUtils().openImage(from: originController, by: imagePath)
+        }
+    }
     
     public var voteResultsAreHidden: Bool {
         set { voteResultsStackView.isHidden = newValue }
@@ -137,6 +143,7 @@ class MovieTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setDefaultState()
+        setSelectedBackgroundView()
     }
     
     private func setDefaultState() {
@@ -175,7 +182,7 @@ class MovieTableViewCell: UITableViewCell {
         if imagePath.isEmpty {
             return
         }
-        onTapImageView?(imagePath)
+        onTapImageView()
     }
     
     private func setDefaultVoteResultsState() {
@@ -183,9 +190,11 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     private func setDefaultPropertyValues() {
+        movie = nil
+        savedMovie = nil
         imageValue = defaultImage
         imagePath = ""
-        onTapImageView = nil
+        originController = nil
         title = nil
         originalTitle = nil
         releaseYear = nil
@@ -193,6 +202,10 @@ class MovieTableViewCell: UITableViewCell {
         iLikeItIsVisible = false
         voteCount = nil
         rating = nil
+    }
+    
+    private func setSelectedBackgroundView() {
+        selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
     }
 }
 

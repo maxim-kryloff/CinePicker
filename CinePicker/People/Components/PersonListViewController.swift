@@ -89,20 +89,17 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
     
     private func setPersonTableViewCellImageProperties(cell: PersonTableViewCell, indexPath: IndexPath) {
         cell.imagePath = people[indexPath.row].imagePath
-        cell.onTapImageView = { (imagePath) in
-            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
-        }
         UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
         setPersonTableViewCellProperties(cell: cell, indexPath: indexPath)
-        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
         return cell
     }
     
     private func setPersonTableViewCellProperties(cell: PersonTableViewCell, indexPath: IndexPath) {
+        cell.originController = self
         let person = people[indexPath.row]
         cell.personName = person.name
         if let character = person as? Character {

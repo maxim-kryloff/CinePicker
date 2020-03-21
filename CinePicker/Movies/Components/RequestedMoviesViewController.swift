@@ -152,7 +152,6 @@ class RequestedMoviesViewController: StateViewController {
                     guard let requestedMoviesResult = requestedMoviesResult else {
                         self.isLiveScrollingRelevant = false
                         self.updateTable(providingData: self.requestedMovies)
-                        
                         return
                     }
                     self.isLiveScrollingRelevant = !requestedMoviesResult.isEmpty
@@ -187,9 +186,6 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
     private func setMovieTableViewCellImageProperties(cell: MovieTableViewCell, indexPath: IndexPath) {
         cell.imagePath = requestedMovies[indexPath.row].imagePath
         UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
-        cell.onTapImageView = { (imagePath) in
-            UIViewUtilsFactory.shared.getImageUtils().openImage(from: self, by: imagePath)
-        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -202,13 +198,13 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movie, for: indexPath) as! MovieTableViewCell
         setMovieTableViewCellProperties(cell: cell, indexPath: indexPath)
-        cell.selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
         return cell
     }
     
     private func setMovieTableViewCellProperties(cell: MovieTableViewCell, indexPath: IndexPath) {
         let movie = requestedMovies[indexPath.row]
         cell.movie = movie
+        cell.originController = self
         if let savedMovie = savedMovieMap[movie.id] {
             cell.savedMovie = savedMovie
         }

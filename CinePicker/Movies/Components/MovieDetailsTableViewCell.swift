@@ -43,7 +43,13 @@ class MovieDetailsTableViewCell: UITableViewCell {
         return UIImage(named: "default_movie_image")!
     }
     
-    public var onTapImageView: ((String) -> Void)?
+    public var originController: UIViewController?
+    
+    private func onTapImageView() {
+        if let originController = originController {
+            UIViewUtilsFactory.shared.getImageUtils().openImage(from: originController, by: imagePath)
+        }
+    }
     
     public var title: String? {
         didSet {
@@ -112,6 +118,7 @@ class MovieDetailsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setDefaultState()
+        setSelectedBackgroundView()
     }
     
     private func setDefaultState() {
@@ -148,13 +155,13 @@ class MovieDetailsTableViewCell: UITableViewCell {
         if imagePath.isEmpty {
             return
         }
-        onTapImageView?(imagePath)
+        onTapImageView()
     }
     
     private func setDefaultPropertyValues() {
         imageValue = defaultImage
         imagePath = ""
-        onTapImageView = nil
+        originController = nil
         title = nil
         originalTitle = nil
         genres = nil
@@ -162,6 +169,10 @@ class MovieDetailsTableViewCell: UITableViewCell {
         runtime = nil
         voteCount = nil
         rating = nil
+    }
+    
+    private func setSelectedBackgroundView() {
+        selectedBackgroundView = UIViewUtilsFactory.shared.getViewUtils().getUITableViewCellSelectedBackgroundView()
     }
 }
 
