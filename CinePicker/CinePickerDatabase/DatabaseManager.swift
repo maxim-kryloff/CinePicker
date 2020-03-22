@@ -9,7 +9,6 @@ class DatabaseManager {
         if instance == nil {
             instance = DatabaseManager()
         }
-        
         return instance!
     }
     
@@ -17,7 +16,6 @@ class DatabaseManager {
     
     private init() {
         persistentContainer = NSPersistentContainer(name: "CinePickerDatabase")
-        
         persistentContainer.loadPersistentStores { (_, error) in
             if let err = error as NSError? {
                 fatalError("Unresolved DB error \(err), \(err.userInfo).")
@@ -37,7 +35,6 @@ class DatabaseManager {
         guard let description = NSEntityDescription.entity(forEntityName: coreDataEntity.rawValue, in: self.viewContext) else {
             fatalError("Couldn't get entity description for '\(coreDataEntity.rawValue)' entity name.")
         }
-        
         return description
     }
     
@@ -52,5 +49,4 @@ class DatabaseManager {
             fatalError("Can't write. \(error), \(error.userInfo).")
         }
     }
-    
 }
