@@ -31,7 +31,7 @@ class RequestedMoviesViewController: StateViewController {
     
     private var savedMovieMap: [Int: SavedMovie] = [:]
     
-    private var isLiveScrollingRelevant = false
+    private var liveScrollingIsRelevant = false
     
     private var isBeingLiveScrolled = false
     
@@ -131,7 +131,7 @@ class RequestedMoviesViewController: StateViewController {
                     return
                 }
                 self.actionsBarButtonItem.isEnabled = true
-                self.isLiveScrollingRelevant = !requestedMoviesResult.isEmpty
+                self.liveScrollingIsRelevant = !requestedMoviesResult.isEmpty
                 if requestedMoviesResult.isEmpty {
                     self.setMessageState(withMessage: CinePickerCaptions.thereAreNoMoviesFound)
                     return
@@ -150,11 +150,11 @@ class RequestedMoviesViewController: StateViewController {
                 OperationQueue.main.addOperation {
                     self.isBeingLiveScrolled = false
                     guard let requestedMoviesResult = requestedMoviesResult else {
-                        self.isLiveScrollingRelevant = false
+                        self.liveScrollingIsRelevant = false
                         self.updateTable(providingData: self.requestedMovies)
                         return
                     }
-                    self.isLiveScrollingRelevant = !requestedMoviesResult.isEmpty
+                    self.liveScrollingIsRelevant = !requestedMoviesResult.isEmpty
                     self.updateTable(providingData: self.requestedMovies + requestedMoviesResult)
                 }
             }
@@ -169,7 +169,7 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == requestedMovies.count - 1 && isLiveScrollingRelevant {
+        if indexPath.row == requestedMovies.count - 1 && liveScrollingIsRelevant {
             return LoadingTableViewCell.standardHeight
         }
         return MovieTableViewCell.standardHeight
@@ -189,7 +189,7 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == requestedMovies.count - 1 && isLiveScrollingRelevant {
+        if indexPath.row == requestedMovies.count - 1 && liveScrollingIsRelevant {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
             if !isBeingLiveScrolled {
                 performLiveScrollingRequest()
@@ -228,7 +228,7 @@ extension RequestedMoviesViewController {
             setMovieDetailsViewControllerProperties(for: segue, sender: sender)
             return
         }
-        fatalError("Unexpected Segue Identifier: \(segueIdentifier)")
+        fatalError("Unexpected segue identifier: \(segueIdentifier)")
     }
     
     private func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, sender: Any?) {

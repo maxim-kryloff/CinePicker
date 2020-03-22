@@ -26,6 +26,20 @@ class MovieDetailsTableViewCell: UITableViewCell {
         return 120
     }
     
+    public var movieDetails: MovieDetails? {
+        didSet {
+            title = movieDetails?.title
+            originalTitle = movieDetails?.originalTitle
+            genres = movieDetails?.genres
+            releaseYear = movieDetails?.releaseYear
+            if movieDetails?.runtime != 0 {
+                runtime = movieDetails?.runtime
+            }
+            voteCount = movieDetails?.voteCount
+            rating = movieDetails?.rating
+        }
+    }
+    
     public var imageValue: UIImage? {
         didSet {
             movieImageImageView.image = imageValue
@@ -51,19 +65,19 @@ class MovieDetailsTableViewCell: UITableViewCell {
         }
     }
     
-    public var title: String? {
+    private var title: String? {
         didSet {
             titleLabel.text = title
         }
     }
     
-    public var originalTitle: String? {
+    private var originalTitle: String? {
         didSet {
             originalTitleLabel.text = originalTitle
         }
     }
     
-    public var genres: [Genre]? {
+    private var genres: [Genre]? {
         didSet {
             if let genres = genres {
                 let genreNames: [String] = genres.map { $0.name }
@@ -72,13 +86,13 @@ class MovieDetailsTableViewCell: UITableViewCell {
         }
     }
     
-    public var releaseYear: String? {
+    private var releaseYear: String? {
         didSet {
             releaseYearLabel.text = releaseYear
         }
     }
     
-    public var runtime: Int? {
+    private var runtime: Int? {
         didSet {
             if let runtime = runtime {
                 runtimeLabel.text = "\(runtime) \(CinePickerCaptions.min)"
@@ -88,7 +102,7 @@ class MovieDetailsTableViewCell: UITableViewCell {
         }
     }
     
-    public var voteCount: Int? {
+    private var voteCount: Int? {
         didSet {
             if let voteCount = voteCount {
                 voteCountLabel.text = String(voteCount)
@@ -98,7 +112,7 @@ class MovieDetailsTableViewCell: UITableViewCell {
         }
     }
     
-    public var rating: Double? {
+    private var rating: Double? {
         didSet {
             if let rating = rating {
                 ratingLabel.textColor = UIViewUtilsFactory.shared.getViewUtils().getMovieRatingColor(rating: rating)

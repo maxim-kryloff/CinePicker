@@ -7,7 +7,7 @@ class ImageService {
     
     private var serialQueue = DispatchQueue(label: UUID().uuidString)
     
-    public func download(by url: URL, onComplete callback: @escaping (_ image: UIImage?) -> Void) {
+    public func download(by url: URL, onComplete callback: @escaping (_ image: UIImage?, _ url: URL) -> Void) {
         let operation = createDownloadImageOperation(downloadImageBy: url, onComplete: callback)
         let queue = createOperationQueue(andPut: operation)
         serialQueue.sync {
@@ -17,12 +17,12 @@ class ImageService {
     
     private func createDownloadImageOperation(
         downloadImageBy url: URL,
-        onComplete callback: @escaping (_ image: UIImage?) -> Void
+        onComplete callback: @escaping (_ image: UIImage?, _ url: URL) -> Void
     ) -> AsyncOperation {
         let operation = DownloadImageOperation(url: url)
         operation.qualityOfService = .utility
         operation.completionBlock = {
-            callback(operation.image)
+            callback(operation.image, url)
         }
         return operation
     }

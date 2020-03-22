@@ -58,7 +58,7 @@ class MovieListService {
             } catch ResponseError.dataIsNil {
                 return
             } catch {
-                fatalError("Unexpected async result...")
+                fatalError("Unexpected async result.")
             }
         }
     }
@@ -84,7 +84,7 @@ class MovieListService {
             } catch ResponseError.dataIsNil {
                 return
             } catch {
-                fatalError("Unexpected async result...")
+                fatalError("Unexpected async result.")
             }
         }
     }

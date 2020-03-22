@@ -35,12 +35,12 @@ class MovieListViewController: StateViewController {
     
     private var isBeingRequested = false
     
-    private var isRequestFailed = false
+    private var requestIsFailed = false
     
     private let movieListService = MovieListService(movieService: MovieService())
     
     @IBAction func onPersonTypeSegmentControlAction(_ sender: Any) {
-        if isBeingRequested || isRequestFailed {
+        if isBeingRequested || requestIsFailed {
             return
         }
         let moviesToDisplay = personTypeSegmentControl.selectedSegmentIndex == 0
@@ -160,13 +160,13 @@ class MovieListViewController: StateViewController {
     private func performRequest() {
         setLoadingState()
         isBeingRequested = true
-        isRequestFailed = false
+        requestIsFailed = false
         movieListService.requestMovies(by: person.id) { (requestedMoviesResult) in
             OperationQueue.main.addOperation {
                 self.unsetLoadingState()
                 self.isBeingRequested = false
                 guard let requestedMoviesResult = requestedMoviesResult else {
-                    self.isRequestFailed = true
+                    self.requestIsFailed = true
                     self.setFailedLoadingState()
                     return
                 }
@@ -240,7 +240,7 @@ extension MovieListViewController {
             setMovieDetailsViewControllerProperties(for: segue, sender: sender)
             return
         }
-        fatalError("Unexpected Segue Identifier: \(segueIdentifier)")
+        fatalError("Unexpected segue identifier: \(segueIdentifier)")
     }
     
     private func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, sender: Any?) {

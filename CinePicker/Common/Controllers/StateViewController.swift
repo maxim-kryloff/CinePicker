@@ -3,7 +3,7 @@ import UIKit
 class StateViewController: UIViewController {
     
     public var tableViewDefinition: UITableView! {
-        fatalError("tableViewDefinition must be overriden...'")
+        fatalError("tableViewDefinition must be overridden.'")
     }
     
     private var loadingView: LoadingUIView!

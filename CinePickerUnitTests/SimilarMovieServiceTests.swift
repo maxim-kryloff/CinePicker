@@ -47,7 +47,7 @@ class SimilarMovieServiceTests: XCTestCase {
     }
     
     func testShouldReturnNilWhenRequestingSimilarMoviesIsFailed() {
-        mockMovieService.isSimilarMoviesRequestFailed = true
+        mockMovieService.similarMoviesRequestIsFailed = true
         
         let similarMovieRequest = SimilarMovieRequest(movieId: fakeMovieId, page: 1)
         
@@ -69,7 +69,7 @@ extension SimilarMovieServiceTests {
     
     private class MockMovieService: MovieService {
         
-        public var isSimilarMoviesRequestFailed = false
+        public var similarMoviesRequestIsFailed = false
         
         private let seeder = Seeder()
         
@@ -77,7 +77,7 @@ extension SimilarMovieServiceTests {
             DispatchQueue.main.async {
                 let movies = self.seeder.getMovies(count: 10)
                 
-                let result = self.isSimilarMoviesRequestFailed
+                let result = self.similarMoviesRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movies)
                 

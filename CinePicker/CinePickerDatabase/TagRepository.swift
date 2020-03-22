@@ -26,11 +26,11 @@ class TagRepository {
         
         let tags: [Tag] = tagDAOs.map { (tagDAO) in
             guard let name = tagDAO.value(forKey: "name") as? String else {
-                fatalError("Tag must have a name...")
+                fatalError("Tag must have a name.")
             }
 
             guard let russianName = tagDAO.value(forKey: "russianName") as? String else {
-                fatalError("Tag must have a russian name...")
+                fatalError("Tag must have a russian name.")
             }
             
             let tag = Tag(name: name, russianName: russianName)
@@ -49,7 +49,7 @@ class TagRepository {
     
     public func getSystemTag(byName systemTagName: SystemTagName) -> Tag {
         guard let systemTag = get(byName: systemTagName.rawValue) else {
-            fatalError("Tag with name '\(SystemTagName.willCheckItOut.rawValue)' wasn't found...")
+            fatalError("Tag with name '\(SystemTagName.willCheckItOut.rawValue)' wasn't found.")
         }
         
         return systemTag

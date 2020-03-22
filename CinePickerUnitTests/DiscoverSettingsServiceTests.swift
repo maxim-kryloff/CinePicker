@@ -40,7 +40,7 @@ class DiscoverSettingsServiceTests: XCTestCase {
     }
     
     func testShouldReturnNilWhenRequestingGenresIsFailed() {
-        mockGenreService.isGenreRequestFailed = true
+        mockGenreService.genreRequestIsFailed = true
         
         discoverSettingsService.requestGenres { result in
             XCTAssertNil(result)
@@ -69,7 +69,7 @@ class DiscoverSettingsServiceTests: XCTestCase {
     }
     
     func testShouldReturnNilWhenRequestingDiscoveredMoviesIsFailed() {
-        mockMovieService.isDiscoveredMoviesRequestFailed = true
+        mockMovieService.discoveredMoviesRequestIsFailed = true
         
         let requestToDiscoverMovies = RequestToDiscoverMovies(genreIds: [], year: nil, rating: nil, page: 1)
         
@@ -93,7 +93,7 @@ extension DiscoverSettingsServiceTests {
     
     private class MockGenreService: GenreService {
         
-        public var isGenreRequestFailed = false
+        public var genreRequestIsFailed = false
         
         private let seeder = Seeder()
         
@@ -101,7 +101,7 @@ extension DiscoverSettingsServiceTests {
             DispatchQueue.main.async {
                 let genres = self.seeder.getGenres(count: 10)
                 
-                let result = self.isGenreRequestFailed
+                let result = self.genreRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(genres)
                 
@@ -117,7 +117,7 @@ extension DiscoverSettingsServiceTests {
     
     private class MockMovieService: MovieService {
         
-        public var isDiscoveredMoviesRequestFailed = false
+        public var discoveredMoviesRequestIsFailed = false
         
         private let seeder = Seeder()
         
@@ -132,7 +132,7 @@ extension DiscoverSettingsServiceTests {
             DispatchQueue.main.async {
                 let movies = self.seeder.getMovies(count: 10)
                 
-                let result = self.isDiscoveredMoviesRequestFailed
+                let result = self.discoveredMoviesRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movies)
                 
