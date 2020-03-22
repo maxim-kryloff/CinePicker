@@ -4,8 +4,6 @@ class PersonListViewController: UIViewController {
     
     @IBOutlet var contentUIView: UIView!
     
-    @IBOutlet weak var topBarView: UIView!
-    
     @IBOutlet weak var personListTableView: UITableView!
     
     public var people: [Person] = []
@@ -58,7 +56,6 @@ class PersonListViewController: UIViewController {
     
     private func setDefaultColors() {
         contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
-        topBarView.backgroundColor = CinePickerColors.getTopBarColor()
         personListTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     

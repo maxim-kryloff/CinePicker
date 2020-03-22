@@ -35,12 +35,18 @@ class MovieCollectionCollectionViewCell: UICollectionViewCell {
     
     private func setDefaultState() {
         setDefaultColors()
+        setImageViewProperties()
         setDefaultPropertyValues()
     }
     
     private func setDefaultColors() {
         backgroundColor = CinePickerColors.getBackgroundColor()
         movieImageActivityIndicator.color = CinePickerColors.getActivityIndicatorColor()
+    }
+    
+    private func setImageViewProperties() {
+        movieImageImageView.layer.cornerRadius = CinePickerDimensions.cornerRadius
+        movieImageImageView.clipsToBounds = true
     }
     
     private func setDefaultPropertyValues() {

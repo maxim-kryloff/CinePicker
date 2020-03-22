@@ -6,8 +6,6 @@ class FailedLoadingTableViewCell: UITableViewCell {
     
     @IBOutlet weak var actionButton: UIButton!
     
-    @IBOutlet weak var bottomBarView: UIView!
-    
     public static var standardHeight: CGFloat {
         return 80
     }
@@ -22,7 +20,6 @@ class FailedLoadingTableViewCell: UITableViewCell {
         backgroundColor = CinePickerColors.getBackgroundColor()
         messageLabel.textColor = CinePickerColors.getMessageColor()
         actionButton.setTitleColor(CinePickerColors.getActionColor(), for: .normal)
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
     private func setCaptions() {

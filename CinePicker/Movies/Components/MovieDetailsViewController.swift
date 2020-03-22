@@ -4,8 +4,6 @@ class MovieDetailsViewController: UIViewController {
     
     @IBOutlet var contentUIView: UIView!
     
-    @IBOutlet weak var topBarView: UIView!
-    
     @IBOutlet weak var movieDetailsTableView: UITableView!
     
     public var movieId: Int!
@@ -164,7 +162,6 @@ class MovieDetailsViewController: UIViewController {
     
     private func setDefaultColors() {
         contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
-        topBarView.backgroundColor = CinePickerColors.getTopBarColor()
         movieDetailsTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     
@@ -702,13 +699,13 @@ extension MovieDetailsViewController {
         
         private func setMovieCollectionTableViewCellProperties(cell: MovieCollectionTableViewCell) {
             cell.header = CinePickerCaptions.alsoInSeries
-            cell.movieCollection = movieDetailsViewController.movieCollection
+            cell.movieCollection = self.movieDetailsViewController.movieCollection
             cell.onTouchDown = { (movie) in
                 let storyboard = UIStoryboard(name: MainStoryboardIdentifiers.main, bundle: nil)
                 let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: MainStoryboardIdentifiers.movieDetailsViewController) as! MovieDetailsViewController
                 movieDetailsViewController.movieId = movie.id
                 movieDetailsViewController.movieTitle = movie.title
-                movieDetailsViewController.navigationController?.pushViewController(movieDetailsViewController, animated: true)
+                self.movieDetailsViewController.navigationController?.pushViewController(movieDetailsViewController, animated: true)
             }
         }
     }

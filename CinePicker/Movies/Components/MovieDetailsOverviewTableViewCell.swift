@@ -4,8 +4,6 @@ class MovieDetailsOverviewTableViewCell: UITableViewCell {
     
     @IBOutlet weak var overviewLabel: UILabel!
     
-    @IBOutlet weak var bottomBarView: UIView!
-    
     public static var standardHeight: CGFloat {
         return UITableView.automaticDimension
     }
@@ -34,7 +32,6 @@ class MovieDetailsOverviewTableViewCell: UITableViewCell {
     private func setDefaultColors() {
         backgroundColor = CinePickerColors.getBackgroundColor()
         overviewLabel.textColor = CinePickerColors.getOverviewColor()
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
     private func setDefaultPropertyValues() {

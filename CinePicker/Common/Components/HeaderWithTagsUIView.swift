@@ -9,8 +9,6 @@ class HeaderWithTagsUIView: UIView {
     
     @IBOutlet weak var iLikeItLGButton: LGButton!
     
-    @IBOutlet weak var bottomBarView: UIView!
-    
     public static var standardHeight: CGFloat {
         return 55
     }
@@ -58,7 +56,6 @@ class HeaderWithTagsUIView: UIView {
     private func setDefaultColors() {
         backgroundColor = CinePickerColors.getBackgroundColor()
         headerLabel.textColor = CinePickerColors.getTitleColor()
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
     private func setDefaultPropertyValues() {

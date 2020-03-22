@@ -25,10 +25,8 @@ class MovieTableViewCell: UITableViewCell {
     
     @IBOutlet weak var ratingLabel: UILabel!
     
-    @IBOutlet weak var bottomBarView: UIView!
-    
     public static var standardHeight: CGFloat {
-        return 80
+        return 88
     }
     
     public static func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, movie: Movie) {
@@ -148,6 +146,7 @@ class MovieTableViewCell: UITableViewCell {
     
     private func setDefaultState() {
         setDefaultColors()
+        setImageViewProperties()
         setImageViewGesture()
         setDefaultVoteResultsState()
         setDefaultPropertyValues()
@@ -163,7 +162,11 @@ class MovieTableViewCell: UITableViewCell {
         iLikeItLGButton.rightIconColor = CinePickerColors.getILikeItTagColor()
         voteCountLabel.textColor = CinePickerColors.getVoteCountColor()
         voteSeparatorLabel.textColor = CinePickerColors.getVoteSeparatorColor()
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
+    }
+    
+    private func setImageViewProperties() {
+        movieImageImageView.layer.cornerRadius = CinePickerDimensions.cornerRadius
+        movieImageImageView.clipsToBounds = true
     }
     
     private func setImageViewGesture() {
