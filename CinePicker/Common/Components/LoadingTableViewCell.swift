@@ -4,8 +4,6 @@ class LoadingTableViewCell: UITableViewCell {
     
     @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
     
-    @IBOutlet weak var bottomBarView: UIView!
-    
     public static var standardHeight: CGFloat {
         return 80
     }
@@ -25,7 +23,6 @@ class LoadingTableViewCell: UITableViewCell {
     private func setDefaultColors() {
         backgroundColor = CinePickerColors.getBackgroundColor()
         loadingActivityIndicator.color = CinePickerColors.getActivityIndicatorColor()
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
     private func setDefaultPropertyValues() {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M0V-NA-q05">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M0V-NA-q05">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -325,10 +325,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Gub-No-7VY">
-                                                    <rect key="frame" x="51.5" y="8.5" width="272" height="50"/>
+                                                    <rect key="frame" x="51.5" y="8.5" width="272" height="33"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BH4-gU-Lga" userLabel="Wil Check It Out LGButton" customClass="LGButton" customModule="LGButton">
-                                                            <rect key="frame" x="0.0" y="0.0" width="160.5" height="50"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="160.5" height="33"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -347,7 +347,7 @@
                                                             </connections>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5XM-VO-slN" userLabel="I like it LGButton" customClass="LGButton" customModule="LGButton">
-                                                            <rect key="frame" x="172.5" y="0.0" width="99.5" height="50"/>
+                                                            <rect key="frame" x="172.5" y="0.0" width="99.5" height="33"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="NO"/>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
@@ -391,25 +391,15 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhL-Qz-fS0" userLabel="Bottom Bar View">
-                                                    <rect key="frame" x="0.0" y="79.5" width="375" height="0.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="0.5" id="dx5-sX-SuE"/>
-                                                    </constraints>
-                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="9T9-V7-vLf" secondAttribute="trailing" constant="16" id="A9j-hp-xGr"/>
-                                                <constraint firstAttribute="trailing" secondItem="hhL-Qz-fS0" secondAttribute="trailing" id="M2r-rr-fZ0"/>
-                                                <constraint firstItem="hhL-Qz-fS0" firstAttribute="leading" secondItem="Jlf-cX-u5l" secondAttribute="leading" id="P6b-Tu-Ap1"/>
                                                 <constraint firstItem="9T9-V7-vLf" firstAttribute="top" secondItem="Jlf-cX-u5l" secondAttribute="top" constant="8" id="R2r-Uf-s8S"/>
                                                 <constraint firstAttribute="bottom" secondItem="9T9-V7-vLf" secondAttribute="bottom" constant="8" id="cEz-HR-RyJ"/>
-                                                <constraint firstAttribute="bottom" secondItem="hhL-Qz-fS0" secondAttribute="bottom" id="je0-2n-QJh"/>
                                                 <constraint firstItem="9T9-V7-vLf" firstAttribute="leading" secondItem="Jlf-cX-u5l" secondAttribute="leading" constant="16" id="u3p-4J-lVd"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="bottomBarView" destination="hhL-Qz-fS0" id="H5q-WT-bQD"/>
                                             <outlet property="overviewLabel" destination="9T9-V7-vLf" id="l2j-rz-yDh"/>
                                         </connections>
                                     </tableViewCell>
@@ -522,7 +512,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JWj-Cq-pnK" customClass="LGButton" customModule="LGButton">
+                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JWj-Cq-pnK" customClass="LGButton" customModule="LGButton">
                                                     <rect key="frame" x="341.5" y="15" width="17.5" height="20"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
@@ -671,6 +661,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="bkA-No-Cab"/>
         <segue reference="6Rr-Qk-OvN"/>
-        <segue reference="XCY-oZ-kcm"/>
+        <segue reference="Hkb-x9-9mw"/>
     </inferredMetricsTieBreakers>
 </document>

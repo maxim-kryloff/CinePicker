@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -35,28 +35,18 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ihH-r5-Yca" userLabel="Bottom Bar View">
-                        <rect key="frame" x="0.0" y="159.5" width="375" height="0.5"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="0.5" id="ckh-Nn-Zxf"/>
-                        </constraints>
-                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="ngY-H8-D1r" secondAttribute="bottom" constant="2" id="2yx-GV-WGw"/>
                     <constraint firstAttribute="trailing" secondItem="ngY-H8-D1r" secondAttribute="trailing" id="9iO-uM-QFM"/>
-                    <constraint firstItem="ihH-r5-Yca" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Cow-3u-7bE"/>
                     <constraint firstItem="ngY-H8-D1r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="K2p-en-Hsa"/>
                     <constraint firstItem="3T2-GH-vj6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Wf5-Ij-1sC"/>
                     <constraint firstItem="ngY-H8-D1r" firstAttribute="top" secondItem="3T2-GH-vj6" secondAttribute="bottom" id="id1-lf-Jyp"/>
                     <constraint firstItem="3T2-GH-vj6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="kgV-eu-8hJ"/>
-                    <constraint firstAttribute="trailing" secondItem="ihH-r5-Yca" secondAttribute="trailing" id="nqd-1z-7qT"/>
-                    <constraint firstAttribute="bottom" secondItem="ihH-r5-Yca" secondAttribute="bottom" id="uEu-XY-Vwr"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="bottomBarView" destination="ihH-r5-Yca" id="Eeo-jU-Wuj"/>
                 <outlet property="headerLabel" destination="3T2-GH-vj6" id="vZX-tk-kNN"/>
                 <outlet property="movieCollectionCollectionView" destination="ngY-H8-D1r" id="Ji1-jS-ekh"/>
             </connections>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,18 +19,9 @@
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ySI-fI-EzP">
                             <rect key="frame" x="169" y="21.5" width="37" height="37"/>
                         </activityIndicatorView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="haA-LK-a8l" userLabel="Bottom Bar View">
-                            <rect key="frame" x="0.0" y="79.5" width="375" height="0.5"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="0.5" id="DTQ-6g-pcO"/>
-                            </constraints>
-                        </view>
                     </subviews>
                     <constraints>
                         <constraint firstItem="ySI-fI-EzP" firstAttribute="centerY" secondItem="iQg-pe-8aZ" secondAttribute="centerY" id="BDU-FB-ebM"/>
-                        <constraint firstAttribute="bottom" secondItem="haA-LK-a8l" secondAttribute="bottom" id="WgA-Za-dia"/>
-                        <constraint firstAttribute="trailing" secondItem="haA-LK-a8l" secondAttribute="trailing" id="hLg-Sx-Tkx"/>
-                        <constraint firstItem="haA-LK-a8l" firstAttribute="leading" secondItem="iQg-pe-8aZ" secondAttribute="leading" id="sQ9-pq-qVg"/>
                         <constraint firstItem="ySI-fI-EzP" firstAttribute="centerX" secondItem="iQg-pe-8aZ" secondAttribute="centerX" id="yvD-FH-jLm"/>
                     </constraints>
                 </view>
@@ -46,7 +37,6 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="N97-sz-zdy"/>
             <connections>
-                <outlet property="bottomBarView" destination="haA-LK-a8l" id="5UB-Ri-J99"/>
                 <outlet property="loadingActivityIndicator" destination="ySI-fI-EzP" id="5Ns-bl-16m"/>
             </connections>
             <point key="canvasLocation" x="-280.80000000000001" y="73.763118440779621"/>

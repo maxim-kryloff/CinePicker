@@ -10,10 +10,8 @@ class PersonTableViewCell: UITableViewCell {
     
     @IBOutlet weak var personPositionLabel: UILabel!
     
-    @IBOutlet weak var bottomBarView: UIView!
-    
     public static var standardHeight: CGFloat {
-        return 80
+        return 88
     }
     
     public var imageValue: UIImage? {
@@ -74,6 +72,7 @@ class PersonTableViewCell: UITableViewCell {
     
     private func setDefaultState() {
         setDefaultColors()
+        setImageViewProperties()
         setImageViewGesture()
         setDefaultPropertyValues()
     }
@@ -83,7 +82,11 @@ class PersonTableViewCell: UITableViewCell {
         personImageActivityIndicator.color = CinePickerColors.getActivityIndicatorColor()
         personNameLabel.textColor = CinePickerColors.getTitleColor()
         personPositionLabel.textColor = CinePickerColors.getSubtitleColor()
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
+    }
+    
+    private func setImageViewProperties() {
+        personImageImageView.layer.cornerRadius = CinePickerDimensions.cornerRadius
+        personImageImageView.clipsToBounds = true
     }
     
     private func setImageViewGesture() {

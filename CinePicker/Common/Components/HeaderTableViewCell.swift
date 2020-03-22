@@ -7,8 +7,6 @@ class HeaderTableViewCell: UITableViewCell {
     
     @IBOutlet weak var rightArrowLGButton: LGButton!
     
-    @IBOutlet weak var bottomBarView: UIView!
-    
     public static var standardHeight: CGFloat {
         return 50
     }
@@ -38,7 +36,6 @@ class HeaderTableViewCell: UITableViewCell {
         backgroundColor = CinePickerColors.getBackgroundColor()
         headerButton.setTitleColor(CinePickerColors.getActionColor(), for: .normal)
         rightArrowLGButton.rightIconColor = CinePickerColors.getActionColor()
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
     private func setDefaultPropertyValues() {

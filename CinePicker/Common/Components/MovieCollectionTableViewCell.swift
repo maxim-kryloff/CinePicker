@@ -6,8 +6,6 @@ class MovieCollectionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var headerLabel: UILabel!
     
-    @IBOutlet weak var bottomBarView: UIView!
-    
     public static var standardHeight: CGFloat {
         return 158
     }
@@ -46,7 +44,6 @@ class MovieCollectionTableViewCell: UITableViewCell {
         backgroundColor = CinePickerColors.getBackgroundColor()
         movieCollectionCollectionView.backgroundColor = CinePickerColors.getBackgroundColor()
         headerLabel.textColor = CinePickerColors.getTitleColor()
-        bottomBarView.backgroundColor = CinePickerColors.getBottomBarColor()
     }
     
     private func setDefaultPropertyValues() {

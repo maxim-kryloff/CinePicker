@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,13 +17,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZt-KC-F9T">
-                            <rect key="frame" x="16" y="10" width="92.5" height="32.5"/>
+                            <rect key="frame" x="16" y="10.5" width="92.5" height="32.5"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U22-VJ-wzl" userLabel="Will Check It Out LGButton" customClass="LGButton" customModule="LGButton">
-                            <rect key="frame" x="283" y="9.5" width="34" height="34"/>
+                            <rect key="frame" x="283" y="10" width="34" height="34"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -50,7 +50,7 @@
                             </connections>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X6t-c1-F1S" userLabel="I like it LGButton" customClass="LGButton" customModule="LGButton">
-                            <rect key="frame" x="325" y="9.5" width="34" height="34"/>
+                            <rect key="frame" x="325" y="10" width="34" height="34"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -76,23 +76,14 @@
                                 <action selector="onILikeItLGButtonTouchUpInside:" destination="EqA-6N-dTf" eventType="touchUpInside" id="fFD-d3-WPl"/>
                             </connections>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxA-wR-KXF" userLabel="Bottom Bar View">
-                            <rect key="frame" x="0.0" y="54.5" width="375" height="0.5"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="0.5" id="GFh-Mh-5Zb"/>
-                            </constraints>
-                        </view>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="X6t-c1-F1S" secondAttribute="trailing" constant="16" id="3Hm-5J-fBb"/>
                         <constraint firstItem="X6t-c1-F1S" firstAttribute="leading" secondItem="U22-VJ-wzl" secondAttribute="trailing" constant="8" id="4jg-d0-6wM"/>
                         <constraint firstItem="dZt-KC-F9T" firstAttribute="leading" secondItem="jHL-Jy-dPy" secondAttribute="leading" constant="16" id="6b3-Js-Ek8"/>
-                        <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="X6t-c1-F1S" secondAttribute="bottom" constant="11" id="Jbp-6M-MxO"/>
-                        <constraint firstAttribute="bottom" secondItem="jxA-wR-KXF" secondAttribute="bottom" id="j2D-Hc-S99"/>
-                        <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="dZt-KC-F9T" secondAttribute="bottom" constant="12" id="nz1-Xb-5bt"/>
-                        <constraint firstItem="jxA-wR-KXF" firstAttribute="leading" secondItem="jHL-Jy-dPy" secondAttribute="leading" id="uGl-Bz-fvT"/>
-                        <constraint firstItem="jxA-wR-KXF" firstAttribute="top" secondItem="U22-VJ-wzl" secondAttribute="bottom" constant="11" id="waQ-mr-rry"/>
-                        <constraint firstAttribute="trailing" secondItem="jxA-wR-KXF" secondAttribute="trailing" id="zsf-6Y-hVB"/>
+                        <constraint firstAttribute="bottom" secondItem="U22-VJ-wzl" secondAttribute="bottom" constant="11" id="KtN-8M-3ZV"/>
+                        <constraint firstAttribute="bottom" secondItem="dZt-KC-F9T" secondAttribute="bottom" constant="12" id="Lbe-eS-8Ty"/>
+                        <constraint firstAttribute="bottom" secondItem="X6t-c1-F1S" secondAttribute="bottom" constant="11" id="mfU-t3-bGf"/>
                     </constraints>
                 </view>
             </subviews>
@@ -107,7 +98,6 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="BTI-Bm-W3Y"/>
             <connections>
-                <outlet property="bottomBarView" destination="jxA-wR-KXF" id="fFk-cP-LHH"/>
                 <outlet property="headerLabel" destination="dZt-KC-F9T" id="5MQ-e7-EXd"/>
                 <outlet property="iLikeItLGButton" destination="X6t-c1-F1S" id="TAk-4i-2dy"/>
                 <outlet property="willCheckItOutLGButton" destination="U22-VJ-wzl" id="uuk-LR-TSc"/>

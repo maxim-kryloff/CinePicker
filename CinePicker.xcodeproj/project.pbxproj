@@ -48,6 +48,7 @@
 		3358103922297CEE009F965B /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3358103822297CEE009F965B /* URLBuilder.swift */; };
 		335BA4572236C95C0026979F /* DebounceActionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335BA4562236C95C0026979F /* DebounceActionService.swift */; };
 		335BA45A2236F7770026979F /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335BA4592236F7770026979F /* ResponseError.swift */; };
+		335C4F6924274A16009F758E /* CinePickerDimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335C4F6824274A16009F758E /* CinePickerDimensions.swift */; };
 		336B107922D5083B00DEF79F /* MovieRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336B107822D5083B00DEF79F /* MovieRepository.swift */; };
 		336B107B22D50F3300DEF79F /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336B107A22D50F3300DEF79F /* DatabaseManager.swift */; };
 		336B108122D512F800DEF79F /* DatabaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336B108022D512F800DEF79F /* DatabaseEntity.swift */; };
@@ -169,6 +170,7 @@
 		3358103822297CEE009F965B /* URLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
 		335BA4562236C95C0026979F /* DebounceActionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebounceActionService.swift; sourceTree = "<group>"; };
 		335BA4592236F7770026979F /* ResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
+		335C4F6824274A16009F758E /* CinePickerDimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinePickerDimensions.swift; sourceTree = "<group>"; };
 		336B107822D5083B00DEF79F /* MovieRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRepository.swift; sourceTree = "<group>"; };
 		336B107A22D50F3300DEF79F /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		336B108022D512F800DEF79F /* DatabaseEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseEntity.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				33B47D3322D8C71900F9D5C3 /* CinePickerLanguageCode.swift */,
 				3321DB5922F00C5C00A3EEAC /* CinePickerSettingKeys.swift */,
 				33B5C7DE22FD96F200983774 /* CinePickerTheme.swift */,
+				335C4F6824274A16009F758E /* CinePickerDimensions.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -754,6 +757,7 @@
 				330F4EF022D79F460018D817 /* Tag.swift in Sources */,
 				3353CE942225BCD7003EAD2A /* PersonService.swift in Sources */,
 				3358103922297CEE009F965B /* URLBuilder.swift in Sources */,
+				335C4F6924274A16009F758E /* CinePickerDimensions.swift in Sources */,
 				3302A6F02234402500466EC2 /* MovieTableViewCell.swift in Sources */,
 				3346F7D1242358850086A815 /* UIAlertUtils.swift in Sources */,
 				33027F6722CFA914007626BD /* MovieCollectionTableViewCell.swift in Sources */,

@@ -137,6 +137,7 @@ class MovieDetailsTableViewCell: UITableViewCell {
     
     private func setDefaultState() {
         setDefaultColors()
+        setImageViewProperties()
         setImageViewGesture()
         setDefaultPropertyValues()
     }
@@ -151,6 +152,11 @@ class MovieDetailsTableViewCell: UITableViewCell {
         runtimeLabel.textColor = CinePickerColors.getRuntimeColor()
         voteCountLabel.textColor = CinePickerColors.getVoteCountColor()
         voteSeparatorLabel.textColor = CinePickerColors.getVoteSeparatorColor()
+    }
+    
+    private func setImageViewProperties() {
+        movieImageImageView.layer.cornerRadius = CinePickerDimensions.cornerRadius
+        movieImageImageView.clipsToBounds = true
     }
     
     private func setImageViewGesture() {
