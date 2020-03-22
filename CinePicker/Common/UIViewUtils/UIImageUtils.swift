@@ -46,12 +46,12 @@ class UIImageUtils {
             cell.activityIndicatorStartAnimating()
             return
         }
-        let escapingView = cell
-        // 300 milliseconds user will see stopped activity indicator
+        // 0.3 sec user will see stopped activity indicator
+        // because after indicator stopped it will be disappearing during 0.3 sec
         cell.activityIndicatorStopAnimating()
         let animations = {
-            escapingView.activityIndicatorAlpha = 0.0
-            escapingView.imageViewAlpha = 1.0
+            cell.activityIndicatorAlpha = 0.0
+            cell.imageViewAlpha = 1.0
         }
         UIView.animate(withDuration: 0.3, animations: animations, completion: nil)
     }
@@ -60,8 +60,12 @@ class UIImageUtils {
         update(cell: cell, bySettingActivityIndicatorAnimatingTo: true)
         imageService.download(by: getImageUrl(from: cell)) { (image, url) in
             OperationQueue.main.addOperation {
-                self.setImage(at: cell, image: image)
                 self.downloadedImages[url.path] = image
+                // Don't use getImageUrl(..) here! You will get a crash related with async code when seguing to the next view controller
+                // because cell.imageUrl will be nil
+                if let cellImageUrl = cell.imageUrl, cellImageUrl.path == url.path {
+                    self.setImage(at: cell, image: image)
+                }
             }
         }
     }
