@@ -70,7 +70,7 @@ class DiscoverSettingsViewController: UIViewController {
         registerDiscoverSettingsTableViewCell()
         defineSearchLGButton()
         setDefaultColors()
-        defineCellFactories()
+        defineCellUtilsFactories()
         performRequest()
     }
     
@@ -108,7 +108,7 @@ class DiscoverSettingsViewController: UIViewController {
         searchLGButton.titleColor = CinePickerColors.getBackgroundColor()
     }
     
-    private func defineCellFactories() {
+    private func defineCellUtilsFactories() {
         genresCellUtilsFactory = GenresCellUtilsFactory(discoverSettingsViewController: self)
         yearCellUtilsFactory = YearCellUtilsFactory(discoverSettingsViewController: self)
         ratingCellUtilsFactory = RatingCellUtilsFactory(discoverSettingsViewController: self)

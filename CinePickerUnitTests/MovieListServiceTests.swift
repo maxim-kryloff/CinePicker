@@ -71,7 +71,7 @@ class MovieListServiceTests: XCTestCase {
     }
     
     func testShouldReturnNilWhenRequestingPersonMoviesIsFailed() {
-        mockMovieService.isPersonMoviesRequestFailed = true
+        mockMovieService.personMoviesRequestIsFailed = true
         
         movieListService.requestMovies(by: fakePersonId) { (result) in
             XCTAssertNil(result)
@@ -82,7 +82,7 @@ class MovieListServiceTests: XCTestCase {
     }
     
     func testShouldReturnNilWhenRequestingCrewPersonMoviesIsFailed() {
-        mockMovieService.isCrewMemberMoviesRequestFailed = true
+        mockMovieService.crewMemberMoviesRequestIsFailed = true
         
         movieListService.requestMovies(by: fakePersonId) { (result) in
             XCTAssertNil(result)
@@ -102,9 +102,9 @@ extension MovieListServiceTests {
         
         public var getCrewPersonMoviesDelayMilliseconds: Int = 0
         
-        public var isPersonMoviesRequestFailed = false
+        public var personMoviesRequestIsFailed = false
         
-        public var isCrewMemberMoviesRequestFailed = false
+        public var crewMemberMoviesRequestIsFailed = false
         
         private let seeder = Seeder()
         
@@ -128,7 +128,7 @@ extension MovieListServiceTests {
             DispatchQueue.main.asyncAfter(deadline: deadline) {
                 let movies = self.seeder.getMovies(count: 10)
                 
-                let result = self.isCrewMemberMoviesRequestFailed
+                let result = self.crewMemberMoviesRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movies)
                 

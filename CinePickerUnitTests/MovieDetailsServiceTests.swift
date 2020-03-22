@@ -49,7 +49,7 @@ class MovieDetailsServiceTests: XCTestCase {
     }
     
     func testShouldReturnNilWhenRequestingMovieDetailsIsFailed() {
-        mockMovieService.isMovieDetailsRequestFaield = true
+        mockMovieService.movieDetailsRequestIsFailed = true
         
         movieDetailsService.requestMovieDetails(by: fakeMovieId) { (result) in
             XCTAssertNil(result)
@@ -69,7 +69,7 @@ class MovieDetailsServiceTests: XCTestCase {
     }
     
     func testShouldReturnNilWhenRequestingMoviesByCollectionIdIsFailed() {
-        mockMovieService.isMoviesByCollectionIdRequestFailed = true
+        mockMovieService.moviesByCollectionIdRequestIsFailed = true
         
         movieDetailsService.requestMovies(byCollectionId: fakeCollectionId) { (result) in
             XCTAssertNil(result)
@@ -136,7 +136,7 @@ class MovieDetailsServiceTests: XCTestCase {
     }
     
     func testShouldReturnNilWhenRequestingCharactersIsFailed() {
-        mockPersonService.isCharactersRequestFailed = true
+        mockPersonService.charactersRequestIsFailed = true
         
         movieDetailsService.requestPeople(by: fakeMovieId) { (result) in
             XCTAssertNil(result)
@@ -147,7 +147,7 @@ class MovieDetailsServiceTests: XCTestCase {
     }
     
     func testShouldReturnNilWhenRequestingCrewPeopleIsFailed() {
-        mockPersonService.isCrewPeopleRequestFailed = true
+        mockPersonService.crewPeopleRequestIsFailed = true
         
         movieDetailsService.requestPeople(by: fakeMovieId) { (result) in
             XCTAssertNil(result)
@@ -167,9 +167,9 @@ extension MovieDetailsServiceTests {
         
         public var getCrewPeopleDelayMilliseconds: Int = 0
         
-        public var isCharactersRequestFailed = false
+        public var charactersRequestIsFailed = false
         
-        public var isCrewPeopleRequestFailed = false
+        public var crewPeopleRequestIsFailed = false
         
         public var isDuplicatedCrewPeople = false
         
@@ -181,7 +181,7 @@ extension MovieDetailsServiceTests {
             DispatchQueue.main.asyncAfter(deadline: deadline) {
                 let characters = self.seeder.getCharacters(count: 10)
                 
-                let result = self.isCharactersRequestFailed
+                let result = self.charactersRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(characters)
                 
@@ -199,7 +199,7 @@ extension MovieDetailsServiceTests {
                     crewPeople += self.seeder.getCrewPeople(count: 10)
                 }
                 
-                let result = self.isCrewPeopleRequestFailed
+                let result = self.crewPeopleRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(crewPeople)
                 
@@ -211,9 +211,9 @@ extension MovieDetailsServiceTests {
     
     private class MockMovieService: MovieService {
         
-        public var isMovieDetailsRequestFaield = false
+        public var movieDetailsRequestIsFailed = false
         
-        public var isMoviesByCollectionIdRequestFailed = false
+        public var moviesByCollectionIdRequestIsFailed = false
         
         private let seeder = Seeder()
         
@@ -221,7 +221,7 @@ extension MovieDetailsServiceTests {
             DispatchQueue.main.async {
                 let movieDetails = self.seeder.getMovieDetails()
                 
-                let result = self.isMovieDetailsRequestFaield
+                let result = self.movieDetailsRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movieDetails)
                 
@@ -233,7 +233,7 @@ extension MovieDetailsServiceTests {
             DispatchQueue.main.async {
                 let movies = self.seeder.getMovies(count: 10)
                 
-                let result = self.isMoviesByCollectionIdRequestFailed
+                let result = self.moviesByCollectionIdRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movies)
                 

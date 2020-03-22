@@ -104,7 +104,7 @@ class MultiSearchServiceTests: XCTestCase {
     }
     
     func testShouldReturnNilWhenRequestingPeopleIsFailed() {
-        mockPersonService.isSearchPopularPeopleRequestFailed = true
+        mockPersonService.searchPopularPeopleRequestIsFailed = true
         
         let multiSearchRequest = MultiSearchRequest(searchQuery: fakeSearchQuery, page: 1)
         
@@ -361,7 +361,7 @@ extension MultiSearchServiceTests {
         
         public var searchPopularPeopleDelayMilliseconds: Int = 0
         
-        public var isSearchPopularPeopleRequestFailed = false
+        public var searchPopularPeopleRequestIsFailed = false
         
         public var customSeedFunc: (() -> [PopularPerson])?
         
@@ -375,7 +375,7 @@ extension MultiSearchServiceTests {
                     ? self.customSeedFunc!()
                     : self.seeder.getPopularPeople(count: 10)
                 
-                let result = self.isSearchPopularPeopleRequestFailed
+                let result = self.searchPopularPeopleRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(popularPeople)
                 

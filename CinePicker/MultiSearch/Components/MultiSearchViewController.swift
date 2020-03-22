@@ -59,7 +59,7 @@ class MultiSearchViewController: StateViewController {
         registerMovieTableViewCell()
         registerPersonTableViewCell()
         setDefaultColors()
-        defineEntityFactories()
+        defineEntityUtilsFactories()
         if !UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource) {
             createAndSaveTags()
             showDataSourceAgreementAlert()
@@ -149,7 +149,7 @@ class MultiSearchViewController: StateViewController {
         entityTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     
-    private func defineEntityFactories() {
+    private func defineEntityUtilsFactories() {
         movieUtilsFactory = MovieUtilsFactory(multiSearchViewController: self)
         personUtilsFactory = PersonUtilsFactory(multiSearchViewController: self)
     }
@@ -460,7 +460,7 @@ extension MultiSearchViewController {
         public func setMultiSearchTableViewCellImageProperties(cell: UITableViewCell, by indexPath: IndexPath) { }
         
         public func getMultiSearchTableViewCell(from tableView: UITableView, by indexPath: IndexPath) -> UITableViewCell {
-            fatalError("getTableViewCell(..) must be overriden.")
+            fatalError("getTableViewCell(..) must be overridden.")
         }
         
         public func performSegueForMultiSearchTableViewCell(from tableView: UITableView, at indexPath: IndexPath) { }

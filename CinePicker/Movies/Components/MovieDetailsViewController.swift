@@ -32,17 +32,17 @@ class MovieDetailsViewController: UIViewController {
     
     private let movieDetailsPeopleSectionNumber: Int = 4
     
-    private var isMovieCollectionGoingToBeRequested = false
+    private var movieCollectionIsGoingToBeRequested = false
     
-    private var isMovieCollectionBeingRequested = false
+    private var movieCollectionIsBeingRequested = false
     
-    private var isMovieCollectionRequestFailed = false
+    private var movieCollectionRequestIsFailed = false
     
-    private var isPeopleGoingToBeRequested = false
+    private var peopleAreGoingToBeRequested = false
     
-    private var isPeopleBeingRequested = false
+    private var peopleAreBeingRequested = false
     
-    private var isPeopleRequestFailed = false
+    private var peopleRequestIsFailed = false
     
     private var savedMovie: SavedMovie?
     
@@ -64,6 +64,16 @@ class MovieDetailsViewController: UIViewController {
     
     private var movieDetailsService = MovieDetailsService(movieService: MovieService(), personService: PersonService())
     
+    private var movieDetailsSectionUtilsFactory: SectionUtilsAbstractFactory!
+    
+    private var movieDetailsTagsSectionUtilsFactory: SectionUtilsAbstractFactory!
+    
+    private var movieDetailsOverviewSectionUtilsFactory: SectionUtilsAbstractFactory!
+    
+    private var movieDetailsMovieCollectionSectionUtilsFactory: SectionUtilsAbstractFactory!
+    
+    private var movieDetailsPeopleSectionUtilsFactory: SectionUtilsAbstractFactory!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         savedMovie = MovieRepository.shared.get(byId: self.movieId)
@@ -84,6 +94,7 @@ class MovieDetailsViewController: UIViewController {
         registerHeaderTableViewCell()
         registerMovieCollectionTableViewCell()
         setDefaultColors()
+        defineSectionUtilsFactories()
         performMovieDetailsRequest()
     }
     
@@ -155,6 +166,14 @@ class MovieDetailsViewController: UIViewController {
         contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
         topBarView.backgroundColor = CinePickerColors.getTopBarColor()
         movieDetailsTableView.backgroundColor = CinePickerColors.getBackgroundColor()
+    }
+    
+    private func defineSectionUtilsFactories() {
+        movieDetailsSectionUtilsFactory = MovieDetailsSectionUtilsFactory(movieDetailsViewController: self)
+        movieDetailsTagsSectionUtilsFactory = MovieDetailsTagsSectionUtilsFactory(movieDetailsViewController: self)
+        movieDetailsOverviewSectionUtilsFactory = MovieDetailsOverviewSectionUtilsFactory(movieDetailsViewController: self)
+        movieDetailsMovieCollectionSectionUtilsFactory = MovieDetailsMovieCollectionSectionUtilsFactory(movieDetailsViewController: self)
+        movieDetailsPeopleSectionUtilsFactory = MovieDetailsPeopleSectionUtilsFactory(movieDetailsViewController: self)
     }
     
     private func onReloadGettingMovieDetails() {
@@ -230,15 +249,15 @@ class MovieDetailsViewController: UIViewController {
             OperationQueue.main.addOperation {
                 guard let requestedMovieDetails = requestedMovieDetails else {
                     self.setFailedLoadingState()
-                    self.isMovieCollectionGoingToBeRequested = false
-                    self.isPeopleGoingToBeRequested = false
+                    self.movieCollectionIsGoingToBeRequested = false
+                    self.peopleAreGoingToBeRequested = false
                     return
                 }
                 self.unsetAnyState()
                 self.movieDetails = requestedMovieDetails
                 self.actionsBarButtonItem.isEnabled = true
-                self.isMovieCollectionGoingToBeRequested = true
-                self.isPeopleGoingToBeRequested = true
+                self.movieCollectionIsGoingToBeRequested = true
+                self.peopleAreGoingToBeRequested = true
                 self.movieDetailsTableView.reloadData()
                 if self.movieDetails.collectionId != nil {
                     self.performMovieCollectionRequest(fromReloading: false)
@@ -264,19 +283,19 @@ class MovieDetailsViewController: UIViewController {
         guard let collectionId = movieDetails.collectionId else {
             fatalError("Collection ID must not be nil.")
         }
-        isMovieCollectionGoingToBeRequested = false
-        isMovieCollectionBeingRequested = true
-        isMovieCollectionRequestFailed = false
+        movieCollectionIsGoingToBeRequested = false
+        movieCollectionIsBeingRequested = true
+        movieCollectionRequestIsFailed = false
         if fromReloading {
             let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsMovieCollectionSectionNumber)
             self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
         }
         movieDetailsService.requestMovies(byCollectionId: collectionId) { (requestedMovies) in
             OperationQueue.main.addOperation {
-                self.isMovieCollectionBeingRequested = false
+                self.movieCollectionIsBeingRequested = false
                 let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsMovieCollectionSectionNumber)
                 guard let requestedMovies = requestedMovies else {
-                    self.isMovieCollectionRequestFailed = true
+                    self.movieCollectionRequestIsFailed = true
                     self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
                     return
                 }
@@ -296,19 +315,19 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func performPeopleRequest(fromReloading: Bool) {
-        isPeopleGoingToBeRequested = false
-        isPeopleBeingRequested = true
-        isPeopleRequestFailed = false
+        peopleAreGoingToBeRequested = false
+        peopleAreBeingRequested = true
+        peopleRequestIsFailed = false
         if fromReloading {
             let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
             self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
         }
         movieDetailsService.requestPeople(by: movieDetails.id) { (requestedMoviePeople) in
             OperationQueue.main.addOperation {
-                self.isPeopleBeingRequested = false
+                self.peopleAreBeingRequested = false
                 let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
                 guard let requestedMoviePeople = requestedMoviePeople else {
-                    self.isPeopleRequestFailed = true
+                    self.peopleRequestIsFailed = true
                     self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
                     return
                 }
@@ -396,25 +415,11 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         if movieDetails == nil {
             return 0
         }
-        switch section {
-            case movieDetailsSectionNumber: return 1
-            case movieDetailsTagsSectionNumber: return 1
-            case movieDetailsOverviewSectionNumber: return 1
-            case movieDetailsMovieCollectionSectionNumber: return getMovieCollectionSectionNumberOfRows()
-            case movieDetailsPeopleSectionNumber: return getMovieDetailsPeopleSectionNumberOfRows()
-            default: fatalError("Section number is out of range.")
-        }
+        return getSectionUtilsFactory(by: section).numberOfRowsInSection
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch (indexPath.section, indexPath.row) {
-            case (movieDetailsSectionNumber, _): return MovieDetailsTableViewCell.standardHeight
-            case (movieDetailsTagsSectionNumber, _): return MovieDetailsTagsTableViewCell.standardHeight
-            case (movieDetailsOverviewSectionNumber, _): return MovieDetailsOverviewTableViewCell.standardHeight
-            case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionSectionRowHeight()
-            case (movieDetailsPeopleSectionNumber, _): return getMovieDetailsPeopleSectionRowHeight(at: indexPath)
-            default: fatalError("Section number is out of range.")
-        }
+        return getSectionUtilsFactory(by: indexPath.section).getHeightForRow(at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -426,114 +431,9 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch (indexPath.section, indexPath.row) {
-            case (movieDetailsSectionNumber, _): return getMovieDetailsTableViewCell(tableView, cellForRowAt: indexPath)
-            case (movieDetailsTagsSectionNumber, _): return getMovieDetailsTagsTableViewCell(tableView, cellForRowAt: indexPath)
-            case (movieDetailsOverviewSectionNumber, _): return getMovieDetailsOverviewTableViewCell(tableView, cellForRowAt: indexPath)
-            case (movieDetailsMovieCollectionSectionNumber, _): return getMovieCollectionTableViewCell(tableView, cellForRowAt: indexPath)
-            case (movieDetailsPeopleSectionNumber, _): return getPersonTableViewCell(tableView, cellForRowAt: indexPath)
-            default: fatalError("Section number is out of range.")
-        }
+        return getSectionUtilsFactory(by: indexPath.section).getTableViewCell(from: tableView, at: indexPath)
     }
     
-    private func getMovieDetailsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetails, for: indexPath) as! MovieDetailsTableViewCell
-        cell.movieDetails = movieDetails
-        cell.originController = self
-        return cell
-    }
-    
-    private func getMovieDetailsTagsTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsTags, for: indexPath) as! MovieDetailsTagsTableViewCell
-        if let savedMovie = savedMovie {
-            cell.willCheckOutIsSelected = savedMovie.containsTag(byName: .willCheckItOut)
-            cell.iLikeItIsSelected = savedMovie.containsTag(byName: .iLikeIt)
-        }
-        cell.onTapWillCheckItOut = onTapWillCheckItOutSystemTag
-        cell.onTapILikeIt = onTapILikeItSystemTag
-        return cell
-    }
-    
-    private func getMovieDetailsOverviewTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsOverview, for: indexPath) as! MovieDetailsOverviewTableViewCell
-        cell.overview = movieDetails.overview
-        return cell
-    }
-    
-    private func getMovieCollectionTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isMovieCollectionGoingToBeRequested || isMovieCollectionBeingRequested {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
-            return cell
-        }
-        if isMovieCollectionRequestFailed {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.failedLoading) as! FailedLoadingTableViewCell
-            return cell
-        }
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieCollection, for: indexPath) as! MovieCollectionTableViewCell
-        setMovieCollectionTableViewCellProperties(cell: cell)
-        return cell
-    }
-    
-    private func setMovieCollectionTableViewCellProperties(cell: MovieCollectionTableViewCell) {
-        cell.header = CinePickerCaptions.alsoInSeries
-        cell.movieCollection = movieCollection
-        cell.onTouchDown = { (movie) in
-            let storyboard = UIStoryboard(name: MainStoryboardIdentifiers.main, bundle: nil)
-            let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: MainStoryboardIdentifiers.movieDetailsViewController) as! MovieDetailsViewController
-            movieDetailsViewController.movieId = movie.id
-            movieDetailsViewController.movieTitle = movie.title
-            self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
-        }
-    }
-    
-    private func getPersonTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isPeopleGoingToBeRequested || isPeopleBeingRequested {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
-            return cell
-        }
-        if isPeopleRequestFailed {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.failedLoading) as! FailedLoadingTableViewCell
-            return cell
-        }
-        let person = people[indexPath.row]
-        if person is Character {
-            return getCharacterTableViewCell(from: tableView, at: indexPath)
-        }
-        if person is CrewPerson {
-            return getCrewPersonTableViewCell(from: tableView, at: indexPath)
-        }
-        fatalError("Person has wrong type.")
-    }
-    
-    private func getCharacterTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == getGoToFullCastIndex() {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
-            cell.header = CinePickerCaptions.goToFullCast
-            return cell
-        }
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
-        cell.originController = self
-        let character = people[indexPath.row] as! Character
-        cell.personName = character.name
-        cell.personPosition = character.characterName
-        cell.personPositionIsValid = !character.isUncredited
-        return cell
-    }
-    
-    private func getCrewPersonTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == getGoToFullCrewIndex() {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
-            cell.header = CinePickerCaptions.goToFullCrew
-            return cell
-        }
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
-        cell.originController = self
-        let crewPerson = people[indexPath.row] as! CrewPerson
-        cell.personName = crewPerson.name
-        cell.personPosition = crewPerson.jobs.joined(separator: ", ")
-        cell.personPositionIsValid = true
-        return cell
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == movieDetailsSectionNumber || indexPath.section == movieDetailsTagsSectionNumber {
@@ -541,14 +441,14 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
             return
         }
         if indexPath.section == movieDetailsMovieCollectionSectionNumber {
-            if isMovieCollectionRequestFailed {
+            if movieCollectionRequestIsFailed {
                 onReloadGettingMovieCollection()
                 return
             }
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        if isPeopleRequestFailed {
+        if peopleRequestIsFailed {
             onReloadGettingPeople()
             return
         }
@@ -592,57 +492,6 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     private func prepare(personTableViewCell cell: PersonTableViewCell, forRowAt indexPath: IndexPath) {
         cell.imagePath = people[indexPath.row].imagePath
         UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell)
-    }
-    
-    private func getMovieCollectionSectionNumberOfRows() -> Int {
-        if movieDetails.collectionId == nil {
-            return 0
-        }
-        if isMovieCollectionGoingToBeRequested || isMovieCollectionBeingRequested || isMovieCollectionRequestFailed {
-            return 1
-        }
-        if movieCollection.isEmpty {
-            return 0
-        }
-        return 1
-    }
-    
-    private func getMovieDetailsPeopleSectionNumberOfRows() -> Int {
-        if isPeopleGoingToBeRequested || isPeopleBeingRequested || isPeopleRequestFailed {
-            return 1
-        }
-        return people.count
-    }
-    
-    private func getMovieCollectionSectionRowHeight() -> CGFloat {
-        if isMovieCollectionGoingToBeRequested || isMovieCollectionBeingRequested {
-            return LoadingTableViewCell.standardHeight
-        }
-        if isMovieCollectionRequestFailed {
-            return FailedLoadingTableViewCell.standardHeight
-        }
-        return MovieCollectionTableViewCell.standardHeight
-    }
-    
-    private func getMovieDetailsPeopleSectionRowHeight(at indexPath: IndexPath) -> CGFloat {
-        if isPeopleGoingToBeRequested || isPeopleBeingRequested {
-            return LoadingTableViewCell.standardHeight
-        }
-        if isPeopleRequestFailed {
-            return FailedLoadingTableViewCell.standardHeight
-        }
-        let person = people[indexPath.row]
-        if person is Character {
-            return indexPath.row == getGoToFullCastIndex()
-                ? HeaderTableViewCell.standardHeight
-                : PersonTableViewCell.standardHeight
-        }
-        if person is CrewPerson {
-            return indexPath.row == getGoToFullCrewIndex()
-                ? HeaderTableViewCell.standardHeight
-                : PersonTableViewCell.standardHeight
-        }
-        fatalError("Person has wrong type.")
     }
 }
 
@@ -691,5 +540,271 @@ extension MovieDetailsViewController {
         personListViewController.title = movieTitle
         let sender = sender as! GoToPersonListTableViewCellSender
         personListViewController.people = sender.personListType == PersonListType.cast ? characters : crewPeople
+    }
+}
+
+extension MovieDetailsViewController {
+    
+    private func getSectionUtilsFactory(by sectionNumber: Int) -> SectionUtilsAbstractFactory {
+        switch sectionNumber {
+            case movieDetailsSectionNumber: return movieDetailsSectionUtilsFactory
+            case movieDetailsTagsSectionNumber: return movieDetailsTagsSectionUtilsFactory
+            case movieDetailsOverviewSectionNumber: return movieDetailsOverviewSectionUtilsFactory
+            case movieDetailsMovieCollectionSectionNumber: return movieDetailsMovieCollectionSectionUtilsFactory
+            case movieDetailsPeopleSectionNumber: return movieDetailsPeopleSectionUtilsFactory
+            default: fatalError("Section number is out of range.")
+        }
+    }
+    
+    private class SectionUtilsAbstractFactory {
+        
+        public let movieDetailsViewController: MovieDetailsViewController
+        
+        init(movieDetailsViewController: MovieDetailsViewController) {
+            self.movieDetailsViewController = movieDetailsViewController
+        }
+        
+        public var numberOfRowsInSection: Int {
+            fatalError("numberOfRowsInSection must be overridden.")
+        }
+        
+        public func getHeightForRow(at indexPath: IndexPath) -> CGFloat {
+            fatalError("getHeightForRow(..) must be overridden.")
+        }
+        
+        public func getTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            fatalError("getTableViewCell(..) must be overridden.")
+        }
+    }
+    
+    private class MovieDetailsSectionUtilsFactory: SectionUtilsAbstractFactory {
+        
+        override var numberOfRowsInSection: Int {
+            return 1
+        }
+        
+        override func getHeightForRow(at indexPath: IndexPath) -> CGFloat {
+            return MovieDetailsTableViewCell.standardHeight
+        }
+        
+        override func getTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            return getMovieDetailsTableViewCell(from: tableView, at: indexPath)
+        }
+        
+        private func getMovieDetailsTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetails, for: indexPath) as! MovieDetailsTableViewCell
+            cell.movieDetails = movieDetailsViewController.movieDetails
+            cell.originController = movieDetailsViewController
+            return cell
+        }
+    }
+    
+    private class MovieDetailsTagsSectionUtilsFactory: SectionUtilsAbstractFactory {
+        
+        override var numberOfRowsInSection: Int {
+            return 1
+        }
+        
+        override func getHeightForRow(at indexPath: IndexPath) -> CGFloat {
+            return MovieDetailsTagsTableViewCell.standardHeight
+        }
+        
+        override func getTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            return getMovieDetailsTagsTableViewCell(from: tableView, at: indexPath)
+        }
+        
+        private func getMovieDetailsTagsTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsTags, for: indexPath) as! MovieDetailsTagsTableViewCell
+            if let savedMovie = movieDetailsViewController.savedMovie {
+                cell.willCheckOutIsSelected = savedMovie.containsTag(byName: .willCheckItOut)
+                cell.iLikeItIsSelected = savedMovie.containsTag(byName: .iLikeIt)
+            }
+            cell.onTapWillCheckItOut = movieDetailsViewController.onTapWillCheckItOutSystemTag
+            cell.onTapILikeIt = movieDetailsViewController.onTapILikeItSystemTag
+            return cell
+        }
+    }
+    
+    private class MovieDetailsOverviewSectionUtilsFactory: SectionUtilsAbstractFactory {
+        
+        override var numberOfRowsInSection: Int {
+            return 1
+        }
+        
+        override func getHeightForRow(at indexPath: IndexPath) -> CGFloat {
+            return MovieDetailsOverviewTableViewCell.standardHeight
+        }
+        
+        override func getTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            return getMovieDetailsOverviewTableViewCell(from: tableView, at: indexPath)
+        }
+        
+        private func getMovieDetailsOverviewTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsOverview, for: indexPath) as! MovieDetailsOverviewTableViewCell
+            cell.overview = movieDetailsViewController.movieDetails.overview
+            return cell
+        }
+    }
+    
+    private class MovieDetailsMovieCollectionSectionUtilsFactory: SectionUtilsAbstractFactory {
+        
+        override var numberOfRowsInSection: Int {
+            return getMovieCollectionSectionNumberOfRows()
+        }
+        
+        private func getMovieCollectionSectionNumberOfRows() -> Int {
+            if movieDetailsViewController.movieDetails.collectionId == nil {
+                return 0
+            }
+            let movieCollectionIsInRequestState = movieDetailsViewController.movieCollectionIsGoingToBeRequested
+                || movieDetailsViewController.movieCollectionIsBeingRequested
+                || movieDetailsViewController.movieCollectionRequestIsFailed
+            if movieCollectionIsInRequestState {
+                return 1
+            }
+            if movieDetailsViewController.movieCollection.isEmpty {
+                return 0
+            }
+            return 1
+        }
+        
+        override func getHeightForRow(at indexPath: IndexPath) -> CGFloat {
+            return getMovieCollectionSectionRowHeight()
+        }
+        
+        private func getMovieCollectionSectionRowHeight() -> CGFloat {
+            if movieDetailsViewController.movieCollectionIsGoingToBeRequested || movieDetailsViewController.movieCollectionIsBeingRequested {
+                return LoadingTableViewCell.standardHeight
+            }
+            if movieDetailsViewController.movieCollectionRequestIsFailed {
+                return FailedLoadingTableViewCell.standardHeight
+            }
+            return MovieCollectionTableViewCell.standardHeight
+        }
+        
+        override func getTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            return getMovieCollectionTableViewCell(from: tableView, at: indexPath)
+        }
+        
+        private func getMovieCollectionTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            if movieDetailsViewController.movieCollectionIsGoingToBeRequested || movieDetailsViewController.movieCollectionIsBeingRequested {
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
+                return cell
+            }
+            if movieDetailsViewController.movieCollectionRequestIsFailed {
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.failedLoading) as! FailedLoadingTableViewCell
+                return cell
+            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieCollection, for: indexPath) as! MovieCollectionTableViewCell
+            setMovieCollectionTableViewCellProperties(cell: cell)
+            return cell
+        }
+        
+        private func setMovieCollectionTableViewCellProperties(cell: MovieCollectionTableViewCell) {
+            cell.header = CinePickerCaptions.alsoInSeries
+            cell.movieCollection = movieDetailsViewController.movieCollection
+            cell.onTouchDown = { (movie) in
+                let storyboard = UIStoryboard(name: MainStoryboardIdentifiers.main, bundle: nil)
+                let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: MainStoryboardIdentifiers.movieDetailsViewController) as! MovieDetailsViewController
+                movieDetailsViewController.movieId = movie.id
+                movieDetailsViewController.movieTitle = movie.title
+                movieDetailsViewController.navigationController?.pushViewController(movieDetailsViewController, animated: true)
+            }
+        }
+    }
+    
+    private class MovieDetailsPeopleSectionUtilsFactory: SectionUtilsAbstractFactory {
+        
+        override var numberOfRowsInSection: Int {
+            return getMovieDetailsPeopleSectionNumberOfRows()
+        }
+        
+        private func getMovieDetailsPeopleSectionNumberOfRows() -> Int {
+            let peopleAreInRequestState = movieDetailsViewController.peopleAreGoingToBeRequested
+                || movieDetailsViewController.peopleAreBeingRequested
+                || movieDetailsViewController.peopleRequestIsFailed
+            if peopleAreInRequestState {
+                return 1
+            }
+            return movieDetailsViewController.people.count
+        }
+        
+        override func getHeightForRow(at indexPath: IndexPath) -> CGFloat {
+            return getMovieDetailsPeopleSectionRowHeight(at: indexPath)
+        }
+        
+        private func getMovieDetailsPeopleSectionRowHeight(at indexPath: IndexPath) -> CGFloat {
+            if movieDetailsViewController.peopleAreGoingToBeRequested || movieDetailsViewController.peopleAreBeingRequested {
+                return LoadingTableViewCell.standardHeight
+            }
+            if movieDetailsViewController.peopleRequestIsFailed {
+                return FailedLoadingTableViewCell.standardHeight
+            }
+            let person = movieDetailsViewController.people[indexPath.row]
+            if person is Character {
+                return indexPath.row == movieDetailsViewController.getGoToFullCastIndex()
+                    ? HeaderTableViewCell.standardHeight
+                    : PersonTableViewCell.standardHeight
+            }
+            if person is CrewPerson {
+                return indexPath.row == movieDetailsViewController.getGoToFullCrewIndex()
+                    ? HeaderTableViewCell.standardHeight
+                    : PersonTableViewCell.standardHeight
+            }
+            fatalError("Person has wrong type.")
+        }
+        
+        override func getTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            return getPersonTableViewCell(from: tableView, at: indexPath)
+        }
+        
+        private func getPersonTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            if movieDetailsViewController.peopleAreGoingToBeRequested || movieDetailsViewController.peopleAreBeingRequested {
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading) as! LoadingTableViewCell
+                return cell
+            }
+            if movieDetailsViewController.peopleRequestIsFailed {
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.failedLoading) as! FailedLoadingTableViewCell
+                return cell
+            }
+            let person = movieDetailsViewController.people[indexPath.row]
+            if person is Character {
+                return getCharacterTableViewCell(from: tableView, at: indexPath)
+            }
+            if person is CrewPerson {
+                return getCrewPersonTableViewCell(from: tableView, at: indexPath)
+            }
+            fatalError("Person has wrong type.")
+        }
+        
+        private func getCharacterTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            if indexPath.row == movieDetailsViewController.getGoToFullCastIndex() {
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
+                cell.header = CinePickerCaptions.goToFullCast
+                return cell
+            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
+            cell.originController = movieDetailsViewController
+            let character = movieDetailsViewController.people[indexPath.row] as! Character
+            cell.personName = character.name
+            cell.personPosition = character.characterName
+            cell.personPositionIsValid = !character.isUncredited
+            return cell
+        }
+        
+        private func getCrewPersonTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            if indexPath.row == movieDetailsViewController.getGoToFullCrewIndex() {
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.header, for: indexPath) as! HeaderTableViewCell
+                cell.header = CinePickerCaptions.goToFullCrew
+                return cell
+            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath) as! PersonTableViewCell
+            cell.originController = movieDetailsViewController
+            let crewPerson = movieDetailsViewController.people[indexPath.row] as! CrewPerson
+            cell.personName = crewPerson.name
+            cell.personPosition = crewPerson.jobs.joined(separator: ", ")
+            cell.personPositionIsValid = true
+            return cell
+        }
     }
 }
