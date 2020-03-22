@@ -4,8 +4,6 @@ class RequestedMoviesViewController: StateViewController {
     
     @IBOutlet var contentUIView: UIView!
     
-    @IBOutlet weak var topBarView: UIView!
-    
     @IBOutlet weak var requestedMoviesTableView: UITableView!
     
     override var tableViewDefinition: UITableView! {
@@ -104,7 +102,6 @@ class RequestedMoviesViewController: StateViewController {
     
     private func setDefaultColors() {
         contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
-        topBarView.backgroundColor = CinePickerColors.getTopBarColor()
         requestedMoviesTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     

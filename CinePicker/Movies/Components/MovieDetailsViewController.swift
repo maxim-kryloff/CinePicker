@@ -4,8 +4,6 @@ class MovieDetailsViewController: UIViewController {
     
     @IBOutlet var contentUIView: UIView!
     
-    @IBOutlet weak var topBarView: UIView!
-    
     @IBOutlet weak var movieDetailsTableView: UITableView!
     
     public var movieId: Int!
@@ -164,7 +162,6 @@ class MovieDetailsViewController: UIViewController {
     
     private func setDefaultColors() {
         contentUIView.backgroundColor = CinePickerColors.getBackgroundColor()
-        topBarView.backgroundColor = CinePickerColors.getTopBarColor()
         movieDetailsTableView.backgroundColor = CinePickerColors.getBackgroundColor()
     }
     

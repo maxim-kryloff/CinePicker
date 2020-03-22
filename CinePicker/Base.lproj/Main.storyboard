@@ -177,14 +177,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YqC-Sp-M9K" userLabel="Top Bar View">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="0.5" id="veh-yt-zxf"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hWT-bd-Joq">
-                                <rect key="frame" x="0.0" y="0.5" width="375" height="622.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -411,20 +405,16 @@
                             </tableView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="hWT-bd-Joq" firstAttribute="top" secondItem="YqC-Sp-M9K" secondAttribute="bottom" id="LIR-UP-w9e"/>
                             <constraint firstItem="A78-85-1pC" firstAttribute="trailing" secondItem="hWT-bd-Joq" secondAttribute="trailing" id="TWN-Sr-k41"/>
-                            <constraint firstItem="A78-85-1pC" firstAttribute="trailing" secondItem="YqC-Sp-M9K" secondAttribute="trailing" id="XnN-KF-hT5"/>
-                            <constraint firstItem="YqC-Sp-M9K" firstAttribute="leading" secondItem="A78-85-1pC" secondAttribute="leading" id="esJ-Ow-rS9"/>
                             <constraint firstItem="hWT-bd-Joq" firstAttribute="leading" secondItem="A78-85-1pC" secondAttribute="leading" id="kET-mv-lIZ"/>
                             <constraint firstItem="A78-85-1pC" firstAttribute="bottom" secondItem="hWT-bd-Joq" secondAttribute="bottom" id="lo4-Bj-vtf"/>
-                            <constraint firstItem="YqC-Sp-M9K" firstAttribute="top" secondItem="A78-85-1pC" secondAttribute="top" id="noE-yt-kgz"/>
+                            <constraint firstItem="hWT-bd-Joq" firstAttribute="top" secondItem="A78-85-1pC" secondAttribute="top" id="nYB-3C-OMX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="A78-85-1pC"/>
                     </view>
                     <connections>
                         <outlet property="contentUIView" destination="bBC-3g-pTl" id="GCK-yN-wUL"/>
                         <outlet property="movieDetailsTableView" destination="hWT-bd-Joq" id="Ibd-bi-ITu"/>
-                        <outlet property="topBarView" destination="YqC-Sp-M9K" id="ZMa-d6-Zb5"/>
                         <segue destination="igN-2x-NPg" kind="show" identifier="ShowPersonMovies" id="Hkb-x9-9mw"/>
                         <segue destination="qMz-EX-DC4" kind="show" identifier="ShowPersonList" id="m1u-ZE-hGY"/>
                         <segue destination="Sda-Ih-6cJ" kind="show" identifier="ShowRequestedMovies" id="bkA-No-Cab"/>
@@ -442,14 +432,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0fL-dU-Nm3" userLabel="Top Bar View">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="0.5" id="fgD-Zh-pOu"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nIN-dc-ZYm">
-                                <rect key="frame" x="0.0" y="0.5" width="375" height="622.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
@@ -459,20 +443,16 @@
                             </tableView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="nIN-dc-ZYm" firstAttribute="top" secondItem="0fL-dU-Nm3" secondAttribute="bottom" id="CWA-QO-zR6"/>
                             <constraint firstItem="hgu-W5-CeU" firstAttribute="trailing" secondItem="nIN-dc-ZYm" secondAttribute="trailing" id="DhH-1d-HIP"/>
-                            <constraint firstItem="hgu-W5-CeU" firstAttribute="trailing" secondItem="0fL-dU-Nm3" secondAttribute="trailing" id="UpL-nh-Z7f"/>
-                            <constraint firstItem="0fL-dU-Nm3" firstAttribute="leading" secondItem="hgu-W5-CeU" secondAttribute="leading" id="W0e-dD-EeC"/>
+                            <constraint firstItem="nIN-dc-ZYm" firstAttribute="top" secondItem="hgu-W5-CeU" secondAttribute="top" id="GbH-BF-BqJ"/>
                             <constraint firstItem="hgu-W5-CeU" firstAttribute="bottom" secondItem="nIN-dc-ZYm" secondAttribute="bottom" id="dnL-pL-Ull"/>
                             <constraint firstItem="nIN-dc-ZYm" firstAttribute="leading" secondItem="hgu-W5-CeU" secondAttribute="leading" id="pO1-LT-4Ke"/>
-                            <constraint firstItem="0fL-dU-Nm3" firstAttribute="top" secondItem="hgu-W5-CeU" secondAttribute="top" id="wmb-a5-I7o"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hgu-W5-CeU"/>
                     </view>
                     <connections>
                         <outlet property="contentUIView" destination="aPr-WI-Il1" id="NVU-3K-6JS"/>
                         <outlet property="personListTableView" destination="nIN-dc-ZYm" id="nia-qh-Qyf"/>
-                        <outlet property="topBarView" destination="0fL-dU-Nm3" id="3uw-JS-kj0"/>
                         <segue destination="igN-2x-NPg" kind="show" identifier="ShowPersonMovies" id="2Eb-ae-loT"/>
                     </connections>
                 </viewController>
@@ -512,7 +492,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JWj-Cq-pnK" customClass="LGButton" customModule="LGButton">
+                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JWj-Cq-pnK" customClass="LGButton" customModule="LGButton">
                                                     <rect key="frame" x="341.5" y="15" width="17.5" height="20"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
@@ -598,14 +578,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZhK-nf-Dro" userLabel="Top Bar View">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="0.5" id="aXe-Rx-cRA"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gkw-Ih-anI">
-                                <rect key="frame" x="0.0" y="0.5" width="375" height="622.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
@@ -617,18 +591,14 @@
                         <constraints>
                             <constraint firstItem="9hY-u6-O1y" firstAttribute="trailing" secondItem="gkw-Ih-anI" secondAttribute="trailing" id="Fcf-rl-hiH"/>
                             <constraint firstItem="9hY-u6-O1y" firstAttribute="bottom" secondItem="gkw-Ih-anI" secondAttribute="bottom" id="Onr-pu-yg5"/>
-                            <constraint firstItem="ZhK-nf-Dro" firstAttribute="top" secondItem="9hY-u6-O1y" secondAttribute="top" id="S6d-j9-3CP"/>
-                            <constraint firstItem="ZhK-nf-Dro" firstAttribute="leading" secondItem="9hY-u6-O1y" secondAttribute="leading" id="Var-vS-KVs"/>
                             <constraint firstItem="gkw-Ih-anI" firstAttribute="leading" secondItem="9hY-u6-O1y" secondAttribute="leading" id="XGC-xC-NaI"/>
-                            <constraint firstItem="gkw-Ih-anI" firstAttribute="top" secondItem="ZhK-nf-Dro" secondAttribute="bottom" id="ZhR-W6-jGM"/>
-                            <constraint firstItem="9hY-u6-O1y" firstAttribute="trailing" secondItem="ZhK-nf-Dro" secondAttribute="trailing" id="biV-zJ-M6b"/>
+                            <constraint firstItem="gkw-Ih-anI" firstAttribute="top" secondItem="9hY-u6-O1y" secondAttribute="top" id="ZYu-oe-C4F"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9hY-u6-O1y"/>
                     </view>
                     <connections>
                         <outlet property="contentUIView" destination="qWz-C9-RXN" id="v3C-WP-aKL"/>
                         <outlet property="requestedMoviesTableView" destination="gkw-Ih-anI" id="WPC-fW-NfB"/>
-                        <outlet property="topBarView" destination="ZhK-nf-Dro" id="mdn-Qg-VgT"/>
                         <segue destination="xLm-8S-XWy" kind="show" identifier="ShowMovieDetails" id="chE-Kq-mov"/>
                     </connections>
                 </viewController>
