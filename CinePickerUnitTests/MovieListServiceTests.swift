@@ -114,7 +114,7 @@ extension MovieListServiceTests {
             DispatchQueue.main.asyncAfter(deadline: deadline) {
                 let movies = self.seeder.getMovies(count: 10)
                 
-                let result = self.isPersonMoviesRequestFailed
+                let result = self.personMoviesRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movies)
                 
