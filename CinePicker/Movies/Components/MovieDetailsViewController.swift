@@ -18,17 +18,19 @@ class MovieDetailsViewController: UIViewController {
     
     private var failedLoadingView: FailedLoadingUIView!
     
-    private let numberOfSections: Int = 5
+    private let numberOfSections: Int = 6
     
     private let movieDetailsSectionNumber: Int = 0
     
     private let movieDetailsTagsSectionNumber: Int = 1
     
-    private let movieDetailsOverviewSectionNumber: Int = 2
+    private let movieDetailsCountriesSectionNumber: Int = 2
     
-    private let movieDetailsMovieCollectionSectionNumber: Int = 3
+    private let movieDetailsOverviewSectionNumber: Int = 3
     
-    private let movieDetailsPeopleSectionNumber: Int = 4
+    private let movieDetailsMovieCollectionSectionNumber: Int = 4
+    
+    private let movieDetailsPeopleSectionNumber: Int = 5
     
     private var movieCollectionIsGoingToBeRequested = false
     
@@ -65,6 +67,8 @@ class MovieDetailsViewController: UIViewController {
     private var movieDetailsSectionUtilsFactory: SectionUtilsAbstractFactory!
     
     private var movieDetailsTagsSectionUtilsFactory: SectionUtilsAbstractFactory!
+    
+    private var movieDetailsCountriesSectionUtilsFactory: SectionUtilsAbstractFactory!
     
     private var movieDetailsOverviewSectionUtilsFactory: SectionUtilsAbstractFactory!
     
@@ -168,6 +172,7 @@ class MovieDetailsViewController: UIViewController {
     private func defineSectionUtilsFactories() {
         movieDetailsSectionUtilsFactory = MovieDetailsSectionUtilsFactory(movieDetailsViewController: self)
         movieDetailsTagsSectionUtilsFactory = MovieDetailsTagsSectionUtilsFactory(movieDetailsViewController: self)
+        movieDetailsCountriesSectionUtilsFactory = MovieDetailsCountriesSectionUtilsFactory(movieDetailsViewController: self)
         movieDetailsOverviewSectionUtilsFactory = MovieDetailsOverviewSectionUtilsFactory(movieDetailsViewController: self)
         movieDetailsMovieCollectionSectionUtilsFactory = MovieDetailsMovieCollectionSectionUtilsFactory(movieDetailsViewController: self)
         movieDetailsPeopleSectionUtilsFactory = MovieDetailsPeopleSectionUtilsFactory(movieDetailsViewController: self)
@@ -546,6 +551,7 @@ extension MovieDetailsViewController {
         switch sectionNumber {
             case movieDetailsSectionNumber: return movieDetailsSectionUtilsFactory
             case movieDetailsTagsSectionNumber: return movieDetailsTagsSectionUtilsFactory
+            case movieDetailsCountriesSectionNumber: return movieDetailsCountriesSectionUtilsFactory
             case movieDetailsOverviewSectionNumber: return movieDetailsOverviewSectionUtilsFactory
             case movieDetailsMovieCollectionSectionNumber: return movieDetailsMovieCollectionSectionUtilsFactory
             case movieDetailsPeopleSectionNumber: return movieDetailsPeopleSectionUtilsFactory
@@ -618,6 +624,31 @@ extension MovieDetailsViewController {
             }
             cell.onTapWillCheckItOut = movieDetailsViewController.onTapWillCheckItOutSystemTag
             cell.onTapILikeIt = movieDetailsViewController.onTapILikeItSystemTag
+            return cell
+        }
+    }
+    
+    
+    private class MovieDetailsCountriesSectionUtilsFactory: SectionUtilsAbstractFactory {
+        
+        override var numberOfRowsInSection: Int {
+            if movieDetailsViewController.movieDetails.countries.isEmpty {
+                return 0
+            }
+            return 1
+        }
+        
+        override func getHeightForRow(at indexPath: IndexPath) -> CGFloat {
+            return MovieDetailsOverviewTableViewCell.standardHeight
+        }
+        
+        override func getTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            return getMovieDetailsCountriesTableViewCell(from: tableView, at: indexPath)
+        }
+        
+        private func getMovieDetailsCountriesTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.movieDetailsCountries, for: indexPath) as! MovieDetailsCountriesTableViewCell
+            cell.countries = movieDetailsViewController.movieDetails.countries
             return cell
         }
     }

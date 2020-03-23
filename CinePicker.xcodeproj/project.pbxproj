@@ -107,6 +107,7 @@
 		33D548BE2248F6E0001F5A66 /* HeaderWithTagsUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D548BD2248F6E0001F5A66 /* HeaderWithTagsUIView.swift */; };
 		33D61E2422B2B1E000250997 /* Agrume.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33D61E2322B2B1E000250997 /* Agrume.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		33D61E2622B2B1E900250997 /* SwiftyGif.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33D61E2522B2B1E900250997 /* SwiftyGif.framework */; };
+		33D64DAD24291877002412E8 /* MovieDetailsCountriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D64DAC24291877002412E8 /* MovieDetailsCountriesTableViewCell.swift */; };
 		33DABDA12243BEAA003BF008 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DABDA02243BEAA003BF008 /* LoadingTableViewCell.swift */; };
 		33DABDA32243C592003BF008 /* FailedLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33DABDA22243C592003BF008 /* FailedLoadingTableViewCell.xib */; };
 		33DABDA52243C7F3003BF008 /* FailedLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DABDA42243C7F3003BF008 /* FailedLoadingTableViewCell.swift */; };
@@ -235,6 +236,7 @@
 		33D548BD2248F6E0001F5A66 /* HeaderWithTagsUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderWithTagsUIView.swift; sourceTree = "<group>"; };
 		33D61E2322B2B1E000250997 /* Agrume.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Agrume.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33D61E2522B2B1E900250997 /* SwiftyGif.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyGif.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33D64DAC24291877002412E8 /* MovieDetailsCountriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsCountriesTableViewCell.swift; sourceTree = "<group>"; };
 		33DABDA02243BEAA003BF008 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
 		33DABDA22243C592003BF008 /* FailedLoadingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FailedLoadingTableViewCell.xib; sourceTree = "<group>"; };
 		33DABDA42243C7F3003BF008 /* FailedLoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedLoadingTableViewCell.swift; sourceTree = "<group>"; };
@@ -431,12 +433,13 @@
 		3388E5C02233C978006FD414 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				330C015522280E35002DEF5F /* MovieListViewController.swift */,
-				33EB3A60222DA5A0002956B8 /* MovieDetailsViewController.swift */,
-				338966702259B53700AED073 /* RequestedMoviesViewController.swift */,
+				33D64DAC24291877002412E8 /* MovieDetailsCountriesTableViewCell.swift */,
+				33AC4A0C222EEF12001F7EAB /* MovieDetailsOverviewTableViewCell.swift */,
 				33AC4A0E222EF7FF001F7EAB /* MovieDetailsTableViewCell.swift */,
 				3382900F22454A6D000359D9 /* MovieDetailsTagsTableViewCell.swift */,
-				33AC4A0C222EEF12001F7EAB /* MovieDetailsOverviewTableViewCell.swift */,
+				33EB3A60222DA5A0002956B8 /* MovieDetailsViewController.swift */,
+				330C015522280E35002DEF5F /* MovieListViewController.swift */,
+				338966702259B53700AED073 /* RequestedMoviesViewController.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -785,6 +788,7 @@
 				338DC89022148BED006680A4 /* AppDelegate.swift in Sources */,
 				33B895A3241FFD6A009CBC35 /* ImageFromInternetViewCellAdapter.swift in Sources */,
 				336B107922D5083B00DEF79F /* MovieRepository.swift in Sources */,
+				33D64DAD24291877002412E8 /* MovieDetailsCountriesTableViewCell.swift in Sources */,
 				3305033C2423682000F7930B /* RequestToDiscoverMovies.swift in Sources */,
 				3353CE922225BC16003EAD2A /* AsyncOperation.swift in Sources */,
 				33D548B822489D1E001F5A66 /* MovieDetails.swift in Sources */,
