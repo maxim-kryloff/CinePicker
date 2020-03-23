@@ -20,6 +20,7 @@ class Seeder {
             popularity: 10,
             genres: genres,
             runtime: 100,
+            countries: [],
             collectionId: 0
         )
         

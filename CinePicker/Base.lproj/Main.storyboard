@@ -372,8 +372,33 @@
                                             <outlet property="willCheckItOutLGButton" destination="BH4-gU-Lga" id="M0O-pQ-d6t"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsCountriesTableViewCellIdentifier" rowHeight="40" id="ysQ-gG-XSe" customClass="MovieDetailsCountriesTableViewCell" customModule="CinePicker" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="198" width="375" height="40"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ysQ-gG-XSe" id="Fft-fg-Xsr">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Countries" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89w-rx-Nli">
+                                                    <rect key="frame" x="16" y="8" width="343" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="89w-rx-Nli" firstAttribute="top" secondItem="Fft-fg-Xsr" secondAttribute="top" constant="8" id="GPi-aE-bAu"/>
+                                                <constraint firstItem="89w-rx-Nli" firstAttribute="leading" secondItem="Fft-fg-Xsr" secondAttribute="leading" constant="16" id="XzO-bF-8K2"/>
+                                                <constraint firstAttribute="trailing" secondItem="89w-rx-Nli" secondAttribute="trailing" constant="16" id="ebe-1D-KDo"/>
+                                                <constraint firstAttribute="bottom" secondItem="89w-rx-Nli" secondAttribute="bottom" constant="2" id="mK4-VJ-Ait"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="countriesLabel" destination="89w-rx-Nli" id="MJ6-H2-TeC"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailsOverviewTableViewCellIdentifier" rowHeight="80" id="Asg-lF-N0F" customClass="MovieDetailsOverviewTableViewCell" customModule="CinePicker" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="198" width="375" height="80"/>
+                                        <rect key="frame" x="0.0" y="238" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Asg-lF-N0F" id="Jlf-cX-u5l">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>

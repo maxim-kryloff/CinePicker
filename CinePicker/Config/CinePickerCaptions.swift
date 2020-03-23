@@ -224,6 +224,13 @@ class CinePickerCaptions {
         return "min"
     }
     
+    public static var countries: String {
+        if CinePickerConfig.getLanguage() == .ru {
+            return "Страны"
+        }
+        return "Countries"
+    }
+    
     public static func movies(ofPerson personName: String) -> String {
         if CinePickerConfig.getLanguage() == .ru {
             return "Фильмы \(personName)"

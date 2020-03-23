@@ -4,6 +4,8 @@ class MovieDetails: Movie {
     
     public let runtime: Int
     
+    public let countries: [Country]
+    
     public let collectionId: Int?
     
     init(
@@ -18,10 +20,12 @@ class MovieDetails: Movie {
         popularity: Double,
         genres: [Genre],
         runtime: Int,
+        countries: [Country],
         collectionId: Int?
     ) {
         self.genres = genres
         self.runtime = runtime
+        self.countries = countries
         self.collectionId = collectionId
         super.init(
             id: id,
@@ -45,6 +49,10 @@ class MovieDetails: Movie {
             genres.append(genre)
         }
         let runtime = json["runtime"] as? Int ?? 0
+        var countries: [Country] = []
+        if let production_countries = json["production_countries"] as? [[String: Any]] {
+            countries = getCountriesFrom(json: production_countries)
+        }
         let belongs_to_collection = json["belongs_to_collection"] as? [String: Any]
         var collectionId: Int?
         if let belongs_to_collection = belongs_to_collection {
@@ -62,8 +70,20 @@ class MovieDetails: Movie {
             popularity: movie.popularity,
             genres: genres,
             runtime: runtime,
+            countries: countries,
             collectionId: collectionId
         )
         return movieDetails
+    }
+    
+    private static func getCountriesFrom(json: [[String: Any]]) -> [Country] {
+        var countries: [Country] = []
+        for production_country in json {
+            let code = production_country["iso_3166_1"] as! String
+            if let country = CinePickerCountries.getCountry(byCode: code) {
+                countries.append(country)
+            }
+        }
+        return countries
     }
 }

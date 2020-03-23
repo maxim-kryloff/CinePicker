@@ -8,6 +8,8 @@ class TableViewCellIdentifiers {
     
     public static let movieDetailsTags = "MovieDetailsTagsTableViewCellIdentifier"
     
+    public static let movieDetailsCountries = "MovieDetailsCountriesTableViewCellIdentifier"
+    
     public static let movieDetailsOverview = "MovieDetailsOverviewTableViewCellIdentifier"
     
     public static let loading = "LoadingTableViewCellIdentifier"
