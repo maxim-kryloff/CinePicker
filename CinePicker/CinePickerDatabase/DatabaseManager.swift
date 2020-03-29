@@ -27,10 +27,6 @@ class DatabaseManager {
         return persistentContainer.viewContext
     }
     
-    public var persistentStoreCoordinator: NSPersistentStoreCoordinator {
-        return persistentContainer.persistentStoreCoordinator
-    }
-    
     public func getEntityDescription(forEntity coreDataEntity: DatabaseEntity) -> NSEntityDescription {
         guard let description = NSEntityDescription.entity(forEntityName: coreDataEntity.rawValue, in: self.viewContext) else {
             fatalError("Couldn't get entity description for '\(coreDataEntity.rawValue)' entity name.")
@@ -43,10 +39,12 @@ class DatabaseManager {
     }
     
     public func saveContext() {
-        do {
-            try viewContext.save()
-        } catch let error as NSError {
-            fatalError("Can't write. \(error), \(error.userInfo).")
+        if viewContext.hasChanges {
+            do {
+                try viewContext.save()
+            } catch let error as NSError {
+                fatalError("Can't write. \(error), \(error.userInfo).")
+            }
         }
     }
 }

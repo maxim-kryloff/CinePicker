@@ -68,8 +68,8 @@ class MovieRepository {
     
     public func save(movie: SavedMovie) {
         let viewContext = DatabaseManager.shared.viewContext
-        let entity = DatabaseManager.shared.getEntityDescription(forEntity: .movie)
-        let movieDAO = NSManagedObject(entity: entity, insertInto: viewContext)
+        let entityDescription = DatabaseManager.shared.getEntityDescription(forEntity: .movie)
+        let movieDAO = NSManagedObject(entity: entityDescription, insertInto: viewContext)
         updateManagedObject(viewContext: viewContext, movieDAO: movieDAO, movie: movie)
         DatabaseManager.shared.saveContext()
     }

@@ -49,8 +49,8 @@ class TagRepository {
     
     public func save(tag: Tag) {
         let viewContext = DatabaseManager.shared.viewContext
-        let entity = DatabaseManager.shared.getEntityDescription(forEntity: .tag)
-        let tagDAO = NSManagedObject(entity: entity, insertInto: viewContext)
+        let entityDescription = DatabaseManager.shared.getEntityDescription(forEntity: .tag)
+        let tagDAO = NSManagedObject(entity: entityDescription, insertInto: viewContext)
         tagDAO.setValue(tag.name, forKey: "name")
         tagDAO.setValue(tag.russianName, forKey: "russianName")
         DatabaseManager.shared.saveContext()
