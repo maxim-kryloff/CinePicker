@@ -8,29 +8,26 @@ class TagRepository {
         if instance == nil {
             instance = TagRepository()
         }
-        
         return instance!
     }
     
     public func getAll() -> [Tag] {
+        let tagEntities = getTagEntities()
+        let tags = createTags(from: tagEntities)
+        return tags
+    }
+    
+    private func getTagEntities() -> [TagEntity] {
         let viewContext = DatabaseManager.shared.viewContext
-        let request = DatabaseManager.shared.getFetchRequest(forEntity: .tag)
-        let tagDAOs: [NSManagedObject]
         do {
-            tagDAOs = try viewContext.fetch(request)
+            return try viewContext.fetch(TagEntity.fetchRequest()) as! [TagEntity]
         } catch let error as NSError {
-            fatalError("Couldn't get all tags from DB. \(error), \(error.userInfo)")
+            fatalError("Couldn't get tag entities from DB. \(error), \(error.userInfo)")
         }
-        let tags: [Tag] = tagDAOs.map { (tagDAO) in
-            guard let name = tagDAO.value(forKey: "name") as? String else {
-                fatalError("Tag must have a name.")
-            }
-            guard let russianName = tagDAO.value(forKey: "russianName") as? String else {
-                fatalError("Tag must have a russian name.")
-            }
-            let tag = Tag(name: name, russianName: russianName)
-            return tag
-        }
+    }
+    
+    private func createTags(from tagEntities: [TagEntity]) -> [Tag] {
+        let tags = tagEntities.map { (tagDAO) in Tag(name: tagDAO.name!, russianName: tagDAO.russianName!) }
         return tags
     }
     
@@ -41,18 +38,20 @@ class TagRepository {
     }
     
     public func getSystemTag(byName systemTagName: SystemTagName) -> Tag {
-        guard let systemTag = get(byName: systemTagName.rawValue) else {
-            fatalError("Tag with name '\(SystemTagName.willCheckItOut.rawValue)' wasn't found.")
-        }
+        let systemTag = get(byName: systemTagName.rawValue)!
         return systemTag
     }
     
     public func save(tag: Tag) {
         let viewContext = DatabaseManager.shared.viewContext
         let entityDescription = DatabaseManager.shared.getEntityDescription(forEntity: .tag)
-        let tagDAO = NSManagedObject(entity: entityDescription, insertInto: viewContext)
-        tagDAO.setValue(tag.name, forKey: "name")
-        tagDAO.setValue(tag.russianName, forKey: "russianName")
+        let tagEntity = TagEntity(entity: entityDescription, insertInto: viewContext)
+        setTagEntityProperties(from: tag, tagEntity: tagEntity)
         DatabaseManager.shared.saveContext()
+    }
+    
+    private func setTagEntityProperties(from tag: Tag, tagEntity: TagEntity) {
+        tagEntity.name = tag.name
+        tagEntity.russianName = tag.russianName
     }
 }
