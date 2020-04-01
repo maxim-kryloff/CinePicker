@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G84" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="MovieEntity" representedClassName="MovieEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E266" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="MovieEntity" representedClassName=".MovieEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="Integer 64" usesScalarValueType="YES">
             <userInfo>
                 <entry key="key" value="value"/>
             </userInfo>
         </attribute>
-        <attribute name="imagePath" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="originalTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="releaseYear" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="title" attributeType="String" syncable="YES"/>
-        <relationship name="tags" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="TagEntity" inverseName="movies" inverseEntity="TagEntity" syncable="YES"/>
+        <attribute name="imagePath" optional="YES" attributeType="String"/>
+        <attribute name="originalTitle" optional="YES" attributeType="String"/>
+        <attribute name="releaseYear" optional="YES" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <relationship name="tags" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="TagEntity" inverseName="movies" inverseEntity="TagEntity"/>
     </entity>
-    <entity name="TagEntity" representedClassName="TagEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="russianName" attributeType="String" syncable="YES"/>
-        <relationship name="movies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MovieEntity" inverseName="tags" inverseEntity="MovieEntity" syncable="YES"/>
+    <entity name="TagEntity" representedClassName=".TagEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String"/>
+        <attribute name="russianName" attributeType="String"/>
+        <relationship name="movies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MovieEntity" inverseName="tags" inverseEntity="MovieEntity"/>
     </entity>
     <elements>
-        <element name="MovieEntity" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="TagEntity" positionX="-63" positionY="18" width="128" height="90"/>
+        <element name="MovieEntity" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="TagEntity" positionX="-63" positionY="18" width="128" height="88"/>
     </elements>
 </model>
