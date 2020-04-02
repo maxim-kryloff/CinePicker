@@ -83,6 +83,7 @@
 		33A1306D223935FE009B804E /* AsyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A1306C223935FE009B804E /* AsyncResult.swift */; };
 		33A181D622D4FBDF003A907C /* CinePickerDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 33A181D422D4FBDF003A907C /* CinePickerDatabase.xcdatamodeld */; };
 		33A1FAF2226E3E12007003E2 /* DebounceActionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A1FAF1226E3E12007003E2 /* DebounceActionServiceTests.swift */; };
+		33A28A782435C65300005F8C /* RepositoryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A28A772435C65300005F8C /* RepositoryUtils.swift */; };
 		33AC4A0D222EEF12001F7EAB /* MovieDetailsOverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC4A0C222EEF12001F7EAB /* MovieDetailsOverviewTableViewCell.swift */; };
 		33AC4A0F222EF7FF001F7EAB /* MovieDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC4A0E222EF7FF001F7EAB /* MovieDetailsTableViewCell.swift */; };
 		33ADA7E22300BB13003D9CC3 /* LGButton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33ADA7E12300BB13003D9CC3 /* LGButton.framework */; };
@@ -212,6 +213,7 @@
 		33A1306C223935FE009B804E /* AsyncResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncResult.swift; sourceTree = "<group>"; };
 		33A181D522D4FBDF003A907C /* CinePickerDatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CinePickerDatabase.xcdatamodel; sourceTree = "<group>"; };
 		33A1FAF1226E3E12007003E2 /* DebounceActionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebounceActionServiceTests.swift; sourceTree = "<group>"; };
+		33A28A772435C65300005F8C /* RepositoryUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryUtils.swift; sourceTree = "<group>"; };
 		33AC4A0C222EEF12001F7EAB /* MovieDetailsOverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsOverviewTableViewCell.swift; sourceTree = "<group>"; };
 		33AC4A0E222EF7FF001F7EAB /* MovieDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		33ADA7E12300BB13003D9CC3 /* LGButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LGButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -534,6 +536,7 @@
 				336B107822D5083B00DEF79F /* MovieRepository.swift */,
 				330F4EF122D7A1D10018D817 /* TagRepository.swift */,
 				330F4EF322D7AB8D0018D817 /* SystemTagName.swift */,
+				33A28A772435C65300005F8C /* RepositoryUtils.swift */,
 			);
 			path = CinePickerDatabase;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				33A1306D223935FE009B804E /* AsyncResult.swift in Sources */,
 				3395E5EB24227FB000C61891 /* UIImageUtils.swift in Sources */,
 				337E78A5224C98CB006A6BE2 /* PersonListType.swift in Sources */,
+				33A28A782435C65300005F8C /* RepositoryUtils.swift in Sources */,
 				33C0CAA422D21EAF00526EED /* MainStoryboardIdentifiers.swift in Sources */,
 				331F5BFA224BAA27008A8607 /* CrewPerson.swift in Sources */,
 				3388E5C82233D354006FD414 /* TableViewCellIdentifiers.swift in Sources */,

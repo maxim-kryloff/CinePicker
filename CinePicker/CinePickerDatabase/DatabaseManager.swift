@@ -29,7 +29,7 @@ class DatabaseManager {
     
     public func getEntityDescription(forEntity coreDataEntity: DatabaseEntity) -> NSEntityDescription {
         guard let description = NSEntityDescription.entity(forEntityName: coreDataEntity.rawValue, in: self.viewContext) else {
-            fatalError("Couldn't get entity description for '\(coreDataEntity.rawValue)' entity name.")
+            fatalError("Couldn't get entity description for '\(coreDataEntity.rawValue)'.")
         }
         return description
     }
@@ -43,7 +43,7 @@ class DatabaseManager {
             do {
                 try viewContext.save()
             } catch let error as NSError {
-                fatalError("Can't write. \(error), \(error.userInfo).")
+                fatalError("Could't save into context. \(error), \(error.userInfo).")
             }
         }
     }

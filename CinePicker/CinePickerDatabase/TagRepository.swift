@@ -11,23 +11,19 @@ class TagRepository {
         return instance!
     }
     
+    private init() { }
+    
     public func getAll() -> [Tag] {
-        let tagEntities = getTagEntities()
+        let tagEntities = RepositoryUtils.shared.getTagEntities()
         let tags = createTags(from: tagEntities)
         return tags
     }
     
-    private func getTagEntities() -> [TagEntity] {
-        let viewContext = DatabaseManager.shared.viewContext
-        do {
-            return try viewContext.fetch(TagEntity.fetchRequest()) as! [TagEntity]
-        } catch let error as NSError {
-            fatalError("Couldn't get tag entities from DB. \(error), \(error.userInfo)")
-        }
-    }
-    
     private func createTags(from tagEntities: [TagEntity]) -> [Tag] {
-        let tags = tagEntities.map { (tagDAO) in Tag(name: tagDAO.name!, russianName: tagDAO.russianName!) }
+        let tags: [Tag] = tagEntities.map { (tagEntity) in
+            let tag = Tag(name: tagEntity.name!, russianName: tagEntity.russianName!)
+            return tag
+        }
         return tags
     }
     

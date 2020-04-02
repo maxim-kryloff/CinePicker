@@ -175,9 +175,9 @@ class MultiSearchViewController: StateViewController {
         return filteredSavedMovies
     }
     
-    private func removeSavedMovie(at indexPath: IndexPath) {
+    private func deleteSavedMovie(at indexPath: IndexPath) {
         let movie = entities[indexPath.row] as! SavedMovie
-        MovieRepository.shared.remove(movie: movie)
+        MovieRepository.shared.delete(movie: movie)
         savedMovies = MovieRepository.shared.getAll()
         entities = getEntities(from: savedMovies)
         entityTableView.deleteRows(at: [indexPath], with: .automatic)
@@ -264,7 +264,7 @@ class MultiSearchViewController: StateViewController {
     }
     
     private func onEraseSavedMovies() {
-        MovieRepository.shared.removeAll()
+        MovieRepository.shared.deleteAll()
         resetViewController()
     }
     
@@ -346,7 +346,7 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            removeSavedMovie(at: indexPath)
+            deleteSavedMovie(at: indexPath)
         }
     }
     

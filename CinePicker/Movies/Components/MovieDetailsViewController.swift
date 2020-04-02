@@ -223,7 +223,7 @@ class MovieDetailsViewController: UIViewController {
             updateSavedMovie(withoutTag: .willCheckItOut)
             return
         }
-        removeSavedMovie()
+        deleteSavedMovie()
     }
     
     private func onTapILikeItSystemTag(cell: MovieDetailsTagsTableViewCell) {
@@ -242,7 +242,7 @@ class MovieDetailsViewController: UIViewController {
             updateSavedMovie(withoutTag: .iLikeIt)
             return
         }
-        removeSavedMovie()
+        deleteSavedMovie()
     }
     
     private func performMovieDetailsRequest() {
@@ -395,11 +395,11 @@ class MovieDetailsViewController: UIViewController {
         self.savedMovie = MovieRepository.shared.get(byId: movieId)
     }
     
-    private func removeSavedMovie() {
+    private func deleteSavedMovie() {
         guard let savedMovie = savedMovie else {
-            fatalError("Movie that's going to be removed doesn't exist.")
+            fatalError("Movie that's going to be deleted doesn't exist.")
         }
-        MovieRepository.shared.remove(movie: savedMovie)
+        MovieRepository.shared.delete(movie: savedMovie)
         self.savedMovie = nil
     }
 }
