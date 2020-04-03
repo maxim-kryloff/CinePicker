@@ -126,7 +126,7 @@ extension PersonListViewController {
             setMovieListControllerProperties(for: segue, sender: sender)
             return
         }
-        fatalError("Unexpected segue identifier: \(segueIdentifier)")
+        fatalError("Unexpected segue identifier: \(segueIdentifier).")
     }
     
     private func setMovieListControllerProperties(for segue: UIStoryboardSegue, sender: Any?) {

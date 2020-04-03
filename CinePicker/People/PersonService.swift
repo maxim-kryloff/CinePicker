@@ -126,17 +126,14 @@ extension PersonService {
         }
         
         private func buildSearchPopularPeopleUrl() -> URL {
-            let optionalUrl = URLBuilder(string: CinePickerConfig.apiPath)
+            let url = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/search/person")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
                 .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .append(queryItem: ("query", searchQuery))
                 .append(queryItem: ("page", String(page)))
                 .build()
-            guard let url = optionalUrl else {
-                fatalError("Couldn't build url for searching for popular people.")
-            }
-            return url
+            return url!
         }
         
         private func getPopularPeople(from responseData: Data) -> [PopularPerson]? {
@@ -198,15 +195,12 @@ extension PersonService {
         }
         
         private func buildGetCharactersUrl() -> URL {
-            let optionalUrl = URLBuilder(string: CinePickerConfig.apiPath)
+            let url = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId!)/credits")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
                 .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .build()
-            guard let url = optionalUrl else {
-                fatalError("Couldn't build url for getting characters.")
-            }
-            return url
+            return url!
         }
         
         private func getCharacters(from responseData: Data) -> [Character]? {
@@ -268,15 +262,12 @@ extension PersonService {
         }
         
         private func buildGetCrewPeopleUrl() -> URL {
-            let optionalUrl = URLBuilder(string: CinePickerConfig.apiPath)
+            let url = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId!)/credits")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
                 .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .build()
-            guard let url = optionalUrl else {
-                fatalError("Couldn't build url for getting crew.")
-            }
-            return url
+            return url!
         }
         
         private func getCrewPeople(from responseData: Data) -> [CrewPerson]? {

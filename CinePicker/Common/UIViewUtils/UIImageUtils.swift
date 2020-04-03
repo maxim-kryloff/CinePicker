@@ -24,7 +24,7 @@ class UIImageUtils {
             setImage(at: cell, image: cell.defaultImage)
             return
         }
-        if let downloadedImage = downloadedImages[getImageUrl(from: cell).path] {
+        if let downloadedImage = downloadedImages[cell.imageUrl!.path] {
             setImage(at: cell, image: downloadedImage)
             return
         }
@@ -58,10 +58,10 @@ class UIImageUtils {
     
     private func downloadAndSetImage(at cell: ImageFromInternetViewCellAdapter) {
         update(cell: cell, bySettingActivityIndicatorAnimatingTo: true)
-        imageService.download(by: getImageUrl(from: cell)) { (image, url) in
+        imageService.download(by: cell.imageUrl!) { (image, url) in
             OperationQueue.main.addOperation {
                 self.downloadedImages[url.path] = image
-                // Don't use getImageUrl(..) here! You will get a crash related with async code when seguing to the next view controller
+                // Don't use 'cell.imageUrl!' here. You will get a crash related with async code when seguing to the next view controller
                 // because cell.imageUrl will be nil
                 if let cellImageUrl = cell.imageUrl, cellImageUrl.path == url.path {
                     self.setImage(at: cell, image: image)
@@ -70,26 +70,16 @@ class UIImageUtils {
         }
     }
     
-    private func getImageUrl(from cell: ImageFromInternetViewCellAdapter) -> URL {
-        guard let url = cell.imageUrl else {
-            fatalError("Couldn't build image url.")
-        }
-        return url
-    }
-    
     public func openImage(from viewController: UIViewController, by imagePath: String) {
         let url = buildOriginalImageUrl(by: imagePath)
         openFullScreenImage(from: viewController, downloadedBy: url)
     }
     
     private func buildOriginalImageUrl(by imagePath: String) -> URL {
-        let optionalUrl = URLBuilder(string: CinePickerConfig.originalImagePath)
+        let url = URLBuilder(string: CinePickerConfig.originalImagePath)
             .append(pathComponent: imagePath)
             .build()
-        guard let url = optionalUrl else {
-            fatalError("Couldn't build original image url.")
-        }
-        return url
+        return url!
     }
     
     private func openFullScreenImage(from viewController: UIViewController, downloadedBy url: URL) {
