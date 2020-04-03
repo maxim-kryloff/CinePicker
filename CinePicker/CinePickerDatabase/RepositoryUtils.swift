@@ -13,14 +13,19 @@ class RepositoryUtils {
     
     private init() { }
     
-    public func getTagEntities() -> [TagEntity] {
-        let viewContext = DatabaseManager.shared.viewContext
+    let viewContext = DatabaseManager.shared.viewContext
+    
+    public func fetchTagEntities(_ fetchRequest: NSFetchRequest<TagEntity>) -> [TagEntity] {
         do {
-            let request: NSFetchRequest = TagEntity.fetchRequest()
-            let tagEntities = try viewContext.fetch(request)
+            let tagEntities = try viewContext.fetch(fetchRequest)
             return tagEntities
         } catch let error as NSError {
             fatalError("Couldn't get tag entities. \(error), \(error.userInfo)")
         }
+    }
+    
+    public func createTag(from tagEntity: TagEntity) -> Tag {
+        let tag = Tag(name: tagEntity.name!, russianName: tagEntity.russianName!)
+        return tag
     }
 }

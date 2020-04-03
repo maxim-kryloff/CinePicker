@@ -13,56 +13,71 @@ class MovieRepository {
     
     private init() { }
     
+    private let viewContext = DatabaseManager.shared.viewContext
+    
     public func getAll() -> [SavedMovie] {
-        let movieEntities = getMovieEntities()
-        let savedMovies = createMovies(from: movieEntities)
+        let fetchRequest: NSFetchRequest = MovieEntity.fetchRequest()
+        let movieEntities = fetchMovieEntities(fetchRequest)
+        let savedMovies = createSavedMovies(from: movieEntities)
         return savedMovies
     }
     
-    private func getMovieEntities() -> [MovieEntity] {
-        let viewContext = DatabaseManager.shared.viewContext
+    private func fetchMovieEntities(_ fetchRequest: NSFetchRequest<MovieEntity>) -> [MovieEntity] {
         do {
-            let request: NSFetchRequest = MovieEntity.fetchRequest()
-            let movieEntities = try viewContext.fetch(request)
+            let movieEntities = try viewContext.fetch(fetchRequest)
             return movieEntities
         } catch let error as NSError {
             fatalError("Couldn't get movie entities. \(error), \(error.userInfo)")
         }
     }
     
-    private func createMovies(from movieEntities: [MovieEntity]) -> [SavedMovie] {
+    private func createSavedMovies(from movieEntities: [MovieEntity]) -> [SavedMovie] {
         let savedMovies: [SavedMovie] = movieEntities.map { (movieEntity) in
-            let tags = createTags(from: movieEntity.tags!)
-            let savedMovie = SavedMovie(
-                id: Int(movieEntity.id),
-                title: movieEntity.title!,
-                originalTitle: movieEntity.originalTitle ?? "",
-                imagePath: movieEntity.imagePath ?? "",
-                releaseYear: movieEntity.releaseYear ?? "",
-                tags: tags
-            )
+            let savedMovie = createSavedMovie(from: movieEntity)
             return savedMovie
         }
         return savedMovies
     }
     
+    private func createSavedMovie(from movieEntity: MovieEntity) -> SavedMovie {
+        let tags: [Tag] = createTags(from: movieEntity.tags!)
+        let savedMovie = SavedMovie(
+            id: Int(movieEntity.id),
+            title: movieEntity.title!,
+            originalTitle: movieEntity.originalTitle ?? "",
+            imagePath: movieEntity.imagePath ?? "",
+            releaseYear: movieEntity.releaseYear ?? "",
+            tags: tags
+        )
+        return savedMovie
+    }
+    
     private func createTags(from tagEntities: NSSet) -> [Tag] {
         let tags: [Tag] = tagEntities.map { (tagEntity) in
             let tagEntity = tagEntity as! TagEntity
-            let tag = Tag(name: tagEntity.name!, russianName: tagEntity.russianName!)
+            let tag = RepositoryUtils.shared.createTag(from: tagEntity)
             return tag
         }
         return tags
     }
     
     public func get(byId id: Int) -> SavedMovie? {
-        let savedMovies = getAll()
-        let savedMovie = savedMovies.first { $0.id == id }
+        guard let movieEntity = getMovieEntity(byId: id) else {
+            return nil
+        }
+        let savedMovie = createSavedMovie(from: movieEntity)
         return savedMovie
     }
     
+    private func getMovieEntity(byId id: Int) -> MovieEntity? {
+        let fetchRequest: NSFetchRequest = MovieEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %d", id)
+        let movieEntities = fetchMovieEntities(fetchRequest)
+        let movieEntity = movieEntities.first
+        return movieEntity
+    }
+    
     public func save(movie: SavedMovie) {
-        let viewContext = DatabaseManager.shared.viewContext
         let entityDescription = DatabaseManager.shared.getEntityDescription(forEntity: .movie)
         let movieEntity = MovieEntity(entity: entityDescription, insertInto: viewContext)
         setMovieEntityProperties(from: movie, movieEntity: movieEntity)
@@ -70,27 +85,20 @@ class MovieRepository {
     }
     
     public func update(movie: SavedMovie) {
-        let movieEntity = getMovieEntity(for: movie)!
+        let movieEntity = getMovieEntity(byId: movie.id)!
         setMovieEntityProperties(from: movie, movieEntity: movieEntity)
         DatabaseManager.shared.saveContext()
     }
     
-    private func getMovieEntity(for movie: SavedMovie) -> MovieEntity? {
-        let movieEntities = getMovieEntities()
-        let movieEntity = movieEntities.first { $0.id == movie.id }
-        return movieEntity
-    }
-    
     public func delete(movie: SavedMovie) {
-        let viewContext = DatabaseManager.shared.viewContext
-        let movieEntity = getMovieEntity(for: movie)!
+        let movieEntity = getMovieEntity(byId: movie.id)!
         viewContext.delete(movieEntity)
         DatabaseManager.shared.saveContext()
     }
     
     public func deleteAll() {
-        let viewContext = DatabaseManager.shared.viewContext
-        let movieEntities = getMovieEntities()
+        let fetchRequest: NSFetchRequest = MovieEntity.fetchRequest()
+        let movieEntities = fetchMovieEntities(fetchRequest)
         for movieEntity in movieEntities {
             viewContext.delete(movieEntity)
         }
@@ -103,7 +111,8 @@ class MovieRepository {
         movieEntity.originalTitle = movie.originalTitle
         movieEntity.imagePath = movie.imagePath
         movieEntity.releaseYear = movie.releaseYear
-        var tagEntities = RepositoryUtils.shared.getTagEntities()
+        let fetchRequest: NSFetchRequest = TagEntity.fetchRequest()
+        var tagEntities = RepositoryUtils.shared.fetchTagEntities(fetchRequest)
         tagEntities = tagEntities.filter { (tagEntity) in
             return movie.tags.contains { $0.name == tagEntity.name }
         }

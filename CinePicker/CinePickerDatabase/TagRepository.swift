@@ -13,29 +13,20 @@ class TagRepository {
     
     private init() { }
     
-    public func getAll() -> [Tag] {
-        let tagEntities = RepositoryUtils.shared.getTagEntities()
-        let tags = createTags(from: tagEntities)
-        return tags
-    }
-    
-    private func createTags(from tagEntities: [TagEntity]) -> [Tag] {
-        let tags: [Tag] = tagEntities.map { (tagEntity) in
-            let tag = Tag(name: tagEntity.name!, russianName: tagEntity.russianName!)
-            return tag
-        }
-        return tags
-    }
-    
-    public func get(byName name: String) -> Tag? {
-        let tags = getAll()
-        let tag = tags.first { $0.name == name }
-        return tag
-    }
-    
     public func getSystemTag(byName systemTagName: SystemTagName) -> Tag {
         let systemTag = get(byName: systemTagName.rawValue)!
         return systemTag
+    }
+    
+    private func get(byName name: String) -> Tag? {
+        let fetchRequest: NSFetchRequest = TagEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        let tagEntities = RepositoryUtils.shared.fetchTagEntities(fetchRequest)
+        guard let tagEntity = tagEntities.first else {
+            return nil
+        }
+        let tag =  RepositoryUtils.shared.createTag(from: tagEntity)
+        return tag
     }
     
     public func save(tag: Tag) {
