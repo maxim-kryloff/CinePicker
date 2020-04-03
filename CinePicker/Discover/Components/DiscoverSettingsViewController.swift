@@ -210,7 +210,7 @@ extension DiscoverSettingsViewController {
             prepareItemsToSelectViewController(for: segue, sender: sender)
             return
         }
-        fatalError("Unexpected segue identifier: \(segueIdentifier)")
+        fatalError("Unexpected segue identifier: \(segueIdentifier).")
     }
     
     private func prepareRequestedMoviesViewController(for segue: UIStoryboardSegue) {
@@ -251,7 +251,7 @@ extension DiscoverSettingsViewController {
             case discoverSettingsRatingRowNumber:
                 return ratingCellUtilsFactory
             default:
-                fatalError("Discover settings cell is out of range.")
+                fatalError("Discover settings cell row number is out of range.")
         }
     }
     

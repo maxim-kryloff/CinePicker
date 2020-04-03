@@ -248,15 +248,12 @@ extension MovieService {
         }
         
         private func buildGetMovieDetailsUrl() -> URL {
-            let optionalUrl = URLBuilder(string: CinePickerConfig.apiPath)
+            let url = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId!)")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
                 .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .build()
-            guard let url = optionalUrl else {
-                fatalError("Couldn't build url for getting movie details.")
-            }
-            return url
+            return url!
         }
         
         private func getMovieDetails(from responseData: Data) -> MovieDetails? {
@@ -320,15 +317,12 @@ extension MovieService {
         }
         
         private func buildGetMoviesUrl() -> URL {
-            let optionalUrl = URLBuilder(string: CinePickerConfig.apiPath)
+            let url = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/person/\(personId!)/movie_credits")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
                 .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .build()
-            guard let url = optionalUrl else {
-                fatalError("Couldn't build url for getting movies.")
-            }
-            return url
+            return url!
         }
         
         private func getMovies(from responseData: Data, personType: PersonType) -> [Movie]? {
@@ -405,17 +399,14 @@ extension MovieService {
         }
         
         private func buildSearchMoviesUrl() -> URL {
-            let optionalUrl = URLBuilder(string: CinePickerConfig.apiPath)
+            let url = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/search/movie")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
                 .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .append(queryItem: ("query", searchQuery))
                 .append(queryItem: ("page", String(page)))
                 .build()
-            guard let url = optionalUrl else {
-                fatalError("Couldn't build url for searching for movies.")
-            }
-            return url
+            return url!
         }
         
         private func getMovies(from responseData: Data) -> [Movie]? {
@@ -479,16 +470,13 @@ extension MovieService {
         }
         
         private func buildGetSimilarMoviesUrl() -> URL {
-            let optionalUrl = URLBuilder(string: CinePickerConfig.apiPath)
+            let url = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/movie/\(movieId!)/similar")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
                 .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .append(queryItem: ("page", String(page)))
                 .build()
-            guard let url = optionalUrl else {
-                fatalError("Couldn't build url for getting similar movies.")
-            }
-            return url
+            return url!
         }
         
         private func getSimilarMovies(from responseData: Data) -> [Movie]? {
@@ -550,15 +538,12 @@ extension MovieService {
         }
         
         private func buildGetMoviesByCollectionIdUrl() -> URL {
-            let optionalUrl = URLBuilder(string: CinePickerConfig.apiPath)
+            let url = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/collection/\(collectionId!)")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
                 .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .build()
-            guard let url = optionalUrl else {
-                fatalError("Couldn't build url for getting movies by collection id.")
-            }
-            return url
+            return url!
         }
         
         private func getMovies(from responseData: Data) -> [Movie]? {
@@ -646,9 +631,7 @@ extension MovieService {
             if let rating = rating {
                 _ = urlBuilder.append(queryItem: ("vote_average.gte", String(rating)))
             }
-            guard let url = urlBuilder.build() else {
-                fatalError("Couldn't build url for getting discovered movies.")
-            }
+            let url = urlBuilder.build()!
             return url
         }
         

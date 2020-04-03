@@ -61,15 +61,12 @@ extension GenreService {
         }
         
         private func buildGetGenresUrl() -> URL {
-            let optionalUrl = URLBuilder(string: CinePickerConfig.apiPath)
+            let url = URLBuilder(string: CinePickerConfig.apiPath)
                 .append(pathComponent: "/genre/movie/list")
                 .append(queryItem: ("api_key", CinePickerConfig.apiToken))
                 .append(queryItem: ("language", CinePickerConfig.getLanguageCode()))
                 .build()
-            guard let url = optionalUrl else {
-                fatalError("Couldn't build url for getting genres.")
-            }
-            return url
+            return url!
         }
         
         private func getGenres(from responseData: Data) -> [Genre]? {

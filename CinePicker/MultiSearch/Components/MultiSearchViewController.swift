@@ -386,7 +386,7 @@ extension MultiSearchViewController {
             setMovieListViewControllerProperties(for: segue, entity: entity)
             return
         }
-        fatalError("Unexpected segue identifier: \(segueIdentifier)")
+        fatalError("Unexpected segue identifier: \(segueIdentifier).")
     }
     
     private func setMovieDetailsViewControllerProperties(for segue: UIStoryboardSegue, entity: MultiSearchEntity) {
@@ -445,7 +445,7 @@ extension MultiSearchViewController {
         switch entity {
             case is Movie: return movieUtilsFactory
             case is PopularPerson: return personUtilsFactory
-            default: fatalError("Entity has unexpected type.")
+            default: fatalError("Entity type is unexpected.")
         }
     }
     

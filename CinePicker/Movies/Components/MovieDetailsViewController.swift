@@ -282,9 +282,6 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func performMovieCollectionRequest(fromReloading: Bool) {
-        guard let collectionId = movieDetails.collectionId else {
-            fatalError("Collection ID must not be nil.")
-        }
         movieCollectionIsGoingToBeRequested = false
         movieCollectionIsBeingRequested = true
         movieCollectionRequestIsFailed = false
@@ -292,7 +289,7 @@ class MovieDetailsViewController: UIViewController {
             let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsMovieCollectionSectionNumber)
             self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
         }
-        movieDetailsService.requestMovies(byCollectionId: collectionId) { (requestedMovies) in
+        movieDetailsService.requestMovies(byCollectionId: movieDetails.collectionId!) { (requestedMovies) in
             OperationQueue.main.addOperation {
                 self.movieCollectionIsBeingRequested = false
                 let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsMovieCollectionSectionNumber)
@@ -378,28 +375,19 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func updateSavedMovie(withTag tagName: SystemTagName) {
-        guard let savedMovie = savedMovie else {
-            fatalError("Movie that's going to be updated doesn't exist.")
-        }
-        savedMovie.addTag(tag: TagRepository.shared.getSystemTag(byName: tagName))
-        MovieRepository.shared.update(movie: savedMovie)
+        savedMovie!.addTag(tag: TagRepository.shared.getSystemTag(byName: tagName))
+        MovieRepository.shared.update(movie: savedMovie!)
         self.savedMovie = MovieRepository.shared.get(byId: movieId)
     }
     
     private func updateSavedMovie(withoutTag tagName: SystemTagName) {
-        guard let savedMovie = savedMovie else {
-            fatalError("Movie that's going to be updated doesn't exist.")
-        }
-        savedMovie.removeTag(byName: tagName)
-        MovieRepository.shared.update(movie: savedMovie)
+        savedMovie!.removeTag(byName: tagName)
+        MovieRepository.shared.update(movie: savedMovie!)
         self.savedMovie = MovieRepository.shared.get(byId: movieId)
     }
     
     private func deleteSavedMovie() {
-        guard let savedMovie = savedMovie else {
-            fatalError("Movie that's going to be deleted doesn't exist.")
-        }
-        MovieRepository.shared.delete(movie: savedMovie)
+        MovieRepository.shared.delete(movie: savedMovie!)
         self.savedMovie = nil
     }
 }
@@ -516,7 +504,7 @@ extension MovieDetailsViewController {
             setPersonListViewControllerProperties(for: segue, sender: sender)
             return
         }
-        fatalError("Unexpected segue identifier: \(segueIdentifier)")
+        fatalError("Unexpected segue identifier: \(segueIdentifier).")
     }
     
     private func setRequestedMoviesViewControllerProperties(for segue: UIStoryboardSegue) {
@@ -779,7 +767,7 @@ extension MovieDetailsViewController {
                     ? HeaderTableViewCell.standardHeight
                     : PersonTableViewCell.standardHeight
             }
-            fatalError("Person has wrong type.")
+            fatalError("Person type is unexpected.")
         }
         
         override func getTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
@@ -802,7 +790,7 @@ extension MovieDetailsViewController {
             if person is CrewPerson {
                 return getCrewPersonTableViewCell(from: tableView, at: indexPath)
             }
-            fatalError("Person has wrong type.")
+            fatalError("Person type is unexpected.")
         }
         
         private func getCharacterTableViewCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
