@@ -1,13 +1,13 @@
 import CoreData
 import Foundation
 
-class DatabaseManager {
+class CoreDataProxy {
     
-    private static var instance: DatabaseManager?
+    private static var instance: CoreDataProxy?
     
-    public static var shared: DatabaseManager {
+    public static var shared: CoreDataProxy {
         if instance == nil {
-            instance = DatabaseManager()
+            instance = CoreDataProxy()
         }
         return instance!
     }
@@ -18,7 +18,7 @@ class DatabaseManager {
         persistentContainer = NSPersistentContainer(name: "CinePickerDatabase")
         persistentContainer.loadPersistentStores { (_, error) in
             if let err = error as NSError? {
-                fatalError("Unresolved DB error \(err), \(err.userInfo).")
+                fatalError("Unresolved Core Data error \(err), \(err.userInfo).")
             }
         }
     }
@@ -27,9 +27,9 @@ class DatabaseManager {
         return persistentContainer.viewContext
     }
     
-    public func getEntityDescription(forEntity coreDataEntity: DatabaseEntity) -> NSEntityDescription {
+    public func createEntityDescription(forEntity coreDataEntity: CoreDataEntity) -> NSEntityDescription {
         guard let description = NSEntityDescription.entity(forEntityName: coreDataEntity.rawValue, in: self.viewContext) else {
-            fatalError("Couldn't get entity description for '\(coreDataEntity.rawValue)'.")
+            fatalError("Couldn't create entity description for '\(coreDataEntity.rawValue)'.")
         }
         return description
     }
@@ -39,7 +39,7 @@ class DatabaseManager {
             do {
                 try viewContext.save()
             } catch let error as NSError {
-                fatalError("Could't save into context. \(error), \(error.userInfo).")
+                fatalError("Could't save context changes. \(error), \(error.userInfo).")
             }
         }
     }

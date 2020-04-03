@@ -13,7 +13,7 @@ class MovieRepository {
     
     private init() { }
     
-    private let viewContext = DatabaseManager.shared.viewContext
+    private let viewContext = CoreDataProxy.shared.viewContext
     
     public func getAll() -> [SavedMovie] {
         let fetchRequest: NSFetchRequest = MovieEntity.fetchRequest()
@@ -27,7 +27,7 @@ class MovieRepository {
             let movieEntities = try viewContext.fetch(fetchRequest)
             return movieEntities
         } catch let error as NSError {
-            fatalError("Couldn't get movie entities. \(error), \(error.userInfo)")
+            fatalError("Couldn't fetch movie entities. \(error), \(error.userInfo)")
         }
     }
     
@@ -78,22 +78,22 @@ class MovieRepository {
     }
     
     public func save(movie: SavedMovie) {
-        let entityDescription = DatabaseManager.shared.getEntityDescription(forEntity: .movie)
+        let entityDescription = CoreDataProxy.shared.createEntityDescription(forEntity: .movie)
         let movieEntity = MovieEntity(entity: entityDescription, insertInto: viewContext)
         setMovieEntityProperties(from: movie, movieEntity: movieEntity)
-        DatabaseManager.shared.saveContext()
+        CoreDataProxy.shared.saveContext()
     }
     
     public func update(movie: SavedMovie) {
         let movieEntity = getMovieEntity(byId: movie.id)!
         setMovieEntityProperties(from: movie, movieEntity: movieEntity)
-        DatabaseManager.shared.saveContext()
+        CoreDataProxy.shared.saveContext()
     }
     
     public func delete(movie: SavedMovie) {
         let movieEntity = getMovieEntity(byId: movie.id)!
         viewContext.delete(movieEntity)
-        DatabaseManager.shared.saveContext()
+        CoreDataProxy.shared.saveContext()
     }
     
     public func deleteAll() {
@@ -102,7 +102,7 @@ class MovieRepository {
         for movieEntity in movieEntities {
             viewContext.delete(movieEntity)
         }
-        DatabaseManager.shared.saveContext()
+        CoreDataProxy.shared.saveContext()
     }
     
     private func setMovieEntityProperties(from movie: SavedMovie, movieEntity: MovieEntity) {

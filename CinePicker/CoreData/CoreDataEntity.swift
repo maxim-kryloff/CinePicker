@@ -1,4 +1,4 @@
-enum DatabaseEntity: String {
+enum CoreDataEntity: String {
     
     case movie = "MovieEntity"
     

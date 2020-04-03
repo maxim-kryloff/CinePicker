@@ -30,11 +30,11 @@ class TagRepository {
     }
     
     public func save(tag: Tag) {
-        let viewContext = DatabaseManager.shared.viewContext
-        let entityDescription = DatabaseManager.shared.getEntityDescription(forEntity: .tag)
+        let viewContext = CoreDataProxy.shared.viewContext
+        let entityDescription = CoreDataProxy.shared.createEntityDescription(forEntity: .tag)
         let tagEntity = TagEntity(entity: entityDescription, insertInto: viewContext)
         setTagEntityProperties(from: tag, tagEntity: tagEntity)
-        DatabaseManager.shared.saveContext()
+        CoreDataProxy.shared.saveContext()
     }
     
     private func setTagEntityProperties(from tag: Tag, tagEntity: TagEntity) {
