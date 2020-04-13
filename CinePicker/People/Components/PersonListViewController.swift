@@ -108,6 +108,12 @@ extension PersonListViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? ImageFromInternetViewCell {
+            UIViewUtilsFactory.shared.getImageUtils().cancelSettingImageFromInternet(at: cell)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.person, for: indexPath)
         let sender = TableViewCellSender(cell: cell, indexPath: indexPath)

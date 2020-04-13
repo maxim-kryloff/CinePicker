@@ -87,6 +87,14 @@ class UIImageUtils {
         agrume.show(from: viewController)
     }
     
+    public func cancelSettingImageFromInternet(at cell: ImageFromInternetViewCell) {
+        let cell = ImageFromInternetViewCellAdapter(cell: cell)
+        if cell.imagePath.isEmpty {
+            return
+        }
+        imageService.cancelDownloading(by: cell.imageUrl!)
+    }
+    
     public func buildImageUrl(by imagePath: String) -> URL? {
         let url = URLBuilder(string: CinePickerConfig.imagePath)
             .append(pathComponent: imagePath)

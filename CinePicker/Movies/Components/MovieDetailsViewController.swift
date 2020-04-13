@@ -424,6 +424,11 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         return getSectionUtilsFactory(by: indexPath.section).getTableViewCell(from: tableView, at: indexPath)
     }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? ImageFromInternetViewCell {
+            UIViewUtilsFactory.shared.getImageUtils().cancelSettingImageFromInternet(at: cell)
+        }
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == movieDetailsSectionNumber || indexPath.section == movieDetailsTagsSectionNumber {

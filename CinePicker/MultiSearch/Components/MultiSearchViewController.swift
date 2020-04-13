@@ -360,6 +360,12 @@ extension MultiSearchViewController: UITableViewDataSource, UITableViewDelegate 
         return getEntityUtilsFactory(by: entity).getMultiSearchTableViewCell(from: tableView, by: indexPath)
     }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? ImageFromInternetViewCell {
+            UIViewUtilsFactory.shared.getImageUtils().cancelSettingImageFromInternet(at: cell)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let entity = entities[indexPath.row]
         getEntityUtilsFactory(by: entity).performSegueForMultiSearchTableViewCell(from: tableView, at: indexPath)
