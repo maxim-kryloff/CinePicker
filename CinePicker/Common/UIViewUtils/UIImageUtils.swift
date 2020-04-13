@@ -14,7 +14,7 @@ class UIImageUtils {
     
     private init() { }
     
-    private var downloadedImages: [String: UIImage] = [:]
+    private var downloadedImageDictionary: [String: UIImage] = [:]
     
     private var imageService = ImageService()
     
@@ -24,7 +24,7 @@ class UIImageUtils {
             setImage(at: cell, image: cell.defaultImage)
             return
         }
-        if let downloadedImage = downloadedImages[cell.imageUrl!.path] {
+        if let downloadedImage = downloadedImageDictionary[cell.imageUrl!.path] {
             setImage(at: cell, image: downloadedImage)
             return
         }
@@ -33,21 +33,10 @@ class UIImageUtils {
     
     private func setImage(at cell: ImageFromInternetViewCellAdapter, image: UIImage?) {
         cell.imageValue = image
-        self.update(cell: cell, bySettingActivityIndicatorAnimatingTo: false)
+        stopActivityIndicator(at: cell)
     }
     
-    private func update(
-        cell: ImageFromInternetViewCellAdapter,
-        bySettingActivityIndicatorAnimatingTo activityIndicatorIsActive: Bool
-    ) {
-        if activityIndicatorIsActive {
-            cell.activityIndicatorAlpha = 1.0
-            cell.imageViewAlpha = 0.0
-            cell.activityIndicatorStartAnimating()
-            return
-        }
-        // 0.3 sec user will see stopped activity indicator
-        // because after indicator stopped it will be disappearing during 0.3 sec
+    private func stopActivityIndicator(at cell: ImageFromInternetViewCellAdapter) {
         cell.activityIndicatorStopAnimating()
         let animations = {
             cell.activityIndicatorAlpha = 0.0
@@ -57,10 +46,10 @@ class UIImageUtils {
     }
     
     private func downloadAndSetImage(at cell: ImageFromInternetViewCellAdapter) {
-        update(cell: cell, bySettingActivityIndicatorAnimatingTo: true)
+        startActivityIndicator(at: cell)
         imageService.download(by: cell.imageUrl!) { (image, url) in
-            OperationQueue.main.addOperation {
-                self.downloadedImages[url.path] = image
+            DispatchQueue.main.async {
+                self.downloadedImageDictionary[url.path] = image
                 // Don't use 'cell.imageUrl!' here. You will get a crash related with async code when seguing to the next view controller
                 // because cell.imageUrl will be nil
                 if let cellImageUrl = cell.imageUrl, cellImageUrl.path == url.path {
@@ -70,16 +59,22 @@ class UIImageUtils {
         }
     }
     
+    private func startActivityIndicator(at cell: ImageFromInternetViewCellAdapter) {
+        cell.activityIndicatorAlpha = 1.0
+        cell.imageViewAlpha = 0.0
+        cell.activityIndicatorStartAnimating()
+    }
+    
     public func openImage(from viewController: UIViewController, by imagePath: String) {
-        let url = buildOriginalImageUrl(by: imagePath)
+        let url = buildOriginalImageUrl(by: imagePath)!
         openFullScreenImage(from: viewController, downloadedBy: url)
     }
     
-    private func buildOriginalImageUrl(by imagePath: String) -> URL {
+    private func buildOriginalImageUrl(by imagePath: String) -> URL? {
         let url = URLBuilder(string: CinePickerConfig.originalImagePath)
             .append(pathComponent: imagePath)
             .build()
-        return url!
+        return url
     }
     
     private func openFullScreenImage(from viewController: UIViewController, downloadedBy url: URL) {
@@ -92,9 +87,18 @@ class UIImageUtils {
         agrume.show(from: viewController)
     }
     
+    public func cancelSettingImageFromInternet(at cell: ImageFromInternetViewCell) {
+        let cell = ImageFromInternetViewCellAdapter(cell: cell)
+        if cell.imagePath.isEmpty {
+            return
+        }
+        imageService.cancelDownloading(by: cell.imageUrl!)
+    }
+    
     public func buildImageUrl(by imagePath: String) -> URL? {
-        return URLBuilder(string: CinePickerConfig.imagePath)
+        let url = URLBuilder(string: CinePickerConfig.imagePath)
             .append(pathComponent: imagePath)
             .build()
+        return url
     }
 }

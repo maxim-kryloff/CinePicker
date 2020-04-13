@@ -12,12 +12,12 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
     
     public var selectedItems: [DiscoverSettingsItemToSelect] {
         get {
-            return Array(selectedItemMap.values)
+            return Array(selectedItemDictionary.values)
         }
         set {
-            selectedItemMap = [:]
+            selectedItemDictionary = [:]
             for selectedItem in newValue {
-                selectedItemMap[selectedItem.identifier] = selectedItem
+                selectedItemDictionary[selectedItem.identifier] = selectedItem
             }
         }
     }
@@ -26,9 +26,9 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
     
     public var onViewWillDisappear: ((_ selectedItems: [DiscoverSettingsItemToSelect]) -> Void)?
     
-    private var selectedItemMap: [Int: DiscoverSettingsItemToSelect] = [:] {
+    private var selectedItemDictionary: [Int: DiscoverSettingsItemToSelect] = [:] {
         didSet {
-            if selectedItemMap.isEmpty {
+            if selectedItemDictionary.isEmpty {
                 disableCancelButton()
             } else if !cancelButtonIsEnabled() {
                 enableCancelButton()
@@ -61,7 +61,7 @@ class DiscoverSettingsItemsToSelectViewController: UIViewController {
             target: self,
             action: #selector(DiscoverSettingsItemsToSelectViewController.onPressCancel)
         )
-        item.isEnabled = !selectedItemMap.isEmpty
+        item.isEnabled = !selectedItemDictionary.isEmpty
         navigationItem.rightBarButtonItems?.append(item)
     }
     
@@ -109,7 +109,7 @@ extension DiscoverSettingsItemsToSelectViewController: UITableViewDataSource, UI
     private func setCellProperties(cell: DiscoverSettingsItemsToSelectTableViewCell, indexPath: IndexPath) {
         let itemToSelect = itemsToSelect[indexPath.row]
         cell.header = itemToSelect.valueToDisplay
-        cell.itemIsSelected = selectedItemMap[itemToSelect.identifier] != nil
+        cell.itemIsSelected = selectedItemDictionary[itemToSelect.identifier] != nil
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -121,13 +121,13 @@ extension DiscoverSettingsItemsToSelectViewController: UITableViewDataSource, UI
             }
         }
         let itemToSelect = itemsToSelect[indexPath.row]
-        if selectedItemMap[itemToSelect.identifier] != nil {
-            selectedItemMap[itemToSelect.identifier] = nil
+        if selectedItemDictionary[itemToSelect.identifier] != nil {
+            selectedItemDictionary[itemToSelect.identifier] = nil
             return
         }
         if !multipleSelectionIsAllowed {
-            selectedItemMap = [:]
+            selectedItemDictionary = [:]
         }
-        selectedItemMap[itemToSelect.identifier] = itemToSelect
+        selectedItemDictionary[itemToSelect.identifier] = itemToSelect
     }
 }

@@ -3,16 +3,14 @@ import UIKit
 
 class ImageService {
     
-    private var queueDictionary: [String: OperationQueue] = [:]
+    private var downloadImageQueue = OperationQueue()
     
-    private var serialQueue = DispatchQueue(label: UUID().uuidString)
+    private var operationDictionary: [String: Operation] = [:]
     
     public func download(by url: URL, onComplete callback: @escaping (_ image: UIImage?, _ url: URL) -> Void) {
         let operation = createDownloadImageOperation(downloadImageBy: url, onComplete: callback)
-        let queue = createOperationQueue(andPut: operation)
-        serialQueue.sync {
-            self.queueDictionary[url.path] = queue
-        }
+        downloadImageQueue.addOperation(operation)
+        operationDictionary[url.path] = operation
     }
     
     private func createDownloadImageOperation(
@@ -27,20 +25,14 @@ class ImageService {
         return operation
     }
     
-    private func createOperationQueue(andPut operation: AsyncOperation) -> OperationQueue {
-        let queue = OperationQueue()
-        queue.addOperation(operation)
-        return queue
-    }
-    
     public func cancelDownloading(by url: URL) {
-        serialQueue.sync {
-            guard let queue = self.queueDictionary[url.path] else {
-                return
-            }
-            queue.cancelAllOperations()
-            self.queueDictionary[url.path] = nil
+        guard let operation = operationDictionary[url.path] else {
+            return
         }
+        if !operation.isFinished {
+            operation.cancel()
+        }
+        operationDictionary[url.path] = nil
     }
 }
 

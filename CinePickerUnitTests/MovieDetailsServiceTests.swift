@@ -17,11 +17,9 @@ class MovieDetailsServiceTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        
         mockMovieService = MockMovieService()
         mockPersonService = MockPersonService()
         movieDetailsService = MovieDetailsService(movieService: mockMovieService, personService: mockPersonService)
-        
         fakeMovieId = 0
         fakeCollectionId = 0
         expectationPromise = expectation(description: "")
@@ -31,11 +29,9 @@ class MovieDetailsServiceTests: XCTestCase {
         mockMovieService = nil
         mockPersonService = nil
         movieDetailsService = nil
-        
         fakeMovieId = nil
         fakeCollectionId = nil
         expectationPromise = nil
-        
         super.tearDown()
     }
     
@@ -44,18 +40,15 @@ class MovieDetailsServiceTests: XCTestCase {
             XCTAssertNotNil(result)
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
     func testShouldReturnNilWhenRequestingMovieDetailsIsFailed() {
         mockMovieService.movieDetailsRequestIsFailed = true
-        
         movieDetailsService.requestMovieDetails(by: fakeMovieId) { (result) in
             XCTAssertNil(result)
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
@@ -64,18 +57,15 @@ class MovieDetailsServiceTests: XCTestCase {
             XCTAssertEqual(result!.count, 10)
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
     func testShouldReturnNilWhenRequestingMoviesByCollectionIdIsFailed() {
         mockMovieService.moviesByCollectionIdRequestIsFailed = true
-        
         movieDetailsService.requestMovies(byCollectionId: fakeCollectionId) { (result) in
             XCTAssertNil(result)
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
@@ -83,77 +73,61 @@ class MovieDetailsServiceTests: XCTestCase {
         movieDetailsService.requestPeople(by: fakeMovieId) { (result) in
             XCTAssertEqual(result!.cast.count, 10)
             XCTAssertEqual(result!.crew.count, 10)
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
     func testShouldReturnCastAndCrewWhenRequestingCharactersIsSlower() {
         mockPersonService.getCharactersDelayMilliseconds = 10
         mockPersonService.getCrewPeopleDelayMilliseconds = 5
-        
         movieDetailsService.requestPeople(by: fakeMovieId) { (result) in
             XCTAssertEqual(result!.cast.count, 10)
             XCTAssertEqual(result!.crew.count, 10)
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
     func testShouldReturnCastAndCrewWhenRequestingCrewPeopleIsSlower() {
         mockPersonService.getCharactersDelayMilliseconds = 5
         mockPersonService.getCrewPeopleDelayMilliseconds = 10
-        
         movieDetailsService.requestPeople(by: fakeMovieId) { (result) in
             XCTAssertEqual(result!.cast.count, 10)
             XCTAssertEqual(result!.crew.count, 10)
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
     func testShouldReturnCompactCrewPeopleWhenDuplicatedCrewPeople() {
         mockPersonService.isDuplicatedCrewPeople = true
-        
         movieDetailsService.requestPeople(by: fakeMovieId) { (result) in
             XCTAssertEqual(result!.cast.count, 10)
             XCTAssertEqual(result!.crew.count, 10)
-            
             for index in 0..<result!.crew.count {
                 XCTAssertEqual(result!.crew[index].jobs, ["Job \(index)"])
             }
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
     func testShouldReturnNilWhenRequestingCharactersIsFailed() {
         mockPersonService.charactersRequestIsFailed = true
-        
         movieDetailsService.requestPeople(by: fakeMovieId) { (result) in
             XCTAssertNil(result)
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
     func testShouldReturnNilWhenRequestingCrewPeopleIsFailed() {
         mockPersonService.crewPeopleRequestIsFailed = true
-        
         movieDetailsService.requestPeople(by: fakeMovieId) { (result) in
             XCTAssertNil(result)
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
 
@@ -177,36 +151,28 @@ extension MovieDetailsServiceTests {
         
         override func getCharacters(by movieId: Int, onComplete callback: @escaping (_: AsyncResult<[Character]>) -> Void) {
             let deadline = DispatchTime.now() + DispatchTimeInterval.milliseconds(getCharactersDelayMilliseconds)
-            
             DispatchQueue.main.asyncAfter(deadline: deadline) {
                 let characters = self.seeder.getCharacters(count: 10)
-                
                 let result = self.charactersRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(characters)
-                
                 callback(result)
             }
         }
         
         override func getCrewPeople(by movieId: Int, onComplete callback: @escaping (AsyncResult<[CrewPerson]>) -> Void) {
             let deadline = DispatchTime.now() + DispatchTimeInterval.milliseconds(getCrewPeopleDelayMilliseconds)
-            
             DispatchQueue.main.asyncAfter(deadline: deadline) {
                 var crewPeople = self.seeder.getCrewPeople(count: 10)
-                
                 if self.isDuplicatedCrewPeople {
                     crewPeople += self.seeder.getCrewPeople(count: 10)
                 }
-                
                 let result = self.crewPeopleRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(crewPeople)
-                
                 callback(result)
             }
         }
-        
     }
     
     private class MockMovieService: MovieService {
@@ -220,11 +186,9 @@ extension MovieDetailsServiceTests {
         override func getMovieDetails(by movieId: Int, onComplete callback: @escaping (AsyncResult<MovieDetails>) -> Void) {
             DispatchQueue.main.async {
                 let movieDetails = self.seeder.getMovieDetails()
-                
                 let result = self.movieDetailsRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movieDetails)
-                
                 callback(result)
             }
         }
@@ -232,15 +196,11 @@ extension MovieDetailsServiceTests {
         override func getMovies(byCollectionId collectionId: Int, onComplete callback: @escaping (_: AsyncResult<[Movie]>) -> Void) {
             DispatchQueue.main.async {
                 let movies = self.seeder.getMovies(count: 10)
-                
                 let result = self.moviesByCollectionIdRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movies)
-                
                 callback(result)
             }
         }
-        
     }
-    
 }

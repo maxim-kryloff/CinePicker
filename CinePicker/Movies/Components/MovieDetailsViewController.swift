@@ -248,7 +248,7 @@ class MovieDetailsViewController: UIViewController {
     private func performMovieDetailsRequest() {
         setLoadingState()
         movieDetailsService.requestMovieDetails(by: movieId) { (requestedMovieDetails) in
-            OperationQueue.main.addOperation {
+            DispatchQueue.main.async {
                 guard let requestedMovieDetails = requestedMovieDetails else {
                     self.setFailedLoadingState()
                     self.movieCollectionIsGoingToBeRequested = false
@@ -290,7 +290,7 @@ class MovieDetailsViewController: UIViewController {
             self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
         }
         movieDetailsService.requestMovies(byCollectionId: movieDetails.collectionId!) { (requestedMovies) in
-            OperationQueue.main.addOperation {
+            DispatchQueue.main.async {
                 self.movieCollectionIsBeingRequested = false
                 let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsMovieCollectionSectionNumber)
                 guard let requestedMovies = requestedMovies else {
@@ -322,7 +322,7 @@ class MovieDetailsViewController: UIViewController {
             self.movieDetailsTableView.reloadRows(at: [firstIndexPath], with: .automatic)
         }
         movieDetailsService.requestPeople(by: movieDetails.id) { (requestedMoviePeople) in
-            OperationQueue.main.addOperation {
+            DispatchQueue.main.async {
                 self.peopleAreBeingRequested = false
                 let firstIndexPath = IndexPath(row: 0, section: self.movieDetailsPeopleSectionNumber)
                 guard let requestedMoviePeople = requestedMoviePeople else {
@@ -424,6 +424,11 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
         return getSectionUtilsFactory(by: indexPath.section).getTableViewCell(from: tableView, at: indexPath)
     }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? ImageFromInternetViewCell {
+            UIViewUtilsFactory.shared.getImageUtils().cancelSettingImageFromInternet(at: cell)
+        }
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == movieDetailsSectionNumber || indexPath.section == movieDetailsTagsSectionNumber {

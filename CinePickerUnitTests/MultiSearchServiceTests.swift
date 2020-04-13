@@ -15,11 +15,9 @@ class MultiSearchServiceTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        
         mockMovieService = MockMovieService()
         mockPersonService = MockPersonService()
         multiSearchService = MultiSearchService(movieService: mockMovieService, personService: mockPersonService)
-        
         fakeSearchQuery = "something"
         expectationPromise = expectation(description: "")
     }
@@ -28,95 +26,69 @@ class MultiSearchServiceTests: XCTestCase {
         mockMovieService = nil
         mockPersonService = nil
         multiSearchService = nil
-        
         fakeSearchQuery = nil
         expectationPromise = nil
-        
         super.tearDown()
     }
     
     func testShouldReturnMoviesAndPeople() {
         let multiSearchRequest = MultiSearchRequest(searchQuery: fakeSearchQuery, page: 1)
-        
         multiSearchService.requestEntities(request: multiSearchRequest) { (request, result) in
             XCTAssertEqual(multiSearchRequest.searchQuery, request.searchQuery)
             XCTAssertEqual(multiSearchRequest.page, request.page)
-            
             XCTAssertEqual(result!.count, 20)
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
     func testShouldReturnMoviesAndPeopleWhenRequestingMoviesIsSlower() {
         mockMovieService.searchMoviesDelayMilliseconds = 10
         mockPersonService.searchPopularPeopleDelayMilliseconds = 5
-        
         let multiSearchRequest = MultiSearchRequest(searchQuery: fakeSearchQuery, page: 1)
-        
         multiSearchService.requestEntities(request: multiSearchRequest) { (request, result) in
             XCTAssertEqual(multiSearchRequest.searchQuery, request.searchQuery)
             XCTAssertEqual(multiSearchRequest.page, request.page)
-            
             XCTAssertEqual(result!.count, 20)
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
     func testShouldReturnMoviesAndPeopleWhenRequestingPeopleIsSlower() {
         mockMovieService.searchMoviesDelayMilliseconds = 5
         mockPersonService.searchPopularPeopleDelayMilliseconds = 10
-        
         let multiSearchRequest = MultiSearchRequest(searchQuery: fakeSearchQuery, page: 1)
-        
         multiSearchService.requestEntities(request: multiSearchRequest) { (request, result) in
             XCTAssertEqual(multiSearchRequest.searchQuery, request.searchQuery)
             XCTAssertEqual(multiSearchRequest.page, request.page)
-            
             XCTAssertEqual(result!.count, 20)
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
     func testShouldReturnNilWhenRequestingMoviesIsFailed() {
         mockMovieService.isSearchMoviesRequestFailed = true
-        
         let multiSearchRequest = MultiSearchRequest(searchQuery: fakeSearchQuery, page: 1)
-        
         multiSearchService.requestEntities(request: multiSearchRequest) { (request, result) in
             XCTAssertEqual(multiSearchRequest.searchQuery, request.searchQuery)
             XCTAssertEqual(multiSearchRequest.page, request.page)
-            
             XCTAssertNil(result)
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
     func testShouldReturnNilWhenRequestingPeopleIsFailed() {
         mockPersonService.searchPopularPeopleRequestIsFailed = true
-        
         let multiSearchRequest = MultiSearchRequest(searchQuery: fakeSearchQuery, page: 1)
-        
         multiSearchService.requestEntities(request: multiSearchRequest) { (request, result) in
             XCTAssertEqual(multiSearchRequest.searchQuery, request.searchQuery)
             XCTAssertEqual(multiSearchRequest.page, request.page)
-            
             XCTAssertNil(result)
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
@@ -169,7 +141,6 @@ class MultiSearchServiceTests: XCTestCase {
                 )
             ]
         }
-        
         mockPersonService.customSeedFunc = {
             return [
                 PopularPerson(
@@ -186,13 +157,10 @@ class MultiSearchServiceTests: XCTestCase {
                 )
             ]
         }
-        
         let multiSearchRequest = MultiSearchRequest(searchQuery: "миР юР", page: 1)
-        
         multiSearchService.requestEntities(request: multiSearchRequest) { (request, result) in
             XCTAssertEqual(multiSearchRequest.searchQuery, request.searchQuery)
             XCTAssertEqual(multiSearchRequest.page, request.page)
-            
             XCTAssertEqual(result!.map { $0.primaryValueToSort }, [
                 "Мир Юрского Периода 2",
                 "Мир Юрского Периода",
@@ -201,10 +169,8 @@ class MultiSearchServiceTests: XCTestCase {
                 "Михаил Иванов",
                 "Мальчишник в Европе",
             ])
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
@@ -257,7 +223,6 @@ class MultiSearchServiceTests: XCTestCase {
                 )
             ]
         }
-        
         mockPersonService.customSeedFunc = {
             return [
                 PopularPerson(
@@ -274,13 +239,10 @@ class MultiSearchServiceTests: XCTestCase {
                 )
             ]
         }
-        
         let multiSearchRequest = MultiSearchRequest(searchQuery: "миР юР", page: 1)
-        
         multiSearchService.requestEntities(request: multiSearchRequest) { (request, result) in
             XCTAssertEqual(multiSearchRequest.searchQuery, request.searchQuery)
             XCTAssertEqual(multiSearchRequest.page, request.page)
-            
             XCTAssertEqual(result!.map { $0.primaryValueToSort }, [
                 "Jurassic World 2",
                 "Jurassic World",
@@ -289,10 +251,8 @@ class MultiSearchServiceTests: XCTestCase {
                 "Михаил Иванов",
                 "Budapest",
             ])
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
@@ -323,7 +283,6 @@ class MultiSearchServiceTests: XCTestCase {
                 )
             ]
         }
-        
         mockPersonService.customSeedFunc = {
             return [
                 PopularPerson(
@@ -334,25 +293,19 @@ class MultiSearchServiceTests: XCTestCase {
                 )
             ]
         }
-        
         let multiSearchRequest = MultiSearchRequest(searchQuery: "vAlUe Aa", page: 1)
-        
         multiSearchService.requestEntities(request: multiSearchRequest) { (request, result) in
             XCTAssertEqual(multiSearchRequest.searchQuery, request.searchQuery)
             XCTAssertEqual(multiSearchRequest.page, request.page)
-            
             XCTAssertEqual(result!.map { $0.primaryValueToSort }, [
                 "Value AA Person 1",
                 "Value AA Movie 2",
                 "Value BB Movie 1"
             ])
-            
             self.expectationPromise.fulfill()
         }
-        
         waitForExpectations(timeout: 0.1, handler: nil)
     }
-    
 }
 
 extension MultiSearchServiceTests {
@@ -369,20 +322,16 @@ extension MultiSearchServiceTests {
         
         override func searchPopularPeople(by searchQuery: String, andPage page: Int, onComplete callback: @escaping (AsyncResult<[PopularPerson]>) -> Void) {
             let deadline = DispatchTime.now() + DispatchTimeInterval.milliseconds(searchPopularPeopleDelayMilliseconds)
-            
             DispatchQueue.main.asyncAfter(deadline: deadline) {
                 let popularPeople = self.customSeedFunc != nil
                     ? self.customSeedFunc!()
                     : self.seeder.getPopularPeople(count: 10)
-                
                 let result = self.searchPopularPeopleRequestIsFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(popularPeople)
-                
                 callback(result)
             }
         }
-        
     }
     
     private class MockMovieService: MovieService {
@@ -397,20 +346,15 @@ extension MultiSearchServiceTests {
         
         override func searchMovies(by searchQuery: String, andPage page: Int, onComplete callback: @escaping (AsyncResult<[Movie]>) -> Void) {
             let deadline = DispatchTime.now() + DispatchTimeInterval.milliseconds(searchMoviesDelayMilliseconds)
-            
             DispatchQueue.main.asyncAfter(deadline: deadline) {
                 let movies = self.customSeedFunc != nil
                     ? self.customSeedFunc!()
                     : self.seeder.getMovies(count: 10)
-                
                 let result = self.isSearchMoviesRequestFailed
                     ? AsyncResult.failure(ResponseError.dataIsNil)
                     : AsyncResult.success(movies)
-                
                 callback(result)
             }
         }
-        
     }
-    
 }

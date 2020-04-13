@@ -76,6 +76,12 @@ extension MovieCollectionTableViewCell: UICollectionViewDelegate, UICollectionVi
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? ImageFromInternetViewCell {
+            UIViewUtilsFactory.shared.getImageUtils().cancelSettingImageFromInternet(at: cell)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = movieCollection[indexPath.row]
         onTouchDown?(movie)

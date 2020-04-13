@@ -20,14 +20,14 @@ class RequestedMoviesViewController: StateViewController {
     
     private var savedMovies: [SavedMovie] = [] {
         didSet {
-            savedMovieMap = [:]
+            savedMovieDictionary = [:]
             for movie in savedMovies {
-                savedMovieMap[movie.id] = movie
+                savedMovieDictionary[movie.id] = movie
             }
         }
     }
     
-    private var savedMovieMap: [Int: SavedMovie] = [:]
+    private var savedMovieDictionary: [Int: SavedMovie] = [:]
     
     private var liveScrollingIsRelevant = false
     
@@ -121,7 +121,7 @@ class RequestedMoviesViewController: StateViewController {
     private func performRequest() {
         setLoadingState()
         requestMovies(requestedPage) { (requestedMoviesResult) in
-            OperationQueue.main.addOperation {
+            DispatchQueue.main.async {
                 self.unsetLoadingState()
                 guard let requestedMoviesResult = requestedMoviesResult else {
                     self.setFailedLoadingState()
@@ -144,7 +144,7 @@ class RequestedMoviesViewController: StateViewController {
         let deadline = DispatchTime.now() + DispatchTimeInterval.milliseconds(liveScrollingDellayMilliseconds)
         DispatchQueue.main.asyncAfter(deadline: deadline) {
             self.requestMovies(self.requestedPage) { (requestedMoviesResult) in
-                OperationQueue.main.addOperation {
+                DispatchQueue.main.async {
                     self.isBeingLiveScrolled = false
                     guard let requestedMoviesResult = requestedMoviesResult else {
                         self.liveScrollingIsRelevant = false
@@ -202,8 +202,14 @@ extension RequestedMoviesViewController: UITableViewDataSource, UITableViewDeleg
         let movie = requestedMovies[indexPath.row]
         cell.movie = movie
         cell.originController = self
-        if let savedMovie = savedMovieMap[movie.id] {
+        if let savedMovie = savedMovieDictionary[movie.id] {
             cell.savedMovie = savedMovie
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? ImageFromInternetViewCell {
+            UIViewUtilsFactory.shared.getImageUtils().cancelSettingImageFromInternet(at: cell)
         }
     }
     
