@@ -117,7 +117,7 @@ class DiscoverSettingsViewController: UIViewController {
     private func performRequest() {
         setLoadingState()
         discoverSettingsService.requestGenres { (requestedGenres) in
-            OperationQueue.main.addOperation {
+            DispatchQueue.main.async {
                 guard let requestedGenres = requestedGenres else {
                     self.setFailedLoadingState()
                     return

@@ -22,14 +22,14 @@ class MultiSearchViewController: StateViewController {
     
     private var savedMovies: [SavedMovie] = [] {
         didSet {
-            savedMovieMap = [:]
+            savedMovieDictionary = [:]
             for movie in savedMovies {
-                savedMovieMap[movie.id] = movie
+                savedMovieDictionary[movie.id] = movie
             }
         }
     }
     
-    private var savedMovieMap: [Int: SavedMovie] = [:]
+    private var savedMovieDictionary: [Int: SavedMovie] = [:]
     
     private let multiSearchService = MultiSearchService(movieService: MovieService(), personService: PersonService())
     
@@ -117,7 +117,7 @@ class MultiSearchViewController: StateViewController {
     private func defineSearchBar() {
         searchBar.placeholder = CinePickerCaptions.typeMovieOrActor
         searchBar.setValue(CinePickerCaptions.cancel, forKey: "cancelButtonText")
-        OperationQueue.main.addOperation {
+        DispatchQueue.main.async {
             let isSavedMoviesEmpty = self.savedMovies.isEmpty
             let didAgreeToUseDataSource = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.didAgreeToUseDataSource)
             if isSavedMoviesEmpty && didAgreeToUseDataSource {
@@ -196,7 +196,7 @@ class MultiSearchViewController: StateViewController {
         setLoadingState()
         let multiSearchRequest = MultiSearchRequest(searchQuery: currentSearchQuery, page: requestedPage)
         multiSearchService.requestEntities(request: multiSearchRequest) { (request, requestedSearchEntities) in
-            OperationQueue.main.addOperation {
+            DispatchQueue.main.async {
                 if self.currentSearchQuery != request.searchQuery {
                     return
                 }
@@ -412,11 +412,11 @@ extension MultiSearchViewController: UISearchBarDelegate {
             showSavedMovies()
             return
         }
-        debounceActionService.async(delay: DispatchTimeInterval.milliseconds(searchDebounceDelayMilliseconds)) {
+        debounceActionService.asyncAfter(delay: DispatchTimeInterval.milliseconds(searchDebounceDelayMilliseconds)) {
             if self.currentSearchQuery.isEmpty {
                 return
             }
-            OperationQueue.main.addOperation {
+            DispatchQueue.main.async {
                 self.unsetAllStates()
                 self.performRequest(shouldScrollToFirstRow: true)
             }
@@ -484,7 +484,7 @@ extension MultiSearchViewController {
                 cell.voteResultsAreHidden = true
                 return cell
             }
-            if let savedMovie = multiSearchViewController.savedMovieMap[movie.id] {
+            if let savedMovie = multiSearchViewController.savedMovieDictionary[movie.id] {
                 cell.savedMovie = savedMovie
             }
             return cell

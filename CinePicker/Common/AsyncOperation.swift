@@ -33,7 +33,7 @@ class AsyncOperation: Operation {
         return true
     }
     
-    override func start () {
+    override func start() {
         if isCancelled {
             state = .isFinished
             return
@@ -42,8 +42,8 @@ class AsyncOperation: Operation {
         state = .isExecuting
     }
     
-    override func cancel () {
-        super.cancel ()
+    override func cancel() {
+        super.cancel()
         state = .isFinished
     }
 }

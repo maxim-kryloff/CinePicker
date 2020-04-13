@@ -12,24 +12,24 @@ class MovieListService {
         by personId: Int,
         onComplete callback: @escaping (_: (cast: [Movie], crew: [Movie])?) -> Void
     ) {
-        let concurrentDispatchQueue = DispatchQueue(label: UUID().uuidString, qos: .utility, attributes: [.concurrent])
+        let requestMoviesDispatchQueue = DispatchQueue(label: UUID().uuidString, qos: .utility, attributes: [.concurrent])
         let dispatchGroup = DispatchGroup()
         
         var castMovies: [Movie]?
-        concurrentDispatchQueue.async(group: dispatchGroup) {
+        requestMoviesDispatchQueue.async(group: dispatchGroup) {
             self.requestMovies(byPerson: personId, dispatchGroup: dispatchGroup) { (result) in
                 castMovies = result
             }
         }
         
         var crewMovies: [Movie]?
-        concurrentDispatchQueue.async(group: dispatchGroup) {
+        requestMoviesDispatchQueue.async(group: dispatchGroup) {
             self.requestMovies(byCrewMember: personId, dispatchGroup: dispatchGroup) { (result) in
                 crewMovies = result
             }
         }
         
-        dispatchGroup.notify(queue: concurrentDispatchQueue) {
+        dispatchGroup.notify(queue: requestMoviesDispatchQueue) {
             var result: (cast: [Movie], crew: [Movie])?
             if let cast = castMovies, let crew = crewMovies {
                 result = (cast: cast, crew: crew)

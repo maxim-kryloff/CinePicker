@@ -24,14 +24,14 @@ class MovieListViewController: StateViewController {
     
     private var savedMovies: [SavedMovie] = [] {
         didSet {
-            savedMovieMap = [:]
+            savedMovieDictionary = [:]
             for movie in savedMovies {
-                savedMovieMap[movie.id] = movie
+                savedMovieDictionary[movie.id] = movie
             }
         }
     }
     
-    private var savedMovieMap: [Int: SavedMovie] = [:]
+    private var savedMovieDictionary: [Int: SavedMovie] = [:]
     
     private var isBeingRequested = false
     
@@ -162,7 +162,7 @@ class MovieListViewController: StateViewController {
         isBeingRequested = true
         requestIsFailed = false
         movieListService.requestMovies(by: person.id) { (requestedMoviesResult) in
-            OperationQueue.main.addOperation {
+            DispatchQueue.main.async {
                 self.unsetLoadingState()
                 self.isBeingRequested = false
                 guard let requestedMoviesResult = requestedMoviesResult else {
@@ -217,7 +217,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         let movie = movies[indexPath.row]
         cell.movie = movie
         cell.originController = self
-        if let savedMovie = savedMovieMap[movie.id] {
+        if let savedMovie = savedMovieDictionary[movie.id] {
             cell.savedMovie = savedMovie
         }
     }

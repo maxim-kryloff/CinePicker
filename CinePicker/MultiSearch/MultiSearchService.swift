@@ -15,26 +15,26 @@ class MultiSearchService {
         request: MultiSearchRequest,
         onComplete callback: @escaping (_: MultiSearchRequest, _: [MultiSearchEntity]?) -> Void
     ) {
-        let concurrentSearchQueue = DispatchQueue(label: UUID().uuidString, qos: .utility, attributes: [.concurrent])
+        let requestEntitiesDispatchQueue = DispatchQueue(label: UUID().uuidString, qos: .utility, attributes: [.concurrent])
         let dispatchGroup = DispatchGroup()
         let searchQuery = request.searchQuery
         let page = request.page
         
         var movies: [Movie]?
-        concurrentSearchQueue.async(group: dispatchGroup) {
+        requestEntitiesDispatchQueue.async(group: dispatchGroup) {
             self.requestMovies(by: searchQuery, andPage: page, dispatchGroup: dispatchGroup) { (result) in
                 movies = result
             }
         }
         
         var popularPeople: [PopularPerson]?
-        concurrentSearchQueue.async(group: dispatchGroup) {
+        requestEntitiesDispatchQueue.async(group: dispatchGroup) {
             self.requestPopularPeople(by: searchQuery, andPage: page, dispatchGroup: dispatchGroup) { (result) in
                 popularPeople = result
             }
         }
         
-        dispatchGroup.notify(queue: concurrentSearchQueue) {
+        dispatchGroup.notify(queue: requestEntitiesDispatchQueue) {
             var requestedSearchEntities: [MultiSearchEntity]?
             if let popularPeople = popularPeople, let movies = movies {
                 requestedSearchEntities = popularPeople + movies

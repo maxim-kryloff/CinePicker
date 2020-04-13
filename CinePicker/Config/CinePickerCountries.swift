@@ -119,15 +119,15 @@ class CinePickerCountries {
         Country(code: "JP", englishName: "Japan", russianName: "Япония")
     ]
     
-    private static let countryMap: [String: Country] = {
-        var map: [String: Country] = [:]
+    private static let countryDictionary: [String: Country] = {
+        var dictionary: [String: Country] = [:]
         for country in countries {
-            map[country.code] = country
+            dictionary[country.code] = country
         }
-        return map
+        return dictionary
     }()
     
     public static func getCountry(byCode code: String) -> Country? {
-        return countryMap[code]
+        return countryDictionary[code]
     }
 }
