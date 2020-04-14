@@ -6,7 +6,6 @@ class ImageFromInternetViewCellAdapter {
     
     init(cell: ImageFromInternetViewCell) {
         self.cell = cell
-        self.setDefaultPropertyValues()
     }
 }
 
@@ -55,11 +54,5 @@ extension ImageFromInternetViewCellAdapter {
     
     func activityIndicatorStopAnimating() {
         cell.activityIndicatorView.stopAnimating()
-    }
-    
-    private func setDefaultPropertyValues() {
-        imageViewAlpha = 1.0
-        activityIndicatorAlpha = 0.0
-        imageValue = nil
     }
 }

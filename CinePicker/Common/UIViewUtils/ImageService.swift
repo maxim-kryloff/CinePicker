@@ -20,6 +20,9 @@ class ImageService {
         let operation = DownloadImageOperation(url: url)
         operation.qualityOfService = .utility
         operation.completionBlock = {
+            if operation.isCancelled {
+                return
+            }
             callback(operation.image, url)
         }
         return operation
