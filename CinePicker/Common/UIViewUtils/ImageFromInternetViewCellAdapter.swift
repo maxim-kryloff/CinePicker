@@ -2,10 +2,10 @@ import UIKit
 
 class ImageFromInternetViewCellAdapter {
     
-    private var cell: ImageFromInternetViewCell
+    public let originCell: ImageFromInternetViewCell
     
     init(cell: ImageFromInternetViewCell) {
-        self.cell = cell
+        originCell = cell
     }
 }
 
@@ -13,16 +13,16 @@ extension ImageFromInternetViewCellAdapter {
     
     var imageValue: UIImage? {
         get {
-            return cell.imageFromInternetImageView.image
+            return originCell.imageFromInternetImageView.image
         }
         set {
-            cell.imageFromInternetImageView.isUserInteractionEnabled = newValue != nil
-            cell.imageFromInternetImageView.image = newValue ?? cell.defaultImage
+            originCell.imageFromInternetImageView.isUserInteractionEnabled = newValue != nil
+            originCell.imageFromInternetImageView.image = newValue ?? originCell.defaultImage
         }
     }
     
     var imagePath: String {
-        get { return cell.imagePath }
+        get { return originCell.imagePath }
     }
     
     var imageUrl: URL? {
@@ -35,24 +35,24 @@ extension ImageFromInternetViewCellAdapter {
     }
     
     var defaultImage: UIImage {
-        return cell.defaultImage
+        return originCell.defaultImage
     }
     
     public var imageViewAlpha: CGFloat {
-        get { return cell.imageFromInternetImageView.alpha }
-        set { cell.imageFromInternetImageView.alpha = newValue }
+        get { return originCell.imageFromInternetImageView.alpha }
+        set { originCell.imageFromInternetImageView.alpha = newValue }
     }
     
     var activityIndicatorAlpha: CGFloat {
-        get { return cell.activityIndicatorView.alpha }
-        set { cell.activityIndicatorView.alpha = newValue }
+        get { return originCell.activityIndicatorView.alpha }
+        set { originCell.activityIndicatorView.alpha = newValue }
     }
     
     func activityIndicatorStartAnimating() {
-        cell.activityIndicatorView.startAnimating()
+        originCell.activityIndicatorView.startAnimating()
     }
     
     func activityIndicatorStopAnimating() {
-        cell.activityIndicatorView.stopAnimating()
+        originCell.activityIndicatorView.stopAnimating()
     }
 }

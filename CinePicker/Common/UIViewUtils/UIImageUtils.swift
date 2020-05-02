@@ -18,7 +18,10 @@ class UIImageUtils {
     
     private var imageService = ImageService()
     
-    public func setImageFromInternet(at cell: ImageFromInternetViewCell) {
+    public func setImageFromInternet(
+        at cell: ImageFromInternetViewCell,
+        _ callback: @escaping (_ image: UIImage?, _ cell: ImageFromInternetViewCell) -> Void = { (image, cell) in }
+    ) {
         let cell = ImageFromInternetViewCellAdapter(cell: cell)
         if cell.imagePath.isEmpty {
             setImage(at: cell, image: cell.defaultImage)
@@ -28,7 +31,7 @@ class UIImageUtils {
             setImage(at: cell, image: downloadedImage)
             return
         }
-        downloadAndSetImage(at: cell)
+        downloadAndSetImage(at: cell, onComplete: callback)
     }
     
     private func setImage(at cell: ImageFromInternetViewCellAdapter, image: UIImage?) {
@@ -45,7 +48,10 @@ class UIImageUtils {
         UIView.animate(withDuration: 0.3, animations: animations, completion: nil)
     }
     
-    private func downloadAndSetImage(at cell: ImageFromInternetViewCellAdapter) {
+    private func downloadAndSetImage(
+        at cell: ImageFromInternetViewCellAdapter,
+        onComplete callback: @escaping (_ image: UIImage?, _ cell: ImageFromInternetViewCell) -> Void = { (image, cell) in }
+    ) {
         startActivityIndicator(at: cell)
         imageService.download(by: cell.imageUrl!) { (image, url) in
             DispatchQueue.main.async {
@@ -54,6 +60,7 @@ class UIImageUtils {
                 // because cell.imageUrl will be nil
                 if let cellImageUrl = cell.imageUrl, cellImageUrl.path == url.path {
                     self.setImage(at: cell, image: image)
+                    callback(image, cell.originCell)
                 }
             }
         }

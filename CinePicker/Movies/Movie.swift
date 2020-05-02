@@ -8,7 +8,11 @@ class Movie {
     
     public let originalTitle: String
     
-    public let imagePath: String
+    public var imagePath: String {
+        return _imagePath
+    }
+    
+    private var _imagePath: String
     
     public let rating: Double
     
@@ -34,12 +38,16 @@ class Movie {
         self.id = id
         self.title = title
         self.originalTitle = originalTitle
-        self.imagePath = imagePath
+        self._imagePath = imagePath
         self.rating = rating
         self.voteCount = voteCount
         self.releaseYear = releaseYear
         self.overview = overview
         self.popularity = popularity
+    }
+    
+    public func update(imagePath: String) {
+        _imagePath = imagePath
     }
     
     public static func buildMovie(fromJson json: [String: Any]) throws -> Movie {
