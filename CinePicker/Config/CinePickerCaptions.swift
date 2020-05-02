@@ -23,14 +23,14 @@ class CinePickerCaptions {
     
     public static var cast: String {
         if CinePickerConfig.getLanguage() == .ru {
-            return "Актер"
+            return "Роли"
         }
         return "Cast"
     }
     
     public static var crew: String {
         if CinePickerConfig.getLanguage() == .ru {
-            return "Участник съемок"
+            return "Съемки"
         }
         return "Crew"
     }
