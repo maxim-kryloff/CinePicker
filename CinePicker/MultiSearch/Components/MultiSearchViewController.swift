@@ -289,14 +289,14 @@ class MultiSearchViewController: StateViewController {
     }
     
     private func onTapWillCheckItOutFilter(cell: HeaderWithTagsUIView) {
-        let isFilterSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.willCheckItOutFilter)
-        UserDefaults.standard.set(!isFilterSelected, forKey: CinePickerSettingKeys.willCheckItOutFilter)
+        UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.willCheckItOutFilter)
+        UserDefaults.standard.set(false, forKey: CinePickerSettingKeys.iLikeItFilter)
         showSavedMovies()
     }
     
     private func onTapILikeItFilter(cell: HeaderWithTagsUIView) {
-        let isFilterSelected = UserDefaults.standard.bool(forKey: CinePickerSettingKeys.iLikeItFilter)
-        UserDefaults.standard.set(!isFilterSelected, forKey: CinePickerSettingKeys.iLikeItFilter)
+        UserDefaults.standard.set(false, forKey: CinePickerSettingKeys.willCheckItOutFilter)
+        UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.iLikeItFilter)
         showSavedMovies()
     }
     
