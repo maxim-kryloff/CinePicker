@@ -33,6 +33,8 @@ class MultiSearchViewController: StateViewController {
     
     private let multiSearchService = MultiSearchService(movieService: MovieService(), personService: PersonService())
     
+    private let movieDetailsService = MovieDetailsService(movieService: MovieService(), personService: PersonService())
+    
     private let debounceActionService = DebounceActionService()
     
     private var movieUtilsFactory: EntityUtilsAbstractFactory!
@@ -477,7 +479,25 @@ extension MultiSearchViewController {
         override func setMultiSearchTableViewCellImageProperties(cell: UITableViewCell, by indexPath: IndexPath) {
             let movie = multiSearchViewController.entities[indexPath.row] as! Movie
             (cell as! MovieTableViewCell).imagePath = movie.imagePath
-            UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell as! ImageFromInternetViewCell)
+            UIViewUtilsFactory.shared.getImageUtils().setImageFromInternet(at: cell as! ImageFromInternetViewCell) { (image, _) in
+                if image != nil {
+                    return
+                }
+                if let savedMovie = movie as? SavedMovie {
+                    self.refreshImagePath(of: savedMovie)
+                }
+            }
+        }
+        
+        private func refreshImagePath(of savedMovie: SavedMovie) {
+            multiSearchViewController.movieDetailsService.requestMovieDetails(by: savedMovie.id) { (movieDetails) in
+                DispatchQueue.main.async {
+                    if let movieDetails = movieDetails {
+                        savedMovie.update(imagePath: movieDetails.imagePath)
+                        MovieRepository.shared.update(movie: savedMovie)
+                    }
+                }
+            }
         }
         
         override func getMultiSearchTableViewCell(from tableView: UITableView, by indexPath: IndexPath) -> UITableViewCell {
