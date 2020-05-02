@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,9 +17,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ngY-H8-D1r">
-                        <rect key="frame" x="0.0" y="33.5" width="375" height="124.5"/>
+                        <rect key="frame" x="16" y="33.5" width="343" height="124.5"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="77S-Ig-UGa">
-                            <size key="itemSize" width="95" height="120"/>
+                            <size key="itemSize" width="90" height="120"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -38,8 +38,8 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="ngY-H8-D1r" secondAttribute="bottom" constant="2" id="2yx-GV-WGw"/>
-                    <constraint firstAttribute="trailing" secondItem="ngY-H8-D1r" secondAttribute="trailing" id="9iO-uM-QFM"/>
-                    <constraint firstItem="ngY-H8-D1r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="K2p-en-Hsa"/>
+                    <constraint firstAttribute="trailing" secondItem="ngY-H8-D1r" secondAttribute="trailing" constant="16" id="9iO-uM-QFM"/>
+                    <constraint firstItem="ngY-H8-D1r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="K2p-en-Hsa"/>
                     <constraint firstItem="3T2-GH-vj6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Wf5-Ij-1sC"/>
                     <constraint firstItem="ngY-H8-D1r" firstAttribute="top" secondItem="3T2-GH-vj6" secondAttribute="bottom" id="id1-lf-Jyp"/>
                     <constraint firstItem="3T2-GH-vj6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="kgV-eu-8hJ"/>
