@@ -281,7 +281,7 @@ class MultiSearchViewController: StateViewController {
         let action = {
             UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.didAgreeToUseDataSource)
             UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.willCheckItOutFilter)
-            UserDefaults.standard.set(true, forKey: CinePickerSettingKeys.iLikeItFilter)
+            UserDefaults.standard.set(false, forKey: CinePickerSettingKeys.iLikeItFilter)
             self.onChangeLanguage()
         }
         UIViewUtilsFactory.shared.getAlertUtils().showDatasourceAgreementAlert(
