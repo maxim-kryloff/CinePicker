@@ -39,9 +39,9 @@ class HeaderWithTagsUIView: UIView {
         }
     }
     
-    public var onTapWillCheckItOut: ((_ cell: HeaderWithTagsUIView) -> Void)?
+    public var onTapWillCheckItOut: (() -> Void)?
     
-    public var onTapILikeIt: ((_ cell: HeaderWithTagsUIView) -> Void)?
+    public var onTapILikeIt: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -95,10 +95,10 @@ class HeaderWithTagsUIView: UIView {
     }
     
     @IBAction func onWillCheckItOutLGButtonTouchUpInside(_ sender: LGButton) {
-        onTapWillCheckItOut?(self)
+        onTapWillCheckItOut?()
     }
     
     @IBAction func onILikeItLGButtonTouchUpInside(_ sender: LGButton) {
-        onTapILikeIt?(self)
+        onTapILikeIt?()
     }
 }
